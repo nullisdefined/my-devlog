@@ -1,4 +1,14 @@
+import { getPostList } from "@/src/lib/posts";
 import { FC } from "react";
+
+export async function generateStaticParams() {
+  const posts = await getPostList();
+
+  return posts.map((post) => ({
+    category: post.category,
+    slug: post.slug,
+  }));
+}
 
 interface PageProps {
   params: {
