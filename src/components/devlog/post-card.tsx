@@ -18,6 +18,8 @@ export function PostCard({ post }: PostCardProps) {
             <Image
               src={post.thumbnail}
               alt={post.title}
+              width={384}
+              height={288}
               className="object-cover w-full h-full"
             />
           ) : (

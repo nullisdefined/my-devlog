@@ -154,6 +154,8 @@ export default function Home() {
                 <Image
                   src="https://storage.googleapis.com/hotsix-bucket/KakaoTalk_20241022_185833320.jpg"
                   alt="Profile"
+                  width={224}
+                  height={224}
                   className="w-full h-full object-cover"
                 />
               </div>
@@ -219,6 +221,8 @@ export default function Home() {
                         <Image
                           src={project.image}
                           alt={project.title}
+                          width={800}
+                          height={450}
                           className="object-cover w-full h-full"
                         />
                       </div>

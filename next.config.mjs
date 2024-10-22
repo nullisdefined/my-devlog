@@ -2,6 +2,7 @@
 const nextConfig = {
   images: {
     unoptimized: true,
+    domains: ["storage.googleapis.com"],
   },
 };
 
