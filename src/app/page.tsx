@@ -25,7 +25,7 @@ import { FaJava } from "react-icons/fa";
 import ScrollableSection from "@/components/ui/scrollable-section";
 
 import ThemeToggle from "@/components/theme-toggle";
-import Footer from "@/components/footer";
+import Footer from "@/components/ui/footer";
 
 export default function Home() {
   const skills = [
