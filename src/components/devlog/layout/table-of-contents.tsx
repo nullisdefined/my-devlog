@@ -52,7 +52,7 @@ export function TableOfContents({ items }: TocProps) {
 
   return (
     <nav className="space-y-2 sticky top-20">
-      <p className="font-semibold mb-4">목차</p>
+      <p className="font-semibold mb-4 text-base">Contents</p>
       <ul className="space-y-2">
         {items.map((item) => (
           <li

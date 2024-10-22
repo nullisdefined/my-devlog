@@ -205,12 +205,12 @@ export default function Home() {
         </section>
 
         {/* Projects Section */}
-        <section className="bg-muted py-20 pt-20 pb-10">
+        <section className="bg-muted py-20 pt-20 pb-0">
           <div className="container mx-auto px-10">
             <h2 className="text-3xl font-bold mb-7">Projects</h2>
             <ScrollableSection>
               <div
-                className="flex gap-10 pb-4"
+                className="flex gap-10 pb-10 px-3"
                 style={{ minWidth: "max-content" }}
               >
                 {projects.map((project, index) => (

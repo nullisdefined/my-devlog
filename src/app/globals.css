@@ -2,20 +2,25 @@
 @tailwind components;
 @tailwind utilities;
 
-/* 코드 하이라이팅 스타일 */
+/* Monokai Pro 스타일 */
+pre[class*="language-"] {
+  @apply bg-[#3a3739] text-[#f2f2f0] w-[85%] mx-auto !important;
+}
+
+.dark pre[class*="language-"] {
+  @apply bg-[#1e1c1f] text-[#f2f2f0] w-[85%] mx-auto !important;
+}
+
 .token.comment,
 .token.prolog,
 .token.doctype,
 .token.cdata {
-  color: #8292a2;
+  color: #727072;
 }
 
+.token.operator,
 .token.punctuation {
-  color: #f8f8f2;
-}
-
-.token.namespace {
-  opacity: 0.7;
+  color: #939293;
 }
 
 .token.property,
@@ -23,12 +28,12 @@
 .token.constant,
 .token.symbol,
 .token.deleted {
-  color: #ff79c6;
+  color: #ff6188;
 }
 
 .token.boolean,
 .token.number {
-  color: #bd93f9;
+  color: #ab9df2;
 }
 
 .token.selector,
@@ -37,66 +42,109 @@
 .token.char,
 .token.builtin,
 .token.inserted {
-  color: #50fa7b;
+  color: #ffd866;
 }
 
-.token.operator,
 .token.entity,
 .token.url,
 .language-css .token.string,
-.style .token.string {
-  color: #f8f8f2;
+.style .token.string,
+.token.variable {
+  color: #78dce8;
 }
 
 .token.atrule,
 .token.attr-value,
-.token.keyword {
-  color: #ff79c6;
-}
-
 .token.function,
 .token.class-name {
-  color: #ffb86c;
+  color: #a9dc76;
+}
+
+.token.keyword {
+  color: #ff6188;
 }
 
 .token.regex,
-.token.important,
-.token.variable {
-  color: #f1fa8c;
+.token.important {
+  color: #ffd866;
 }
 
-/* 코드 블록 스타일 */
+/* 코드 블록 스타일링 */
 pre {
-  @apply relative;
-  @apply my-4 p-4 rounded-lg;
-  @apply bg-zinc-900 text-zinc-100;
+  @apply relative w-[90%] mx-auto !important;
 }
 
-pre.group {
-  @apply relative;
+pre:hover .copy-code-button {
+  @apply opacity-100;
 }
 
-/* 코드 블록 스크롤바 */
-pre::-webkit-scrollbar {
-  @apply h-2;
+.copy-code-button {
+  @apply absolute right-2 top-2 p-2 rounded-md;
+  @apply bg-black/20 hover:bg-black/40;
+  @apply transition-all duration-200;
+  @apply opacity-0;
 }
 
-pre::-webkit-scrollbar-track {
-  @apply bg-muted;
+/* 코드 블록 기본 스타일 */
+.prose pre {
+  @apply w-[85%] mx-auto !important;
+  @apply my-6 relative rounded-lg;
+  @apply bg-[#f5f5f5];
+  counter-reset: line;
 }
 
-pre::-webkit-scrollbar-thumb {
-  @apply bg-primary/20 rounded-full border-2 border-transparent bg-clip-padding;
+/* 줄 번호 스타일링 */
+.prose pre > code {
+  @apply grid;
+  counter-reset: line;
 }
 
-pre:hover::-webkit-scrollbar-thumb {
-  @apply bg-primary/40;
+.prose pre > code > .line {
+  @apply px-4 py-0.5;
+  @apply border-l-2 border-transparent;
+  counter-increment: line;
+  display: inline-block;
+  width: 100%;
 }
 
-/* 복사 버튼 */
-.copy-button {
-  @apply opacity-0 group-hover:opacity-100;
-  @apply transition-opacity duration-200;
+.prose pre > code > .line::before {
+  content: counter(line);
+  @apply inline-block w-8 mr-4;
+  @apply text-gray-500 text-right;
+  @apply select-none;
+}
+
+/* hover 효과 */
+.prose pre > code > .line:hover {
+  @apply bg-white/5;
+  @apply border-l-2 border-primary/50;
+}
+
+/* 스크롤바 스타일 유지 */
+.prose pre::-webkit-scrollbar {
+  @apply h-2 w-2;
+}
+
+.prose pre::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+
+.prose pre::-webkit-scrollbar-thumb {
+  @apply bg-primary/10 rounded-full;
+  @apply hover:bg-primary/20;
+}
+
+/* 코드 블록 padding 조정 */
+.prose pre code {
+  @apply py-4;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+/* 특정 줄 강조 가능 */
+.prose pre > code > .line.highlighted {
+  @apply bg-primary/10;
+  @apply border-l-2 border-primary;
 }
 
 @layer base {
@@ -134,25 +182,25 @@ pre:hover::-webkit-scrollbar-thumb {
 
   .dark {
     --background: 0 0% 3.9%;
-    --foreground: 0 0% 98%;
+    --foreground: 0 0% 88%;
 
     --card: 0 0% 3.9%;
-    --card-foreground: 0 0% 98%;
+    --card-foreground: 0 0% 88%;
 
     --popover: 0 0% 3.9%;
-    --popover-foreground: 0 0% 98%;
+    --popover-foreground: 0 0% 88%;
 
-    --primary: 0 0% 98%;
+    --primary: 0 0% 88%;
     --primary-foreground: 0 0% 9%;
 
     --secondary: 0 0% 14.9%;
-    --secondary-foreground: 0 0% 98%;
+    --secondary-foreground: 0 0% 96%;
 
     --muted: 0 0% 14.9%;
-    --muted-foreground: 0 0% 63.9%;
+    --muted-foreground: 0 0% 60%;
 
     --accent: 0 0% 14.9%;
-    --accent-foreground: 0 0% 98%;
+    --accent-foreground: 0 0% 96%;
 
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 85.7% 97.3%;
@@ -192,4 +240,48 @@ pre:hover::-webkit-scrollbar-thumb {
     transform: translateZ(0);
     will-change: transform;
   }
+
+  main {
+    padding-top: 72px;
+  }
+
+  ::selection {
+    background-color: rgba(16, 185, 129, 0.2);
+    color: inherit;
+  }
+}
+
+/* 제목 스타일 */
+.prose h1 {
+  @apply text-4xl font-bold mt-8 mb-4;
+}
+
+.prose h2 {
+  @apply text-2xl font-semibold mt-8 mb-4;
+}
+
+.prose h3 {
+  @apply text-xl font-medium mt-6 mb-3;
+}
+
+.prose h4 {
+  @apply text-lg font-medium mt-4 mb-2;
+}
+
+.prose.dark\:prose-invert {
+  --tw-prose-invert-body: hsl(0, 0%, 88%);
+  --tw-prose-invert-headings: hsl(0, 0%, 90%);
+  --tw-prose-invert-links: hsl(0, 0%, 88%);
+  --tw-prose-invert-bold: hsl(0, 0%, 90%);
+  --tw-prose-invert-counters: hsl(0, 0%, 88%);
+  --tw-prose-invert-bullets: hsl(0, 0%, 65%);
+  --tw-prose-invert-hr: hsl(0, 0%, 30%);
+  --tw-prose-invert-quotes: hsl(0, 0%, 88%);
+  --tw-prose-invert-quote-borders: hsl(0, 0%, 30%);
+  --tw-prose-invert-captions: hsl(0, 0%, 65%);
+  --tw-prose-invert-code: hsl(0, 0%, 88%);
+  --tw-prose-invert-pre-code: hsl(0, 0%, 88%);
+  --tw-prose-invert-pre-bg: hsl(0, 0%, 10%);
+  --tw-prose-invert-th-borders: hsl(0, 0%, 30%);
+  --tw-prose-invert-td-borders: hsl(0, 0%, 20%);
 }

@@ -5,17 +5,26 @@ import { useEffect } from "react";
 
 export function PostContent({ content }: { content: string }) {
   useEffect(() => {
-    const buttons = document.querySelectorAll(".copy-button");
+    const buttons = document.querySelectorAll(".copy-code-button");
     buttons.forEach((button) => {
+      const pre = button.parentElement;
+      const code = pre?.querySelector("code");
+
       button.addEventListener("click", async () => {
-        const code = (button as HTMLElement).dataset.code;
         if (code) {
-          await navigator.clipboard.writeText(code);
-          const originalIcon = button.innerHTML;
-          button.innerHTML = `<svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
-          setTimeout(() => {
-            button.innerHTML = originalIcon;
-          }, 2000);
+          await navigator.clipboard.writeText(code.textContent || "");
+
+          // 복사 성공 표시
+          const svg = button.querySelector("svg");
+          if (svg) {
+            const originalPath = svg.innerHTML;
+            svg.innerHTML =
+              '<path d="M20 6L9 17l-5-5" stroke="currentColor" fill="none" stroke-width="2"/>';
+
+            setTimeout(() => {
+              svg.innerHTML = originalPath;
+            }, 2000);
+          }
         }
       });
     });

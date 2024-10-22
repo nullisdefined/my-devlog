@@ -42,8 +42,8 @@ export function Comments() {
 
   return (
     <section className="mt-16 mr-1 pr-1">
-      <hr className="border-t border-gray-200 dark:border-gray-700 mb-8" />
-      <div ref={elementRef} className="w-full" />
+      <hr className="border-t border-gray-200 dark:border-gray-700 mb-8 mx-auto" />
+      <div ref={elementRef} className="w-11/12 mx-auto" />
     </section>
   );
 }

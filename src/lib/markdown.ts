@@ -12,65 +12,62 @@ import { toString } from "hast-util-to-string";
 import type { Element, ElementContent } from "hast";
 import { TableOfContentsItem } from "@/types/post";
 
-const createCopyButton = (): Element => ({
-  type: "element",
-  tagName: "button",
-  properties: {
-    className: [
-      "absolute",
-      "top-2",
-      "right-2",
-      "p-2",
-      "rounded-lg",
-      "bg-primary/10",
-      "hover:bg-primary/20",
-      "opacity-0",
-      "group-hover:opacity-100",
-      "transition-all",
-      "duration-200",
-      "copy-button",
-    ],
-    "data-code": "",
-  },
-  children: [
-    {
-      type: "element",
-      tagName: "svg",
-      properties: {
-        className: ["h-4", "w-4"],
-        viewBox: "0 0 24 24",
-        fill: "none",
-        stroke: "currentColor",
-        strokeWidth: "2",
-        strokeLinecap: "round",
-        strokeLinejoin: "round",
-      },
-      children: [
-        {
-          type: "element",
-          tagName: "path",
-          properties: {
-            d: "M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2",
-          },
-          children: [],
-        },
-        {
-          type: "element",
-          tagName: "rect",
-          properties: {
-            x: "8",
-            y: "2",
-            width: "8",
-            height: "4",
-            rx: "1",
-            ry: "1",
-          },
-          children: [],
-        },
+function createCopyButton(): Element {
+  return {
+    type: "element",
+    tagName: "button",
+    properties: {
+      className: [
+        "absolute",
+        "right-2",
+        "top-2",
+        "p-2",
+        "rounded-md",
+        "bg-black/20",
+        "hover:bg-black/40",
+        "transition-all",
+        "duration-200",
+        "opacity-0",
+        "group-hover:opacity-100",
+        "copy-code-button",
       ],
     },
-  ],
-});
+    children: [
+      {
+        type: "element",
+        tagName: "svg",
+        properties: {
+          viewBox: "0 0 24 24",
+          fill: "none",
+          stroke: "currentColor",
+          strokeWidth: "2",
+          strokeLinecap: "round",
+          strokeLinejoin: "round",
+          className: ["w-4", "h-4"],
+        },
+        children: [
+          {
+            type: "element",
+            tagName: "path",
+            properties: {
+              d: "M8 17.929H6c-1.105 0-2-.912-2-2.036V5.036C4 3.912 4.895 3 6 3h8c1.105 0 2 .912 2 2.036v1.866m-6 .17h8c1.105 0 2 .91 2 2.035v10.857C20 21.088 19.105 22 18 22h-8c-1.105 0-2-.912-2-2.036V9.107c0-1.124.895-2.036 2-2.036z",
+            },
+            children: [],
+          },
+        ],
+      },
+    ],
+  };
+}
+
+const codeBlockStyles = [
+  "relative",
+  "group",
+  "rounded-lg",
+  "bg-black/90",
+  "p-4",
+  "overflow-x-auto",
+];
 
 export async function markdownToHtml(content: string): Promise<string> {
   const result = await unified()
@@ -86,19 +83,7 @@ export async function markdownToHtml(content: string): Promise<string> {
           if (!node.properties.className) {
             node.properties.className = [];
           }
-          (node.properties.className as string[]).push(
-            "overflow-x-auto",
-            "[&::-webkit-scrollbar]:h-2",
-            "[&::-webkit-scrollbar-track]:bg-muted",
-            "[&::-webkit-scrollbar-thumb]:bg-primary/20",
-            "[&::-webkit-scrollbar-thumb]:rounded-full",
-            "[&::-webkit-scrollbar-thumb]:border-2",
-            "[&::-webkit-scrollbar-thumb]:border-transparent",
-            "[&::-webkit-scrollbar-thumb]:bg-clip-padding",
-            "hover:[&::-webkit-scrollbar-thumb]:bg-primary/40",
-            "motion-safe:scroll-smooth",
-            "relative"
-          );
+          (node.properties.className as string[]).push(...codeBlockStyles);
 
           const codeEl = node.children[0] as Element;
           if (codeEl?.tagName === "code") {
@@ -111,8 +96,8 @@ export async function markdownToHtml(content: string): Promise<string> {
     })
     .use(rehypeCodeTitles)
     .use(rehypePrism, {
-      plugins: ["line-numbers", "show-language"],
-      theme: "dracula",
+      plugins: ["line-numbers"],
+      theme: "monokai",
     } as any)
     .use(rehypeSlug)
     .use(rehypeAutolinkHeadings)

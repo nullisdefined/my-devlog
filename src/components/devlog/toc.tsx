@@ -52,15 +52,22 @@ export function TableOfContents({ items }: TocProps) {
   }
 
   return (
-    <nav className="space-y-2 sticky top-24 max-h-[calc(100vh-8rem)] overflow-y-auto">
-      <p className="font-semibold mb-4">목차</p>
+    <nav className="space-y-2">
+      <div className="border-b border-border pb-2 mb-4">
+        <p className="font-semibold text-lg">Contents</p>
+      </div>
       <ul className="space-y-2">
         {items.map((item) => (
           <li
             key={item.id}
             className={cn(
-              "text-sm transition-colors duration-200",
-              item.level === 2 ? "ml-0" : item.level === 3 ? "ml-4" : "ml-6",
+              "transition-colors duration-200",
+              // 레벨에 따른 들여쓰기와 글자 크기
+              item.level === 2
+                ? "ml-0 text-sm font-medium"
+                : item.level === 3
+                ? "ml-4 text-[13px]"
+                : "ml-6 text-xs",
               activeId === item.id
                 ? "text-primary font-medium"
                 : "text-muted-foreground hover:text-foreground"

@@ -12,7 +12,7 @@ const config: Config = {
   theme: {
     container: {
       center: true,
-      padding: "2rem",
+      padding: "0.1rem",
       screens: {
         "2xl": "1400px",
       },
@@ -117,6 +117,25 @@ const config: Config = {
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+      },
+      typography: {
+        DEFAULT: {
+          css: {
+            maxWidth: "none",
+            h1: {
+              textAlign: "left",
+            },
+            h2: {
+              textAlign: "left",
+            },
+            h3: {
+              textAlign: "left",
+            },
+            p: {
+              textAlign: "left",
+            },
+          },
+        },
       },
     },
   },
