@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Post } from "../types";
+import Image from "next/image";
 
 interface PostCardProps {
   post: Post;
@@ -8,7 +9,7 @@ interface PostCardProps {
 export default function PostCard({ post }: PostCardProps) {
   return (
     <div className="bg-white shadow-md rounded-lg overflow-hidden">
-      <img
+      <Image
         src={post.coverImage}
         alt={post.title}
         className="w-full h-48 object-cover"
