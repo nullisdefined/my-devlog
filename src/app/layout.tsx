@@ -1,10 +1,10 @@
-import "./globals.css";
 import type { Metadata } from "next";
-import Link from "next/link";
+import "./globals.css";
+import { ThemeProvider } from "./context/theme-provider";
 
 export const metadata: Metadata = {
-  title: "My Blog",
-  description: "Welcome to my blog ㅋㅋ",
+  title: "김재우의 포트폴리오 & 블로그",
+  description: "풀스택 개발자 김재우의 포트폴리오와 기술 블로그입니다.",
 };
 
 export default function RootLayout({
@@ -13,24 +13,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body>
-        <header className="bg-gray-800 text-white p-4">
-          <nav>
-            <ul className="flex space-x-4">
-              <li>
-                <Link href="/">Home</Link>
-              </li>
-              <li>
-                <Link href="/blog">Blog</Link>
-              </li>
-            </ul>
-          </nav>
-        </header>
-        {children}
-        <footer className="bg-gray-800 text-white p-4 mt-8">
-          <p>&copy; 2024 My Blog. All rights reserved.</p>
-        </footer>
+    <html lang="ko" suppressHydrationWarning>
+      <body className="min-h-screen bg-background font-sans antialiased">
+        <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>
   );

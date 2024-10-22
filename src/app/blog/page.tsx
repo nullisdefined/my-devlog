@@ -1,27 +1,46 @@
 import Link from "next/link";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
-// 임시 데이터
-const posts = [
-  { id: 1, title: "First Post", slug: "first-post" },
-  { id: 2, title: "Second Post", slug: "second-post" },
-];
+export default function BlogHome() {
+  // 샘플 블로그 포스트 데이터
+  const posts = [
+    {
+      slug: "post-1",
+      title: "첫 번째 블로그 포스트",
+      excerpt: "이것은 첫 번째 블로그 포스트의 요약입니다...",
+      date: "2024-10-22",
+      category: "프론트엔드",
+      tags: ["React", "Next.js"],
+    },
+    // 더 많은 포스트 추가
+  ];
 
-export default function BlogPage() {
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-6">Blog Posts</h1>
-      <ul>
-        {posts.map((post) => (
-          <li key={post.id} className="mb-4">
-            <Link
-              href={`/blog/category1/${post.slug}`}
-              className="text-blue-500 hover:underline"
-            >
-              {post.title}
-            </Link>
-          </li>
-        ))}
-      </ul>
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      {posts.map((post) => (
+        <Card key={post.slug}>
+          <CardHeader>
+            <CardTitle>
+              <Link href={`/blog/${post.slug}`} className="hover:underline">
+                {post.title}
+              </Link>
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-muted-foreground">{post.excerpt}</p>
+          </CardContent>
+          <CardFooter className="flex justify-between text-sm text-muted-foreground">
+            <span>{post.date}</span>
+            <span>{post.category}</span>
+          </CardFooter>
+        </Card>
+      ))}
     </div>
   );
 }
