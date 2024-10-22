@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { DevlogHeader } from "./devlog-header";
 import { DevlogSidebar } from "./devlog-sidebar";
-import Footer from "@/components/ui/footer";
+import Footer from "@/components/footer";
 import { TableOfContents } from "./table-of-contents";
 interface DevlogLayoutProps {
   children: React.ReactNode;

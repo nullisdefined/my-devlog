@@ -1,16 +1,15 @@
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
+import { unified } from "unified";
+import remarkParse from "remark-parse";
+import remarkGfm from "remark-gfm";
+import remarkRehype from "remark-rehype";
+import rehypeStringify from "rehype-stringify";
+import rehypePrism from "rehype-prism-plus";
 import { Post } from "@/types/post";
 
 const POSTS_PATH = path.join(process.cwd(), "src/content/posts");
-
-function extractFirstSentence(text: string): string {
-  const cleaned = text.replace(/[#*`]/g, "").trim();
-  const words = cleaned.split(/\s+/);
-  const excerpt = words.slice(0, 2).join(" ");
-  return excerpt + "...";
-}
 
 export async function getPostList(): Promise<Post[]> {
   const categories = fs.readdirSync(POSTS_PATH);
@@ -32,24 +31,14 @@ export async function getPostList(): Promise<Post[]> {
 
       if (data.draft) continue;
 
-      const firstParagraph =
-        content
-          .split("\n")
-          .find((line) => line.trim() !== "" && !line.startsWith("#"))
-          ?.trim() || "";
-
       allPosts.push({
         title: data.title,
-        description: data.description || extractFirstSentence(firstParagraph),
+        description: data.description,
         date: data.date,
         category: data.category,
         slug: filename.replace(".md", ""),
         tags: data.tags || [],
         thumbnail: data.thumbnail,
-        readingTime: calculateReadingTime(content),
-        content: data.description
-          ? undefined
-          : extractFirstSentence(firstParagraph),
       });
     }
   }
@@ -63,12 +52,21 @@ export async function getPostBySlug(
   category: string,
   slug: string
 ): Promise<Post | null> {
-  const filePath = path.join(POSTS_PATH, category, `${slug}.md`);
+  const filePath = path.join(POSTS_PATH, category.toLowerCase(), `${slug}.md`);
 
   if (!fs.existsSync(filePath)) return null;
 
   const fileContent = fs.readFileSync(filePath, "utf-8");
   const { data, content } = matter(fileContent);
+
+  // 마크다운을 HTML로 변환
+  const processedContent = await unified()
+    .use(remarkParse)
+    .use(remarkGfm)
+    .use(remarkRehype)
+    .use(rehypePrism)
+    .use(rehypeStringify)
+    .process(content);
 
   return {
     title: data.title,
@@ -78,14 +76,6 @@ export async function getPostBySlug(
     slug,
     tags: data.tags || [],
     thumbnail: data.thumbnail,
-    readingTime: calculateReadingTime(content),
-    content,
+    content: processedContent.toString(),
   };
-}
-
-function calculateReadingTime(content: string): string {
-  const wordsPerMinute = 200;
-  const words = content.trim().split(/\s+/).length;
-  const minutes = Math.ceil(words / wordsPerMinute);
-  return `${minutes} min read`;
 }

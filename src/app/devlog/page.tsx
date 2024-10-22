@@ -13,6 +13,7 @@ export default async function DevlogPage({
   const postsPerPage = 6;
   const totalPages = Math.ceil(posts.length / postsPerPage);
 
+  // 현재 페이지의 포스트만 가져오기
   const currentPosts = posts.slice(
     (currentPage - 1) * postsPerPage,
     currentPage * postsPerPage
@@ -20,26 +21,17 @@ export default async function DevlogPage({
 
   return (
     <DevlogLayout>
-      {currentPage === 1 && (
-        <section className="mb-12">
-          <h2 className="text-2xl font-bold mb-6">Recent</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 justify-items-center">
-            {posts.slice(0, 3).map((post) => (
-              <PostCard key={post.slug} post={post} />
-            ))}
-          </div>
-        </section>
-      )}
+      <div className="space-y-8">
+        <h1 className="text-3xl font-bold">All Posts</h1>
 
-      <section>
-        <h2 className="text-2xl font-bold mb-6">All Posts</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 gap-y-8 justify-items-center">
           {currentPosts.map((post) => (
             <PostCard key={post.slug} post={post} />
           ))}
         </div>
+
         <Pagination currentPage={currentPage} totalPages={totalPages} />
-      </section>
+      </div>
     </DevlogLayout>
   );
 }

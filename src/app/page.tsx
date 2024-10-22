@@ -25,7 +25,7 @@ import { FaJava } from "react-icons/fa";
 import ScrollableSection from "@/components/ui/scrollable-section";
 
 import ThemeToggle from "@/components/theme-toggle";
-import Footer from "@/components/ui/footer";
+import Footer from "@/components/footer";
 
 export default function Home() {
   const skills = [
@@ -260,7 +260,7 @@ export default function Home() {
                           className="flex items-center justify-center"
                         >
                           <SiGithub className="mr-2 h-4 w-4" />
-                          Repo
+                          repo
                         </Link>
                       </Button>
                     </div>

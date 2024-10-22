@@ -6,6 +6,5 @@ export interface Post {
   slug: string;
   tags: string[];
   thumbnail?: string;
-  readingTime: string;
   content?: string;
 }

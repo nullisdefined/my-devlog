@@ -1,19 +1,9 @@
 // src/app/devlog/[category]/[slug]/page.tsx
+import { DevlogLayout } from "@/components/devlog/layout/devlog-layout";
+import { getPostBySlug } from "@/lib/posts";
 import { notFound } from "next/navigation";
 import { format } from "date-fns";
-
-// 이 부분은 나중에 실제 데이터로 대체됩니다
-const getPostBySlug = async (category: string, slug: string) => {
-  // 실제로는 데이터베이스나 CMS에서 가져올 것입니다
-  return {
-    title: "NestJS와 함께하는 마이크로서비스 아키텍처",
-    content: "...",
-    date: "2024-03-15",
-    category: "Backend",
-    author: "Jaewoo Kim",
-    readingTime: "8 min read",
-  };
-};
+import { Tag } from "@/components/devlog/tag";
 
 export default async function PostPage({
   params: { category, slug },
@@ -27,29 +17,36 @@ export default async function PostPage({
   }
 
   return (
-    <article className="min-h-screen bg-background">
-      {/* Post Header */}
-      <div className="container mx-auto px-4 py-20">
-        <div className="max-w-3xl mx-auto">
-          <div className="mb-8">
-            <div className="text-sm text-muted-foreground mb-4">
-              {format(new Date(post.date), "MMMM d, yyyy")} • {post.readingTime}
-            </div>
-            <h1 className="text-4xl md:text-5xl font-bold mb-4">
-              {post.title}
-            </h1>
-            <div className="flex items-center gap-4">
-              <div className="text-muted-foreground">By {post.author}</div>
-              <div className="text-primary">{post.category}</div>
-            </div>
+    <DevlogLayout>
+      <article className="max-w-3xl mx-auto">
+        {/* Post Header */}
+        <div className="mb-8">
+          <div className="space-y-1 mb-4">
+            <time
+              dateTime={post.date}
+              className="text-sm text-muted-foreground"
+            >
+              {format(new Date(post.date), "yyyy년 MM월 dd일")}
+            </time>
+            <h1 className="text-3xl font-bold">{post.title}</h1>
           </div>
 
-          {/* Post Content */}
-          <div className="prose dark:prose-invert max-w-none">
-            {post.content}
-          </div>
+          {post.tags && (
+            <div className="flex flex-wrap gap-2">
+              {post.tags.map((tag) => (
+                <Tag key={tag} name={tag} />
+              ))}
+            </div>
+          )}
         </div>
-      </div>
-    </article>
+
+        {/* Post Content */}
+        <div className="prose dark:prose-invert max-w-none">
+          {post.content && (
+            <div dangerouslySetInnerHTML={{ __html: post.content }} />
+          )}
+        </div>
+      </article>
+    </DevlogLayout>
   );
 }
