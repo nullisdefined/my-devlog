@@ -70,7 +70,29 @@
   * {
     @apply border-border;
   }
+
+  :root {
+    color-scheme: light;
+  }
+
+  .dark {
+    color-scheme: dark;
+  }
+
+  body,
+  body * {
+    @apply antialiased;
+    transition: background-color 22ms ease-out, color 22ms ease-out;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
   body {
-    @apply bg-background text-foreground antialiased;
+    @apply bg-background text-foreground;
+  }
+
+  .transform-gpu {
+    transform: translateZ(0);
+    will-change: transform;
   }
 }
