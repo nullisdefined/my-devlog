@@ -1,16 +1,9 @@
-// src/app/blog/[category]/[slug]/page.tsx
+// src/app/devlog/[category]/[slug]/page.tsx
 import { notFound } from "next/navigation";
 import { format } from "date-fns";
 
-interface PostParams {
-  params: {
-    category: string;
-    slug: string;
-  };
-}
-
 // 이 부분은 나중에 실제 데이터로 대체됩니다
-const getPost = async (slug: string) => {
+const getPostBySlug = async (category: string, slug: string) => {
   // 실제로는 데이터베이스나 CMS에서 가져올 것입니다
   return {
     title: "NestJS와 함께하는 마이크로서비스 아키텍처",
@@ -22,8 +15,12 @@ const getPost = async (slug: string) => {
   };
 };
 
-export default async function PostPage({ params }: PostParams) {
-  const post = await getPost(params.slug);
+export default async function PostPage({
+  params: { category, slug },
+}: {
+  params: { category: string; slug: string };
+}) {
+  const post = await getPostBySlug(category, slug);
 
   if (!post) {
     notFound();

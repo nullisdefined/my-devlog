@@ -3,6 +3,7 @@ import Link from "next/link";
 import { format } from "date-fns";
 import { Post } from "@/types/post";
 import { Tag } from "./tag";
+import Image from "next/image";
 
 interface PostCardProps {
   post: Post;
@@ -14,7 +15,7 @@ export function PostCard({ post }: PostCardProps) {
       <Card className="overflow-hidden hover:shadow-lg transition-all duration-300 h-full group max-w-sm">
         <div className="relative aspect-[4/3]">
           {post.thumbnail ? (
-            <img
+            <Image
               src={post.thumbnail}
               alt={post.title}
               className="object-cover w-full h-full"

@@ -19,6 +19,7 @@ import {
   SiTailwindcss,
   SiNextdotjs,
 } from "react-icons/si";
+import Image from "next/image";
 
 import { FaJava } from "react-icons/fa";
 import ScrollableSection from "@/components/ui/scrollable-section";
@@ -150,7 +151,7 @@ export default function Home() {
             <div className="flex flex-col md:flex-row items-center gap-12 md:gap-16">
               {/* Profile Image */}
               <div className="w-48 h-48 md:ml-8 rounded-full overflow-hidden border-4 border-primary/20 shadow-xl">
-                <img
+                <Image
                   src="https://storage.googleapis.com/hotsix-bucket/KakaoTalk_20241022_185833320.jpg"
                   alt="Profile"
                   className="w-full h-full object-cover"
@@ -215,7 +216,7 @@ export default function Home() {
                   >
                     {project.image && (
                       <div className="relative aspect-video">
-                        <img
+                        <Image
                           src={project.image}
                           alt={project.title}
                           className="object-cover w-full h-full"
