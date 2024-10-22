@@ -22,8 +22,9 @@ import {
 
 import { FaJava } from "react-icons/fa";
 import ScrollableSection from "@/components/ui/scrollable-section";
-import Footer from "@/components/Footer";
+
 import ThemeToggle from "@/components/theme-toggle";
+import Footer from "@/components/footer";
 
 export default function Home() {
   const skills = [
@@ -171,9 +172,9 @@ export default function Home() {
                 </p>
                 <div className="flex flex-wrap gap-4 justify-center md:justify-start">
                   <Button variant="default" asChild>
-                    <Link href="/blog">
+                    <Link href="/devlog">
                       <FileText className="mr-2 h-4 w-4" />
-                      Blog
+                      Devlog
                     </Link>
                   </Button>
                   <Button variant="outline" asChild>

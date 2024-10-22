@@ -13,7 +13,7 @@ export function ThemeToggle() {
       variant="ghost"
       size="icon"
       onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-      className="fixed top-4 right-4 z-50 transform-gpu" // GPU 가속 추가
+      className="fixed top-4 right-4 z-50 transform-gpu"
     >
       <div className="relative w-5 h-5 transform-gpu">
         <Sun
