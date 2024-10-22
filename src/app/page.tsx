@@ -18,6 +18,7 @@ import {
   SiReact,
   SiTailwindcss,
   SiNextdotjs,
+  SiCplusplus,
 } from "react-icons/si";
 import Image from "next/image";
 
@@ -33,6 +34,7 @@ export default function Home() {
       category: "Languages",
       techs: [
         { name: "C", icon: <SiC className="h-5 w-5" /> },
+        { name: "C++", icon: <SiCplusplus className="h-5 w-5" /> },
         { name: "Java", icon: <FaJava className="h-5 w-5" /> },
         { name: "JavaScript", icon: <SiJavascript className="h-5 w-5" /> },
         { name: "TypeScript", icon: <SiTypescript className="h-5 w-5" /> },

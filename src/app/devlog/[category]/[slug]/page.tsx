@@ -1,9 +1,10 @@
-// src/app/devlog/[category]/[slug]/page.tsx
 import { DevlogLayout } from "@/components/devlog/layout/devlog-layout";
 import { getPostBySlug } from "@/lib/posts";
+import { markdownToHtml, extractTableOfContents } from "@/lib/markdown";
 import { notFound } from "next/navigation";
 import { format } from "date-fns";
 import { Tag } from "@/components/devlog/tag";
+import { Comments } from "@/components/devlog/comments";
 
 export default async function PostPage({
   params: { category, slug },
@@ -16,10 +17,12 @@ export default async function PostPage({
     notFound();
   }
 
+  const content = await markdownToHtml(post.content || "");
+  const toc = extractTableOfContents(content);
+
   return (
-    <DevlogLayout>
+    <DevlogLayout toc={toc}>
       <article className="max-w-3xl mx-auto">
-        {/* Post Header */}
         <div className="mb-8">
           <div className="space-y-1 mb-4">
             <time
@@ -29,9 +32,14 @@ export default async function PostPage({
               {format(new Date(post.date), "yyyy년 MM월 dd일")}
             </time>
             <h1 className="text-3xl font-bold">{post.title}</h1>
+            {post.description && (
+              <p className="text-xl text-muted-foreground">
+                {post.description}
+              </p>
+            )}
           </div>
 
-          {post.tags && (
+          {post.tags && post.tags.length > 0 && (
             <div className="flex flex-wrap gap-2">
               {post.tags.map((tag) => (
                 <Tag key={tag} name={tag} />
@@ -40,12 +48,11 @@ export default async function PostPage({
           )}
         </div>
 
-        {/* Post Content */}
         <div className="prose dark:prose-invert max-w-none">
-          {post.content && (
-            <div dangerouslySetInnerHTML={{ __html: post.content }} />
-          )}
+          <div dangerouslySetInnerHTML={{ __html: content }} />
         </div>
+
+        <Comments />
       </article>
     </DevlogLayout>
   );

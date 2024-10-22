@@ -8,3 +8,9 @@ export interface Post {
   thumbnail?: string;
   content?: string;
 }
+
+export interface TableOfContentsItem {
+  id: string;
+  title: string;
+  level: number;
+}
