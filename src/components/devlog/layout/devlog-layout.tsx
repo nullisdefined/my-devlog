@@ -37,7 +37,7 @@ export function DevlogLayout({ children, toc = [] }: DevlogLayoutProps) {
             </aside>
 
             {/* Main Content */}
-            <main className="flex-1 min-h-[calc(100vh-4rem)] py-6">
+            <main className="flex-1 min-h-[calc(100vh-4rem)] py-6 pt-[76px]">
               <div className="max-w-3xl mx-auto">{children}</div>
             </main>
 

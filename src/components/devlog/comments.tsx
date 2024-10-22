@@ -42,7 +42,7 @@ export function Comments() {
 
   return (
     <section className="mt-16 mr-1 pr-1">
-      <h2 className="text-xl font-bold mb-8">Comments</h2>
+      <hr className="border-t border-gray-200 dark:border-gray-700 mb-8" />
       <div ref={elementRef} className="w-full" />
     </section>
   );

@@ -35,10 +35,13 @@ export function TableOfContents({ items }: TocProps) {
     if (element) {
       const header = document.querySelector("header");
       const headerHeight = header?.offsetHeight || 0;
-      const offset = 80; // 헤더 아래 추가 여백
+      const offset = headerHeight + 100;
+
+      const elementPosition = element.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - offset;
 
       window.scrollTo({
-        top: element.offsetTop - headerHeight - offset,
+        top: offsetPosition,
         behavior: "smooth",
       });
     }
@@ -49,7 +52,7 @@ export function TableOfContents({ items }: TocProps) {
   }
 
   return (
-    <nav className="space-y-2 sticky top-20">
+    <nav className="space-y-2 sticky top-24 max-h-[calc(100vh-8rem)] overflow-y-auto">
       <p className="font-semibold mb-4">목차</p>
       <ul className="space-y-2">
         {items.map((item) => (

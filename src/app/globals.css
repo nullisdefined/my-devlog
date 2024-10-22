@@ -65,6 +65,40 @@
   color: #f1fa8c;
 }
 
+/* 코드 블록 스타일 */
+pre {
+  @apply relative;
+  @apply my-4 p-4 rounded-lg;
+  @apply bg-zinc-900 text-zinc-100;
+}
+
+pre.group {
+  @apply relative;
+}
+
+/* 코드 블록 스크롤바 */
+pre::-webkit-scrollbar {
+  @apply h-2;
+}
+
+pre::-webkit-scrollbar-track {
+  @apply bg-muted;
+}
+
+pre::-webkit-scrollbar-thumb {
+  @apply bg-primary/20 rounded-full border-2 border-transparent bg-clip-padding;
+}
+
+pre:hover::-webkit-scrollbar-thumb {
+  @apply bg-primary/40;
+}
+
+/* 복사 버튼 */
+.copy-button {
+  @apply opacity-0 group-hover:opacity-100;
+  @apply transition-opacity duration-200;
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;
