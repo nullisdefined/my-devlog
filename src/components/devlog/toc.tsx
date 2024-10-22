@@ -29,6 +29,21 @@ export function TableOfContents({ items }: TocProps) {
     return () => observer.disconnect();
   }, []);
 
+  const handleClick = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
+    e.preventDefault();
+    const element = document.getElementById(id);
+    if (element) {
+      const header = document.querySelector("header");
+      const headerHeight = header?.offsetHeight || 0;
+      const offset = 80; // 헤더 아래 추가 여백
+
+      window.scrollTo({
+        top: element.offsetTop - headerHeight - offset,
+        behavior: "smooth",
+      });
+    }
+  };
+
   if (items.length === 0) {
     return null;
   }
@@ -48,7 +63,9 @@ export function TableOfContents({ items }: TocProps) {
                 : "text-muted-foreground hover:text-foreground"
             )}
           >
-            <a href={`#${item.id}`}>{item.title}</a>
+            <a href={`#${item.id}`} onClick={(e) => handleClick(e, item.id)}>
+              {item.title}
+            </a>
           </li>
         ))}
       </ul>

@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { format } from "date-fns";
 import { Tag } from "@/components/devlog/tag";
 import { Comments } from "@/components/devlog/comments";
+import { PostContent } from "@/components/devlog/post-content";
 
 export default async function PostPage({
   params: { category, slug },
@@ -12,16 +13,15 @@ export default async function PostPage({
   params: { category: string; slug: string };
 }) {
   const post = await getPostBySlug(category, slug);
-
   if (!post) {
     notFound();
   }
 
+  // HTML 변환
   const content = await markdownToHtml(post.content || "");
-  const toc = extractTableOfContents(content);
 
   return (
-    <DevlogLayout toc={toc}>
+    <DevlogLayout toc={extractTableOfContents(content)}>
       <article className="max-w-3xl mx-auto">
         <div className="mb-8">
           <div className="space-y-1 mb-4">
@@ -48,10 +48,7 @@ export default async function PostPage({
           )}
         </div>
 
-        <div className="prose dark:prose-invert max-w-none">
-          <div dangerouslySetInnerHTML={{ __html: content }} />
-        </div>
-
+        <PostContent content={content} />
         <Comments />
       </article>
     </DevlogLayout>

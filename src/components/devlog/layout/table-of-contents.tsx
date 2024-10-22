@@ -46,26 +46,30 @@ export function TableOfContents({ items }: TableOfContentsProps) {
 
   return (
     <div className="space-y-2">
-      <p className="font-semibold">On this page</p>
-      <nav className="text-sm">
-        {items.map((item) => (
-          <Link
-            key={item.id}
-            href={`#${item.id}`}
-            className={cn(
-              "block py-1 hover:text-foreground transition-colors",
-              {
-                "pl-4": item.level === 2,
-                "pl-8": item.level === 3,
-                "text-foreground": activeId === item.id,
-                "text-muted-foreground": activeId !== item.id,
-              }
-            )}
-          >
-            {item.title}
-          </Link>
-        ))}
-      </nav>
+      <div className="flex justify-center">
+        <div>
+          <p className="font-semibold text-center pb-2">Contents</p>
+          <nav className="text-sm">
+            {items.map((item) => (
+              <Link
+                key={item.id}
+                href={`#${item.id}`}
+                className={cn(
+                  "block py-1 hover:text-foreground transition-colors",
+                  {
+                    "pl-4": item.level === 2,
+                    "pl-8": item.level === 3,
+                    "text-foreground": activeId === item.id,
+                    "text-muted-foreground": activeId !== item.id,
+                  }
+                )}
+              >
+                {item.title}
+              </Link>
+            ))}
+          </nav>
+        </div>
+      </div>
     </div>
   );
 }
