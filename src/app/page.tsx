@@ -308,7 +308,7 @@ export default function Home() {
                     </div>
                   </li>
                   <li>
-                    <div className="font-semibold">프로그래머스</div>
+                    <div className="font-semibold">그렙(프로그래머스)</div>
                     <div className="text-muted-foreground">
                       타입스크립트로 함께하는 웹 풀 사이클 개발(React, Node.js)
                       3기
