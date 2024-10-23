@@ -5,15 +5,20 @@ import { DevlogHeader } from "./devlog-header";
 import { DevlogSidebar } from "./devlog-sidebar";
 import Footer from "@/components/footer";
 import { TableOfContents } from "./table-of-contents";
-import { TableOfContentsItem } from "@/types/post";
+import { TableOfContentsItem, Post } from "@/types/post";
 import { ScrollToTop } from "../scroll-to-top";
 
 interface DevlogLayoutProps {
   children: React.ReactNode;
   toc?: TableOfContentsItem[];
+  posts?: Post[];
 }
 
-export function DevlogLayout({ children, toc = [] }: DevlogLayoutProps) {
+export function DevlogLayout({
+  children,
+  toc = [],
+  posts = [],
+}: DevlogLayoutProps) {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -26,7 +31,7 @@ export function DevlogLayout({ children, toc = [] }: DevlogLayoutProps) {
 
   return (
     <div className="flex flex-col min-h-screen">
-      <DevlogHeader />
+      <DevlogHeader posts={posts} />
       <div className="flex-1">
         <div className="container mx-auto">
           <div className="flex gap-4">

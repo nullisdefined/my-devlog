@@ -14,14 +14,14 @@ export const ScrollableSection = ({
       overflow-x-auto
       [&::-webkit-scrollbar]:h-2.5
       [&::-webkit-scrollbar-track]:bg-muted/50
-      [&::-webkit-scrollbar-thumb]:bg-white/50
+      [&::-webkit-scrollbar-thumb]:bg-black/20
       [&::-webkit-scrollbar-thumb]:rounded-full
       [&::-webkit-scrollbar-thumb]:border
       [&::-webkit-scrollbar-thumb]:border-transparent
       [&::-webkit-scrollbar-thumb]:bg-clip-padding
-      hover:[&::-webkit-scrollbar-thumb]:bg-white
+      hover:[&::-webkit-scrollbar-thumb]:bg-black/30
       dark:[&::-webkit-scrollbar-thumb]:bg-white/50
-      dark:hover:[&::-webkit-scrollbar-thumb]:bg-white
+      dark:hover:[&::-webkit-scrollbar-thumb]:bg-white/60
       motion-safe:scroll-smooth
       ${className}
     `}

@@ -1,5 +1,5 @@
 import { DevlogLayout } from "@/components/devlog/layout/devlog-layout";
-import { getPostBySlug } from "@/lib/posts";
+import { getPostBySlug, getPostList } from "@/lib/posts";
 import { markdownToHtml, extractTableOfContents } from "@/lib/markdown";
 import { notFound } from "next/navigation";
 import { format } from "date-fns";
@@ -12,16 +12,22 @@ export default async function PostPage({
 }: {
   params: { category: string; slug: string };
 }) {
-  const post = await getPostBySlug(category, slug);
+  const [post, posts] = await Promise.all([
+    getPostBySlug(category, slug),
+    getPostList(), // 모든 포스트 가져오기
+  ]);
+
   if (!post) {
     notFound();
   }
 
-  // HTML 변환
   const content = await markdownToHtml(post.content || "");
 
   return (
-    <DevlogLayout toc={extractTableOfContents(content)}>
+    <DevlogLayout
+      toc={extractTableOfContents(content)}
+      posts={posts} // posts prop 전달
+    >
       <article className="max-w-3xl mx-auto text-left">
         <div className="mb-8">
           <div className="space-y-1 mb-4">
