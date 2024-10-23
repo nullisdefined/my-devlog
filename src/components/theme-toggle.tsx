@@ -4,9 +4,26 @@
 import { HiSun, HiMoon } from "react-icons/hi";
 import { useTheme } from "@/app/context/theme-provider";
 import { Button } from "@/components/ui/button";
+import { useEffect } from "react";
 
 export function ThemeToggle() {
   const { theme, setTheme } = useTheme();
+
+  // 키보드 단축키 추가
+  useEffect(() => {
+    const handleKeyPress = (event: KeyboardEvent) => {
+      if (event.ctrlKey && event.key === "m") {
+        event.preventDefault(); // 기본 동작 방지
+        setTheme(theme === "dark" ? "light" : "dark");
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyPress);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyPress);
+    };
+  }, [theme, setTheme]);
 
   return (
     <Button
@@ -20,7 +37,7 @@ export function ThemeToggle() {
       ) : (
         <HiMoon className="h-4 w-4" />
       )}
-      <span className="sr-only">테마 전환</span>
+      <span className="sr-only">테마 전환 (Ctrl + M)</span>
     </Button>
   );
 }
