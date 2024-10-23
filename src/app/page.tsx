@@ -19,6 +19,11 @@ import {
   SiTailwindcss,
   SiNextdotjs,
   SiCplusplus,
+  SiVisualstudiocode,
+  SiSlack,
+  SiTrello,
+  SiSwagger,
+  SiNotion,
 } from "react-icons/si";
 import Image from "next/image";
 
@@ -71,6 +76,16 @@ export default function Home() {
         { name: "AWS", icon: <SiAmazon className="h-5 w-5" /> },
         { name: "Git", icon: <SiGit className="h-5 w-5" /> },
         { name: "GitHub", icon: <SiGithub className="h-5 w-5" /> },
+      ],
+    },
+    {
+      category: "Development Tools",
+      techs: [
+        { name: "VSCode", icon: <SiVisualstudiocode className="h-5 w-5" /> },
+        { name: "Swagger", icon: <SiSwagger className="h-5 w-5" /> },
+        { name: "Slack", icon: <SiSlack className="h-5 w-5" /> },
+        { name: "Notion", icon: <SiNotion className="h-5 w-5" /> },
+        { name: "Trello", icon: <SiTrello className="h-5 w-5" /> },
       ],
     },
   ];
