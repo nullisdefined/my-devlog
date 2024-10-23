@@ -18,6 +18,10 @@ const config: Config = {
       },
     },
     extend: {
+      fontFamily: {
+        sans: ["var(--font-pretendard)"],
+        mono: ["var(--font-jetbrains)"],
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",

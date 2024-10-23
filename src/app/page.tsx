@@ -145,7 +145,9 @@ export default function Home() {
 
   return (
     <>
-      <ThemeToggle />
+      <div className="fixed top-4 right-4 z-50">
+        <ThemeToggle />
+      </div>
       <main className="min-h-screen bg-background">
         {/* Hero Section */}
         <section className="container mx-auto px-4 py-20">
