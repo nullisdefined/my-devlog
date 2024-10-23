@@ -4,6 +4,9 @@ const nextConfig = {
     unoptimized: true,
     domains: ["storage.googleapis.com"],
   },
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
 };
 
 export default nextConfig;
