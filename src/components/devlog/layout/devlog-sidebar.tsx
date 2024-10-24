@@ -2,8 +2,7 @@ import { useState, useMemo } from "react";
 import Link from "next/link";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { ChevronRight } from "lucide-react";
-import { categories } from "@/config/categories";
-import { CategoryItem } from "@/types/index";
+import { categories, CategoryItem } from "@/config/categories";
 import { Tag } from "../tag";
 import { Post } from "@/types/index";
 
@@ -14,7 +13,6 @@ interface DevlogSidebarProps {
 export function DevlogSidebar({ posts }: DevlogSidebarProps) {
   const [expandedCategory, setExpandedCategory] = useState<string | null>(null);
 
-  // 모든 게시글에서 태그를 추출하고 사용 빈도를 계산
   const tagCounts = useMemo(() => {
     const counts = new Map<string, number>();
 
@@ -24,7 +22,6 @@ export function DevlogSidebar({ posts }: DevlogSidebarProps) {
       });
     });
 
-    // 태그를 사용 빈도순으로 정렬하여 반환
     return Array.from(counts.entries())
       .sort((a, b) => b[1] - a[1])
       .map(([tag]) => ({
@@ -33,14 +30,13 @@ export function DevlogSidebar({ posts }: DevlogSidebarProps) {
       }));
   }, [posts]);
 
-  const renderCategory = (
-    category: CategoryItem & { subcategories?: readonly CategoryItem[] }
-  ) => {
+  const renderCategory = (category: CategoryItem) => {
     const hasSubcategories =
       category.subcategories && category.subcategories.length > 0;
+    const Icon = category.icon;
 
     return (
-      <div key={category.path} className="w-2/3 relative">
+      <div key={category.path} className="w-full relative">
         <div
           className="flex items-center justify-between group"
           onMouseEnter={() => setExpandedCategory(category.path)}
@@ -48,12 +44,13 @@ export function DevlogSidebar({ posts }: DevlogSidebarProps) {
         >
           <Link
             href={category.path}
-            className="flex-1 px-3 py-2 text-sm rounded-md hover:bg-accent/50 transition-colors"
+            className="flex-1 px-3 py-2 text-sm rounded-md hover:bg-accent/50 transition-colors flex items-center gap-2 group-hover:text-primary"
           >
-            {category.name}
+            <Icon className="w-5 h-5" />
+            <span>{category.name}</span>
           </Link>
           {hasSubcategories && (
-            <ChevronRight className="w-4 h-4 mr-2 text-muted-foreground transition-transform group-hover:text-primary" />
+            <ChevronRight className="w-4 h-4 mr-2 text-muted-foreground transition-transform group-hover:text-primary group-hover:translate-x-0.5 duration-200" />
           )}
         </div>
 
@@ -65,16 +62,20 @@ export function DevlogSidebar({ posts }: DevlogSidebarProps) {
           >
             <div className="absolute left-0 w-8 h-full top-0 -translate-x-full" />
 
-            <div className="relative w-36 bg-background/95 backdrop-blur-sm border rounded-lg shadow-lg z-50 text-center">
-              {category.subcategories?.map((subcat) => (
-                <Link
-                  key={subcat.path}
-                  href={subcat.path}
-                  className="block px-4 py-2 text-sm hover:bg-accent/50 transition-colors"
-                >
-                  {subcat.name}
-                </Link>
-              ))}
+            <div className="relative w-44 bg-background/95 backdrop-blur-sm border rounded-lg shadow-lg z-50">
+              {category.subcategories?.map((subcat) => {
+                const SubIcon = subcat.icon;
+                return (
+                  <Link
+                    key={subcat.path}
+                    href={subcat.path}
+                    className="flex items-center gap-2 px-4 py-2 text-sm hover:bg-accent/50 transition-colors hover:text-primary"
+                  >
+                    <SubIcon className="w-5 h-5" />
+                    <span>{subcat.name}</span>
+                  </Link>
+                );
+              })}
             </div>
           </div>
         )}
@@ -83,7 +84,7 @@ export function DevlogSidebar({ posts }: DevlogSidebarProps) {
   };
 
   return (
-    <div className="space-y-8 pb-16">
+    <div className="sticky top-20 space-y-8 pb-16">
       {/* Profile Section */}
       <div className="flex flex-col items-center space-y-4">
         <Link href="/">
@@ -105,13 +106,7 @@ export function DevlogSidebar({ posts }: DevlogSidebarProps) {
       <div>
         <h4 className="font-semibold mb-4 px-3">Categories</h4>
         <nav className="space-y-1">
-          {categories.map((category) =>
-            renderCategory(
-              category as CategoryItem & {
-                subcategories?: readonly CategoryItem[];
-              }
-            )
-          )}
+          {categories.map((category) => renderCategory(category))}
         </nav>
       </div>
 
