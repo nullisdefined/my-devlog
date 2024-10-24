@@ -99,7 +99,7 @@ export function DevlogSidebar({ posts }: DevlogSidebarProps) {
         </Link>
         <div className="text-center">
           <h3 className="font-semibold">Jaewoo Kim</h3>
-          <p className="text-sm text-muted-foreground">Backend Developer</p>
+          <p className="text-sm text-muted-foreground">{/**/}</p>
         </div>
       </div>
 
