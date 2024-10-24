@@ -13,14 +13,13 @@ export default async function DevlogPage({
   const postsPerPage = 6;
   const totalPages = Math.ceil(posts.length / postsPerPage);
 
-  // 현재 페이지의 포스트만 가져오기
   const currentPosts = posts.slice(
     (currentPage - 1) * postsPerPage,
     currentPage * postsPerPage
   );
 
   return (
-    <DevlogLayout>
+    <DevlogLayout posts={posts}>
       <div className="space-y-8">
         <h1 className="text-3xl font-bold">All Posts</h1>
 

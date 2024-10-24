@@ -5,7 +5,7 @@ import { DevlogHeader } from "./devlog-header";
 import { DevlogSidebar } from "./devlog-sidebar";
 import Footer from "@/components/footer";
 import { TableOfContents } from "./table-of-contents";
-import { TableOfContentsItem, Post } from "@/types/post";
+import { TableOfContentsItem, Post } from "@/types/index";
 import { ScrollToTop } from "../scroll-to-top";
 
 interface DevlogLayoutProps {
@@ -36,20 +36,17 @@ export function DevlogLayout({
         <div className="container mx-auto">
           <div className="flex gap-4">
             {/* 왼쪽 사이드바 */}
-            <aside className="hidden lg:block w-60 shrink-0 pr-[70px]">
-              <div className="pt-[120px]">
-                <DevlogSidebar />
+            <aside className="hidden lg:block w-72 shrink-0">
+              <div className="sticky top-20 pt-[120px]">
+                <DevlogSidebar posts={posts} />
               </div>
             </aside>
 
             {/* 메인 콘텐츠 */}
-            <main className="flex-1 min-h-[calc(100vh-4rem)] py-6 pt-[76px] px-4 pl-24">
-              <div className="w-full max-w-3xl">
-                {/* 너비 고정 및 왼쪽 정렬 */}
-                <div className="w-full">
-                  {/* 내부 컨텐츠를 감싸는 컨테이너 */}
-                  {children}
-                </div>
+            <main className="flex-1 min-h-[calc(100vh-4rem)] py-6 pt-[76px] px-4">
+              <div className="w-full max-w-3xl mx-auto">
+                {/* 내부 컨텐츠를 감싸는 컨테이너 */}
+                {children}
               </div>
             </main>
 

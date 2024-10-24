@@ -2,28 +2,98 @@ export const categories = [
   {
     name: "All",
     path: "/devlog",
-    description: "모든 게시글",
   },
   {
     name: "Backend",
     path: "/devlog/backend",
-    description: "백엔드 개발 관련 게시글",
+    subcategories: [
+      {
+        name: "NestJS",
+        path: "/devlog/backend/nestjs",
+      },
+      {
+        name: "SpringBoot",
+        path: "/devlog/backend/spring-boot",
+      },
+      {
+        name: "Express",
+        path: "/devlog/backend/express",
+      },
+      {
+        name: "Django",
+        path: "/devlog/backend/django",
+      },
+    ],
   },
   {
     name: "Architecture",
     path: "/devlog/architecture",
-    description: "소프트웨어 아키텍처 관련 게시글",
+    subcategories: [
+      {
+        name: "MSA",
+        path: "/devlog/architecture/msa",
+      },
+      {
+        name: "DDD",
+        path: "/devlog/architecture/ddd",
+      },
+      {
+        name: "Clean Architecture",
+        path: "/devlog/architecture/clean-architecture",
+      },
+    ],
   },
   {
     name: "Database",
     path: "/devlog/database",
-    description: "데이터베이스 관련 게시글",
+    subcategories: [
+      {
+        name: "MySQL",
+        path: "/devlog/database/mysql",
+      },
+      {
+        name: "PostgreSQL",
+        path: "/devlog/database/postgresql",
+      },
+      {
+        name: "MongoDB",
+        path: "/devlog/database/mongodb",
+      },
+      {
+        name: "Redis",
+        path: "/devlog/database/redis",
+      },
+    ],
   },
   {
     name: "DevOps",
     path: "/devlog/devops",
-    description: "DevOps 관련 게시글",
+    subcategories: [
+      {
+        name: "Docker",
+        path: "/devlog/devops/docker",
+      },
+      {
+        name: "Kubernetes",
+        path: "/devlog/devops/kubernetes",
+      },
+      {
+        name: "CI/CD",
+        path: "/devlog/devops/cicd",
+      },
+      {
+        name: "AWS",
+        path: "/devlog/devops/aws",
+      },
+    ],
   },
 ] as const;
 
-export type Category = (typeof categories)[number]["name"];
+type ExtractCategoryNames<T> = T extends {
+  name: infer N;
+  subcategories?: infer S;
+}
+  ? N | ExtractCategoryNames<S extends readonly any[] ? S[number] : never>
+  : never;
+
+export type Category = ExtractCategoryNames<(typeof categories)[number]>;

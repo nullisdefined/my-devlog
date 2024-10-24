@@ -1,7 +1,7 @@
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
-import { Post } from "@/types/post";
+import { Post } from "@/types/index";
 
 const POSTS_PATH = path.join(process.cwd(), "src/content/posts");
 
@@ -30,7 +30,6 @@ export async function getPostBySlug(
 
     return {
       title: data.title,
-      description: data.description || "",
       date: data.date,
       category: data.category || category,
       slug,
@@ -70,7 +69,6 @@ export async function getPostList(): Promise<Post[]> {
 
         allPosts.push({
           title: data.title,
-          description: data.description || "",
           date: data.date,
           category: data.category || category,
           slug: filename.replace(".md", ""),
@@ -84,6 +82,34 @@ export async function getPostList(): Promise<Post[]> {
     return allPosts.sort(
       (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
     );
+  } catch (error) {
+    return [];
+  }
+}
+
+export async function getPostsByTag(tag: string): Promise<Post[]> {
+  try {
+    const allPosts = await getPostList();
+    return allPosts.filter((post) =>
+      post.tags?.some((t) => t.toLowerCase() === tag.toLowerCase())
+    );
+  } catch (error) {
+    return [];
+  }
+}
+
+export async function getAllTags(): Promise<string[]> {
+  try {
+    const allPosts = await getPostList();
+    const tagsSet = new Set<string>();
+
+    allPosts.forEach((post) => {
+      post.tags?.forEach((tag) => {
+        tagsSet.add(tag.toLowerCase());
+      });
+    });
+
+    return Array.from(tagsSet).sort();
   } catch (error) {
     return [];
   }

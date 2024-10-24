@@ -6,7 +6,7 @@ import { Search } from "lucide-react";
 import ThemeToggle from "@/components/theme-toggle";
 import { useState, useEffect } from "react";
 import { SearchDialog } from "../search-dialog";
-import type { Post } from "@/types/post";
+import type { Post } from "@/types/index";
 
 export function DevlogHeader({ posts = [] }: { posts: Post[] }) {
   const [isOpen, setIsOpen] = useState(false);

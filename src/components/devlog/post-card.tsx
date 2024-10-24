@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { format } from "date-fns";
-import { Post } from "@/types/post";
+import { Post } from "@/types/index";
 import { Tag } from "./tag";
 import Image from "next/image";
 import { getFirstParagraph, removeMarkdown } from "@/lib/remove-markdown-utils";
@@ -10,7 +10,7 @@ interface PostCardProps {
 }
 
 export function PostCard({ post }: PostCardProps) {
-  const category = post.category.toLowerCase();
+  const category = post.category?.toLowerCase();
   const firstParagraph = getFirstParagraph(post.content);
   const plainContent = firstParagraph
     ? removeMarkdown(firstParagraph)

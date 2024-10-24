@@ -47,7 +47,7 @@ export default async function PostPage({
 
           {post.tags && post.tags.length > 0 && (
             <div className="flex flex-wrap gap-2">
-              {post.tags.map((tag) => (
+              {post.tags.map((tag: string) => (
                 <Tag key={tag} name={tag} />
               ))}
             </div>
