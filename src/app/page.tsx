@@ -79,7 +79,7 @@ export default function Home() {
       ],
     },
     {
-      category: "Development Tools",
+      category: "Tools",
       techs: [
         { name: "VSCode", icon: <SiVisualstudiocode className="h-5 w-5" /> },
         { name: "Swagger", icon: <SiSwagger className="h-5 w-5" /> },
