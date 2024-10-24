@@ -9,6 +9,8 @@ import { SearchDialog } from "../search-dialog";
 import type { Post } from "@/types/index";
 
 export function DevlogHeader({ posts = [] }: { posts: Post[] }) {
+  console.log("Posts in header:", posts);
+
   const [isOpen, setIsOpen] = useState(false);
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [visible, setVisible] = useState(true);
