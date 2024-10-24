@@ -1,9 +1,9 @@
-import { Card } from "@/components/ui/card";
 import Link from "next/link";
 import { format } from "date-fns";
 import { Post } from "@/types/post";
 import { Tag } from "./tag";
 import Image from "next/image";
+import { getFirstParagraph, removeMarkdown } from "@/lib/remove-markdown-utils";
 
 interface PostCardProps {
   post: Post;
@@ -11,12 +11,16 @@ interface PostCardProps {
 
 export function PostCard({ post }: PostCardProps) {
   const category = post.category.toLowerCase();
+  const firstParagraph = getFirstParagraph(post.content);
+  const plainContent = firstParagraph
+    ? removeMarkdown(firstParagraph)
+    : removeMarkdown(post.content);
 
   return (
     <Link href={`/devlog/${category}/${post.slug}`}>
-      <Card className="overflow-hidden hover:shadow-lg transition-all duration-300 h-full group w-full">
-        <div className="flex justify-between p-6 gap-6">
-          <div className="flex-1 space-y-4">
+      <div className="border-y py-4 hover:bg-accent/50 transition-all duration-300 w-full">
+        <div className="flex justify-between items-center px-2 gap-4">
+          <div className="flex-1 space-y-2">
             <div className="flex items-center gap-2 text-sm text-muted-foreground">
               <span className="font-medium">{post.category}</span>
               <span>•</span>
@@ -29,12 +33,12 @@ export function PostCard({ post }: PostCardProps) {
               {post.title}
             </h2>
 
-            <p className="text-sm text-muted-foreground line-clamp-2">
-              {post.description}
+            <p className="text-sm text-muted-foreground line-clamp-3 mb-2">
+              {plainContent}
             </p>
 
             {post.tags && post.tags.length > 0 && (
-              <div className="flex flex-wrap gap-1.5">
+              <div className="flex flex-wrap gap-1.5 mt-3">
                 {post.tags.map((tag) => (
                   <Tag key={tag} name={tag} className="text-xs" />
                 ))}
@@ -42,13 +46,13 @@ export function PostCard({ post }: PostCardProps) {
             )}
           </div>
 
-          <div className="relative w-32 h-32 flex-shrink-0">
+          <div className="relative w-28 h-28 flex-shrink-0">
             {post.thumbnail ? (
               <Image
                 src={post.thumbnail}
                 alt={post.title}
-                width={128}
-                height={128}
+                width={112}
+                height={112}
                 className="object-cover rounded-lg"
               />
             ) : (
@@ -60,7 +64,7 @@ export function PostCard({ post }: PostCardProps) {
             )}
           </div>
         </div>
-      </Card>
+      </div>
     </Link>
   );
 }
