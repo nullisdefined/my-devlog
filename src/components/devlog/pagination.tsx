@@ -1,5 +1,6 @@
 import Link from "next/link";
 import React from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 interface PaginationProps {
   currentPage: number;
@@ -9,14 +10,14 @@ interface PaginationProps {
 export function Pagination({ currentPage, totalPages }: PaginationProps) {
   return (
     <div className="flex justify-center items-center gap-3 mt-8">
-      {currentPage > 1 && (
-        <Link
-          href={`/devlog?page=${currentPage - 1}`}
-          className="text-muted-foreground hover:text-primary px-4 py-2 rounded-full transition-all hover:bg-primary/10"
-        >
-          Previous
-        </Link>
-      )}
+      <Link
+        href={`/devlog?page=${currentPage - 1}`}
+        className={`text-muted-foreground hover:text-primary p-1.5 rounded-full transition-all hover:bg-primary/10 ${
+          currentPage <= 1 ? "pointer-events-none opacity-50" : ""
+        }`}
+      >
+        <ChevronLeft className="h-5 w-5" />
+      </Link>
 
       {Array.from({ length: totalPages }, (_, i) => i + 1)
         .filter((page) => {
@@ -37,21 +38,21 @@ export function Pagination({ currentPage, totalPages }: PaginationProps) {
                 currentPage === page
                   ? "text-white bg-primary hover:bg-primary/90 dark:text-gray-800"
                   : "text-muted-foreground hover:text-primary hover:bg-primary/10"
-              } w-10 h-10 flex items-center justify-center rounded-full transition-all`}
+              } w-8 h-8 flex items-center justify-center rounded-full transition-all`}
             >
               {page}
             </Link>
           </React.Fragment>
         ))}
 
-      {currentPage < totalPages && (
-        <Link
-          href={`/devlog?page=${currentPage + 1}`}
-          className="text-muted-foreground hover:text-primary px-4 py-2 rounded-full transition-all hover:bg-primary/10"
-        >
-          Next
-        </Link>
-      )}
+      <Link
+        href={`/devlog?page=${currentPage + 1}`}
+        className={`text-muted-foreground hover:text-primary p-1.5 rounded-full transition-all hover:bg-primary/10 ${
+          currentPage >= totalPages ? "pointer-events-none opacity-50" : ""
+        }`}
+      >
+        <ChevronRight className="h-5 w-5" />
+      </Link>
     </div>
   );
 }

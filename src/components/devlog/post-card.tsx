@@ -46,13 +46,13 @@ export function PostCard({ post }: PostCardProps) {
             )}
           </div>
 
-          <div className="relative w-28 h-28 flex-shrink-0">
+          <div className="relative w-40 h-40 flex-shrink-0">
             {post.thumbnail ? (
               <Image
                 src={post.thumbnail}
                 alt={post.title}
-                width={112}
-                height={112}
+                width={160}
+                height={160}
                 className="object-cover rounded-lg"
               />
             ) : (
