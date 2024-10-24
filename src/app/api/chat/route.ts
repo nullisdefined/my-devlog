@@ -7,55 +7,9 @@ import type { ChatRoom, Message } from "@/types/chat";
 const getRoomKey = (roomId: string) => `chat:room:${roomId}`;
 const getMessagesKey = (roomId: string) => `chat:messages:${roomId}`;
 
-// 디버깅용 함수
-async function inspectRedisData() {
-  try {
-    // 1. 모든 활성 채팅방 ID 가져오기
-    const activeRooms = await redis.smembers("chat:active_rooms");
-    console.log("\n=== Active Room IDs ===");
-    console.log(activeRooms);
-
-    // 2. 각 채팅방의 데이터 상세 조회
-    for (const roomId of activeRooms) {
-      console.log(`\n=== Room ${roomId} Data ===`);
-      const roomKey = getRoomKey(roomId);
-      const roomData = await redis.get(roomKey);
-      console.log("Raw room data:", roomData);
-      console.log("Type of room data:", typeof roomData);
-
-      if (roomData) {
-        try {
-          const parsedData =
-            typeof roomData === "string" ? JSON.parse(roomData) : roomData;
-          console.log("Parsed room data:", parsedData);
-        } catch (error) {
-          console.error("Failed to parse room data:", error);
-        }
-      }
-
-      // 3. 해당 방의 메시지 데이터 조회
-      const messagesKey = getMessagesKey(roomId);
-      const messages = await redis.lrange(messagesKey, 0, -1);
-      console.log(`\n=== Messages for Room ${roomId} ===`);
-      console.log("Number of messages:", messages.length);
-      if (messages.length > 0) {
-        console.log("First message:", messages[0]);
-        console.log("Type of first message:", typeof messages[0]);
-      }
-    }
-  } catch (error) {
-    console.error("Inspection error:", error);
-  }
-}
-
 export async function GET() {
   try {
-    // 디버깅 정보 출력
-    await inspectRedisData();
-
     const activeRooms = await redis.smembers("chat:active_rooms");
-    console.log("Active rooms:", activeRooms);
-
     if (!activeRooms || activeRooms.length === 0) {
       return NextResponse.json({ rooms: [] });
     }
@@ -64,12 +18,8 @@ export async function GET() {
       activeRooms.map(async (roomId) => {
         try {
           const data = await redis.get(getRoomKey(roomId));
-          console.log(`Raw data for room ${roomId}:`, data);
-          console.log(`Data type for room ${roomId}:`, typeof data);
-
           if (!data) return null;
 
-          // 데이터가 이미 객체인 경우 그대로 사용, 문자열인 경우 파싱
           let parsedData;
           if (typeof data === "string") {
             try {
@@ -82,7 +32,6 @@ export async function GET() {
             parsedData = data;
           }
 
-          // ChatRoom 타입 검증
           if (
             !parsedData.id ||
             !parsedData.userId ||
@@ -122,7 +71,6 @@ export async function POST(request: Request) {
     const body = await request.json();
     const { content, sender, roomId, userId } = body;
 
-    // 새로운 채팅방 생성
     if (!roomId && sender === "user") {
       const newRoomId = uuidv4();
       const chatRoom: ChatRoom = {
@@ -140,7 +88,6 @@ export async function POST(request: Request) {
         timestamp: Date.now(),
       };
 
-      // 문자열로 변환하여 저장
       const messageStr = JSON.stringify(message);
       const roomStr = JSON.stringify(chatRoom);
 
@@ -158,7 +105,6 @@ export async function POST(request: Request) {
       return NextResponse.json({ message, roomId: newRoomId });
     }
 
-    // 기존 채팅방에 메시지 전송
     if (roomId) {
       const message: Message = {
         id: uuidv4(),
@@ -190,7 +136,6 @@ export async function POST(request: Request) {
             sender === "user" ? (chatRoom.unread || 0) + 1 : chatRoom.unread,
         };
 
-        // 문자열로 변환하여 저장
         const messageStr = JSON.stringify(message);
         const roomStr = JSON.stringify(updatedRoom);
 
@@ -216,6 +161,29 @@ export async function POST(request: Request) {
     console.error("Error in chat API:", error);
     return NextResponse.json(
       { error: "Failed to send message" },
+      { status: 500 }
+    );
+  }
+}
+
+export async function DELETE(
+  request: Request,
+  { params }: { params: { roomId: string } }
+) {
+  try {
+    const { roomId } = params;
+
+    await Promise.all([
+      redis.del(getRoomKey(roomId)),
+      redis.del(getMessagesKey(roomId)),
+      redis.srem("chat:active_rooms", roomId),
+    ]);
+
+    return NextResponse.json({ success: true });
+  } catch (error) {
+    console.error("Error deleting chat room:", error);
+    return NextResponse.json(
+      { error: "Failed to delete chat room" },
       { status: 500 }
     );
   }
