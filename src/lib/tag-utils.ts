@@ -1,6 +1,6 @@
 const allPosts: Post[] = [];
 
-import { Post } from "@/types/post";
+import { Post } from "@/types/index";
 
 export function getTagStats() {
   const stats = new Map<string, number>();

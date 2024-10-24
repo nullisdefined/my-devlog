@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { TableOfContentsItem } from "@/types/post";
+import { TableOfContentsItem } from "@/types/index";
 import { cn } from "@/lib/class-name-utils";
 
 interface TocProps {

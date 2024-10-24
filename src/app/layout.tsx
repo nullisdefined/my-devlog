@@ -3,6 +3,7 @@ import "./globals.css";
 import { ThemeProvider } from "./context/theme-provider";
 import localFont from "next/font/local";
 import { JetBrains_Mono } from "next/font/google";
+import { ChatWidget } from "@/components/chat/chat-widget";
 
 const pretendard = localFont({
   src: [
@@ -73,6 +74,7 @@ export default function RootLayout({
       <body
         className={`min-h-screen bg-background font-sans antialiased ${pretendard.className}`}
       >
+        <ChatWidget />
         <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>

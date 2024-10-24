@@ -10,7 +10,7 @@ import rehypeStringify from "rehype-stringify";
 import { visit } from "unist-util-visit";
 import { toString } from "hast-util-to-string";
 import type { Element, ElementContent } from "hast";
-import { TableOfContentsItem } from "@/types/post";
+import { TableOfContentsItem } from "@/types/index";
 
 function createCopyButton(): Element {
   return {

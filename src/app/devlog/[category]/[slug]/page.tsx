@@ -38,11 +38,6 @@ export default async function PostPage({
               {format(new Date(post.date), "yyyy년 MM월 dd일")}
             </time>
             <h1 className="text-3xl font-bold text-left">{post.title}</h1>
-            {post.description && (
-              <p className="text-xl text-muted-foreground text-left">
-                {post.description}
-              </p>
-            )}
           </div>
 
           {post.tags && post.tags.length > 0 && (
