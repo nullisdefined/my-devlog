@@ -52,8 +52,11 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Main",
+  title: "Devlog",
   description: "메인 페이지 입니다.",
+  icons: {
+    icon: "./favicon.ico",
+  },
 };
 
 export default function RootLayout({
