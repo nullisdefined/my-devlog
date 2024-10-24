@@ -49,7 +49,7 @@ export function DevlogHeader({ posts = [] }: { posts: Post[] }) {
       <div className="container flex h-14 items-center">
         <div className="flex gap-6 md:gap-10">
           <Link href="/devlog" className="flex items-center space-x-2">
-            <span className="font-bold text-lg">Devlog</span>
+            <span className="font-bold text-lg">#nullisdefined</span>
           </Link>
         </div>
         <div className="flex-1" />
@@ -60,7 +60,7 @@ export function DevlogHeader({ posts = [] }: { posts: Post[] }) {
             className="relative h-8 w-8 px-0"
             onClick={() => setIsOpen(true)}
           >
-            <Search className="h-4 w-4" strokeWidth={1.5} />
+            <Search className="h-5 w-5" strokeWidth={1.5} />
             <span className="sr-only">검색 게시물 (Ctrl + K)</span>
           </Button>
           <ThemeToggle />

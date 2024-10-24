@@ -33,9 +33,9 @@ export function ThemeToggle() {
       onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
     >
       {theme === "dark" ? (
-        <HiSun className="h-4 w-4" />
+        <HiSun className="h-5 w-5" />
       ) : (
-        <HiMoon className="h-4 w-4" />
+        <HiMoon className="h-5 w-5" />
       )}
       <span className="sr-only">테마 전환 (Ctrl + M)</span>
     </Button>
