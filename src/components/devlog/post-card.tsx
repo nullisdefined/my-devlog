@@ -17,8 +17,8 @@ export function PostCard({ post }: PostCardProps) {
     : removeMarkdown(post.content);
 
   return (
-    <Link href={`/devlog/${category}/${post.slug}`}>
-      <div className="border-y py-4 hover:bg-accent/50 transition-all duration-300 w-full">
+    <Link href={`/devlog/${category}/${post.slug}`} className="group">
+      <div className="border-b py-4 w-full">
         <div className="flex justify-between items-center px-2 gap-4">
           <div className="flex-1 space-y-2">
             <div className="flex items-center gap-2 text-sm text-muted-foreground">
@@ -29,7 +29,7 @@ export function PostCard({ post }: PostCardProps) {
               </time>
             </div>
 
-            <h2 className="text-lg font-semibold line-clamp-1 group-hover:text-primary transition-colors">
+            <h2 className="text-lg font-semibold line-clamp-1 group-hover:text-emerald-500 transition-colors">
               {post.title}
             </h2>
 

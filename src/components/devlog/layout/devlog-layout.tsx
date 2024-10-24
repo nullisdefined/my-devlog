@@ -36,15 +36,15 @@ export function DevlogLayout({
         <div className="container mx-auto">
           <div className="flex gap-4">
             {/* 왼쪽 사이드바 */}
-            <aside className="hidden lg:block w-72 shrink-0">
-              <div className="sticky top-20 pt-[120px]">
+            <aside className="hidden lg:block w-60 shrink-0">
+              <div className="top-20 pt-[40px] pb-[700px]">
                 <DevlogSidebar posts={posts} />
               </div>
             </aside>
 
             {/* 메인 콘텐츠 */}
-            <main className="flex-1 min-h-[calc(100vh-4rem)] py-6 pt-[76px] px-4">
-              <div className="w-full max-w-3xl mx-auto">
+            <main className="flex-1 min-h-[calc(100vh-4rem)] py-6 pt-[76px] pl-4">
+              <div className="w-full max-w-3xl ml-20 mr-14">
                 {/* 내부 컨텐츠를 감싸는 컨테이너 */}
                 {children}
               </div>

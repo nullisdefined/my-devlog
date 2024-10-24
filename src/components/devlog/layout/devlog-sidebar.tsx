@@ -40,7 +40,7 @@ export function DevlogSidebar({ posts }: DevlogSidebarProps) {
       category.subcategories && category.subcategories.length > 0;
 
     return (
-      <div key={category.path} className="w-full relative">
+      <div key={category.path} className="w-2/3 relative">
         <div
           className="flex items-center justify-between group"
           onMouseEnter={() => setExpandedCategory(category.path)}
@@ -55,9 +55,17 @@ export function DevlogSidebar({ posts }: DevlogSidebarProps) {
           {hasSubcategories && (
             <ChevronRight className="w-4 h-4 mr-2 text-muted-foreground transition-transform group-hover:text-primary" />
           )}
+        </div>
 
-          {hasSubcategories && expandedCategory === category.path && (
-            <div className="absolute left-[calc(100%+0.5rem)] top-0 w-48 bg-background/95 backdrop-blur-sm border rounded-lg shadow-lg z-50 py-1">
+        {hasSubcategories && expandedCategory === category.path && (
+          <div
+            className="absolute left-[calc(100%+0.2rem)] top-0 py-1"
+            onMouseEnter={() => setExpandedCategory(category.path)}
+            onMouseLeave={() => setExpandedCategory(null)}
+          >
+            <div className="absolute left-0 w-8 h-full top-0 -translate-x-full" />
+
+            <div className="relative w-36 bg-background/95 backdrop-blur-sm border rounded-lg shadow-lg z-50 text-center">
               {category.subcategories?.map((subcat) => (
                 <Link
                   key={subcat.path}
@@ -68,8 +76,8 @@ export function DevlogSidebar({ posts }: DevlogSidebarProps) {
                 </Link>
               ))}
             </div>
-          )}
-        </div>
+          </div>
+        )}
       </div>
     );
   };
@@ -106,6 +114,8 @@ export function DevlogSidebar({ posts }: DevlogSidebarProps) {
           )}
         </nav>
       </div>
+
+      <div className="border-t" />
 
       {/* Tags */}
       <div>
