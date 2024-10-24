@@ -5,6 +5,7 @@ import { ChevronRight } from "lucide-react";
 import { categories, CategoryItem } from "@/config/categories";
 import { Tag } from "../tag";
 import { Post } from "@/types/index";
+import { VisitorsWidget } from "@/components/visitor/visitors-widget";
 
 interface DevlogSidebarProps {
   posts: Post[];
@@ -133,6 +134,16 @@ export function DevlogSidebar({ posts }: DevlogSidebarProps) {
         ) : (
           <p className="text-sm text-muted-foreground px-3">태그가 없습니다</p>
         )}
+      </div>
+
+      <div className="border-t" />
+
+      {/* Visitors Widget */}
+      <div>
+        <h4 className="font-semibold mb-4 px-3">Visitors</h4>
+        <div className="px-3">
+          <VisitorsWidget />
+        </div>
       </div>
     </div>
   );

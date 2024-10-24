@@ -1,13 +1,25 @@
 export interface Message {
   id: string;
   content: string;
-  sender: string;
+  sender: "user" | "admin";
   timestamp: number;
 }
 
-export interface ChatSession {
+export interface ChatRoom {
   id: string;
-  messages: Message[];
-  createdAt: number;
+  userId: string;
+  userName?: string;
+  lastMessage?: string;
   updatedAt: number;
+  unread: number;
+}
+
+export interface PusherMessage {
+  type: "message";
+  data: Message;
+}
+
+export interface PusherNewChat {
+  type: "new-chat";
+  data: ChatRoom;
 }
