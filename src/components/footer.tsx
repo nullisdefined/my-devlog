@@ -43,7 +43,7 @@ export function Footer() {
         </div>
 
         {/* Bottom Bar */}
-        <div className="border-t border-border pb-5 pt-4">
+        <div className="border-t border-muted-foreground/20 dark:border-muted-foreground/30 pb-5 pt-4">
           <div className="flex justify-center">
             <p className="text-sm text-muted-foreground">
               © 2024 Jaewoo Kim. All rights reserved.
