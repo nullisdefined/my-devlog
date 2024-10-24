@@ -65,7 +65,7 @@ export function ChatWidget() {
     return (
       <button
         onClick={() => setIsOpen(true)}
-        className="fixed bottom-4 right-4 bg-primary text-primary-foreground p-4 rounded-full shadow-lg hover:bg-primary/90 transition-transform transform hover:scale-110"
+        className="fixed bottom-4 right-4 bg-primary text-primary-foreground p-4 rounded-full shadow-lg hover:bg-primary/90 transition-colors z-[9999]" // z-index 추가
       >
         <MessageCircle className="h-6 w-6" />
       </button>
@@ -73,8 +73,10 @@ export function ChatWidget() {
   }
 
   return (
-    <div className="fixed bottom-4 right-4 w-80 sm:w-96 bg-background border rounded-3xl shadow-lg">
-      <div className="flex items-center justify-between p-4 border-b rounded-t-3xl">
+    <div className="fixed bottom-4 right-4 w-80 sm:w-96 bg-background border rounded-lg shadow-lg z-[9999]">
+      {" "}
+      {/* z-index 추가 */}
+      <div className="flex items-center justify-between p-4 border-b">
         <h3 className="font-semibold">채팅</h3>
         <button
           onClick={() => setIsOpen(false)}
@@ -83,7 +85,6 @@ export function ChatWidget() {
           <X className="h-5 w-5" />
         </button>
       </div>
-
       <div className="h-96 overflow-y-auto p-4 space-y-4">
         {messages.map((message) => (
           <div
@@ -108,8 +109,7 @@ export function ChatWidget() {
         ))}
         <div ref={messagesEndRef} />
       </div>
-
-      <form onSubmit={handleSubmit} className="p-4 border-t rounded-b-3xl">
+      <form onSubmit={handleSubmit} className="p-4 border-t">
         <div className="flex gap-2">
           <input
             type="text"

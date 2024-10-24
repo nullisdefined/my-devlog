@@ -4,6 +4,11 @@ import { useState, useEffect } from "react";
 import { pusherClient } from "@/lib/pusher";
 import { Message } from "@/types/chat";
 import { format } from "date-fns";
+import {
+  requestNotificationPermission,
+  sendNotification,
+  unreadMessages,
+} from "@/lib/notification";
 
 export default function AdminChatPage() {
   const [messages, setMessages] = useState<Message[]>([]);
@@ -16,10 +21,30 @@ export default function AdminChatPage() {
   });
 
   useEffect(() => {
+    // 페이지 로드 시 알림 권한 요청
+    requestNotificationPermission();
+
+    // 읽지 않은 메시지 로드
+    const unread = unreadMessages.get();
+    if (unread.length > 0) {
+      setMessages((prev) => [...prev, ...unread]);
+      unreadMessages.clear();
+    }
+  }, []);
+
+  useEffect(() => {
     if (isAuthenticated) {
       const channel = pusherClient.subscribe("chat");
 
       channel.bind("message", (message: Message) => {
+        // 사용자가 보낸 메시지일 때만 알림
+        if (message.sender === "user") {
+          // 현재 페이지가 활성화되어 있지 않을 때만 알림
+          if (!document.hasFocus()) {
+            sendNotification("새로운 메시지가 도착했습니다", message.content);
+            unreadMessages.add(message);
+          }
+        }
         setMessages((prev) => [...prev, message]);
       });
 
