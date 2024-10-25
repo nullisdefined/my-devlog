@@ -10,6 +10,7 @@ const nextConfig = {
   experimental: {
     // appDir: true,
   },
+  vercelToolbar: false
 };
 
 export default nextConfig;
