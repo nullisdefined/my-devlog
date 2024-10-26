@@ -2,25 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Monokai Pro 스타일 */
+/* VS Code 다크 테마 */
 pre[class*="language-"] {
-  @apply bg-[#3a3739] text-[#f2f2f0] w-[85%] mx-auto !important;
-}
-
-.dark pre[class*="language-"] {
-  @apply bg-[#1e1c1f] text-[#f2f2f0] w-[85%] mx-auto !important;
+  @apply bg-[#222222] text-[#d4d4d4] w-[85%] mx-auto !important;
 }
 
 .token.comment,
 .token.prolog,
 .token.doctype,
 .token.cdata {
-  color: #727072;
+  color: #6a9955;
 }
 
-.token.operator,
 .token.punctuation {
-  color: #939293;
+  color: #d4d4d4;
 }
 
 .token.property,
@@ -28,12 +23,12 @@ pre[class*="language-"] {
 .token.constant,
 .token.symbol,
 .token.deleted {
-  color: #ff6188;
+  color: #569cd6;
 }
 
 .token.boolean,
 .token.number {
-  color: #ab9df2;
+  color: #b5cea8;
 }
 
 .token.selector,
@@ -42,31 +37,35 @@ pre[class*="language-"] {
 .token.char,
 .token.builtin,
 .token.inserted {
-  color: #ffd866;
+  color: #ce9178;
 }
 
+.token.operator,
 .token.entity,
 .token.url,
 .language-css .token.string,
-.style .token.string,
-.token.variable {
-  color: #78dce8;
+.style .token.string {
+  color: #d4d4d4;
 }
 
 .token.atrule,
 .token.attr-value,
-.token.function,
-.token.class-name {
-  color: #a9dc76;
+.token.keyword {
+  color: #c586c0;
 }
 
-.token.keyword {
-  color: #ff6188;
+.token.function {
+  color: #dcdcaa;
+}
+
+.token.class-name {
+  color: #4ec9b0;
 }
 
 .token.regex,
-.token.important {
-  color: #ffd866;
+.token.important,
+.token.variable {
+  color: #9cdcfe;
 }
 
 /* 코드 블록 스타일링 */
@@ -89,7 +88,7 @@ pre:hover .copy-code-button {
 .prose pre {
   @apply w-[85%] mx-auto !important;
   @apply my-6 relative rounded-lg;
-  @apply bg-[#f5f5f5];
+  @apply bg-[#282828];
   counter-reset: line;
 }
 
@@ -110,13 +109,13 @@ pre:hover .copy-code-button {
 .prose pre > code > .line::before {
   content: counter(line);
   @apply inline-block w-8 mr-4;
-  @apply text-gray-500 text-right;
+  @apply text-[#858585] text-right;
   @apply select-none;
 }
 
 /* hover 효과 */
 .prose pre > code > .line:hover {
-  @apply bg-white/5;
+  @apply bg-[#2a2d2e];
   @apply border-l-2 border-primary/50;
 }
 
@@ -143,7 +142,7 @@ pre:hover .copy-code-button {
 
 /* 특정 줄 강조 가능 */
 .prose pre > code > .line.highlighted {
-  @apply bg-primary/10;
+  @apply bg-[#2a2d2e];
   @apply border-l-2 border-primary;
 }
 
@@ -253,7 +252,7 @@ pre:hover .copy-code-button {
 
 /* 제목 스타일 */
 .prose h1 {
-  @apply text-4xl font-bold mt-8 mb-4;
+  @apply text-3xl font-bold mt-8 mb-4;
 }
 
 .prose h2 {
@@ -284,4 +283,73 @@ pre:hover .copy-code-button {
   --tw-prose-invert-pre-bg: hsl(0, 0%, 10%);
   --tw-prose-invert-th-borders: hsl(0, 0%, 30%);
   --tw-prose-invert-td-borders: hsl(0, 0%, 20%);
+}
+/* 리스트 스타일 */
+.prose ul {
+  list-style-type: none;
+  padding-left: 1.2em;
+}
+
+.prose ul > li {
+  position: relative;
+}
+
+.prose ul > li::before {
+  content: "•";
+  position: absolute;
+  left: -1.2em;
+  color: var(--tw-prose-bullets);
+}
+
+.prose ul > li > ul > li::before {
+  content: "◦";
+}
+
+.prose ul > li > ul > li > ul > li::before {
+  content: "▪";
+}
+/* 인라인 코드 스타일 */
+.prose code:not(pre code) {
+  @apply bg-[#ffebd6] text-[#d54c4c];
+  @apply px-1 py-0.5 rounded;
+  @apply text-sm;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    "Liberation Mono", "Courier New", monospace;
+  white-space: pre-wrap;
+}
+
+.dark .prose code:not(pre code) {
+  @apply bg-[#4a2f2a] text-[#a29c75];
+  white-space: pre-wrap;
+}
+
+.copy-code-button {
+  opacity: 0;
+}
+
+.prose a {
+  @apply relative pl-0;
+  @apply inline-flex items-center;
+  @apply text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300;
+  @apply no-underline hover:underline;
+}
+
+.prose p a {
+  @apply relative pl-5;
+  @apply inline-flex items-center;
+  @apply text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300;
+  @apply no-underline hover:underline;
+}
+
+.prose p a::before {
+  content: "";
+  @apply absolute left-0 top-1/2 -translate-y-1/2;
+  @apply w-4 h-4;
+  @apply bg-current opacity-75;
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6'%3E%3C/path%3E%3Cpolyline points='15 3 21 3 21 9'%3E%3C/polyline%3E%3Cline x1='10' y1='14' x2='21' y2='3'%3E%3C/line%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6'%3E%3C/path%3E%3Cpolyline points='15 3 21 3 21 9'%3E%3C/polyline%3E%3Cline x1='10' y1='14' x2='21' y2='3'%3E%3C/line%3E%3C/svg%3E");
+}
+
+.prose p a:hover::before {
+  @apply opacity-100;
 }

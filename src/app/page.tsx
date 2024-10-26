@@ -183,9 +183,9 @@ export default function Home() {
               <div className="flex-1 text-center md:text-left">
                 <h1 className="text-4xl font-bold mb-4">Jaewoo Kim</h1>
                 <p className="text-xl text-muted-foreground mb-6">
-                  {/* 백엔드 개발자 */}
+                  {/* 한줄소개 */}
                 </p>
-                <p className="text-muted-foreground mb-8 max-w-2xl">
+                <p className="text-muted-foreground mb-8 max-w-full">
                   제 손으로 서비스를 개발해 내는 직무에 대한 깊은 희망과, 웹
                   개발이 가지는 가치에 대한 확신으로 개발자를 꿈꾸게 되었습니다.
                   사용자 삶의 질 향상에 있어 변화의 물결을 주도하고, 그 물결의

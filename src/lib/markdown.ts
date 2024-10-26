@@ -27,8 +27,6 @@ function createCopyButton(): Element {
         "hover:bg-black/40",
         "transition-all",
         "duration-200",
-        "opacity-0",
-        "group-hover:opacity-100",
         "copy-code-button",
       ],
     },
@@ -74,8 +72,10 @@ export async function markdownToHtml(content: string): Promise<string> {
     .use(remarkParse)
     .use(remarkGfm)
     .use(remarkRehype)
+    // 인라인 코드 백틱 제거 플러그인 추가
     .use(() => (tree) => {
       visit(tree, "element", (node: Element) => {
+        // pre 태그 처리 (기존 코드)
         if (node.tagName === "pre") {
           if (!node.properties) {
             node.properties = {};
@@ -91,6 +91,20 @@ export async function markdownToHtml(content: string): Promise<string> {
             button.properties["data-code"] = toString(codeEl);
             node.children.push(button as ElementContent);
           }
+        }
+        // 인라인 코드 처리 (새로 추가)
+        if (
+          node.tagName === "code" &&
+          (!node.properties?.className ||
+            !(node.properties.className as string[]).some((c) =>
+              c.startsWith("language-")
+            ))
+        ) {
+          node.children.forEach((child) => {
+            if (child.type === "text") {
+              child.value = child.value.replace(/`/g, "");
+            }
+          });
         }
       });
     })

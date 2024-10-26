@@ -1,4 +1,3 @@
-// src/components/devlog/post-content.tsx
 "use client";
 
 import { useEffect } from "react";
