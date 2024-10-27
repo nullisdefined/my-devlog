@@ -31,7 +31,6 @@ export function VisitorsWidget() {
 
     trackVisit();
 
-    // 5분마다 방문자 수 업데이트
     const interval = setInterval(async () => {
       const response = await fetch("/api/visitors");
       const data = await response.json();
@@ -46,7 +45,7 @@ export function VisitorsWidget() {
   }
 
   return (
-    <div className="flex items-center space-x-2 text-black">
+    <div className="flex items-center space-x-2">
       <Eye className="w-4 h-4" />
       <p className="text-sm font-bold">{stats.total.toLocaleString()}</p>
     </div>
