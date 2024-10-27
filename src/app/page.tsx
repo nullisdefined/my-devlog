@@ -319,7 +319,7 @@ export default function Home() {
                     <div className="font-semibold">숭실대학교</div>
                     <div className="text-muted-foreground">소프트웨어학부</div>
                     <div className="text-sm text-muted-foreground">
-                      현재 재학중
+                      2022.03 ~ 2027.03
                     </div>
                   </li>
                   <li>
@@ -329,7 +329,7 @@ export default function Home() {
                       3기
                     </div>
                     <div className="text-sm text-muted-foreground">
-                      부트캠프 수료
+                      2024.04 ~ 2024.10
                     </div>
                   </li>
                 </ul>
