@@ -6,15 +6,37 @@ import { format } from "date-fns";
 import { Tag } from "@/components/devlog/tag";
 import { Comments } from "@/components/devlog/comments";
 import { PostContent } from "@/components/devlog/post-content";
+import { SortButton } from "@/components/devlog/sort-button";
+
+interface PostPageProps {
+  params: {
+    slug: string[];
+  };
+  searchParams: {
+    page?: string;
+    order?: "asc" | "desc";
+  };
+}
+
+export async function generateStaticParams() {
+  const posts = await getPostList();
+
+  return posts.map((post) => ({
+    slug: [...(post.urlCategory?.split("/") || []), post.slug],
+  }));
+}
 
 export default async function PostPage({
-  params: { category, slug },
-}: {
-  params: { category: string; slug: string };
-}) {
+  params,
+  searchParams,
+}: PostPageProps) {
+  // URL에서 마지막 부분이 실제 slug, 나머지는 카테고리 경로
+  const slug = params.slug[params.slug.length - 1];
+  const category = params.slug.slice(0, -1).join("/");
+
   const [post, posts] = await Promise.all([
-    getPostBySlug(category, slug),
-    getPostList(), // 모든 포스트 가져오기
+    getPostBySlug(category.toLowerCase(), slug),
+    getPostList(),
   ]);
 
   if (!post) {
@@ -22,21 +44,22 @@ export default async function PostPage({
   }
 
   const content = await markdownToHtml(post.content || "");
+  const order = searchParams.order || "desc";
 
   return (
-    <DevlogLayout
-      toc={extractTableOfContents(content)}
-      posts={posts} // posts prop 전달
-    >
+    <DevlogLayout toc={extractTableOfContents(content)} posts={posts}>
       <article className="max-w-3xl mx-auto text-left">
         <div className="mb-8">
           <div className="space-y-1 mb-4">
-            <time
-              dateTime={post.date}
-              className="text-sm text-muted-foreground"
-            >
-              {format(new Date(post.date), "yyyy년 MM월 dd일")}
-            </time>
+            <div className="flex items-center justify-between">
+              <time
+                dateTime={post.date}
+                className="text-sm text-muted-foreground"
+              >
+                {format(new Date(post.date), "yyyy년 MM월 dd일")}
+              </time>
+              <SortButton order={order} />
+            </div>
             <h1 className="text-3xl font-bold text-left">{post.title}</h1>
           </div>
 

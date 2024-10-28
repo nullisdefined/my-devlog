@@ -2,7 +2,11 @@ import { useState, useMemo } from "react";
 import Link from "next/link";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { ChevronRight } from "lucide-react";
-import { categories, CategoryItem } from "@/config/categories";
+import {
+  categories,
+  seriesCategories,
+  CategoryItem,
+} from "@/config/categories";
 import { Tag } from "../tag";
 import { Post } from "@/types/index";
 import { VisitorsWidget } from "@/components/visitor/visitors-widget";
@@ -29,6 +33,19 @@ export function DevlogSidebar({ posts }: DevlogSidebarProps) {
         name: tag,
         count: counts.get(tag) || 0,
       }));
+  }, [posts]);
+
+  const seriesCounts = useMemo(() => {
+    const counts = new Map<string, number>();
+
+    posts.forEach((post) => {
+      if (post.category?.toLowerCase().startsWith("series/")) {
+        const seriesPath = "/devlog/" + post.category.toLowerCase();
+        counts.set(seriesPath, (counts.get(seriesPath) || 0) + 1);
+      }
+    });
+
+    return counts;
   }, [posts]);
 
   const renderCategory = (category: CategoryItem) => {
@@ -108,6 +125,33 @@ export function DevlogSidebar({ posts }: DevlogSidebarProps) {
         <h4 className="font-semibold mb-4 px-3">Categories</h4>
         <nav className="space-y-1">
           {categories.map((category) => renderCategory(category))}
+        </nav>
+      </div>
+
+      <div className="border-t" />
+
+      {/* Series */}
+      <div>
+        <h4 className="font-semibold mb-4 px-3">Series</h4>
+        <nav className="space-y-1">
+          {seriesCategories[0].subcategories?.map((series) => {
+            const postCount = seriesCounts.get(series.path.toLowerCase()) || 0;
+
+            return (
+              <Link
+                key={series.path}
+                href={series.path}
+                className="group block px-3 py-2 rounded-md hover:bg-accent/50 transition-colors"
+              >
+                <div className="flex items-center gap-2 min-w-0">
+                  <span className="truncate text-sm flex-1">{series.name}</span>
+                  <span className="text-xs text-muted-foreground group-hover:text-primary whitespace-nowrap flex-shrink-0">
+                    {postCount}개의 글
+                  </span>
+                </div>
+              </Link>
+            );
+          })}
         </nav>
       </div>
 

@@ -14,7 +14,6 @@ export async function GET(
 
     // Redis에서 메시지 히스토리 가져오기
     const rawMessages = await redis.lrange(messagesKey, 0, -1);
-    console.log(`Retrieved ${rawMessages.length} messages for room ${roomId}`);
 
     if (!rawMessages || rawMessages.length === 0) {
       return NextResponse.json({ messages: [] });
@@ -45,9 +44,6 @@ export async function GET(
       .filter((msg): msg is Message => msg !== null)
       .sort((a, b) => a.timestamp - b.timestamp);
 
-    console.log(
-      `Processed ${messages.length} valid messages for room ${roomId}`
-    );
     return NextResponse.json({ messages });
   } catch (error) {
     console.error("Error fetching messages:", error);

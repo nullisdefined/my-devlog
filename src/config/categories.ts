@@ -9,6 +9,10 @@ import {
   MonitorSmartphone,
   BrainCircuit,
   Binary,
+  BookOpen,
+  Layout,
+  FileCode,
+  Database,
 } from "lucide-react";
 import {
   SiReact,
@@ -27,6 +31,7 @@ export interface CategoryItem {
   name: string;
   path: string;
   icon: LucideIcon | IconType;
+  description?: string;
   subcategories?: readonly CategoryItem[];
 }
 
@@ -38,103 +43,120 @@ export const categories: readonly CategoryItem[] = [
   },
   {
     name: "Algorithm",
-    path: "/devlog/algorithm",
+    path: "/devlog/categories/algorithm",
     icon: Code2,
     subcategories: [
       {
         name: "BOJ",
-        path: "/devlog/algorithm/boj",
+        path: "/devlog/categories/algorithm/boj",
         icon: BrainCircuit,
       },
       {
         name: "Programmers",
-        path: "/devlog/algorithm/programmers",
+        path: "/devlog/categories/algorithm/programmers",
         icon: Binary,
       },
     ],
   },
   {
     name: "Data Structure",
-    path: "/devlog/data-structure",
+    path: "/devlog/categories/data-structure",
     icon: Network,
   },
   {
     name: "Frontend",
-    path: "/devlog/frontend",
+    path: "/devlog/categories/frontend",
     icon: MonitorSmartphone,
     subcategories: [
       {
         name: "React",
-        path: "/devlog/frontend/react",
+        path: "/devlog/categories/frontend/react",
         icon: SiReact,
       },
       {
         name: "Next.js",
-        path: "/devlog/frontend/nextjs",
+        path: "/devlog/categories/frontend/nextjs",
         icon: SiNextdotjs,
       },
     ],
   },
   {
     name: "Backend",
-    path: "/devlog/backend",
+    path: "/devlog/categories/backend",
     icon: Server,
     subcategories: [
       {
         name: "NestJS",
-        path: "/devlog/backend/nestjs",
+        path: "/devlog/categories/backend/nestjs",
         icon: SiNestjs,
       },
       {
         name: "SpringBoot",
-        path: "/devlog/backend/spring-boot",
+        path: "/devlog/categories/backend/spring-boot",
         icon: SiSpring,
       },
     ],
   },
   {
     name: "Architecture",
-    path: "/devlog/architecture",
+    path: "/devlog/categories/architecture",
     icon: CircuitBoard,
     subcategories: [
       {
         name: "MSA",
-        path: "/devlog/architecture/msa",
+        path: "/devlog/categories/architecture/msa",
         icon: Network,
       },
     ],
   },
   {
     name: "Database",
-    path: "/devlog/database",
+    path: "/devlog/categories/database",
     icon: DatabaseIcon,
     subcategories: [
       {
         name: "MySQL",
-        path: "/devlog/database/mysql",
+        path: "/devlog/categories/database/mysql",
         icon: SiMysql,
       },
       {
         name: "Redis",
-        path: "/devlog/database/redis",
+        path: "/devlog/categories/database/redis",
         icon: SiRedis,
       },
       {
         name: "MongoDB",
-        path: "/devlog/database/mongodb",
+        path: "/devlog/categories/database/mongodb",
         icon: SiMongodb,
       },
     ],
   },
   {
     name: "DevOps",
-    path: "/devlog/devops",
+    path: "/devlog/categories/devops",
     icon: Cloud,
     subcategories: [
       {
         name: "AWS",
-        path: "/devlog/devops/aws",
+        path: "/devlog/categories/devops/aws",
         icon: SiAmazon,
+      },
+    ],
+  },
+] as const;
+
+export const seriesCategories: readonly CategoryItem[] = [
+  {
+    name: "Series",
+    path: "/devlog/series",
+    icon: BookOpen,
+    subcategories: [
+      {
+        name: "Next.js 블로그 구현하기",
+        path: "/devlog/series/nextjs-blog",
+        icon: Layout,
+        description:
+          "Next.js로 만들어진 지금 이 블로그의 개발과정을 기록합니다.",
       },
     ],
   },
@@ -159,4 +181,5 @@ export type Category =
   | "Redis"
   | "MongoDB"
   | "DevOps"
-  | "AWS";
+  | "AWS"
+  | "Series";

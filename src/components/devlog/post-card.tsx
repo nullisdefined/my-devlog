@@ -17,7 +17,10 @@ export function PostCard({ post }: PostCardProps) {
     : removeMarkdown(post.content);
 
   return (
-    <Link href={`/devlog/${category}/${post.slug}`} className="group">
+    <Link
+      href={`/devlog/posts/${post.urlCategory}/${post.slug}`}
+      className="group"
+    >
       <div className="border-b py-4 w-full">
         <div className="h-48 flex justify-between items-center px-2 gap-4">
           <div className="flex-1 h-full flex flex-col">

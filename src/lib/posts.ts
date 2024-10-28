@@ -4,17 +4,34 @@ import matter from "gray-matter";
 import { Post } from "@/types/index";
 
 const POSTS_PATH = path.join(process.cwd(), "src/content/posts");
+const SERIES_PATH = path.join(process.cwd(), "src/content/posts/series");
+
+// URL에서 특수문자를 제거하는 함수
+const normalizeCategory = (category: string): string => {
+  return category
+    .toLowerCase()
+    .split("/")
+    .map((segment) => segment.replace(/[^a-z0-9-]/g, ""))
+    .join("/");
+};
 
 export async function getPostBySlug(
   category: string,
   slug: string
 ): Promise<Post | null> {
   try {
-    const filePath = path.join(
-      POSTS_PATH,
-      category.toLowerCase(),
-      `${slug}.md`
-    );
+    const decodedSlug = decodeURIComponent(slug);
+    const normalizedCategory = normalizeCategory(decodeURIComponent(category));
+
+    // 시리즈와 일반 카테고리 구분
+    const basePath = category.toLowerCase().startsWith("series/")
+      ? SERIES_PATH
+      : POSTS_PATH;
+    const categoryPath = category.toLowerCase().startsWith("series/")
+      ? normalizedCategory.replace("series/", "")
+      : normalizedCategory;
+
+    const filePath = path.join(basePath, categoryPath, `${decodedSlug}.md`);
 
     if (!fs.existsSync(filePath)) {
       return null;
@@ -23,16 +40,11 @@ export async function getPostBySlug(
     const fileContent = fs.readFileSync(filePath, "utf-8");
     const { data, content } = matter(fileContent);
 
-    // 필수 필드 검증
-    if (!data.title || !data.date) {
-      return null;
-    }
-
     return {
       title: data.title,
       date: data.date,
-      category: data.category || category,
-      slug,
+      category: data.category || normalizedCategory,
+      slug: decodedSlug,
       tags: data.tags || [],
       thumbnail: data.thumbnail,
       content,
@@ -44,73 +56,133 @@ export async function getPostBySlug(
 
 export async function getPostList(): Promise<Post[]> {
   try {
-    if (!fs.existsSync(POSTS_PATH)) {
-      return [];
-    }
-
-    const categories = fs.readdirSync(POSTS_PATH);
     const allPosts: Post[] = [];
 
-    for (const category of categories) {
-      const categoryPath = path.join(POSTS_PATH, category);
+    const processDirectory = (dirPath: string, categoryPath: string[] = []) => {
+      const files = fs.readdirSync(dirPath);
 
-      if (!fs.statSync(categoryPath).isDirectory()) continue;
+      for (const file of files) {
+        const fullPath = path.join(dirPath, file);
+        const stat = fs.statSync(fullPath);
 
-      const posts = fs
-        .readdirSync(categoryPath)
-        .filter((filename) => filename.endsWith(".md"));
+        if (stat.isDirectory()) {
+          processDirectory(fullPath, [...categoryPath, file.toLowerCase()]);
+          continue;
+        }
 
-      for (const filename of posts) {
-        const filePath = path.join(categoryPath, filename);
-        const fileContent = fs.readFileSync(filePath, "utf-8");
+        if (!file.endsWith(".md")) continue;
+
+        const fileContent = fs.readFileSync(fullPath, "utf-8");
         const { data, content } = matter(fileContent);
 
         if (data.draft) continue;
 
+        const urlCategory = categoryPath.join("/");
+
         allPosts.push({
           title: data.title,
           date: data.date,
-          category: data.category || category,
-          slug: filename.replace(".md", ""),
+          category: data.category || urlCategory,
+          slug: path.basename(file, ".md"),
           tags: data.tags || [],
           thumbnail: data.thumbnail,
-          content: content.slice(0, 200), // 미리보기용 content 추가
+          content: content.slice(0, 200),
+          urlCategory,
         });
       }
-    }
+    };
+
+    processDirectory(POSTS_PATH);
 
     return allPosts.sort(
       (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
     );
   } catch (error) {
+    console.error("Error reading posts:", error);
+    return [];
+  }
+}
+
+export async function getSeriesPostList(): Promise<Post[]> {
+  try {
+    const allPosts: Post[] = [];
+
+    const processDirectory = (dirPath: string, categoryPath: string[] = []) => {
+      if (!fs.existsSync(dirPath)) return;
+
+      const files = fs.readdirSync(dirPath);
+
+      for (const file of files) {
+        const fullPath = path.join(dirPath, file);
+        const stat = fs.statSync(fullPath);
+
+        if (stat.isDirectory()) {
+          processDirectory(fullPath, [...categoryPath, file.toLowerCase()]);
+          continue;
+        }
+
+        if (!file.endsWith(".md")) continue;
+
+        const fileContent = fs.readFileSync(fullPath, "utf-8");
+        const { data, content } = matter(fileContent);
+
+        if (data.draft) continue;
+
+        // urlCategory를 series 폴더부터 시작하도록 설정
+        const urlCategory = ["series", ...categoryPath].join("/");
+
+        allPosts.push({
+          title: data.title,
+          date: data.date,
+          category: data.category || urlCategory,
+          slug: path.basename(file, ".md"),
+          tags: data.tags || [],
+          thumbnail: data.thumbnail,
+          content: content.slice(0, 200),
+          urlCategory,
+        });
+      }
+    };
+
+    // series 폴더만 처리
+    processDirectory(SERIES_PATH, []);
+
+    console.log("Found series posts:", allPosts); // 디버깅용
+
+    return allPosts.sort(
+      (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+    );
+  } catch (error) {
+    console.error("Error reading series posts:", error);
     return [];
   }
 }
 
 export async function getPostsByTag(tag: string): Promise<Post[]> {
-  try {
-    const allPosts = await getPostList();
-    return allPosts.filter((post) =>
-      post.tags?.some((t) => t.toLowerCase() === tag.toLowerCase())
-    );
-  } catch (error) {
-    return [];
-  }
+  const [posts, seriesPosts] = await Promise.all([
+    getPostList(),
+    getSeriesPostList(),
+  ]);
+  const allPosts = [...posts, ...seriesPosts];
+
+  return allPosts.filter((post) =>
+    post.tags?.some((t) => t.toLowerCase() === tag.toLowerCase())
+  );
 }
 
 export async function getAllTags(): Promise<string[]> {
-  try {
-    const allPosts = await getPostList();
-    const tagsSet = new Set<string>();
+  const [posts, seriesPosts] = await Promise.all([
+    getPostList(),
+    getSeriesPostList(),
+  ]);
+  const allPosts = [...posts, ...seriesPosts];
+  const tagsSet = new Set<string>();
 
-    allPosts.forEach((post) => {
-      post.tags?.forEach((tag) => {
-        tagsSet.add(tag.toLowerCase());
-      });
+  allPosts.forEach((post) => {
+    post.tags?.forEach((tag) => {
+      tagsSet.add(tag.toLowerCase());
     });
+  });
 
-    return Array.from(tagsSet).sort();
-  } catch (error) {
-    return [];
-  }
+  return Array.from(tagsSet).sort();
 }
