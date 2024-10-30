@@ -1,44 +1,45 @@
 export function removeMarkdown(markdown: string | undefined): string {
   if (!markdown) return "";
 
-  let text = markdown;
+  // 줄바꿈 문자열('\n')을 실제 줄바꿈으로 변환
+  let text = markdown.replace(/\\n/g, "\n");
 
-  text = text.replace(/```[\s\S]*?```/g, "");
-  text = text.replace(/`[^`]*`/g, "");
-  text = text.replace(/^#{1,6}\s+/gm, "");
-  text = text.replace(/[*_]{1,2}([^*_]+)[*_]{1,2}/g, "$1");
-  text = text.replace(/\[([^\]]+)\]\([^)]+\)/g, "$1");
+  // 이미지 태그 제거
   text = text.replace(/!\[([^\]]+)\]\([^)]+\)/g, "");
-  text = text.replace(/^\s*>\s+/gm, "");
-  text = text.replace(/^(?:[-*_]){3,}\s*$/gm, "");
-  text = text.replace(/^[\s-*+]+/gm, "");
-  text = text.replace(/<[^>]*>/g, "");
-  text = text.replace(/\n{2,}/g, "\n");
-  text = text.replace(/^\s+|\s+$/g, "");
+
+  // 헤더 제거 (## 같은 마크다운 헤더)
+  text = text.replace(/^#+\s+/gm, "");
+
+  // 다른 마크다운 문법 제거
+  text = text.replace(/\*\*([^*]+)\*\*/g, "$1"); // 볼드
+  text = text.replace(/_([^_]+)_/g, "$1"); // 이탤릭
+  text = text.replace(/`[^`]+`/g, "$1"); // 인라인 코드
+  text = text.replace(/\[([^\]]+)\]\([^)]+\)/g, "$1"); // 링크
+
+  // 빈 줄 제거하고 공백 정리
+  text = text
+    .split("\n")
+    .filter((line) => line.trim() !== "")
+    .join(" ")
+    .replace(/\s+/g, " ")
+    .trim();
 
   return text;
 }
 
 export function getFirstParagraph(
   markdown: string | undefined,
-  maxLength?: number
+  maxLength: number = 100
 ): string {
   if (!markdown) return "";
 
-  const paragraphs = markdown.split(/\n\s*\n/);
-  let firstParagraph = "";
+  // 전체 텍스트 정제
+  const cleanText = removeMarkdown(markdown);
 
-  for (const paragraph of paragraphs) {
-    const cleaned = removeMarkdown(paragraph).trim();
-    if (cleaned.length > 0) {
-      firstParagraph = cleaned;
-      break;
-    }
+  // 최대 길이로 자르기
+  if (cleanText.length > maxLength) {
+    return cleanText.slice(0, maxLength) + "...";
   }
 
-  if (maxLength && firstParagraph.length > maxLength) {
-    return firstParagraph.slice(0, maxLength) + "...";
-  }
-
-  return firstParagraph;
+  return cleanText;
 }

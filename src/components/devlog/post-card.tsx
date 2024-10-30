@@ -11,7 +11,7 @@ interface PostCardProps {
 
 export function PostCard({ post }: PostCardProps) {
   const category = post.category?.toLowerCase();
-  const firstParagraph = getFirstParagraph(post.content);
+  const firstParagraph = getFirstParagraph(post.content, 80);
   const plainContent = firstParagraph
     ? removeMarkdown(firstParagraph)
     : removeMarkdown(post.content);

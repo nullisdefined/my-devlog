@@ -6,7 +6,6 @@ import { format } from "date-fns";
 import { Tag } from "@/components/devlog/tag";
 import { Comments } from "@/components/devlog/comments";
 import { PostContent } from "@/components/devlog/post-content";
-import { SortButton } from "@/components/devlog/sort-button";
 
 interface PostPageProps {
   params: {
@@ -58,7 +57,6 @@ export default async function PostPage({
               >
                 {format(new Date(post.date), "yyyy년 MM월 dd일")}
               </time>
-              <SortButton order={order} />
             </div>
             <h1 className="text-3xl font-bold text-left">{post.title}</h1>
           </div>

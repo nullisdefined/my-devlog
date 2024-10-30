@@ -142,7 +142,7 @@ export default async function SeriesPage({
           </div>
         )}
 
-        <div className="grid grid-cols-2 gap-4 pt-8 border-t">
+        <div className="grid grid-cols-2 gap-4">
           {previous && (
             <Link href={previous.path} className="col-start-1">
               <Button variant="ghost" className="w-full group">
