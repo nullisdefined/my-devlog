@@ -160,11 +160,23 @@ export async function getPostsByTag(tag: string): Promise<Post[]> {
     getPostList(),
     getSeriesPostList(),
   ]);
-  const allPosts = [...posts, ...seriesPosts];
 
-  return allPosts.filter((post) =>
-    post.tags?.some((t) => t.toLowerCase() === tag.toLowerCase())
-  );
+  // 중복 제거를 위한 map
+  const uniquePosts = new Map<string, Post>();
+
+  // 모든 포스트를 순회하면서 중복 체크
+  [...posts, ...seriesPosts].forEach((post) => {
+    if (post.tags?.some((t) => t.toLowerCase() === tag.toLowerCase())) {
+      // slug와 category를 조합하여 고유 키 생성
+      const uniqueKey = `${post.category}/${post.slug}`;
+      if (!uniquePosts.has(uniqueKey)) {
+        uniquePosts.set(uniqueKey, post);
+      }
+    }
+  });
+
+  // map의 값들을 배열로 변환하여 반환
+  return Array.from(uniquePosts.values());
 }
 
 export async function getAllTags(): Promise<string[]> {
