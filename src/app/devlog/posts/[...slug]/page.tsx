@@ -21,7 +21,7 @@ export async function generateStaticParams() {
   const posts = await getPostList();
 
   return posts.map((post) => ({
-    slug: [...(post.urlCategory?.split("/") || []), post.slug],
+    slug: [...(post.urlCategory?.split("/").filter(Boolean) || []), post.slug],
   }));
 }
 

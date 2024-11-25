@@ -13,8 +13,9 @@ import { seriesCategories } from "@/config/categories";
 
 export async function generateStaticParams() {
   const seriesPosts = await getSeriesPostList();
+
   return seriesPosts.map((post) => ({
-    slug: post.urlCategory?.split("/") || [],
+    slug: post.urlCategory?.split("/").filter(Boolean) || [],
   }));
 }
 

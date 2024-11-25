@@ -23,7 +23,7 @@ export function VisitorsWidget() {
         const data = await response.json();
         setStats({ total: data.total });
       } catch (error) {
-        console.error("Error tracking visit:", error);
+        // console.error("Error tracking visit:", error);
       } finally {
         setLoading(false);
       }

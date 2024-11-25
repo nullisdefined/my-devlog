@@ -98,7 +98,7 @@ export async function getPostList(): Promise<Post[]> {
       (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
     );
   } catch (error) {
-    console.error("Error reading posts:", error);
+    // console.error("Error reading posts:", error);
     return [];
   }
 }
@@ -147,13 +147,10 @@ export async function getSeriesPostList(): Promise<Post[]> {
     // series 폴더만 처리
     processDirectory(SERIES_PATH, []);
 
-    console.log("Found series posts:", allPosts); // 디버깅용
-
     return allPosts.sort(
       (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
     );
   } catch (error) {
-    console.error("Error reading series posts:", error);
     return [];
   }
 }

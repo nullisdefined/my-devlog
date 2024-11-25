@@ -17,6 +17,7 @@ interface TagPageProps {
 
 export async function generateStaticParams() {
   const tags = await getAllTags();
+
   return tags.map((tag) => ({
     tags: tag,
   }));

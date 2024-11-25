@@ -11,9 +11,13 @@ export async function generateStaticParams() {
   const paths: { slug: string[] }[] = [];
 
   const addCategoryPath = (category: string) => {
-    paths.push({
-      slug: category.replace("/devlog/categories/", "").split("/"),
-    });
+    const normalizedPath = category
+      .replace("/devlog/categories/", "")
+      .replace(/^\/+|\/+$/g, "")
+      .split("/")
+      .filter(Boolean);
+
+    paths.push({ slug: normalizedPath });
   };
 
   categories.forEach((cat) => {

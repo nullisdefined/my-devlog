@@ -152,11 +152,17 @@ export const seriesCategories: readonly CategoryItem[] = [
     icon: BookOpen,
     subcategories: [
       {
-        name: "Next.js 블로그 구현하기",
-        path: "/devlog/series/nextjs-blog",
+        name: "devlog",
+        path: "/devlog/series/devlog",
         icon: Layout,
         description:
-          "Next.js로 만들어진 지금 이 블로그의 개발과정을 기록합니다.",
+          "Next.js와 다양한 기술을 활용해 나만의 devlog를 만드는 과정을 기록합니다.",
+      },
+      {
+        name: "Thumbs Up",
+        path: "/devlog/series/thumbs-up",
+        icon: Layout,
+        description: "썸네일 제작 서비스 Thumbs Up의 개발과정을 담고 있습니다.",
       },
     ],
   },
