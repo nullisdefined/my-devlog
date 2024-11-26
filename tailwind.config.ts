@@ -138,6 +138,10 @@ const config: Config = {
             p: {
               textAlign: "left",
             },
+            img: {
+              width: "78%",
+              margin: "2rem auto",
+            },
           },
         },
       },

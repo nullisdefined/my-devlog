@@ -42,26 +42,21 @@ export const categories: readonly CategoryItem[] = [
     icon: LayoutGrid,
   },
   {
-    name: "Algorithm",
-    path: "/devlog/categories/algorithm",
-    icon: Code2,
+    name: "CS",
+    path: "/devlog/categories/cs",
+    icon: BrainCircuit,
     subcategories: [
       {
-        name: "BOJ",
-        path: "/devlog/categories/algorithm/boj",
-        icon: BrainCircuit,
-      },
-      {
-        name: "Programmers",
-        path: "/devlog/categories/algorithm/programmers",
-        icon: Binary,
+        name: "Data Structure",
+        path: "/devlog/categories/cs/data-structure",
+        icon: Network,
       },
     ],
   },
   {
-    name: "Data Structure",
-    path: "/devlog/categories/data-structure",
-    icon: Network,
+    name: "Problem Solving",
+    path: "/devlog/categories/problem-solving",
+    icon: Binary,
   },
   {
     name: "Frontend",
