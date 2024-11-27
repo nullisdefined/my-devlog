@@ -1,5 +1,5 @@
 ---
-title: "빅오(Big O) 표기법"
+title: "빅오(Big-O) 표기법"
 date: 2024-11-26
 tags: ["Big-O"]
 category: "CS/Data Structure"
