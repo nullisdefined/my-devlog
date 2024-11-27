@@ -1,6 +1,6 @@
 ---
 title: "TypeScript란?"
-date: 2024-11-11
+date: 2024-06-11
 tags: ["TypeScript"]
 category: "Languages/TypeScript"
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/bdb3fceafe9378092615c3f6ddf659a2.png"
