@@ -1,5 +1,5 @@
 ---
-title: "Redis로 채팅 기능 구현하기"
+title: "Redis로 구현한 채팅 기능"
 date: 2024-11-25
 tags: ["Redis"]
 category: "Series/devlog"
@@ -60,4 +60,4 @@ Redis가 생각보다 어렵지 않게 느껴졌다. 인메모리 데이터베�
 4. 메시지 차단 기능
 
 ---
-이 프로젝트의 모든 소스 코드는 GitHub에 공개되어 있습니다. 코드 품질 개선이나 새로운 기능 제안에 대한 피드백은 언제나 환영입니다.
+이 프로젝트의 모든 소스 코드는 [GitHub](https://github.com/nullisdefined/next-devlog)에 공개되어 있습니다. 코드 품질 개선이나 새로운 기능 제안에 대한 피드백은 언제나 환영입니다.

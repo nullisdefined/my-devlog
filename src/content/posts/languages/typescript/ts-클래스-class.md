@@ -1,7 +1,7 @@
 ---
-title: "[TypeScript] 클래스(class)"
-date: 2024-11-27
-tags: ["TypeScript"]
+title: "[TS] 클래스(Class)"
+date: 2024-11-17
+tags: ["TypeScript", "Class"]
 category: "Languages/TypeScript"
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/bdb3fceafe9378092615c3f6ddf659a2.png"
 draft: false

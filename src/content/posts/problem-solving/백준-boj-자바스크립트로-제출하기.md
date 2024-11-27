@@ -1,5 +1,5 @@
 ---
-title: "백준(BOJ) 자바스크립트로 제출하는 법"
+title: "백준(BOJ) 자바스크립트로 제출하기"
 date: 2024-11-25
 tags: ["JavaScript", "BOJ"]
 category: "Problem Solving"

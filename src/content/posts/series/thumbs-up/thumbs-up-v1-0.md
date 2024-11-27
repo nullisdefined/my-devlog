@@ -1,7 +1,7 @@
 ---
 title: "Thumbs Up v1.0"
 date: 2024-11-02
-tags: ["토이프로젝트"]
+tags: ["토이프로젝트", "React", "TypeScript", "TailwindCSS"]
 category: "Series/thumbs-up"
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/83851ab3c72e414bef22a0a1454f61e5.png"
 draft: false
@@ -56,7 +56,7 @@ draft: false
 - gh-pages
 
 ## 배포
-다음과 같은 이유들로 GitHub Pages를 통해 서비스를 배포했다:
+다음과 같은 이유들로 GitHub Pages를 통해 [Thumbs Up](https://nullisdefined.github.io/thumbs-up/)을 배포했다:
 - 무료 호스팅
 - 간편한 배포 프로세스
 - CI/CD 파이프라인 구축 용이
@@ -76,4 +76,4 @@ draft: false
 - 이미지 배경 선택 시 미리보기 UI 개선
 
 ---
-이 프로젝트의 모든 소스 코드는 GitHub에 공개되어 있습니다. 코드 품질 개선이나 새로운 기능 제안에 대한 피드백은 언제나 환영입니다.
+이 프로젝트의 모든 소스 코드는 [GitHub](https://github.com/nullisdefined/thumbs-up)에 공개되어 있습니다. 코드 품질 개선이나 새로운 기능 제안에 대한 피드백은 언제나 환영입니다.
