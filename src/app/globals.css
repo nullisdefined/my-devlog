@@ -353,3 +353,13 @@ pre:hover .copy-code-button {
 .prose p a:hover::before {
   @apply opacity-100;
 }
+
+.prose blockquote {
+  quotes: none;
+  @apply pl-6 border-l-2 border-gray-200 dark:border-gray-800;
+}
+
+.prose blockquote p::before,
+.prose blockquote p::after {
+  content: none;
+}

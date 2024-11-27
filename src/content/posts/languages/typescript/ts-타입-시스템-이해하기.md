@@ -21,7 +21,7 @@ const greeting: string = "Hello, TypeScript!";
 // 변환된 JavaScript 코드
 const greeting = "Hello, TypeScript!";
 ```
-> 💡C나 Java처럼 기계어로 컴파일되는 것이 아니라 다른 형태의 고수준 언어인 JavaScript로 변환되기 때문에, 이 과정을 특별히 스파일'이라고도 부른다.
+> 💡C나 Java처럼 기계어로 컴파일되는 것이 아니라 다른 형태의 고수준 언어인 JavaScript로 변환되기 때문에, 이 과정을 특별히 '트랜스파일'이라고도 부른다.
 
 ## TypeScript의 보호 기능
 TypeScript는 코드의 실행 전에 타입 체커(Type Checker)를 통해 잠재적인 오류를 감지한다.
