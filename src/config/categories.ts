@@ -23,6 +23,8 @@ import {
   SiRedis,
   SiMongodb,
   SiAmazon,
+  SiJavascript,
+  SiTypescript,
 } from "react-icons/si";
 import { LucideIcon } from "lucide-react";
 import { IconType } from "react-icons";
@@ -57,6 +59,23 @@ export const categories: readonly CategoryItem[] = [
     name: "Problem Solving",
     path: "/devlog/categories/problem-solving",
     icon: Binary,
+  },
+  {
+    name: "Languages",
+    path: "/devlog/categories/languages",
+    icon: Code2,
+    subcategories: [
+      {
+        name: "JavaScript",
+        path: "/devlog/categories/languages/javascript",
+        icon: SiJavascript,
+      },
+      {
+        name: "TypeScript",
+        path: "/devlog/categories/languages/typescript",
+        icon: SiTypescript,
+      },
+    ],
   },
   {
     name: "Frontend",
@@ -165,10 +184,12 @@ export const seriesCategories: readonly CategoryItem[] = [
 
 export type Category =
   | "All"
-  | "Algorithm"
-  | "BOJ"
-  | "Programmers"
+  | "CS"
   | "Data Structure"
+  | "Problem Solving"
+  | "Programming Languages"
+  | "JavaScript"
+  | "TypeScript"
   | "Frontend"
   | "React"
   | "Next.js"
