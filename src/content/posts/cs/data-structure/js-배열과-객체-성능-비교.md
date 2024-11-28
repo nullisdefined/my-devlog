@@ -4,7 +4,7 @@ date: 2024-11-26
 tags: ["JavaScript", "Object", "Array"]
 category: "CS/Data Structure"
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/3268fadded62ff0a0987d8204616248f.png"
-draft: false
+draft: true
 ---
 
 ![image](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/3268fadded62ff0a0987d8204616248f.png)

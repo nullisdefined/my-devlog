@@ -10,7 +10,7 @@ export function Comments() {
   useEffect(() => {
     const script = document.createElement("script");
     script.src = "https://giscus.app/client.js";
-    script.setAttribute("data-repo", "nullisdefined/next-blog");
+    script.setAttribute("data-repo", "nullisdefined/next-devlog");
     script.setAttribute("data-repo-id", "R_kgDONC5Xiw");
     script.setAttribute("data-category", "General");
     script.setAttribute("data-category-id", "DIC_kwDONC5Xi84CjmQ-");

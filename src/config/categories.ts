@@ -25,6 +25,8 @@ import {
   SiAmazon,
   SiJavascript,
   SiTypescript,
+  SiExpress,
+  SiNodedotjs,
 } from "react-icons/si";
 import { LucideIcon } from "lucide-react";
 import { IconType } from "react-icons";
@@ -99,6 +101,16 @@ export const categories: readonly CategoryItem[] = [
     path: "/devlog/categories/backend",
     icon: Server,
     subcategories: [
+      {
+        name: "Node.js",
+        path: "/devlog/categories/backend/nodejs",
+        icon: SiNodedotjs,
+      },
+      {
+        name: "Express",
+        path: "/devlog/categories/backend/express",
+        icon: SiExpress,
+      },
       {
         name: "NestJS",
         path: "/devlog/categories/backend/nestjs",
