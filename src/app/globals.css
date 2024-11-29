@@ -2,148 +2,129 @@
 @tailwind components;
 @tailwind utilities;
 
-/* VS Code 다크 테마 */
-pre[class*="language-"] {
-  @apply bg-[#222222] text-[#d4d4d4] w-[85%] mx-auto !important;
-}
-
-.token.comment,
-.token.prolog,
-.token.doctype,
-.token.cdata {
-  color: #6a9955;
-}
-
-.token.punctuation {
-  color: #d4d4d4;
-}
-
-.token.property,
-.token.tag,
-.token.constant,
-.token.symbol,
-.token.deleted {
-  color: #569cd6;
-}
-
-.token.boolean,
-.token.number {
-  color: #b5cea8;
-}
-
-.token.selector,
-.token.attr-name,
-.token.string,
-.token.char,
-.token.builtin,
-.token.inserted {
-  color: #ce9178;
-}
-
-.token.operator,
-.token.entity,
-.token.url,
-.language-css .token.string,
-.style .token.string {
-  color: #d4d4d4;
-}
-
-.token.atrule,
-.token.attr-value,
-.token.keyword {
-  color: #c586c0;
-}
-
-.token.function {
-  color: #dcdcaa;
-}
-
-.token.class-name {
-  color: #4ec9b0;
-}
-
-.token.regex,
-.token.important,
-.token.variable {
-  color: #9cdcfe;
-}
-
-/* 코드 블록 스타일링 */
-pre {
-  @apply relative w-[90%] mx-auto !important;
-}
-
-pre:hover .copy-code-button {
-  @apply opacity-100;
-}
-
-.copy-code-button {
-  @apply absolute right-2 top-2 p-2 rounded-md;
-  @apply bg-black/20 hover:bg-black/40;
-  @apply transition-all duration-200;
-  @apply opacity-0;
-}
-
 /* 코드 블록 기본 스타일 */
 .prose pre {
-  @apply w-[85%] mx-auto !important;
-  @apply my-6 relative rounded-lg;
-  @apply bg-[#282828];
-  counter-reset: line;
+  @apply relative my-4 rounded-lg !important;
+  @apply bg-[#2e333c] dark:bg-[#1a1b26] !important;
+  font-size: 0.9rem !important;
+  padding: 2rem 0 1rem !important;
+  overflow-x: auto;
+  white-space: pre;
+  position: relative;
 }
 
-/* 줄 번호 스타일링 */
+/* 언어 배지 스타일 */
+.prose pre[data-language]::before {
+  content: attr(data-language-icon);
+  @apply absolute top-2 left-3 z-10;
+  @apply px-2 py-0.5 text-xs font-mono font-bold;
+  @apply bg-black/30 rounded-md;
+  color: var(--language-color);
+}
+
+/* 코드 타이틀 스타일 */
+.prose pre[data-title]::after {
+  content: attr(data-title);
+  @apply absolute top-2 left-1/2 -translate-x-1/2;
+  @apply px-2 py-0.5 text-xs font-mono;
+  @apply text-gray-400;
+}
+
+/* 이미지 캡션 스타일 */
+.prose img + em {
+  @apply block text-center text-sm text-muted-foreground mt-2;
+}
+
+/* 코드 컨테이너 */
 .prose pre > code {
-  @apply grid;
   counter-reset: line;
+  display: grid;
 }
 
-.prose pre > code > .line {
-  @apply px-4 py-0.5;
+/* 줄 번호 및 하이라이팅 스타일 */
+.prose pre > code > span {
   @apply border-l-2 border-transparent;
   counter-increment: line;
   display: inline-block;
   width: 100%;
+  padding: 0 !important;
 }
 
-.prose pre > code > .line::before {
+.prose pre > code > span::before {
   content: counter(line);
-  @apply inline-block w-8 mr-4;
-  @apply text-[#858585] text-right;
-  @apply select-none;
+  @apply inline-block w-12 pr-4 text-gray-500 text-right border-r border-gray-700/50;
+  @apply select-none opacity-50;
+  margin-right: 1rem;
+  margin-left: 0;
 }
 
-/* hover 효과 */
-.prose pre > code > .line:hover {
-  @apply bg-[#2a2d2e];
-  @apply border-l-2 border-primary/50;
+/* 호버 효과 */
+.prose pre > code > span:hover {
+  @apply bg-white/5;
 }
 
-/* 스크롤바 스타일 유지 */
-.prose pre::-webkit-scrollbar {
-  @apply h-2 w-2;
+/* 복사 버튼 스타일 */
+.copy-button {
+  @apply absolute top-2 right-2 p-2 rounded-lg;
+  @apply opacity-0 group-hover:opacity-100;
+  @apply bg-black/30 hover:bg-black/50;
+  @apply transition-all duration-200;
+  z-index: 10;
+  position: absolute;
 }
 
-.prose pre::-webkit-scrollbar-track {
-  @apply bg-transparent;
+/* 구문 하이라이팅 */
+.prose pre code .token.comment {
+  color: #5c6370;
+  font-style: italic;
+}
+.prose pre code .token.keyword {
+  color: #c678dd;
+}
+.prose pre code .token.string {
+  color: #98c379;
+}
+.prose pre code .token.number {
+  color: #d19a66;
+}
+.prose pre code .token.function {
+  color: #61afef;
+}
+.prose pre code .token.operator {
+  color: #56b6c2;
+}
+.prose pre code .token.class-name {
+  color: #e5c07b;
+}
+.prose pre code .token.property {
+  color: #e06c75;
 }
 
-.prose pre::-webkit-scrollbar-thumb {
-  @apply bg-primary/10 rounded-full;
-  @apply hover:bg-primary/20;
+/* 인라인 코드 스타일 */
+.prose code:not(pre code) {
+  @apply bg-gray-100 dark:bg-gray-800;
+  @apply text-rose-600 dark:text-rose-400;
+  @apply rounded px-1.5 py-0.5;
+  @apply text-[0.85em] font-normal;
+  @apply border border-gray-200/50 dark:border-gray-700/50;
 }
 
-/* 코드 블록 padding 조정 */
-.prose pre code {
-  @apply py-4;
-  padding-left: 0 !important;
-  padding-right: 0 !important;
+/* 이미지 다크모드 처리 */
+.dark .prose img {
+  @apply opacity-90 transition-all duration-500 ease-in-out;
+  filter: brightness(0.8) contrast(1.2);
 }
 
-/* 특정 줄 강조 가능 */
-.prose pre > code > .line.highlighted {
-  @apply bg-[#2a2d2e];
-  @apply border-l-2 border-primary;
+.dark .prose img:hover {
+  @apply opacity-100;
+  filter: none;
+  transition-duration: 500ms;
+}
+
+/* 백틱 제거를 위한 추가 스타일 */
+.prose code:not(pre code)::before,
+.prose code:not(pre code)::after {
+  content: none !important;
 }
 
 @layer base {
@@ -284,6 +265,7 @@ pre:hover .copy-code-button {
   --tw-prose-invert-th-borders: hsl(0, 0%, 30%);
   --tw-prose-invert-td-borders: hsl(0, 0%, 20%);
 }
+
 /* 리스트 스타일 */
 .prose ul {
   list-style-type: none;
@@ -307,24 +289,6 @@ pre:hover .copy-code-button {
 
 .prose ul > li > ul > li > ul > li::before {
   content: "▪";
-}
-/* 인라인 코드 스타일 */
-.prose code:not(pre code) {
-  @apply bg-[#ffebd6] text-[#d54c4c];
-  @apply px-1 py-0.5 rounded;
-  @apply text-sm;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
-    "Liberation Mono", "Courier New", monospace;
-  white-space: pre-wrap;
-}
-
-.dark .prose code:not(pre code) {
-  @apply bg-[#4a2f2a] text-[#a29c75];
-  white-space: pre-wrap;
-}
-
-.copy-code-button {
-  opacity: 0;
 }
 
 .prose a {
@@ -362,4 +326,24 @@ pre:hover .copy-code-button {
 .prose blockquote p::before,
 .prose blockquote p::after {
   content: none;
+}
+
+.prose pre::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.prose pre::-webkit-scrollbar-track {
+  background: #2e333c;
+  border-radius: 10px;
+}
+
+.prose pre::-webkit-scrollbar-thumb {
+  background-color: #4a4f59;
+  border-radius: 10px;
+  border: 2px solid #2e333c;
+}
+
+.prose pre::-webkit-scrollbar-thumb:hover {
+  background-color: #5a5f69;
 }

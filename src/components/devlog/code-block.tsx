@@ -8,9 +8,15 @@ interface CodeBlockProps {
   code: string;
   language?: string;
   filename?: string;
+  showLineNumbers?: boolean;
 }
 
-export function CodeBlock({ code, language, filename }: CodeBlockProps) {
+export function CodeBlock({
+  code,
+  language,
+  filename,
+  showLineNumbers = true,
+}: CodeBlockProps) {
   const [copied, setCopied] = useState(false);
 
   const copyCode = async () => {
@@ -19,19 +25,30 @@ export function CodeBlock({ code, language, filename }: CodeBlockProps) {
     setTimeout(() => setCopied(false), 2000);
   };
 
+  const lines = code.trim().split("\n");
+
   return (
-    <div className="relative group">
+    <div className="relative group not-prose">
       {filename && (
-        <div className="bg-muted px-4 py-2 text-sm border-b">{filename}</div>
+        <div className="bg-muted/50 px-4 py-2 text-sm border-b rounded-t-lg font-mono text-muted-foreground">
+          {filename}
+        </div>
       )}
-      <pre className={cn("relative", language && `language-${language}`)}>
-        <code
-          className={cn(
-            "block overflow-x-auto p-4",
-            language && `language-${language}`
-          )}
-        >
-          {code}
+      <pre
+        className={cn(
+          "relative overflow-hidden",
+          language && `language-${language}`,
+          filename ? "rounded-t-none" : "rounded-t-lg",
+          "rounded-b-lg"
+        )}
+        data-language={language || "plaintext"}
+      >
+        <code className={cn("block", language && `language-${language}`)}>
+          {lines.map((line, i) => (
+            <span key={i} className="line">
+              {line}
+            </span>
+          ))}
         </code>
         <button
           onClick={copyCode}
@@ -41,6 +58,7 @@ export function CodeBlock({ code, language, filename }: CodeBlockProps) {
             "bg-primary/10 hover:bg-primary/20",
             "transition-all duration-200"
           )}
+          aria-label="Copy code"
         >
           {copied ? (
             <Check className="h-4 w-4" />
