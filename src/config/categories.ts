@@ -108,11 +108,6 @@ export const categories: readonly CategoryItem[] = [
         icon: SiNodedotjs,
       },
       {
-        name: "Express",
-        path: "/devlog/categories/backend/express",
-        icon: SiExpress,
-      },
-      {
         name: "NestJS",
         path: "/devlog/categories/backend/nestjs",
         icon: SiNestjs,

@@ -25,9 +25,13 @@
 /* 코드 타이틀 스타일 */
 .prose pre[data-title]::after {
   content: attr(data-title);
-  @apply absolute top-2 left-1/2 -translate-x-1/2;
+  @apply absolute top-0 left-1/2 -translate-x-1/2;
   @apply px-2 py-0.5 text-xs font-mono;
   @apply text-gray-400;
+  background-color: #2e333c;
+  border-bottom-left-radius: 0.5rem;
+  border-bottom-right-radius: 0.5rem;
+  transform: translateX(-50%);
 }
 
 /* 이미지 캡션 스타일 */
