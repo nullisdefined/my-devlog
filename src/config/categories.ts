@@ -27,6 +27,7 @@ import {
   SiTypescript,
   SiExpress,
   SiNodedotjs,
+  SiDocker,
 } from "react-icons/si";
 import { LucideIcon } from "lucide-react";
 import { IconType } from "react-icons";
@@ -166,6 +167,11 @@ export const categories: readonly CategoryItem[] = [
         name: "AWS",
         path: "/devlog/categories/devops/aws",
         icon: SiAmazon,
+      },
+      {
+        name: "Docker",
+        path: "/devlog/categories/devops/docker",
+        icon: SiDocker,
       },
     ],
   },
