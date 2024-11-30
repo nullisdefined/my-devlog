@@ -1,7 +1,6 @@
 import { useState, useMemo } from "react";
 import Link from "next/link";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { ChevronRight } from "lucide-react";
 import {
   categories,
   seriesCategories,
@@ -10,13 +9,29 @@ import {
 import { Tag } from "../tag";
 import { Post } from "@/types/index";
 import { VisitorsWidget } from "@/components/visitor/visitors-widget";
+import { cn } from "@/lib/class-name-utils";
+import { ChevronRight } from "lucide-react";
 
 interface DevlogSidebarProps {
   posts: Post[];
 }
 
 export function DevlogSidebar({ posts }: DevlogSidebarProps) {
-  const [expandedCategory, setExpandedCategory] = useState<string | null>(null);
+  const [expandedCategories, setExpandedCategories] = useState<string[]>([]);
+
+  const handleCategoryClick = (
+    category: CategoryItem,
+    event: React.MouseEvent
+  ) => {
+    if (category.subcategories && category.subcategories.length > 0) {
+      event.preventDefault();
+      setExpandedCategories((current) =>
+        current.includes(category.path)
+          ? current.filter((path) => path !== category.path)
+          : [...current, category.path]
+      );
+    }
+  };
 
   const tagCounts = useMemo(() => {
     const counts = new Map<string, number>();
@@ -48,59 +63,6 @@ export function DevlogSidebar({ posts }: DevlogSidebarProps) {
     return counts;
   }, [posts]);
 
-  const renderCategory = (category: CategoryItem) => {
-    const hasSubcategories =
-      category.subcategories && category.subcategories.length > 0;
-    const Icon = category.icon;
-
-    return (
-      <div key={category.path} className="w-full relative">
-        <div
-          className="flex items-center justify-between group"
-          onMouseEnter={() => setExpandedCategory(category.path)}
-          onMouseLeave={() => setExpandedCategory(null)}
-        >
-          <Link
-            href={category.path}
-            className="flex-1 px-3 py-2 text-sm rounded-md hover:bg-accent/50 transition-colors flex items-center gap-2 group-hover:text-primary"
-          >
-            <Icon className="w-5 h-5" />
-            <span>{category.name}</span>
-          </Link>
-          {hasSubcategories && (
-            <ChevronRight className="w-4 h-4 mr-2 text-muted-foreground transition-transform group-hover:text-primary group-hover:translate-x-0.5 duration-200" />
-          )}
-        </div>
-
-        {hasSubcategories && expandedCategory === category.path && (
-          <div
-            className="absolute left-[calc(100%+0.2rem)] top-0 py-1"
-            onMouseEnter={() => setExpandedCategory(category.path)}
-            onMouseLeave={() => setExpandedCategory(null)}
-          >
-            <div className="absolute left-0 w-8 h-full top-0 -translate-x-full" />
-
-            <div className="relative w-44 bg-background/95 backdrop-blur-sm border rounded-lg shadow-lg z-50">
-              {category.subcategories?.map((subcat) => {
-                const SubIcon = subcat.icon;
-                return (
-                  <Link
-                    key={subcat.path}
-                    href={subcat.path}
-                    className="flex items-center gap-2 px-4 py-2 text-sm hover:bg-accent/50 transition-colors hover:text-primary"
-                  >
-                    <SubIcon className="w-5 h-5" />
-                    <span>{subcat.name}</span>
-                  </Link>
-                );
-              })}
-            </div>
-          </div>
-        )}
-      </div>
-    );
-  };
-
   return (
     <div className="sticky top-20 space-y-8 pb-16">
       {/* Profile Section */}
@@ -124,7 +86,70 @@ export function DevlogSidebar({ posts }: DevlogSidebarProps) {
       <div>
         <h4 className="font-semibold mb-4 px-3">Categories</h4>
         <nav className="space-y-1">
-          {categories.map((category) => renderCategory(category))}
+          {categories.map((category) => (
+            <div key={category.path} className="space-y-1">
+              {category.subcategories && category.subcategories.length > 0 ? (
+                <div
+                  className="group relative"
+                  onClick={(e) => handleCategoryClick(category, e)}
+                >
+                  <button
+                    className={cn(
+                      "flex items-center w-full px-2 py-1.5 rounded-md",
+                      "hover:bg-accent hover:text-accent-foreground",
+                      "transition-colors cursor-pointer"
+                    )}
+                  >
+                    <ChevronRight
+                      className={cn(
+                        "h-4 w-4 transition-transform mr-2",
+                        expandedCategories.includes(category.path) &&
+                          "rotate-90"
+                      )}
+                    />
+                    <category.icon className="w-4 h-4 mr-2" />
+                    <span>{category.name}</span>
+                  </button>
+                </div>
+              ) : (
+                <Link
+                  href={category.path}
+                  className={cn(
+                    "flex items-center w-full px-2 py-1.5 rounded-md",
+                    "hover:bg-accent hover:text-accent-foreground",
+                    "transition-colors cursor-pointer"
+                  )}
+                >
+                  <div className="w-4 mr-2" />
+                  <category.icon className="w-4 h-4 mr-2" />
+                  <span>{category.name}</span>
+                </Link>
+              )}
+
+              {category.subcategories &&
+                category.subcategories.length > 0 &&
+                expandedCategories.includes(category.path) && (
+                  <div className="ml-9 space-y-1">
+                    {category.subcategories.map((subcategory) => (
+                      <Link
+                        key={subcategory.path}
+                        href={subcategory.path}
+                        className={cn(
+                          "flex items-center px-2 py-1.5 rounded-md",
+                          "hover:bg-accent hover:text-accent-foreground",
+                          "transition-colors text-sm"
+                        )}
+                      >
+                        {subcategory.icon && (
+                          <subcategory.icon className="w-4 h-4 mr-2" />
+                        )}
+                        <span>{subcategory.name}</span>
+                      </Link>
+                    ))}
+                  </div>
+                )}
+            </div>
+          ))}
         </nav>
       </div>
 

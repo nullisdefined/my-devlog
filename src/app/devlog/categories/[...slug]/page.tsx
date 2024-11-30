@@ -95,7 +95,7 @@ export default async function CategoryPage({
   );
 
   return (
-    <DevlogLayout posts={allPosts}>
+    <DevlogLayout posts={allPosts} isListPage={true}>
       <div className="space-y-8">
         <div className="space-y-4">
           <div className="flex items-center gap-2">

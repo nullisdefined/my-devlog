@@ -1,75 +1,106 @@
 import Link from "next/link";
 import { format } from "date-fns";
 import { Post } from "@/types/index";
-import { Tag } from "./tag";
 import Image from "next/image";
-import { getFirstParagraph, removeMarkdown } from "@/lib/remove-markdown-utils";
+import { cn } from "@/lib/class-name-utils";
+import { getFirstParagraph } from "@/lib/remove-markdown-utils";
 
 interface PostCardProps {
   post: Post;
 }
 
+interface TagProps {
+  tag: string;
+  className?: string;
+}
+
+export function Tag({ tag, className }: TagProps) {
+  return (
+    <span
+      className={cn(
+        "inline-flex items-center",
+        "px-2 py-0.5 rounded-full",
+        "bg-secondary text-secondary-foreground",
+        "hover:bg-secondary/80 transition-colors",
+        className
+      )}
+    >
+      #{tag}
+    </span>
+  );
+}
+
 export function PostCard({ post }: PostCardProps) {
-  const category = post.category?.toLowerCase();
-  const firstParagraph = getFirstParagraph(post.content, 80);
-  const plainContent = firstParagraph
-    ? removeMarkdown(firstParagraph)
-    : removeMarkdown(post.content);
+  const previewText = getFirstParagraph(post.content, 350);
 
   return (
     <Link
       href={`/devlog/posts/${post.urlCategory}/${post.slug}`}
-      className="group"
+      className="block"
     >
-      <div className="border-b py-4 w-full">
-        <div className="h-48 flex justify-between items-center px-2 gap-4">
-          <div className="flex-1 h-full flex flex-col">
-            <div className="flex items-center gap-2 text-sm text-muted-foreground">
-              <span className="font-medium">{post.category}</span>
-              <span>•</span>
-              <time dateTime={post.date}>
+      <article className="group relative bg-card rounded-lg border border-border overflow-hidden transition-all hover:shadow-lg">
+        <div className="flex flex-col sm:flex-row h-full">
+          <div className="flex-1 p-4 sm:p-5 flex flex-col order-2 sm:order-1">
+            <div className="flex flex-wrap items-center gap-3 mb-3">
+              {post.category && (
+                <span className="text-xs sm:text-sm tracking-wide font-medium text-primary/90 uppercase">
+                  {post.category}
+                </span>
+              )}
+              <span className="text-[11px] sm:text-xs text-muted-foreground">
                 {format(new Date(post.date), "yyyy.MM.dd")}
-              </time>
+              </span>
             </div>
 
-            <h2 className="text-lg font-semibold line-clamp-1 group-hover:text-emerald-500 transition-colors mt-2">
-              {post.title}
-            </h2>
+            <div className="flex-grow flex flex-col">
+              <h2
+                className="text-base sm:text-xl font-bold 
+                           mb-2 sm:mb-3
+                           leading-snug
+                           line-clamp-2 
+                           group-hover:text-primary transition-colors"
+              >
+                {post.title}
+              </h2>
 
-            <p className="text-sm text-muted-foreground line-clamp-3 mt-2">
-              {plainContent}
-            </p>
+              <p
+                className="text-sm sm:text-base 
+                           text-muted-foreground 
+                           leading-relaxed
+                           flex-grow
+                           line-clamp-3 sm:line-clamp-4"
+              >
+                {previewText.endsWith("...")
+                  ? previewText
+                  : `${previewText}...`}
+              </p>
+            </div>
 
-            <div className="mt-auto">
-              {post.tags && post.tags.length > 0 && (
-                <div className="flex flex-wrap gap-1.5">
-                  {post.tags.map((tag) => (
-                    <Tag key={tag} name={tag} className="text-xs" />
-                  ))}
-                </div>
-              )}
+            <div className="mt-4 pt-3 border-t flex flex-wrap gap-1.5 sm:gap-2">
+              {post.tags?.map((tag) => (
+                <Tag key={tag} tag={tag} className="text-[11px] sm:text-xs" />
+              ))}
             </div>
           </div>
 
-          <div className="relative w-48 h-full flex items-center">
+          <div className="relative sm:w-[280px] shrink-0 order-1 sm:order-2">
             {post.thumbnail ? (
-              <Image
-                src={post.thumbnail}
-                alt={post.title}
-                width={192}
-                height={192}
-                className="object-cover rounded-lg"
-              />
-            ) : (
-              <div className="w-full h-48 bg-muted rounded-lg flex items-center justify-center">
-                <p className="text-4xl font-semibold text-muted-foreground">
-                  {post.title.charAt(0)}
-                </p>
+              <div className="relative aspect-[16/9] sm:aspect-square">
+                <Image
+                  src={post.thumbnail}
+                  alt={post.title}
+                  fill
+                  className="object-contain"
+                  sizes="(max-width: 768px) 100vw, 280px"
+                  priority={false}
+                />
               </div>
+            ) : (
+              <div className="relative aspect-[16/9] sm:aspect-square bg-muted" />
             )}
           </div>
         </div>
-      </div>
+      </article>
     </Link>
   );
 }

@@ -14,15 +14,29 @@ interface DevlogLayoutProps {
   children: React.ReactNode;
   toc?: TableOfContentsItem[];
   posts?: Post[];
+  isListPage?: boolean;
 }
 
 export function DevlogLayout({
   children,
   toc = [],
   posts = [],
+  isListPage = false,
 }: DevlogLayoutProps) {
   const [mounted, setMounted] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+  useEffect(() => {
+    if (isSidebarOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [isSidebarOpen]);
 
   useEffect(() => {
     setMounted(true);
@@ -38,36 +52,38 @@ export function DevlogLayout({
       <div className="flex-1">
         <div className="container mx-auto max-w-[1440px] px-4">
           <div className="flex flex-col xl:flex-row gap-8">
-            {/* 모바일/태블릿 사이드바 */}
             <aside
               className={cn(
-                "xl:hidden fixed inset-y-0 left-0 z-40 w-72 bg-background/80 backdrop-blur-sm",
+                "xl:hidden fixed inset-y-0 left-0 z-40 w-72 bg-background",
                 "transform transition-transform duration-300 ease-out",
                 "border-r border-border/40",
                 isSidebarOpen ? "translate-x-0" : "-translate-x-full"
               )}
             >
-              <div className="h-full pt-20 pb-4 overflow-y-auto custom-scrollbar">
+              <div className="h-full pt-16 pb-4 overflow-y-auto">
                 <DevlogSidebar posts={posts} />
               </div>
             </aside>
 
-            {/* PC 사이드바 */}
             <aside className="hidden xl:block w-60 shrink-0">
               <div className="sticky top-20 pt-[40px] pb-[700px]">
                 <DevlogSidebar posts={posts} />
               </div>
             </aside>
 
-            {/* 메인 컨텐츠 */}
-            <main className="flex-1 min-h-[calc(100vh-4rem)] py-6 pt-[76px]">
+            <main className="flex-1 min-h-[calc(100vh-4rem)] py-6 pt-[40px] sm:pt-[76px]">
               <div className="relative w-full mx-auto">
-                {/* 컨텐츠 영역 - 태블릿에서는 더 넓은 너비 사용 */}
-                <div className="w-full xl:w-[768px] mx-auto">{children}</div>
+                <div
+                  className={cn(
+                    "w-full mx-auto",
+                    isListPage ? "xl:w-[1000px]" : "xl:w-[768px]"
+                  )}
+                >
+                  {children}
+                </div>
               </div>
             </main>
 
-            {/* TOC - 태블릿과 PC에서 표시 */}
             {toc && toc.length > 0 && (
               <aside className="hidden md:block w-60 shrink-0">
                 <div className="sticky top-20 pt-[46px] flex flex-col gap-2">
@@ -79,16 +95,11 @@ export function DevlogLayout({
         </div>
       </div>
 
-      {/* 모바일/태블릿 사이드바 토글 버튼 */}
-      <MobileSidebarToggle
-        onToggle={() => setIsSidebarOpen(!isSidebarOpen)}
-        className="xl:hidden"
-      />
+      <MobileSidebarToggle onToggle={() => setIsSidebarOpen(!isSidebarOpen)} />
 
-      {/* 사이드바 오버레이 */}
       {isSidebarOpen && (
         <div
-          className="fixed inset-0 bg-background/80 backdrop-blur-sm z-30 xl:hidden transition-opacity duration-300"
+          className="fixed inset-0 bg-background/80 backdrop-blur-sm z-30 xl:hidden"
           onClick={() => setIsSidebarOpen(false)}
         />
       )}

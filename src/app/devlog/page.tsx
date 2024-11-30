@@ -26,7 +26,7 @@ export default async function DevlogPage({
   );
 
   return (
-    <DevlogLayout posts={posts}>
+    <DevlogLayout posts={posts} isListPage={true}>
       <div className="space-y-8">
         <div className="flex flex-col gap-4">
           <h1 className="text-3xl font-bold flex items-center gap-2">

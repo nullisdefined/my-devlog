@@ -42,7 +42,7 @@ export default async function TagPage({ params, searchParams }: TagPageProps) {
   });
 
   return (
-    <DevlogLayout posts={allPosts}>
+    <DevlogLayout posts={allPosts} isListPage={true}>
       <div className="space-y-8">
         <div className="flex flex-col gap-4">
           <div className="flex items-center gap-2">
