@@ -105,6 +105,12 @@ export const languageConfigs: Record<string, LanguageConfig> = {
     borderColor: "border-[#4479A1]",
     color: "#4479A1",
   },
+  graphql: {
+    icon: "GQL",
+    borderColor: "border-[#FF69B4]",
+    color: "#FF69B4",
+    aliases: ["gql"],
+  },
   plaintext: {
     icon: "TXT",
     borderColor: "border-gray-400",
