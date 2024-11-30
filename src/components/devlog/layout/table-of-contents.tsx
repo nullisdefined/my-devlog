@@ -11,6 +11,7 @@ interface TocProps {
 
 export function TableOfContents({ items }: TocProps) {
   const [activeId, setActiveId] = useState<string>("");
+  const [isExpanded, setIsExpanded] = useState(false);
   const { setForceHidden } = useHeaderStore();
 
   useEffect(() => {
@@ -28,17 +29,31 @@ export function TableOfContents({ items }: TocProps) {
     const headings = document.querySelectorAll("h2, h3, h4");
     headings.forEach((elem) => observer.observe(elem));
 
-    return () => observer.disconnect();
+    // 모바일에서 TOC 토글 기능
+    const handleTocClick = (e: Event) => {
+      if (window.innerWidth <= 767) {
+        const target = e.target as HTMLElement;
+        if (!target.closest("a")) {
+          setIsExpanded((prev) => !prev);
+        }
+      }
+    };
+
+    const tocContainer = document.querySelector(".toc-container");
+    tocContainer?.addEventListener("click", handleTocClick);
+
+    return () => {
+      observer.disconnect();
+      tocContainer?.removeEventListener("click", handleTocClick);
+    };
   }, []);
 
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
     e.preventDefault();
     const element = document.getElementById(id);
     if (element) {
-      // 헤더 숨기기
       setForceHidden(true);
-
-      const offset = 24; // 최소한의 여백만 적용
+      const offset = 24;
 
       const elementPosition = element.getBoundingClientRect().top;
       const offsetPosition = elementPosition + window.pageYOffset - offset;
@@ -47,12 +62,17 @@ export function TableOfContents({ items }: TocProps) {
         top: offsetPosition,
         behavior: "smooth",
       });
+
+      // 모바일에서 TOC 닫기
+      if (window.innerWidth <= 767) {
+        setIsExpanded(false);
+      }
     }
   };
 
   return (
-    <nav className="space-y-2 sticky top-20">
-      <p className="font-semibold mb-4 text-base">Contents</p>
+    <nav className={cn("toc-container", isExpanded && "expanded")}>
+      <p className="font-semibold mb-4 text-base hidden xl:block">Contents</p>
       <ul className="space-y-2">
         {items.map((item) => (
           <li

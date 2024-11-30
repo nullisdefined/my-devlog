@@ -55,6 +55,12 @@ const jetbrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   title: "Devlog",
   description: "메인 페이지 입니다.",
+  viewport: {
+    width: "device-width",
+    initialScale: 1,
+    maximumScale: 1,
+    viewportFit: "cover",
+  },
   icons: {
     icon: "./favicon.ico",
   },
@@ -71,6 +77,12 @@ export default function RootLayout({
       className={`${pretendard.variable} ${jetbrainsMono.variable}`}
       suppressHydrationWarning
     >
+      <head>
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+        />
+      </head>
       <body
         className={`min-h-screen bg-background font-sans antialiased ${pretendard.className}`}
       >

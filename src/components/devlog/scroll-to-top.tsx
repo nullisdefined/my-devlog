@@ -19,25 +19,20 @@ export function ScrollToTop() {
     return () => window.removeEventListener("scroll", toggleVisibility);
   }, []);
 
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   return (
-    <div
-      className={`
-      fixed bottom-[80px] right-4 
-      transition-all duration-100 ease-in-out
-      ${
-        isVisible
-          ? "opacity-100 translate-y-0"
-          : "opacity-0 translate-y-4 pointer-events-none"
-      }
-    `}
+    <button
+      className={`fixed bottom-20 right-4 z-50 hidden md:block p-4 
+        bg-primary/10 hover:bg-primary/20 rounded-full 
+        transition-all duration-200 backdrop-blur-sm
+        ${isVisible ? "opacity-100" : "opacity-0 pointer-events-none"}`}
+      onClick={scrollToTop}
     >
-      <button
-        onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-        className="p-4 bg-primary/10 hover:bg-primary/20 rounded-full transition-all duration-200 backdrop-blur-sm"
-      >
-        <ChevronUp className="h-5 w-5" />
-        <span className="sr-only">Scroll to top</span>
-      </button>
-    </div>
+      <ChevronUp className="h-5 w-5" />
+      <span className="sr-only">Scroll to top</span>
+    </button>
   );
 }

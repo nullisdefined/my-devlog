@@ -13,6 +13,81 @@
   position: relative;
 }
 
+/* TOC 컨테이너 기본 스타일 */
+.toc-container {
+  @apply bg-background border border-border rounded-lg p-4;
+  position: sticky;
+  top: 5rem;
+  bottom: 1rem;
+  left: 2rem;
+  /* width: 100%; */
+  max-height: calc(100vh - 8rem);
+  overflow-y: auto;
+}
+
+/* 스크롤바 스타일링 */
+.toc-container::-webkit-scrollbar {
+  width: 4px;
+}
+
+.toc-container::-webkit-scrollbar-track {
+  @apply bg-muted;
+  border-radius: 2px;
+}
+
+.toc-container::-webkit-scrollbar-thumb {
+  @apply bg-muted-foreground/50;
+  border-radius: 2px;
+}
+
+/* 데스크톱 스타일 (xl 브레이크포인트 이상) */
+@media (min-width: 1280px) {
+  .toc-container {
+    width: 240px;
+    margin-left: 2rem;
+  }
+}
+
+/* 태블릿 스타일 */
+@media (max-width: 1279px) and (min-width: 768px) {
+  .toc-container {
+    width: 200px;
+    margin-left: 1rem;
+  }
+}
+
+/* 모바일 스타일 */
+@media (max-width: 767px) {
+  .toc-container {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: auto;
+    width: 100%;
+    max-height: 50vh;
+    border-radius: 1rem 1rem 0 0;
+    transform: translateY(calc(100% - 2.5rem));
+    transition: transform 0.3s ease-in-out;
+    z-index: 50;
+    background-color: hsl(var(--background));
+    box-shadow: 0 -4px 6px -1px rgb(0 0 0 / 0.1);
+  }
+
+  .toc-container.expanded {
+    transform: translateY(0);
+  }
+
+  /* 모바일에서 TOC 헤더 스타일 */
+  .toc-container::before {
+    content: "목차";
+    @apply block text-center text-sm font-medium text-muted-foreground;
+    padding: 0.5rem;
+    border-bottom: 1px solid hsl(var(--border));
+    margin-bottom: 0.5rem;
+  }
+}
+
 /* 언어 배지 스타일 */
 .prose pre[data-language]::before {
   content: attr(data-language-icon);
@@ -47,7 +122,7 @@
 
 /* 줄 번호 및 하이라이팅 스타일 */
 .prose pre > code > span {
-  @apply border-l-2 border-transparent;
+  @apply border-l border-transparent;
   counter-increment: line;
   display: inline-block;
   width: 100%;
@@ -132,6 +207,25 @@
 }
 
 @layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
+  body {
+    @apply antialiased;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    width: 100%;
+    overflow-x: hidden;
+  }
+
+  @media (max-width: 640px) {
+    html {
+      touch-action: manipulation;
+    }
+  }
+
   :root {
     --background: 0 0% 100%;
     --foreground: 0 0% 3.9%;
@@ -232,6 +326,63 @@
   ::selection {
     background-color: rgba(16, 185, 129, 0.2);
     color: inherit;
+  }
+
+  /* 기본 스크롤바 스타일 */
+  * {
+    /* Firefox */
+    scrollbar-width: thin;
+    scrollbar-color: rgba(156, 163, 175, 0.3) transparent;
+  }
+
+  /* Webkit 브라우저용 스크롤바 스타일 */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: rgba(156, 163, 175, 0.3);
+    border-radius: 3px;
+    transition: background-color 0.2s ease;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(156, 163, 175, 0.5);
+  }
+
+  /* 다크 모드 스크롤바 */
+  .dark ::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+
+  .dark ::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+  }
+
+  /* 코드 블록의 특별한 스크롤바 스타일 유지 */
+  .prose pre::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  .prose pre::-webkit-scrollbar-track {
+    background: #2e333c;
+    border-radius: 10px;
+  }
+
+  .prose pre::-webkit-scrollbar-thumb {
+    background-color: #4a4f59;
+    border-radius: 10px;
+    border: 2px solid #2e333c;
+  }
+
+  .prose pre::-webkit-scrollbar-thumb:hover {
+    background-color: #5a5f69;
   }
 }
 

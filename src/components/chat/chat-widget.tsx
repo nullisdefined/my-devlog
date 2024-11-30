@@ -162,7 +162,7 @@ export function ChatWidget() {
   }
 
   return (
-    <div className="fixed bottom-4 right-4 z-[9999]">
+    <div className="fixed bottom-4 right-4 z-50 hidden md:block">
       {isOpen ? (
         <div
           className="fixed inset-0 bg-transparent"
