@@ -9,7 +9,7 @@ draft: false
 
 ![image](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/bdb3fceafe9378092615c3f6ddf659a2.png)
 ## Call Signatures로 함수 타입 정의
-Call Signature는 함수의 매개변수와 반환 값의 타입을 미리 정의하는 방법이다. IDE에서 함수에 마우스를 올렸을 때 보이는 타입 정보가 바로 Call Signatures다.
+Call Signature는 함수의 매개변수와 반환 값의 타입을 미리 정의하는 방법이다. IDE에서 함수에 마우스를 올렸을 때 보이는 타입 정보가 바로 Call Signatures이다.
 
 ### 기본적인 Call Signature 정의
 ```ts
@@ -45,7 +45,6 @@ const push: Push = (config) => {
   }
 };
 
-// 사용 예시
 push('/home');           // string 버전
 push({ path: '/about', state: {} }); // Config 버전
 ```
@@ -89,7 +88,6 @@ type PrintArray<T> = {
 
 const printFirst: PrintArray<any> = (arr) => arr[0];
 
-// 사용 예시
 const num = printFirst([1, 2, 3]);         // number 타입 반환
 const str = printFirst(["a", "b", "c"]);   // string 타입 반환
 ```
@@ -101,7 +99,6 @@ type KeyValuePair<K, V> = {
   value: V;
 };
 
-// 사용 예시
 const pair: KeyValuePair<string, number> = {
   key: "age",
   value: 25
@@ -119,22 +116,22 @@ function printLength<T extends Lengthwise>(arg: T): number {
   return arg.length;
 }
 
-// 사용 가능
 printLength("Hello");     // string has length
 printLength([1, 2, 3]);   // array has length
 // printLength(123);      // Error: number doesn't have length
 ```
 
-### 팁(Tips)
-1. 가능한 한 타입 추론 활용하기
+## Tips
+#### 1. 가능한 타입 추론 활용
 ```ts
-// 👎 불필요한 타입 명시
+// 불필요한 타입 명시
 const items = genericFunction<string>(['a', 'b']);
 
-// 👍 타입 추론 활용
+// 타입 추론 활용
 const items = genericFunction(['a', 'b']);
 ```
-2. 의미 있는 제네릭 타입 이름 사용하기
+
+#### 2. 의미 있는 제네릭 타입 이름 사용
 ```ts
 // 일반적인 컨벤션
 T: Type
@@ -143,7 +140,8 @@ K: Key
 V: Value
 S: State
 ```
-3. 함수 오버로딩 보다 유니온 타입이 더 간단할 수 있음
+
+#### 3. 함수 오버로딩 보다 유니온 타입이 더 간단할 수 있다.
 ```ts
 // 오버로딩 사용
 type StringOrNumber = {
