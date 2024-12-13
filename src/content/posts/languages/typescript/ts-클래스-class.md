@@ -56,8 +56,9 @@ console.log(person.name);  // getter 호출
 person.name = "Lee";       // setter 호출
 ```
 > 💡 관례적으로 private 프로퍼티 이름 앞에 언더스코어(\_)를 붙인다.
+
 ## 접근 제한자
-TypeScript는 세 가지 접근 제한자를 제공한다
+TypeScript는 세 가지 접근 제한자를 제공한다.
 #### 1. private
 - 해당 클래스 내부에서만 접근 가능
 - 자식 클래스에서도 접근 불가
@@ -150,18 +151,82 @@ class MathHelper {
 console.log(MathHelper.PI);     // 3.14159
 console.log(MathHelper.square(4)); // 16
 ```
-static 멤버는 클래스의 인스턴스 생성과 관계없이 존재하며 클래스 자체에 바인딩된다. static 멤버의 주요 특징을 정리하면,
+
+**static 멤버의 주요 특징:**
 1. 클래스가 로드될 때 메모리에 한 번만 생성됨
 2. 모든 인스턴스가 같은 static 멤버를 공유함
 3. 클래스 이름으로 직접 접근이 가능함
 4. 인스턴스 없이도 사용할 수 있음
 
-## 주의 사항
-### TypeScript의 타입 시스템은 개발 단계에서 동작한다
-TypeScript의 접근 제한자는 컴파일 시점에만 동작하며, JavaScript로 컴파일된 이후에는 일반적인 프로퍼티로 변환된다. 따라서 런타임에서 완벽한 캡슐화를 보장하지는 않는다.
+## 클래스 상속
+클래스 상속을 통해 기존 클래스의 기능을 확장할 수 있다.
+### 기본 상속
+```ts
+class Animal {
+  constructor(protected name: string) {}
+  
+  move(): void {
+    console.log(`${this.name} is moving.`);
+  }
+}
 
-#### TypeScript 접근 제한자의 한계
-TypeScript의 private, protected 같은 접근 제한자는 개발 단계에서 타입 체크를 통해 잘못된 접근을 방지해주는 기능을 한다. 하지만 이 보호 기능은 컴파일 시점에서만 동작하며, 실제 런타임에서는 다음과 같은 방법으로 접근이 가능하다.
+class Dog extends Animal {
+  constructor(name: string, private breed: string) {
+    super(name); // 부모 클래스의 생성자 호출
+  }
+
+  bark(): void {
+    console.log("Woof!");
+  }
+}
+
+const dog = new Dog("Buddy", "Poodle");
+dog.move(); // "Buddy is moving."
+dog.bark(); // "Woof!"
+```
+
+### 메서드 오버라이딩
+자식 클래스에서 부모 클래스의 메서드를 재정의할 수 있다.
+```ts
+class Cat extends Animal {
+  move(): void {
+    console.log("Sneaking quietly..."); // 부모 클래스의 move() 메서드를 오버라이드
+    super.move(); // 부모 클래스의 메서드도 호출 가능
+  }
+}
+
+const cat = new Cat("Navi");
+cat.move();
+// 출력:
+// Sneaking quietly...
+// Navi is moving.
+```
+
+### 인터페이스 구현
+클래스는 하나 이상의 인터페이스를 구현할 수 있다.
+```ts
+interface Movable {
+  move(): void;
+}
+
+interface Soundable {
+  makeSound(): void;
+}
+
+class Horse implements Movable, Soundable {
+  move(): void {
+    console.log('다그닥다그닥');
+  }
+
+  makeSound(): void {
+    console.log('히히힝!');
+  }
+}
+```
+
+## 주의 사항
+### 런타임에서의 접근 제한자
+TypeScript의 접근 제한자(private, protected 등)는 컴파일 시점에만 동작한다. JavaScript로 컴파일되면 일반 프로퍼티로 변환되어 런타임에서는 접근이 가능해진다.
 ```ts
 class User {
   constructor(private name: string) {}
@@ -172,8 +237,7 @@ console.log(user.name); // Property 'name' is private and only accessible within
 console.log((user as any).name); // 타입 캐스팅으로 접근 가능
 console.log(user["name"]); // 인덱스로 접근 가능
 ```
-이렇게 접근이 가능한 이유는:
-1. TypeScript 코드가 JavaScript로 컴파일되면 다음과 같이 변환되기 때문이다.
+이는 TypeScript가 JavaScript로 컴파일될 때 다음과 같이 변환되기 때문이다:
 ```js
 var User = /** @class */ (function () {
     function User(name) {
@@ -187,33 +251,6 @@ var user = new User("Kim");
 console.log(user.name); // 타입 캐스팅으로 접근 가능
 console.log(user["name"]); // 인덱스로 접근 가능
 ```
-2. JavaScript에는 private 같은 접근 제한자 개념이 없어서, 모든 프로퍼티가 public으로 변환된다. 따라서, 진정한 의미의 데이터 캡슐화가 필요한 경우네는 다음과 같은 대안을 고려해볼 수 있다.
-```ts
-// 클로저를 활용한 private 데이터 보호
-class User {
-  private readonly _data: {
-    name: string;
-  };
 
-  constructor(name: string) {
-    this._data = Object.freeze({
-      name
-    });
-  }
-
-  getName(): string {
-    return this._data.name;
-  }
-}
-
-const user = new User("Kim");
-console.log(user.getName());      // "Kim"
-console.log(user["_data"].name);  // "Kim" - 여전히 접근은 가능하지만, 
-                                 // 적어도 실수로 접근하는 것은 방지할 수 있다.
-```
-
-- 접근 제한자는 개발 단계에서의 실수를 방지하는 도구로서 의미가 있다.
-- 실제 보안이 필요한 데이터는 서버 사이드에서 관리하자.
-
----
-TypeScript는 프로토타입 기반 언어인 JavaScrip를 보다 강력하고 안전하게 해준다. TypeScript의 클래스로 접근 제한자, 읽기 전용 프로퍼티, 추상 클래스 등의 기능을 통해 더 견고한 객체지향 프로그래밍이 가능해진다.
+### 실제 데이터 보호가 필요한 경우
+민감한 데이터나 실제 보안이 필요한 정보는 서버 사이드에서 관리하는 것이 좋다. 클라이언트 사이드의 접근 제한자는 개발 단계에서의 실수를 방지하는 용도로 사용하자.

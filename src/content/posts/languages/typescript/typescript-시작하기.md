@@ -113,7 +113,7 @@ ts-node index.ts
   ]
 }
 ```
-
+자세한 내용은 https://www.typescriptlang.org/tsconfig/ 에서 확인할 수 있다.
 ## TypeScript의 주요 특징
 #### 1. 타입 명시와 추론
 ```ts
