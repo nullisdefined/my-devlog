@@ -85,12 +85,14 @@ export function PostCard({ post }: PostCardProps) {
 
           <div className="relative sm:w-[280px] shrink-0 order-1 sm:order-2">
             {post.thumbnail ? (
-              <div className="relative aspect-[16/9] sm:aspect-square">
+              <div className="relative aspect-[16/9] sm:aspect-square group">
                 <Image
                   src={post.thumbnail}
                   alt={post.title}
                   fill
-                  className="object-contain"
+                  className="object-contain transition-all duration-500 ease-in-out
+                   dark:opacity-90 dark:brightness-78 dark:contrast-100
+                   dark:group-hover:opacity-100 dark:group-hover:brightness-100 dark:group-hover:contrast-100"
                   sizes="(max-width: 768px) 100vw, 280px"
                   priority={false}
                 />
