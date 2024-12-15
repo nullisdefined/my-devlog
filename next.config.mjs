@@ -11,6 +11,9 @@ const nextConfig = {
     // appDir: true,
   },
   vercelToolbar: false,
+  vercelSpeedInsights: {
+    enabled: false,
+  },
 };
 
 export default nextConfig;
