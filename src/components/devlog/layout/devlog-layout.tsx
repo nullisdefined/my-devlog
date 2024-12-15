@@ -95,7 +95,10 @@ export function DevlogLayout({
         </div>
       </div>
 
-      <MobileSidebarToggle onToggle={() => setIsSidebarOpen(!isSidebarOpen)} />
+      <MobileSidebarToggle
+        onToggle={() => setIsSidebarOpen(!isSidebarOpen)}
+        isOpen={isSidebarOpen}
+      />
 
       {isSidebarOpen && (
         <div
