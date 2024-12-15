@@ -58,7 +58,7 @@ export function PostCard({ post }: PostCardProps) {
                            mb-2 sm:mb-3
                            leading-snug
                            line-clamp-2 
-                           group-hover:text-primary transition-colors"
+                           group-hover:text-emerald-500 transition-colors"
               >
                 {post.title}
               </h2>
