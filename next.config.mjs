@@ -10,9 +10,19 @@ const nextConfig = {
   experimental: {
     // appDir: true,
   },
-  vercelToolbar: false,
-  vercelSpeedInsights: {
-    enabled: false,
+  async headers() {
+    return [
+      {
+        source: "/(.*)",
+        headers: [
+          {
+            key: "Set-Cookie",
+            value:
+              "__vercel_toolbar_=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT;",
+          },
+        ],
+      },
+    ];
   },
 };
 
