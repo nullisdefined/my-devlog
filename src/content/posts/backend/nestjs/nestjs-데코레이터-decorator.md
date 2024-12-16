@@ -165,4 +165,4 @@ getUsers() {
 ```
 
 ### 참고 자료
-- https://docs.nestjs.com/custom-decorators
+- [NestJS 공식문서](https://docs.nestjs.com/custom-decorators)
