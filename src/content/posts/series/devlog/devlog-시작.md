@@ -1,7 +1,7 @@
 ---
 title: "Devlog 시작"
 date: 2024-10-28
-tags: ["NextJS"]
+tags: []
 category: "Series/devlog"
 thumbnail: ""
 draft: false

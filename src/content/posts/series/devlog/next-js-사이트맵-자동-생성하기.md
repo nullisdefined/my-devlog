@@ -1,7 +1,7 @@
 ---
 title: "[Next.js] 사이트맵 자동 생성하기"
 date: 2024-12-17
-tags: ["NextJS", "SEO"]
+tags: ["NextJS", "SEO", "JavaScript"]
 category: "Series/devlog"
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/c9870b4f6ce1b0451761374cd9403ea1.png"
 draft: false

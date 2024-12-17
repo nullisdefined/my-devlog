@@ -1,5 +1,5 @@
 ---
-title: "[Node.js] GraphQL"
+title: "GraphQL이란?"
 date: 2024-11-30
 tags: ["NodeJS", "GraphQL"]
 category: "Backend/NodeJS"
