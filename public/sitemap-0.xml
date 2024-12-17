@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:mobile="http://www.google.com/schemas/sitemap-mobile/1.0" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
+<url><loc>https://nullisdefined.site/admin/chat</loc><lastmod>2024-12-17T11:56:03.583Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://nullisdefined.site</loc><lastmod>2024-12-17T11:56:03.584Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://nullisdefined.site/devlog/backend/nestjs/nestjs-http-request와-response-다루기</loc><lastmod>Mon Nov 04 2024 09:00:00 GMT+0900 (대한민국 표준시)</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+<url><loc>https://nullisdefined.site/devlog/backend/nestjs/nestjs-validation-pipe</loc><lastmod>Wed Nov 13 2024 09:00:00 GMT+0900 (대한민국 표준시)</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+<url><loc>https://nullisdefined.site/devlog/backend/nestjs/nestjs-데코레이터-decorator</loc><lastmod>Sun Dec 15 2024 09:00:00 GMT+0900 (대한민국 표준시)</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+<url><loc>https://nullisdefined.site/devlog/backend/nestjs/nestjs-트랜잭션-transaction</loc><lastmod>Sun Dec 15 2024 09:00:00 GMT+0900 (대한민국 표준시)</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+<url><loc>https://nullisdefined.site/devlog/backend/nodejs/express-js란</loc><lastmod>Fri Nov 29 2024 09:00:00 GMT+0900 (대한민국 표준시)</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+<url><loc>https://nullisdefined.site/devlog/backend/nodejs/express-미들웨어와-라우팅</loc><lastmod>Sat Nov 30 2024 09:00:00 GMT+0900 (대한민국 표준시)</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+<url><loc>https://nullisdefined.site/devlog/backend/nodejs/node-js-모듈-시스템</loc><lastmod>Wed Nov 20 2024 09:00:00 GMT+0900 (대한민국 표준시)</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+<url><loc>https://nullisdefined.site/devlog/backend/nodejs/node-js-이벤트-기반-아키텍처와-비동기-처리</loc><lastmod>Mon Nov 18 2024 09:00:00 GMT+0900 (대한민국 표준시)</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+<url><loc>https://nullisdefined.site/devlog/cs/data-structure/js-배열과-객체-성능-비교</loc><lastmod>Tue Nov 26 2024 09:00:00 GMT+0900 (대한민국 표준시)</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+<url><loc>https://nullisdefined.site/devlog/cs/data-structure/빅오-big-o-표기법</loc><lastmod>Tue Nov 26 2024 09:00:00 GMT+0900 (대한민국 표준시)</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+<url><loc>https://nullisdefined.site/devlog/database/고립성-isolation</loc><lastmod>Tue Dec 17 2024 09:00:00 GMT+0900 (대한민국 표준시)</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+<url><loc>https://nullisdefined.site/devlog/database/원자성-atomicity</loc><lastmod>Tue Dec 17 2024 09:00:00 GMT+0900 (대한민국 표준시)</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+<url><loc>https://nullisdefined.site/devlog/languages/javascript/js-프로미스-promise</loc><lastmod>Mon Dec 16 2024 09:00:00 GMT+0900 (대한민국 표준시)</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+<url><loc>https://nullisdefined.site/devlog/languages/typescript/ts-인터페이스-interface</loc><lastmod>Fri Dec 13 2024 09:00:00 GMT+0900 (대한민국 표준시)</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+<url><loc>https://nullisdefined.site/devlog/languages/typescript/ts-클래스-class</loc><lastmod>Sun Nov 17 2024 09:00:00 GMT+0900 (대한민국 표준시)</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+<url><loc>https://nullisdefined.site/devlog/languages/typescript/ts-타입-시스템-이해하기</loc><lastmod>Wed Nov 13 2024 09:00:00 GMT+0900 (대한민국 표준시)</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+<url><loc>https://nullisdefined.site/devlog/languages/typescript/ts-함수-function</loc><lastmod>Sat Nov 16 2024 09:00:00 GMT+0900 (대한민국 표준시)</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+<url><loc>https://nullisdefined.site/devlog/languages/typescript/typescript-시작하기</loc><lastmod>Mon Nov 11 2024 09:00:00 GMT+0900 (대한민국 표준시)</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+<url><loc>https://nullisdefined.site/devlog/problem-solving/백준-boj-자바스크립트로-제출하기</loc><lastmod>Mon Nov 25 2024 09:00:00 GMT+0900 (대한민국 표준시)</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+<url><loc>https://nullisdefined.site/devlog/series/devlog/redis로-구현한-채팅-기능</loc><lastmod>Mon Nov 25 2024 09:00:00 GMT+0900 (대한민국 표준시)</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+<url><loc>https://nullisdefined.site/devlog/series/devlog/개발-블로그-시작</loc><lastmod>Mon Oct 28 2024 09:00:00 GMT+0900 (대한민국 표준시)</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+<url><loc>https://nullisdefined.site/devlog/series/thumbs-up/thumbs-up-v1-0</loc><lastmod>Sat Nov 02 2024 09:00:00 GMT+0900 (대한민국 표준시)</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+<url><loc>https://nullisdefined.site/devlog/devlog/redis로-구현한-채팅-기능</loc><lastmod>Mon Nov 25 2024 09:00:00 GMT+0900 (대한민국 표준시)</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+<url><loc>https://nullisdefined.site/devlog/devlog/개발-블로그-시작</loc><lastmod>Mon Oct 28 2024 09:00:00 GMT+0900 (대한민국 표준시)</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+<url><loc>https://nullisdefined.site/devlog/thumbs-up/thumbs-up-v1-0</loc><lastmod>Sat Nov 02 2024 09:00:00 GMT+0900 (대한민국 표준시)</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+</urlset>

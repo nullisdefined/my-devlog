@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "sync": "ts-node scripts/sync-blog.ts"
+    "sync": "ts-node scripts/sync-blog.ts",
+    "postbuild": "next-sitemap"
   },
   "dependencies": {
     "@giscus/react": "^3.0.0",
@@ -41,6 +42,7 @@
     "mime-types": "^2.1.35",
     "next": "14.2.15",
     "next-mdx-remote": "^5.0.0",
+    "next-sitemap": "^4.2.3",
     "pusher": "^5.2.0",
     "pusher-js": "^8.4.0-rc2",
     "react": "^18",
