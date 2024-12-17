@@ -74,8 +74,8 @@ export const languageConfigs: Record<string, LanguageConfig> = {
   },
   json: {
     icon: "JSON",
-    borderColor: "border-[#000000]",
-    color: "#000000",
+    borderColor: "border-[#FFB499]",
+    color: "#FFB499",
   },
   yaml: {
     icon: "YAML",
