@@ -123,12 +123,12 @@ async createScheduleWithWrapping(
 
 트랜잭션 관리 로직이 `withTransaction` 래핑 메서드로 추상화되어 비즈니스 로직에만 집중할 수 있게 되었다. 또한 다른 메서드에서도 동일한 방식으로 트랜잭션 관리를 처리할 수 있어 재사용성이 늘었다.
 
-## typeorm-transactional-cls-hooked 라이브러리 활용
+## typeorm-transactional 라이브러리 활용
 중복되는 트랜잭션 코드 문제를 해결하기 위해 커뮤니티에서 제공하는 라이브러리를 활용할 수도 있다. 대표적인 예로 [typeorm-transactional-cls-hooked](https://www.npmjs.com/package/typeorm-transactional-cls-hooked) 라이브러리가 있다. 이 라이브러리를 사용하면, 메서드에 간단한 데코레이터를 붙여 트랜잭션 범위를 선언할 수 있으며, 메서드 내에서 발생하는 모든 데이터베이스 연산이 하나의 트랜잭션으로 처리된다.
 
 ```ts
 import { Injectable } from '@nestjs/common';
-import { Transactional } from 'typeorm-transactional-cls-hooked';
+import { Transactional } from 'typeorm-transactional';
 
 @Injectable()
 export class SomeService {
@@ -151,3 +151,6 @@ export class SomeService {
     만약 이 메서드 내부에서 다른 서비스의 메서드를 호출하고, 그 메서드에서도 DB 연산(예: `repository.save()`, `manager.find()`)을 수행한다면, 해당 DB 연산들은 CLS를 통해 전달받은 동일한 트랜잭션 매니저를 사용하게 된다. 즉, 호출한 측 메서드와 호출받은 측 메서드 간의 DB 조작 모두 한 트랜잭션 안에서 처리된다.
 - **에러 발생 시 롤백**:  
     트랜잭션 범위 내에서 어디서 에러가 발생하든, 최종적으로 `@Transactional()` 메서드가 정상 종료되지 않고 에러를 던진다면 트랜잭션은 롤백된다. 다른 서비스에서 일어난 DB 연산이라 할지라도 모두 동일한 트랜잭션 범위 안에 있으므로 하나의 원자적 연산 단위로 취급된다.
+
+## typeorm-test-transactions 라이브러리 활용
+`typeorm-test-transactions` 라이브러리를 활용해서 `typeorm-transactional`로 구현된 트랜잭션을 테스트해보자.

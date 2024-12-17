@@ -135,23 +135,6 @@ export const categories: readonly CategoryItem[] = [
     name: "Database",
     path: "/devlog/categories/database",
     icon: DatabaseIcon,
-    subcategories: [
-      {
-        name: "MySQL",
-        path: "/devlog/categories/database/mysql",
-        icon: SiMysql,
-      },
-      {
-        name: "Redis",
-        path: "/devlog/categories/database/redis",
-        icon: SiRedis,
-      },
-      {
-        name: "MongoDB",
-        path: "/devlog/categories/database/mongodb",
-        icon: SiMongodb,
-      },
-    ],
   },
   {
     name: "DevOps",
