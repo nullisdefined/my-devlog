@@ -82,7 +82,6 @@ export function PostCard({ post }: PostCardProps) {
               ))}
             </div>
           </div>
-
           <div className="relative sm:w-[280px] shrink-0 order-1 sm:order-2">
             {post.thumbnail ? (
               <div className="relative aspect-[16/9] sm:aspect-square group">
@@ -98,7 +97,11 @@ export function PostCard({ post }: PostCardProps) {
                 />
               </div>
             ) : (
-              <div className="relative aspect-[16/9] sm:aspect-square bg-muted" />
+              <div className="relative aspect-[16/9] sm:aspect-square bg-gradient-to-br from-emerald-500/30 to-sky-500/30 flex items-center justify-center">
+                <span className="text-5xl sm:text-7xl font-bold text-muted-foreground/60 dark:text-card-foreground">
+                  {post.title.charAt(0)}
+                </span>
+              </div>
             )}
           </div>
         </div>
