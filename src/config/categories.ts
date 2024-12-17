@@ -166,13 +166,14 @@ export const seriesCategories: readonly CategoryItem[] = [
         path: "/devlog/series/devlog",
         icon: Layout,
         description:
-          "Next.js와 다양한 기술을 활용해 나만의 devlog를 만드는 과정을 기록합니다.",
+          "Next.js와 다양한 기술을 활용해 개발 블로그(devlog)를 구축하고 발전시켜 나가는 과정을 기록합니다.",
       },
       {
         name: "Thumbs Up",
         path: "/devlog/series/thumbs-up",
         icon: Layout,
-        description: "썸네일 제작 서비스 Thumbs Up의 개발과정을 담고 있습니다.",
+        description:
+          "썸네일 제작 도구 'Thumbs Up'을 개발하면서 경험한 기능 구현과 개선 과정을 공유합니다.",
       },
     ],
   },
