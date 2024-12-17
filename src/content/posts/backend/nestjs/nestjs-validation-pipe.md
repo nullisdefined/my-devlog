@@ -14,6 +14,7 @@ Validation Pipe는 NestJS에서 제공하는 파이프 중 하나이다. 클라�
 ## Pipe
 파이프(Pipe)는 @Injectable 데코레이터로 주석이 달린 클래스를 의미한다. Data Transformation과 Data Validation을 위해서 사용된다. Nest는 라우트 핸들러 함수가 호출되기 직전에 파이프를 삽입하여 인수를 수신하고 이에대해 작동한다. 아래 사진은 Nest의 전체적인 라이프사이클을 나타낸다.
 ![image](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/1a10c358f98c5d64106d4ab2aa4cbe4b.png)
+
 ## Validation Pipe의 주요 기능
 ### 1. 데이터 유효성 검사 (Validation)
 - 입력된 데이터가 정해진 규칙에 맞는지 검사
@@ -176,5 +177,5 @@ export function IsUniqueEmail(validationOptions?: ValidationOptions) {
 }
 ```
 
----
+## 마무리
 ValidationPipe는 NestJS 애플리케이션에서 데이터 유효성 검사를 효과적으로 처리할 수 있게 해주는 강력한 도구다. DTO와 함께 사용하면 타입 안정성을 확보하고 비즈니스 로직에 잘못된 데이터가 전달되는 것을 방지할 수 있다. class-validator를 사용하여 재사용 가능한 방식으로 유효성 검사 규칙을 정의하여 코드의 유지보수성과 가독성을 높일 수 있다.

@@ -44,6 +44,7 @@ const requestHandler = (req, res) => {
 
 module.exports = requestHandler;
 ```
+
 ```js
 // app.js (수정된 파일)
 const http = require('http');
@@ -55,7 +56,7 @@ const server = http.createServer(routes);
 ## 모듈 내보내기 방식
 Node.js에서 모듈을 내보내는 방법은 크게 세 가지가 있다.
 
-#### 1. 단일 요소 내보내기
+### 1. 단일 요소 내보내기
 가장 간단한 방식으로, 하나의 함수나 객체를 내보낼 때 사용한다.
 ```js
 const requestHandler = (req, res) => {
@@ -65,7 +66,7 @@ const requestHandler = (req, res) => {
 module.exports = requestHandler;
 ```
 
-#### 2. 객체로 여러 요소 내보내기
+### 2. 객체로 여러 요소 내보내기
 여러 함수나 값을 하나의 객체로 그룹화하여 내보낼 수 있다.
 ```js
 const requestHandler = (req, res) => {
@@ -78,7 +79,7 @@ module.exports = {
 };
 ```
 
-#### 3. 개별 속성으로 내보내기
+### 3. 개별 속성으로 내보내기
 `module.exports`의 속성으로 개별적으로 내보낼 수 있다.
 ```js
 module.exports.handler = requestHandler;
@@ -116,7 +117,7 @@ const server = http.createServer(routes.handler);
     - Node.js가 제공하는 특별한 객체
     - 직접 재할당은 불가능 (`exports = {...}` 사용 불가)
 
-
+## 마무리
 Node.js의 모듈 시스템을 활용하면 코드를 논리적인 단위로 분리하고, 재사용성을 높이며, 유지보수가 용이한 애플리케이션을 구축할 수 있다.
 
 ---
