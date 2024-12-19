@@ -1,5 +1,5 @@
 ---
-title: "[Next.js] Upstash Redis 활용한 실시간 채팅 기능 구현하기"
+title: "[Next.js] Upstash Redis 활용 실시간 채팅 기능 구현하기"
 date: 2024-11-25
 tags: ["NextJS", "Upstash", "Redis", "TypeScript"]
 category: "Series/devlog"
@@ -133,7 +133,7 @@ export function AdminChatLink() {
 
 ## Redis 데이터 목록
 ![image](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/fd9d632d43c6552a6e7648f019c23d99.png)
-*Redis에 저장된 채채팅 메시지 리스트*
+*Redis에 저장된 채팅 메시지 리스트*
 
 ## 마무리
 Redis를 처음 사용하면서 (클라우드 서비스인데도 불구하고) 빠른 성능과 간단한 사용법에 놀랐다. 특히 Upstash는 클라우드 기반으로 설정이 간편해 서버리스 프로젝트와의 궁합이 잘 맞았다.

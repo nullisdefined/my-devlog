@@ -11,6 +11,7 @@ import { Post } from "@/types/index";
 import { VisitorsWidget } from "@/components/visitor/visitors-widget";
 import { cn } from "@/lib/class-name-utils";
 import { ChevronRight } from "lucide-react";
+import BallWidget from "@/components/ball/ball-widget";
 
 interface DevlogSidebarProps {
   posts: Post[];
@@ -214,6 +215,17 @@ export function DevlogSidebar({ posts }: DevlogSidebarProps) {
           <VisitorsWidget />
         </div>
       </div>
+
+      {/* <div className="border-t" /> */}
+
+      {/* Ball Widget */}
+      {/*
+      <div>
+        <div className="px-3">
+          <BallWidget />
+        </div>
+      </div>
+      */}
     </div>
   );
 }
