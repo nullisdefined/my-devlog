@@ -1,6 +1,6 @@
 ---
 title: "일관성(Consistency)"
-date: 2024-12-18
+date: 2024-12-20
 tags: ["Database", "Transaction", "ACID"]
 category: "Database"
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/432972f52003de35f8bc825a2f8d1a2d.png"
@@ -95,3 +95,6 @@ draft: false
 - 사용자 경험
 - 비즈니스 요구사항
 결과적으로, 데이터베이스 시스템은 각 시스템의 특성에 맞는 적절한 일관성 수준을 선택해야 한다.
+
+---
+이 글은 Udemy의 [【한글자막】 데이터베이스 엔지니어링 ( Database Engineering ) 마스터하기!](https://www.udemy.com/course/database-engineering-korean/)강의를 토대로 공부한 내용을 정리한 것입니다.
