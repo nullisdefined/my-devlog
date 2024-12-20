@@ -1,12 +1,12 @@
 ---
 title: "백준(BOJ) 자바스크립트로 제출하기"
+slug: "백준-boj-자바스크립트로-제출하기"
 date: 2024-11-25
 tags: ["JavaScript", "BOJ"]
 category: "Problem Solving"
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/a2ece62d4e9073e31f91f537a8314a6a.png"
 draft: false
 ---
-
 백준은 JavaScript 언어를 지원하지만 백준 문제풀이에 있어서 JavaScript는 조금 까다롭게 느껴질 수 있다. 이유는 입력 처리에 있는데, C, Java 등 다른 언어들에서는 기본적으로 간단한 입력 함수(scanf, Scanner Class 등)를 제공하는데 그에 반해 JavaScript는 Node.js의 fs 모듈을 사용해야 하며, 입력 처리를 위한 추가 작업이 필요하다.
 ![image](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/a2ece62d4e9073e31f91f537a8314a6a.png)
 

@@ -1,12 +1,12 @@
 ---
 title: "[Express] 미들웨어와 라우팅"
+slug: "express-미들웨어와-라우팅"
 date: 2024-11-30
 tags: ["NodeJS", "Express"]
 category: "Backend/NodeJS"
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/443cb67c45a8f2e9fc5d6c753e981266.png"
 draft: false
 ---
-
 ![image](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/443cb67c45a8f2e9fc5d6c753e981266.png)
 
 ## 미들웨어의 동작 원리

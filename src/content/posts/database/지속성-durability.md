@@ -1,12 +1,12 @@
 ---
 title: "지속성(Durability)"
+slug: "지속성-durability"
 date: 2024-12-20
 tags: ["Database", "Transaction", "ACID"]
 category: "Database"
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/9cdeb1456717e422b1e2143c003209d1.png"
 draft: false
 ---
-
 ![image](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/9cdeb1456717e422b1e2143c003209d1.png)
 
 트랜잭션의 ACID 속성 중 지속성(Durability)은 데이터베이스에 저장된 데이터의 영구성을 보장하는 특성이다. 시스템 장애나 전원 손실과 같은 예기치 않은 상황에서도 커밋된 트랜잭션의 결과가 영구적으로 보존되도록 보장한다.

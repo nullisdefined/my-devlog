@@ -1,12 +1,12 @@
 ---
 title: "[Node.js] 모듈 시스템"
+slug: "node-js-모듈-시스템"
 date: 2024-11-20
 tags: ["NodeJS"]
 category: "Backend/NodeJS"
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/443cb67c45a8f2e9fc5d6c753e981266.png"
 draft: false
 ---
-
 ![image](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/443cb67c45a8f2e9fc5d6c753e981266.png)
 
 

@@ -1,12 +1,12 @@
 ---
 title: "일관성(Consistency)"
+slug: "일관성-consistency"
 date: 2024-12-18
 tags: ["Database", "Transaction", "ACID"]
 category: "Database"
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/432972f52003de35f8bc825a2f8d1a2d.png"
 draft: false
 ---
-
 ![image](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/432972f52003de35f8bc825a2f8d1a2d.png)
 
 트랜잭션의 ACID 속성 중 일관성(Consistency)은 데이터의 무결성과 정확성을 보장하는 중요한 요소다. 일관성은 트랜잭션이 실행된 후 데이터베이스가 유효한 상태를 유지하도록 보장하며, 이를 위반하면 데이터 손상 또는 불일치 문제가 발생할 수 있다. 

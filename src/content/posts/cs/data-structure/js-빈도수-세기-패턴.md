@@ -1,12 +1,12 @@
 ---
 title: "[JS] 빈도수 세기 패턴"
+slug: "js-빈도수-세기-패턴"
 date: 2024-11-29
 tags: ["JavaScript"]
 category: "CS/Data Structure"
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/5527369119ba6ac9455d02961c357398.png"
 draft: true
 ---
-
 ![image](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/5527369119ba6ac9455d02961c357398.png)
 
 빈도수 세기 패턴은 배열이나 문자열의 구성 요소를 비교할 때 유용하게 사용되는 문제 해결 패턴이다. 이 패턴은 두 개의 배열이나 문자열을 비교할 때 중첩 반복문을 사용하는 대신, 객체를 사용하여 각 요소의 빈도수를 저장하고 비교함으로써 시간 복잡도를 개선할 수 있다.

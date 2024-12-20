@@ -1,12 +1,12 @@
 ---
 title: "[NestJS] Validation Pipe"
+slug: "nestjs-validation-pipe"
 date: 2024-11-13
 tags: ["NestJS", "Validation", "Pipe"]
 category: "Backend/NestJS"
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/e48e6fd88f6339a761df1c6155770ce4.png"
 draft: false
 ---
-
 ![image](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/e48e6fd88f6339a761df1c6155770ce4.png)
 
 Validation Pipe는 NestJS에서 제공하는 파이프 중 하나이다. 클라이언트로부터 받은 데이터의 유효성을 검사하고 필요한 경우 데이터를 변환할 수도 있다. 이를 통해 애플리케이션의 안정성을 높이고 잘못된 데이터로 인한 오류를 사전에 예방할 수 있다.

@@ -1,12 +1,12 @@
 ---
 title: "[TS] 인터페이스(Interface)"
+slug: "ts-인터페이스-interface"
 date: 2024-12-13
 tags: ["TypeScript", "Interface"]
 category: "Languages/TypeScript"
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/bdb3fceafe9378092615c3f6ddf659a2.png"
 draft: false
 ---
-
 ![image](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/bdb3fceafe9378092615c3f6ddf659a2.png)
 
 인터페이스는 타입스크립트에서 객체의 타입을 정의하는 방법이다. 특정 객체가 어떤 프로퍼티와 메소드를 가져야 하는지 정의한다.

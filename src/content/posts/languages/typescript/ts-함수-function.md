@@ -1,12 +1,12 @@
 ---
 title: "[TS] 함수(Function)"
+slug: "ts-함수-function"
 date: 2024-11-16
 tags: ["TypeScript", "Function"]
 category: "Languages/TypeScript"
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/bdb3fceafe9378092615c3f6ddf659a2.png"
 draft: false
 ---
-
 ![image](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/bdb3fceafe9378092615c3f6ddf659a2.png)
 ## Call Signatures로 함수 타입 정의
 Call Signature는 함수의 매개변수와 반환 값의 타입을 미리 정의하는 방법이다. IDE에서 함수에 마우스를 올렸을 때 보이는 타입 정보가 바로 Call Signatures이다.

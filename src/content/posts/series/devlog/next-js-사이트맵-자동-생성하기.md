@@ -1,12 +1,12 @@
 ---
 title: "[Next.js] 사이트맵 자동 생성하기"
+slug: "next-js-사이트맵-자동-생성하기"
 date: 2024-12-17
-tags: ["NextJS", "SEO", "JavaScript"]
+tags: ["NextJS", "SEO"]
 category: "Series/devlog"
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/c9870b4f6ce1b0451761374cd9403ea1.png"
 draft: false
 ---
-
 블로그를 개발하면서 SEO(검색 엔진 최적화)는 필수로 챙겨야 할 요소라고 생각했다. 또 블로그에 새로운 페이지가 업데이트될 때마다 Google이나 다른 검색 엔진에서 어떤 과정을 거치게 될까 궁금해 찾아보다 사이트맵이라는 개념을 알게 되었다. 이 글에서는 next-sitemap 라이브러리를 사용해서 사이트맵을 생성하고, Google Search Console에 도메인을 등록하는 과정을 정리한 내용이다.
 
 ## 사이트맵(sitemap)이란?

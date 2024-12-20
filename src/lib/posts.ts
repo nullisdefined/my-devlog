@@ -23,7 +23,6 @@ export async function getPostBySlug(
     const decodedSlug = decodeURIComponent(slug);
     const normalizedCategory = normalizeCategory(decodeURIComponent(category));
 
-    // 시리즈와 일반 카테고리 구분
     const basePath = category.toLowerCase().startsWith("series/")
       ? SERIES_PATH
       : POSTS_PATH;
@@ -31,11 +30,28 @@ export async function getPostBySlug(
       ? normalizedCategory.replace("series/", "")
       : normalizedCategory;
 
-    const filePath = path.join(basePath, categoryPath, `${decodedSlug}.md`);
+    // 파일 검색 시 frontmatter의 slug 필드도 확인
+    const dirFiles = fs.readdirSync(path.join(basePath, categoryPath));
+    let filePath = null;
 
-    if (!fs.existsSync(filePath)) {
-      return null;
+    for (const file of dirFiles) {
+      if (!file.endsWith(".md")) continue;
+
+      const fullPath = path.join(basePath, categoryPath, file);
+      const content = fs.readFileSync(fullPath, "utf-8");
+      const { data } = matter(content);
+
+      // frontmatter에 slug가 있으면 그것을 우선 사용
+      if (
+        data.slug === decodedSlug ||
+        path.basename(file, ".md") === decodedSlug
+      ) {
+        filePath = fullPath;
+        break;
+      }
     }
+
+    if (!filePath) return null;
 
     const fileContent = fs.readFileSync(filePath, "utf-8");
     const { data, content } = matter(fileContent);
@@ -44,7 +60,7 @@ export async function getPostBySlug(
       title: data.title,
       date: data.date,
       category: data.category || normalizedCategory,
-      slug: decodedSlug,
+      slug: data.slug || decodedSlug, // frontmatter의 slug 우선 사용
       tags: data.tags || [],
       thumbnail: data.thumbnail,
       content,
@@ -135,7 +151,7 @@ export async function getSeriesPostList(): Promise<Post[]> {
           title: data.title,
           date: data.date,
           category: data.category || urlCategory,
-          slug: path.basename(file, ".md"),
+          slug: data.slug || path.basename(file, ".md"),
           tags: data.tags || [],
           thumbnail: data.thumbnail,
           content: content.slice(0, 200),

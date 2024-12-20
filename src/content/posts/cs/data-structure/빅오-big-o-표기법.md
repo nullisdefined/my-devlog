@@ -1,12 +1,12 @@
 ---
 title: "빅오(Big-O) 표기법"
+slug: "빅오-big-o-표기법"
 date: 2024-11-26
 tags: ["Big-O"]
 category: "CS/Data Structure"
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/f33e7091d0a8cb916e89b70eced5c553.png"
 draft: false
 ---
-
 ![image](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/f33e7091d0a8cb916e89b70eced5c553.png)
 
 효율적인 알고리즘을 작성하기 위해서 먼저 알고리즘의 성능을 평가하는 방법을 이해해야 한다.

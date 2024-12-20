@@ -1,12 +1,12 @@
 ---
 title: "[Node.js] Express"
+slug: "node-js-express"
 date: 2024-11-29
 tags: ["NodeJS", "Express"]
 category: "Backend/NodeJS"
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/03a5a0480e31b580ab7f4657cbf8066d.png"
 draft: false
 ---
-
 ![image](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/03a5a0480e31b580ab7f4657cbf8066d.png)
 
 Vanilla Node.js로 웹 서버를 개발할 때 가장 먼저 마주치는 어려움은 반복적이고 번거로운 작업들이다.

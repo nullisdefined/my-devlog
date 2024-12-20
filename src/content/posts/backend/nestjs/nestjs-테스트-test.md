@@ -1,12 +1,12 @@
 ---
 title: "[NestJS] 테스트(Test)"
+slug: "nestjs-테스트-test"
 date: 2024-12-16
 tags: ["NestJS", "Jest", "E2E", "UnitTest"]
 category: "Backend/NestJS"
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/e48e6fd88f6339a761df1c6155770ce4.png"
 draft: true
 ---
-
 ![image](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/e48e6fd88f6339a761df1c6155770ce4.png)
 
 개발 공부를 하다 보면, 어느 순간 테스트 코드를 작성하라는 조언을 듣게 된다. 처음에는 솔직히 굉장히 귀찮고 번거로운 느낌이었다. 기능 하나 완성하는 것만으로도 힘든데, 테스트 코드를 또 따로 작성하라는 건 마치 두 번 일하는 기분이었다. 코드를 조금만 바꿔도 테스트 코드도 수정해야 하고, 차라리 Postman과 같은 툴로 직접 API를 호출해서 결과를 보는 게 지금 당장은 편하다고 느꼈다.

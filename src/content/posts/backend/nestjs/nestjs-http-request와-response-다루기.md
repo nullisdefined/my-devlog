@@ -1,12 +1,12 @@
 ---
 title: "[NestJS] HTTP Request와 Response 다루기"
+slug: "nestjs-http-request와-response-다루기"
 date: 2024-11-04
 tags: ["NestJS", "HTTP"]
 category: "Backend/NestJS"
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/e48e6fd88f6339a761df1c6155770ce4.png"
 draft: false
 ---
-
 ![image](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/e48e6fd88f6339a761df1c6155770ce4.png)
 
 NestJS에서는 HTTP 요청과 응답을 처리하기 위한 다양한 데코레이터와 기능을 제공한다. 이를 통해 클라이언트의 요청을 효과적으로 처리하고, 적절한 응답을 반환할 수 있다.

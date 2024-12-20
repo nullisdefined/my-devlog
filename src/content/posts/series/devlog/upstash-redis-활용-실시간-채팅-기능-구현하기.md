@@ -1,12 +1,12 @@
 ---
-title: "[Next.js] Upstash Redis 활용 실시간 채팅 기능 구현하기"
+title: "Upstash Redis 활용 실시간 채팅 기능 구현하기"
+slug: "upstash-redis-활용-실시간-채팅-기능-구현하기"
 date: 2024-11-25
 tags: ["NextJS", "Upstash", "Redis", "TypeScript"]
 category: "Series/devlog"
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/833f02d8c2bb631bb74e5c71cd617c0e.png"
 draft: false
 ---
-
 블로그에 채팅 기능이 꼭 필요하지는 않았다. 하지만 Redis를 처음 사용해보고 싶었고, 채팅 기능은 Redis의 장점을 실험해보기 좋은 대상이라고 생각했다. 채팅은 실시간으로 메시지를 주고받아야 하며, 데이터를 빠르게 읽고 쓰는 성능이 필요하기 때문이다. 또한 Redis는 방문자의 수를 집계하는 위젯으로도 활용하고 있다.
 
 ## Redis vs. Upstash

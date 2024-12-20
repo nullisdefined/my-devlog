@@ -1,12 +1,12 @@
 ---
 title: "[Node.js] 이벤트 기반 아키텍처와 비동기 처리"
+slug: "node-js-이벤트-기반-아키텍처와-비동기-처리"
 date: 2024-11-18
 tags: ["NodeJS"]
 category: "Backend/NodeJS"
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/443cb67c45a8f2e9fc5d6c753e981266.png"
 draft: false
 ---
-
 ![image](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/443cb67c45a8f2e9fc5d6c753e981266.png)
 
 ## Node.js는 어떻게 요청을 처리할까?

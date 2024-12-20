@@ -1,15 +1,15 @@
 ---
 title: "Thumbs Up v1.0"
+slug: "thumbs-up-v1-0"
 date: 2024-11-02
 tags: ["토이프로젝트", "React", "TypeScript", "TailwindCSS"]
 category: "Series/thumbs-up"
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/96853286d6745f087ef00bf2d48b8a3d.png"
 draft: false
 ---
-
 ![image](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/96853286d6745f087ef00bf2d48b8a3d.png)
 
-블로그에 사용할 1:1 비율의 썸네일 제작 도구가 필요해 직접 개발한 프로젝트다. 다양한 사용자 요구를 반영해 비율과 스타일을 자유롭게 설정할 수 있도록 했다.
+블로그에 사용할 1:1 비율의 썸네일 제작 도구가 필요해 개발하게 된 프로젝트
 
 ---
 ## 주요 기능
@@ -30,7 +30,7 @@ draft: false
 
 ### 사용자 경험 최적화
 - 썸네일 미리보기
-- 이미지 다운로드 및 클립보드 복사 기능
+- 이미지 다운로드 및 클립보드 복사
 - 반응형 인터페이스
 
 ---
@@ -54,7 +54,7 @@ Github Pages를 통해 배포했으며, 다음과 같은 이유로 선택했다.
 - CI/CD 파이프라인 구축 용이
 - HTTPS 지원
 
-프로젝트는 [Thumbs Up](https://nullisdefined.github.io/thumbs-up/)에서 확인할 수 있다.
+배포된 프로젝트는 [Thumbs Up](https://nullisdefined.github.io/thumbs-up/)에서 확인할 수 있다.
 
 ---
 ## 향후 개선 사항

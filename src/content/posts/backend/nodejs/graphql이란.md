@@ -1,12 +1,12 @@
 ---
 title: "GraphQL이란?"
+slug: "graphql이란"
 date: 2024-11-30
 tags: ["NodeJS", "GraphQL"]
 category: "Backend/NodeJS"
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/35467ed7b1bf2f0acd84f17735f7f7b7.png"
 draft: false
 ---
-
 ![image](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/35467ed7b1bf2f0acd84f17735f7f7b7.png)
 
 많은 프로젝트에서 REST API가 기본으로 사용되지만, 그 구조적인 한계로 인해 데이터 전송에 비효율이 발생할 때가 있다. 대표적으로 Over Fetching과 Under Fetching 문제다.

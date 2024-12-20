@@ -1,12 +1,11 @@
 ---
 title: "[JS] 다중 포인터 패턴"
+slug: "js-다중-포인터-패턴"
 date: 2024-12-11
 tags: ["JavaScript"]
 category: "CS/Data Structure"
-thumbnail: ""
 draft: true
 ---
-
 다중 포인터 패턴은 배열이나 문자열과 같은 선형 구조에서 두 개 이상의 포인터를 가지고 데이터를 처리하는 알고리즘 패턴이다. 이 패턴은 특히 정렬된 배열에서 효율적으로 값을 찾거나 비교할 때 유용하다.
 
 ## 기본 개념

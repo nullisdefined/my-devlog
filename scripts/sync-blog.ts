@@ -11,8 +11,9 @@ interface BlogSyncConfig {
 }
 
 interface FrontMatter {
-  title?: string;
+  title: string;
   category?: string;
+  slug?: string;
   tags?: string[] | string;
   [key: string]: any;
 }
@@ -135,24 +136,47 @@ class BlogSync {
 
       const { data, content: mdContent } = matter(updatedContent);
 
+      // title만 필수로 체크
+      if (!data.title) return;
+
       const frontMatter = data as FrontMatter;
-      if (!frontMatter.title || !frontMatter.category) return;
 
-      let category = frontMatter.category || "Uncategorized";
-      let categoryPath: string;
+      let categoryPath = "posts/uncategorized";
 
-      if (category.includes("/")) {
-        const [parentCategory, childCategory] = category.split("/");
-        categoryPath = path.join(
-          "posts",
-          parentCategory.toLowerCase(),
-          childCategory.toLowerCase().replace(/\./g, "").replace(/\s+/g, "-")
-        );
+      // category는 필요할 때만 사용
+      if (frontMatter.category) {
+        if (frontMatter.category.includes("/")) {
+          const [parentCategory, childCategory] =
+            frontMatter.category.split("/");
+          categoryPath = path.join(
+            "posts",
+            parentCategory.toLowerCase(),
+            childCategory.toLowerCase().replace(/\./g, "").replace(/\s+/g, "-")
+          );
+        } else {
+          categoryPath = path.join(
+            "posts",
+            frontMatter.category.toLowerCase().replace(/\s+/g, "-")
+          );
+        }
+      }
+
+      const postsDir = path.join(this.nextContentDir, categoryPath);
+      if (!fs.existsSync(postsDir)) {
+        fs.mkdirSync(postsDir, { recursive: true });
+      }
+
+      let slug: string;
+      if (frontMatter.slug) {
+        slug = frontMatter.slug;
       } else {
-        categoryPath = path.join(
-          "posts",
-          category.toLowerCase().replace(/\s+/g, "-")
-        );
+        const existingSlug = Array.from(this.existingNextPosts.entries()).find(
+          ([_, existingPath]) =>
+            existingPath ===
+            path.join(postsDir, `${this.createSlug(frontMatter.title)}.md`)
+        )?.[0];
+
+        slug = existingSlug || this.createSlug(frontMatter.title);
       }
 
       const stats = fs.statSync(filePath);
@@ -162,32 +186,24 @@ class BlogSync {
       const [processedContent, firstImageUrl] = this.processImages(mdContent);
       const thumbnail = frontMatter.thumbnail || firstImageUrl || "";
 
+      const destPath = path.join(postsDir, `${slug}.md`);
+
       const yamlContent = [
         "---",
-        `title: "${frontMatter.title || path.basename(filePath, ".md")}"`,
+        `title: "${frontMatter.title}"`,
+        `slug: "${slug}"`,
         `date: ${fileDate}`,
         `tags: [${tags.map((tag) => `"${tag}"`).join(", ")}]`,
-        `category: "${category}"`,
-        `thumbnail: "${thumbnail}"`,
+        frontMatter.category ? `category: "${frontMatter.category}"` : null,
+        thumbnail ? `thumbnail: "${thumbnail}"` : null,
         `draft: ${frontMatter.draft || false}`,
         "---",
         "",
         processedContent,
-      ].join("\n");
+      ]
+        .filter(Boolean)
+        .join("\n");
 
-      const postsDir = path.join(this.nextContentDir, categoryPath);
-
-      if (!fs.existsSync(postsDir)) {
-        fs.mkdirSync(postsDir, { recursive: true });
-      }
-
-      const slug = this.createSlug(
-        frontMatter.title || path.basename(filePath, ".md")
-      );
-
-      const destPath = path.join(postsDir, `${slug}.md`);
-
-      // Remove the old file if it exists at a different location
       const oldPath = this.existingNextPosts.get(slug);
       if (oldPath && oldPath !== destPath) {
         if (fs.existsSync(oldPath)) {
@@ -197,11 +213,9 @@ class BlogSync {
         this.existingNextPosts.delete(slug);
       }
 
-      // Write the new file
       fs.writeFileSync(destPath, yamlContent);
       console.log(`Processed: ${destPath}`);
 
-      // Remove from existingNextPosts as this post is still valid
       this.existingNextPosts.delete(slug);
       this.processedFiles.add(filePath);
     } catch (error: any) {

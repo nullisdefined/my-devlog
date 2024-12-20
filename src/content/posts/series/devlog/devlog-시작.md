@@ -1,12 +1,11 @@
 ---
 title: "Devlog 시작"
+slug: "devlog-시작"
 date: 2024-10-28
 tags: []
 category: "Series/devlog"
-thumbnail: ""
 draft: false
 ---
-
 요즘 많은 개발자들이 자신의 지식과 경험을 블로그에 기록하며 소통하고 있다. Tistory나 Velog 같은 검증된 플랫폼이 있지만, 직접 개발해보기로 정했다.
 
 개발 과정 자체가 학습의 기회라고 생각했다. 기획부터 디자인, 개발, 배포까지 모든 과정을 직접 고민하고 경험하면서 더 많은 것을 배울 수 있을 것 같았다.

@@ -1,12 +1,12 @@
 ---
 title: "[TS] 타입 시스템 이해하기"
+slug: "ts-타입-시스템-이해하기"
 date: 2024-11-13
 tags: ["TypeScript"]
 category: "Languages/TypeScript"
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/bdb3fceafe9378092615c3f6ddf659a2.png"
 draft: false
 ---
-
 ![image](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/bdb3fceafe9378092615c3f6ddf659a2.png)
 
 TypeScript는 JavaScript의 상위 집합으로 최종적으로 JavaScript 코드로 변환되어 실행된다.

@@ -1,12 +1,12 @@
 ---
 title: "[TS] 클래스(Class)"
+slug: "ts-클래스-class"
 date: 2024-11-17
 tags: ["TypeScript", "Class"]
 category: "Languages/TypeScript"
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/bdb3fceafe9378092615c3f6ddf659a2.png"
 draft: false
 ---
-
 ![image](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/bdb3fceafe9378092615c3f6ddf659a2.png)
 
 TypeScript의 클래스는 JavaScript의 클래스 문법을 기반으로 하되, 타입 시스템과 접근 제어자 등 객체 지향 프로그래밍의 핵심 기능들을 추가로 제공한다.

@@ -14,7 +14,8 @@ export function Comments() {
     script.setAttribute("data-repo-id", "R_kgDONC5Xiw");
     script.setAttribute("data-category", "General");
     script.setAttribute("data-category-id", "DIC_kwDONC5Xi84CjmQ-");
-    script.setAttribute("data-mapping", "pathname");
+    script.setAttribute("data-mapping", "specific");
+    script.setAttribute("data-term", window.location.pathname);
     script.setAttribute("data-strict", "0");
     script.setAttribute("data-reactions-enabled", "1");
     script.setAttribute("data-emit-metadata", "0");

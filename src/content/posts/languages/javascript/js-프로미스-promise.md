@@ -1,12 +1,12 @@
 ---
 title: "[JS] 프로미스(Promise)"
+slug: "js-프로미스-promise"
 date: 2024-12-16
 tags: ["JavaScript", "Promise"]
 category: "Languages/JavaScript"
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/7089d24aaadae68bb65e4270e212017a.png"
 draft: false
 ---
-
 ![image](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/7089d24aaadae68bb65e4270e212017a.png)
 
 JavaScript는 웹 브라우저 또는 Node.js 환경에서 동작하는 단일 스레드 기반 언어이기 때문에, 긴 시간이 소요되는 작업(네트워크 요청, 파일 입출력, 타이머 등)을 동기적으로 처리하면 애플리케이션이 멈춘 것처럼 보이는 현상이 발생하게 될 것이다. 이를 막기 위해 JavaScript는 오래 걸리는 작업을 비동기적으로 처리하는 방식을 사용한다.
