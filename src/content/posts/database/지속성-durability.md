@@ -1,6 +1,6 @@
 ---
 title: "지속성(Durability)"
-date: 2024-12-18
+date: 2024-12-20
 tags: ["Database", "Transaction", "ACID"]
 category: "Database"
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/9cdeb1456717e422b1e2143c003209d1.png"
