@@ -22,7 +22,7 @@ class BlogSync {
   private obsidianDir: string;
   private nextContentDir: string;
   private processedFiles: Set<string>;
-  private existingNextPosts: Map<string, string>; // slug -> full path mapping
+  private existingNextPosts: Map<string, string>;
 
   constructor(config: BlogSyncConfig) {
     this.obsidianDir = config.obsidianDir;
@@ -168,7 +168,7 @@ class BlogSync {
 
       let slug: string;
       if (frontMatter.slug) {
-        slug = frontMatter.slug;
+        slug = this.createSlug(frontMatter.slug);
       } else {
         const existingSlug = Array.from(this.existingNextPosts.entries()).find(
           ([_, existingPath]) =>
