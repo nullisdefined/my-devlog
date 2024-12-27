@@ -1,9 +1,11 @@
-require("dotenv").config({ path: ".env.local" });
+import * as dotenv from "dotenv";
+import * as fs from "fs";
+import * as path from "path";
+import * as chokidar from "chokidar";
+import matter from "gray-matter";
+import * as os from "os"; // OS 관련 기능 추가
 
-const fs = require("fs");
-const path = require("path");
-const chokidar = require("chokidar");
-const matter = require("gray-matter");
+dotenv.config({ path: ".env.local" });
 
 interface BlogSyncConfig {
   obsidianDir: string;
@@ -25,15 +27,42 @@ class BlogSync {
   private existingNextPosts: Map<string, string>;
 
   constructor(config: BlogSyncConfig) {
-    this.obsidianDir = config.obsidianDir;
-    this.nextContentDir = config.nextContentDir;
+    // 경로 정규화
+    this.obsidianDir = path.resolve(this.normalizePath(config.obsidianDir));
+    this.nextContentDir = path.resolve(
+      this.normalizePath(config.nextContentDir)
+    );
     this.processedFiles = new Set();
     this.existingNextPosts = new Map();
 
     this.initSync();
   }
 
+  // 경로 정규화를 위한 새로운 메서드
+  private normalizePath(inputPath: string): string {
+    // 홈 디렉토리 처리 ('~' 확장)
+    if (inputPath.startsWith("~")) {
+      inputPath = inputPath.replace("~", os.homedir());
+    }
+
+    // 경로 구분자 정규화
+    return path.normalize(inputPath);
+  }
+
   private async initSync(): Promise<void> {
+    // 디렉토리 존재 확인
+    if (!fs.existsSync(this.obsidianDir)) {
+      throw new Error(`Obsidian directory not found: ${this.obsidianDir}`);
+    }
+    if (!fs.existsSync(this.nextContentDir)) {
+      throw new Error(
+        `Next.js content directory not found: ${this.nextContentDir}`
+      );
+    }
+
+    console.log(`Watching Obsidian directory: ${this.obsidianDir}`);
+    console.log(`Syncing to Next.js content directory: ${this.nextContentDir}`);
+
     await this.scanNextContentDir();
 
     const watcher = chokidar.watch(this.obsidianDir, {
@@ -46,13 +75,16 @@ class BlogSync {
         "**/template/**",
         "**/_templates/**",
       ],
+      followSymlinks: false, // 맥OS의 심볼릭 링크 처리
     });
 
     watcher
       .on("add", (filePath: string) => this.handleFile(filePath))
       .on("change", (filePath: string) => this.handleFile(filePath))
+      .on("error", (error: Error) => console.error(`Watcher error: ${error}`))
       .on("ready", () => {
         this.cleanupOrphanedPosts();
+        console.log("Initial scan complete");
         process.exit(0);
       });
   }
@@ -132,7 +164,7 @@ class BlogSync {
 
       if (!content.includes("#devlog")) return;
 
-      let updatedContent = content.replace(/#devlog/g, "").trim();
+      const updatedContent = content.replace(/#devlog/g, "").trim();
 
       const { data, content: mdContent } = matter(updatedContent);
 
@@ -271,13 +303,16 @@ class BlogSync {
 }
 
 try {
-  if (!process.env.OBSIDIAN_DIR) throw new Error("OBSIDIAN_DIR is not set");
-  if (!process.env.NEXT_CONTENT_DIR)
-    throw new Error("NEXT_CONTENT_DIR is not set");
+  const obsidianDir = process.env.OBSIDIAN_DIR;
+  const nextContentDir = process.env.NEXT_CONTENT_DIR;
+
+  if (!obsidianDir) throw new Error("OBSIDIAN_DIR is not set in .env.local");
+  if (!nextContentDir)
+    throw new Error("NEXT_CONTENT_DIR is not set in .env.local");
 
   const config: BlogSyncConfig = {
-    obsidianDir: process.env.OBSIDIAN_DIR,
-    nextContentDir: process.env.NEXT_CONTENT_DIR,
+    obsidianDir,
+    nextContentDir,
   };
 
   new BlogSync(config);

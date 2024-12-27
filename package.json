@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "sync": "ts-node scripts/sync-blog.ts",
+    "sync": "ts-node --project tsconfig.scripts.json scripts/sync-blog.ts",
     "postbuild": "next-sitemap"
   },
   "dependencies": {
