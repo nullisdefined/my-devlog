@@ -2,10 +2,10 @@
 title: "ES15 / ECMAScript 2024 새로운 모습"
 slug: "es15-ecmascript-2024-새로운-모습"
 date: 2025-01-02
-tags: ["JavaScript"]
+tags: ["JavaScript", "PatternMatching", "Set", "TemporalAPI"]
 category: "Languages/JavaScript"
 thumbnail: "https://miro.medium.com/v2/resize:fit:1400/1*J6tqpXBB9FkZeW8peS5HWg.png"
-draft: true
+draft: false
 ---
 ![](https://miro.medium.com/v2/resize:fit:1400/1*J6tqpXBB9FkZeW8peS5HWg.png)
 새로운 ECMAScript 버전, ES15(ECMAScript 2024)가 드디어 등장했다.
@@ -130,7 +130,7 @@ const nextMonth = date.add({ months: 1 });
 
 날짜와 시간을 다루는 작업이 훨씬 간단하고 논리적으로 바뀌었다.
 
-## 결론
+## 마무리
 ES15 / ECMAScript 2024는 JavaScript의 강력함과 즐거움을 한 단계 더 끌어올렸다. 이번 업데이트로 패턴 매칭, 파이프라인 연산자, Set과 배열 메서드, 날짜 관리 등 다양한 작업이 훨씬 간단해졌다.
 
 ---

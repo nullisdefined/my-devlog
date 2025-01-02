@@ -1,11 +1,11 @@
 ---
 title: "Node.js is Not Single-Threaded"
 slug: "node-js-is-not-single-threaded"
-date: 2025-01-02
+date: 2025-01-03
 tags: ["NodeJS", "JavaScript"]
 category: "Backend/NodeJS"
 thumbnail: "https://miro.medium.com/v2/resize:fit:1400/1*ZA75t1puirE_p7gbZ9aZpQ.png"
-draft: true
+draft: false
 ---
 ![](https://miro.medium.com/v2/resize:fit:1400/1*ZA75t1puirE_p7gbZ9aZpQ.png)
 Node.js는 싱글 스레드 아키텍처를 통해 서버 자원을 효율적으로 활용하며 빠른 속도를 자랑한다. 하지만 정말 단일 스레드만으로 이러한 성능을 낼 수 있을까?
@@ -140,7 +140,7 @@ Node.js는 비동기 코드를 단일 스레드로 실행할 수 있도록 강�
 운영 체제별로 이벤트 디멀티플렉서 구현 방식이 다르기 때문에, 일부 I/O 작업은 완전한 비동기 처리가 어렵다. 특히 파일 I/O 구현에서 이러한 문제가 두드러지며, 이는 일부 Node.js의 DNS 함수에도 영향을 미친다.
 
 뿐만 아니라 비동기 처리로 완전히 해결되지 않는 작업들은 다음과 같다.
-- DNS 작업: `dns.lookup`같은 작업은 원격 서버를 쿼리해야 하므로 블록킹될 수 있다.
+- DNS 작업: `dns.lookup`같은 작업은 원격 서버를 쿼리해야 하므로 블로킹될 수 있다.
 - CPU 집중 작업: 암호화(cryptography) 등 연산 집약적인 작업
 - 압축 작업: ZIP 파일 생성 등
 
@@ -157,9 +157,16 @@ Node.js 자체는 단일 스레드 기반이지만, 내부적으로 사용하는
 UV_THREADPOOL_SIZE=8 node my_script.js
 ```
 
+비동기로 처리할 수 없는 I/O 작업이 발생할 때 Node.js는 다음과 같은 방식으로 처리한다. 하지만 일반적인 비동기 작업과는 몇 가지 차이가 있다.
 
+1. 이벤트 디멀티플렉서는 I/O 작업의 소스를 확인한 뒤, 해당 작업을 작업 큐에 등록한다.
+2. 스레드 풀은 작업 큐를 지속적으로 확인하며, 새로운 작업이 들어오면 이를 감지한다.
+3. 작업 큐에 새로운 작업이 추가되면, 스레드 풀은 준비된 스레드 중 하나를 사용해 비동기적으로 작업을 처리한다.
+4. 작업이 완료되면 스레드 풀은 작업 결과를 이벤트 큐에 추가해 이벤트 루프가 처리할 수 있도록 한다.
 
+I/O 작업은 실제로 완전한 비동기로 처리될 수 없다. 이는 물리적인 제약 때문인데, 데이터 전송 속도는 하드웨어 성능에 따라 정해질 뿐 더 빠르게 처리할 방법은 없다.
 
+세상에 완벽한 것은 없기 때문에, 하드웨어가 발전하기 전까지 우리가 가진 자원을 활용해 최적화된 알고리즘으로 최대한 효율적으로 처리하는 수밖에 없다.
 
 ---
 이 글은 Tkachenko Evgeny의 [Node.js is Not Single-Threaded](https://medium.com/@tkachenko.hello/node-js-is-not-single-threaded-1383594dbd17)를 한글로 번역한 글입니다.

@@ -1,11 +1,11 @@
 ---
 title: "JavaScript vs. TypeScript"
 slug: "javascript-vs-typescript"
-date: 2025-01-01
+date: 2025-01-02
 tags: ["JavaScript", "TypeScript"]
 category: "Languages/JavaScript"
 thumbnail: "https://miro.medium.com/v2/resize:fit:1400/1*e-kmaRa9iJL82Je5vVn-AA.png"
-draft: true
+draft: false
 ---
 상황을 상상해보자. 새로운 프로젝트를 시작하려 한다. 사용할 툴은 준비되어 있고, 캔버스는 비어있다. 첫 줄의 코드를 작성하기 전에, 중요한 질문이 떠오른다. "JavaScript를 사용할 것인가, TypeScript를 사용할 것인가?" 이 결정은 개발 경험과 더 나아가 프로젝트의 성공에 큰 영향을 미칠 수 있다. 이 글에서는 두 언어의 대결을 탐구하며 2025년에는 어느 쪽이 더 주목할 가치가 있는지 살펴본다.
 
@@ -41,7 +41,7 @@ JavaScript와 TypeScript 모두 사용해본 결과, 둘 중 어떤 것을 선�
 
 TypeScript는 마치 경험 많은 선배가 내 코드를 검토해 주는 것처럼 안정감을 준다.
 
-## 결론: 상황에 따라 선택하자
+## 상황에 따라 선택하자
 정답은 없다. 중요한 건 필요와 상황에 맞는 언어를 선택하는 것이다. 하지만 앞으로의 시대를 대비하려면 TypeScript를 배우는 것이 필수처럼 느껴질 날이 올지도 모른다. 그러니 JavaScript로 시작해 TypeScript로 확장하는 방법을 추천한다.
 
 ---
