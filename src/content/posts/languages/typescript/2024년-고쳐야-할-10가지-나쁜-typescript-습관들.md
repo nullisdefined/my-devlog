@@ -1,6 +1,6 @@
 ---
-title: "2024년에 고쳐야 할 10가지 나쁜 TypeScript 습관들"
-slug: "2024년에-고쳐야-할-10가지-나쁜-typescript-습관들"
+title: "2024년 고쳐야 할 10가지 나쁜 TypeScript 습관들"
+slug: "2024년-고쳐야-할-10가지-나쁜-typescript-습관들"
 date: 2025-01-01
 tags: ["TypeScript"]
 category: "Languages/TypeScript"
