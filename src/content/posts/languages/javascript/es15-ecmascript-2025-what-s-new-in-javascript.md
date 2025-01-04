@@ -1,6 +1,6 @@
 ---
-title: "ES15 / ECMAScript 2024 새로운 모습"
-slug: "es15-ecmascript-2024-새로운-모습"
+title: "ES15 / ECMAScript 2025: What’s New in JavaScript? 🎉✨"
+slug: "es15-ecmascript-2025-what-s-new-in-javascript"
 date: 2025-01-02
 tags: ["JavaScript", "PatternMatching", "Set", "TemporalAPI"]
 category: "Languages/JavaScript"
