@@ -90,8 +90,8 @@ export const languageConfigs: Record<string, LanguageConfig> = {
   },
   markdown: {
     icon: "MD",
-    borderColor: "border-[#000000]",
-    color: "#000000",
+    borderColor: "border-[#D2B48C]",
+    color: "#D2B48C",
     aliases: ["md"],
   },
   shell: {
