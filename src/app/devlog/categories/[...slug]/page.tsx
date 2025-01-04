@@ -1,11 +1,7 @@
-import { Post } from "@/types/index";
-import { getPostList } from "@/lib/posts";
 import { notFound } from "next/navigation";
-import { PostCard } from "@/components/devlog/post-card";
-import { Pagination } from "@/components/devlog/pagination";
 import { categories, CategoryItem } from "@/config/categories";
-import { DevlogLayout } from "@/components/devlog/layout/devlog-layout";
-import { SortButton } from "@/components/devlog/sort-button";
+import { CategoryView } from "@/components/devlog/category-view";
+import { getPostList } from "@/lib/posts";
 
 export async function generateStaticParams() {
   const paths: { slug: string[] }[] = [];
@@ -84,7 +80,11 @@ export default async function CategoryPage({
     notFound();
   }
 
-  const Icon = currentCategory.icon;
+  const currentCategoryWithIconName = {
+    ...currentCategory,
+    iconName: currentCategory.icon.name,
+  };
+
   const currentPage = Number(searchParams.page) || 1;
   const postsPerPage = 6;
   const totalPages = Math.ceil(categoryPosts.length / postsPerPage);
@@ -95,44 +95,14 @@ export default async function CategoryPage({
   );
 
   return (
-    <DevlogLayout posts={allPosts} isListPage={true}>
-      <div className="space-y-8">
-        <div className="space-y-4">
-          <div className="flex items-center gap-2">
-            <Icon className="w-6 h-6" />
-            <h1 className="text-3xl font-bold">{currentCategory.name}</h1>
-          </div>
-
-          <div className="flex items-center justify-between">
-            <p className="text-muted-foreground">
-              {categoryPosts.length}{" "}
-              {categoryPosts.length === 1 ? "Post" : "Posts"} found
-            </p>
-            <SortButton order={order} />
-          </div>
-        </div>
-
-        {categoryPosts.length > 0 ? (
-          <>
-            <div className="grid grid-cols-1 gap-4">
-              {currentPosts.map((post: Post) => (
-                <PostCard
-                  key={`${post.urlCategory}/${post.slug}`}
-                  post={post}
-                />
-              ))}
-            </div>
-
-            {totalPages > 1 && (
-              <Pagination currentPage={currentPage} totalPages={totalPages} />
-            )}
-          </>
-        ) : (
-          <div className="text-center py-8 text-muted-foreground">
-            No posts in this category yet.
-          </div>
-        )}
-      </div>
-    </DevlogLayout>
+    <CategoryView
+      posts={currentPosts}
+      allPosts={allPosts}
+      currentCategory={currentCategoryWithIconName}
+      order={order}
+      categoryPosts={categoryPosts}
+      currentPage={currentPage}
+      totalPages={totalPages}
+    />
   );
 }
