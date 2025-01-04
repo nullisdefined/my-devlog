@@ -3,9 +3,12 @@ title: "[JS] 다중 포인터 패턴"
 slug: "js-다중-포인터-패턴"
 date: 2024-12-11
 tags: ["JavaScript"]
-category: "CS/Data Structure"
-draft: true
+category: "Problem Solving"
+thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com//images/0b53f64a5a8cb22143202c084192b585.png"
+draft: false
 ---
+![image](https://nullisdefined.s3.ap-northeast-2.amazonaws.com//images/0b53f64a5a8cb22143202c084192b585.png)
+
 다중 포인터 패턴은 배열이나 문자열과 같은 선형 구조에서 두 개 이상의 포인터를 가지고 데이터를 처리하는 알고리즘 패턴이다. 이 패턴은 특히 정렬된 배열에서 효율적으로 값을 찾거나 비교할 때 유용하다.
 
 ## 기본 개념
@@ -78,4 +81,4 @@ console.log(countUniqueValues([]));                             // 0
 
 
 ---
-이 프로젝트의 모든 소스 코드는 GitHub에 공개되어 있습니다. 코드 품질 개선이나 새로운 기능 제안에 대한 피드백은 언제나 환영입니다.
+이 글은 Udemy의 [【한글자막】 JavaScript 알고리즘 & 자료구조 마스터클래스](https://www.udemy.com/course/best-javascript-data-structures/) 강의를 토대로 공부한 내용을 정리한 것입니다.

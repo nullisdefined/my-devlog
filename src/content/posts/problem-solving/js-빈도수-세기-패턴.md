@@ -3,9 +3,9 @@ title: "[JS] 빈도수 세기 패턴"
 slug: "js-빈도수-세기-패턴"
 date: 2024-11-29
 tags: ["JavaScript"]
-category: "CS/Data Structure"
+category: "Problem Solving"
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/5527369119ba6ac9455d02961c357398.png"
-draft: true
+draft: false
 ---
 ![image](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/5527369119ba6ac9455d02961c357398.png)
 
@@ -59,7 +59,7 @@ console.log(same([1,2,3], [1,4,9])); // true
 console.log(same([1,2,3], [1,9])); // false
 console.log(same([1,2,1], [4,4,1])); // false
 ```
-`frequencyCounter1[val] || 0`는 JavaScript의 특성상 없는 요소에 접근할 때 `undefined`가 반환되기 때문에 사용된다.
+- `frequencyCounter1[val] || 0`는 JavaScript의 특성상 없는 요소에 접근할 때 `undefined`가 반환되기 때문에 사용
 
 ## 예제2: 에너그램 확인
 두 문자열이 에너그램(anagram)인지 확인하는 문제도 빈도수 세기 패턴을 활용할 수 있다.
@@ -96,7 +96,6 @@ console.log(validAnagram('awesome', 'awesom')); // false
 ```
 
 ## 시간 복잡도
-빈도수 세기 패턴의 최대 장점은 시간 복잡도를 개선할 수 있다는 것이다.
 - 중첩 반복문을 사용할 경우: O(n^2)
 - 빈도수 세기 패턴 사용: O(n)
 

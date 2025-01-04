@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "sync": "ts-node --project tsconfig.scripts.json scripts/sync-blog.ts",
-    "postbuild": "next-sitemap"
+    "postbuild": "next-sitemap",
+    "deploy": "./scripts/deploy.sh"
   },
   "dependencies": {
     "@giscus/react": "^3.0.0",
