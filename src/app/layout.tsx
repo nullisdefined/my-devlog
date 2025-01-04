@@ -53,8 +53,20 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Devlog",
-  description: "메인 페이지 입니다.",
+  title: {
+    default: "Devlog",
+    template: "%s | Devlog",
+  },
+  description:
+    "A personal blog dedicated to sharing insights and experiences in software development.",
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+    },
+  },
   viewport: {
     width: "device-width",
     initialScale: 1,

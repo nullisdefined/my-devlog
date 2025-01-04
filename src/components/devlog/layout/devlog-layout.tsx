@@ -6,25 +6,25 @@ import { DevlogSidebar } from "./devlog-sidebar";
 import { MobileSidebarToggle } from "./mobile-sidebar-toggle";
 import Footer from "@/components/footer";
 import { TableOfContents } from "./table-of-contents";
-import { TableOfContentsItem, Post } from "@/types/index";
+import { Post } from "@/types/index";
 import { ScrollToTop } from "../scroll-to-top";
 import { cn } from "@/lib/class-name-utils";
+import { useToc } from "@/app/context/toc-provider";
 
 interface DevlogLayoutProps {
   children: React.ReactNode;
-  toc?: TableOfContentsItem[];
   posts?: Post[];
   isListPage?: boolean;
 }
 
 export function DevlogLayout({
   children,
-  toc = [],
   posts = [],
   isListPage = false,
 }: DevlogLayoutProps) {
   const [mounted, setMounted] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const { toc } = useToc();
 
   useEffect(() => {
     if (isSidebarOpen) {
@@ -84,10 +84,10 @@ export function DevlogLayout({
               </div>
             </main>
 
-            {toc && toc.length > 0 && (
+            {toc && (
               <aside className="hidden md:block w-60 shrink-0">
                 <div className="sticky top-20 pt-[46px] flex flex-col gap-2">
-                  <TableOfContents items={toc} />
+                  <TableOfContents toc={toc} />
                 </div>
               </aside>
             )}

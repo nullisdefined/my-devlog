@@ -1,4 +1,3 @@
-import { DevlogLayout } from "@/components/devlog/layout/devlog-layout";
 import { PostCard } from "@/components/devlog/post-card";
 import { getPostList } from "@/lib/posts";
 import { Pagination } from "@/components/devlog/pagination";
@@ -26,30 +25,28 @@ export default async function DevlogPage({
   );
 
   return (
-    <DevlogLayout posts={posts} isListPage={true}>
-      <div className="space-y-8">
-        <div className="flex flex-col gap-4">
-          <h1 className="text-3xl font-bold flex items-center gap-2">
-            <LayoutGrid className="w-6 h-6" />
-            All Posts
-          </h1>
+    <div className="space-y-8">
+      <div className="flex flex-col gap-4">
+        <h1 className="text-3xl font-bold flex items-center gap-2">
+          <LayoutGrid className="w-6 h-6" />
+          All Posts
+        </h1>
 
-          <div className="flex items-center justify-between">
-            <p className="text-muted-foreground">
-              {posts.length} {posts.length === 1 ? "Post" : "Posts"} found
-            </p>
-            <SortButton order={order} />
-          </div>
+        <div className="flex items-center justify-between">
+          <p className="text-muted-foreground">
+            {posts.length} {posts.length === 1 ? "Post" : "Posts"} found
+          </p>
+          <SortButton order={order} />
         </div>
-
-        <div className="grid grid-cols-1 gap-4">
-          {currentPosts.map((post) => (
-            <PostCard key={post.slug} post={post} />
-          ))}
-        </div>
-
-        <Pagination currentPage={currentPage} totalPages={totalPages} />
       </div>
-    </DevlogLayout>
+
+      <div className="grid grid-cols-1 gap-4">
+        {currentPosts.map((post) => (
+          <PostCard key={post.slug} post={post} />
+        ))}
+      </div>
+
+      <Pagination currentPage={currentPage} totalPages={totalPages} />
+    </div>
   );
 }

@@ -1,19 +1,21 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useMemo } from "react";
 import { TableOfContentsItem } from "@/types/index";
 import { cn } from "@/lib/class-name-utils";
 import { useHeaderStore } from "@/store/header-store";
 
 interface TocProps {
-  items: TableOfContentsItem[];
+  toc: TableOfContentsItem[] | null;
 }
 
-export function TableOfContents({ items }: TocProps) {
+export function TableOfContents({ toc }: TocProps) {
   const [activeId, setActiveId] = useState<string>("");
   const [isExpanded, setIsExpanded] = useState(false);
   const { setForceHidden } = useHeaderStore();
   const tocRef = useRef<HTMLDivElement>(null);
+
+  const items = toc || [];
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -103,24 +105,33 @@ export function TableOfContents({ items }: TocProps) {
         )}
       >
         <p className="font-semibold mb-4 text-base hidden xl:block">Contents</p>
-        <ul className="space-y-2">
-          {items.map((item) => (
-            <li
-              key={item.id}
-              className={cn(
-                "text-sm transition-colors duration-200",
-                item.level === 2 ? "ml-0" : item.level === 3 ? "ml-4" : "ml-6",
-                activeId === item.id
-                  ? "text-primary font-medium"
-                  : "text-muted-foreground hover:text-foreground"
-              )}
-            >
-              <a href={`#${item.id}`} onClick={(e) => handleClick(e, item.id)}>
-                {item.title}
-              </a>
-            </li>
-          ))}
-        </ul>
+        {items.length > 0 && (
+          <ul className="space-y-2">
+            {items.map((item) => (
+              <li
+                key={item.id}
+                className={cn(
+                  "text-sm transition-colors duration-200",
+                  item.level === 2
+                    ? "ml-0"
+                    : item.level === 3
+                    ? "ml-4"
+                    : "ml-6",
+                  activeId === item.id
+                    ? "text-primary font-medium"
+                    : "text-muted-foreground hover:text-foreground"
+                )}
+              >
+                <a
+                  href={`#${item.id}`}
+                  onClick={(e) => handleClick(e, item.id)}
+                >
+                  {item.title}
+                </a>
+              </li>
+            ))}
+          </ul>
+        )}
       </nav>
     </div>
   );
