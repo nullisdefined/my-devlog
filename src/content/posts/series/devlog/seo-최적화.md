@@ -5,7 +5,7 @@ date: 2025-01-04
 tags: ["NextJS", "SEO"]
 category: "Series/devlog"
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com//images/86e097f8a63c767c7b899c570e74c017.png"
-draft: true
+draft: false
 ---
 ![image](https://nullisdefined.s3.ap-northeast-2.amazonaws.com//images/86e097f8a63c767c7b899c570e74c017.png)
 
