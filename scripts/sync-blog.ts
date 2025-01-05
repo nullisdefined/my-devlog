@@ -3,7 +3,7 @@ import * as fs from "fs";
 import * as path from "path";
 import * as chokidar from "chokidar";
 import matter from "gray-matter";
-import * as os from "os"; // OS 관련 기능 추가
+import * as os from "os";
 
 dotenv.config({ path: ".env.local" });
 
