@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { ThemeProvider } from "./context/theme-provider";
 import localFont from "next/font/local";
@@ -52,6 +52,13 @@ const jetbrainsMono = JetBrains_Mono({
   variable: "--font-jetbrains",
 });
 
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  viewportFit: "cover",
+};
+
 export const metadata: Metadata = {
   title: {
     default: "Devlog",
@@ -66,12 +73,6 @@ export const metadata: Metadata = {
       index: true,
       follow: true,
     },
-  },
-  viewport: {
-    width: "device-width",
-    initialScale: 1,
-    maximumScale: 1,
-    viewportFit: "cover",
   },
   icons: {
     icon: "./favicon.ico",
@@ -89,12 +90,6 @@ export default function RootLayout({
       className={`${pretendard.variable} ${jetbrainsMono.variable}`}
       suppressHydrationWarning
     >
-      <head>
-        <meta
-          name="viewport"
-          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
-        />
-      </head>
       <body
         className={`min-h-screen bg-background font-sans antialiased ${pretendard.className}`}
       >

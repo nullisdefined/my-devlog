@@ -80,11 +80,6 @@ export default async function CategoryPage({
     notFound();
   }
 
-  const currentCategoryWithIconName = {
-    ...currentCategory,
-    iconName: currentCategory.icon.name,
-  };
-
   const currentPage = Number(searchParams.page) || 1;
   const postsPerPage = 6;
   const totalPages = Math.ceil(categoryPosts.length / postsPerPage);
@@ -94,11 +89,18 @@ export default async function CategoryPage({
     currentPage * postsPerPage
   );
 
+  const categoryForClient = {
+    name: currentCategory.name,
+    path: currentCategory.path,
+    iconName: currentCategory.icon.name,
+    description: currentCategory.description,
+  };
+
   return (
     <CategoryView
       posts={currentPosts}
       allPosts={allPosts}
-      currentCategory={currentCategoryWithIconName}
+      currentCategory={categoryForClient}
       order={order}
       categoryPosts={categoryPosts}
       currentPage={currentPage}

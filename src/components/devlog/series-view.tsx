@@ -8,18 +8,30 @@ import { Card } from "@/components/ui/card";
 import { SortButton } from "./sort-button";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import * as Icons from "lucide-react";
-import { CategoryItem } from "@/config/categories";
+import { IconMapper } from "./icon-mapper";
 
 interface SeriesViewProps {
   currentPosts: Post[];
-  currentSeries: Omit<CategoryItem, "icon"> & { iconName: string };
+  currentSeries: {
+    name: string;
+    path: string;
+    iconName: string;
+    description?: string;
+  };
   seriesPosts: Post[];
   order: "asc" | "desc";
   currentPage: number;
   totalPages: number;
-  previous: CategoryItem | null;
-  next: CategoryItem | null;
+  previous: {
+    name: string;
+    path: string;
+    iconName: string;
+  } | null;
+  next: {
+    name: string;
+    path: string;
+    iconName: string;
+  } | null;
 }
 
 export function SeriesView({
@@ -32,15 +44,15 @@ export function SeriesView({
   previous,
   next,
 }: SeriesViewProps) {
-  // @ts-expect-error - Dynamic icon import from lucide-react can't be typed properly
-  const Icon = Icons[currentSeries.iconName];
-
   return (
     <div className="space-y-8">
       <div className="space-y-6">
         <div className="flex flex-col gap-4">
           <div className="flex items-center gap-2 pb-3">
-            <Icon className="w-8 h-8 text-primary" />
+            <IconMapper
+              name={currentSeries.iconName}
+              className="w-8 h-8 text-primary"
+            />
             <h1 className="text-3xl font-bold">{currentSeries.name}</h1>
           </div>
           {currentSeries.description && (

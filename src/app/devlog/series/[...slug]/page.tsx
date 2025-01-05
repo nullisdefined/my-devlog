@@ -55,11 +55,6 @@ export default async function SeriesPage({
     notFound();
   }
 
-  const currentSeriesWithIconName = {
-    ...currentSeries,
-    iconName: currentSeries.icon.name,
-  };
-
   const currentPage = Number(searchParams.page) || 1;
   const postsPerPage = 6;
   const totalPages = Math.max(1, Math.ceil(seriesPosts.length / postsPerPage));
@@ -87,16 +82,39 @@ export default async function SeriesPage({
 
   const { previous, next } = findAdjacentSeries();
 
+  const currentSeriesForClient = {
+    name: currentSeries.name,
+    path: currentSeries.path,
+    iconName: currentSeries.icon.name,
+    description: currentSeries.description,
+  };
+
+  const previousForClient = previous
+    ? {
+        name: previous.name,
+        path: previous.path,
+        iconName: previous.icon.name,
+      }
+    : null;
+
+  const nextForClient = next
+    ? {
+        name: next.name,
+        path: next.path,
+        iconName: next.icon.name,
+      }
+    : null;
+
   return (
     <SeriesView
       currentPosts={currentPosts}
-      currentSeries={currentSeriesWithIconName}
+      currentSeries={currentSeriesForClient}
       seriesPosts={seriesPosts}
       order={order}
       currentPage={currentPage}
       totalPages={totalPages}
-      previous={previous}
-      next={next}
+      previous={previousForClient}
+      next={nextForClient}
     />
   );
 }

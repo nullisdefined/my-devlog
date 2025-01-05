@@ -1,16 +1,20 @@
 "use client";
 
 import { Post } from "@/types/index";
-import { CategoryItem } from "@/config/categories";
 import { PostCard } from "./post-card";
 import { Pagination } from "./pagination";
 import { SortButton } from "./sort-button";
-import * as Icons from "lucide-react";
+import { IconMapper } from "./icon-mapper";
 
 interface CategoryViewProps {
   posts: Post[];
   allPosts: Post[];
-  currentCategory: Omit<CategoryItem, "icon"> & { iconName: string };
+  currentCategory: {
+    name: string;
+    path: string;
+    iconName: string;
+    description?: string;
+  };
   order: "asc" | "desc";
   categoryPosts: Post[];
   currentPage: number;
@@ -26,14 +30,11 @@ export function CategoryView({
   currentPage,
   totalPages,
 }: CategoryViewProps) {
-  // @ts-expect-error - Dynamic icon import from lucide-react can't be typed properly
-  const Icon = Icons[currentCategory.iconName];
-
   return (
     <div className="space-y-8">
       <div className="space-y-4">
         <div className="flex items-center gap-2">
-          <Icon className="w-6 h-6" />
+          <IconMapper name={currentCategory.iconName} className="w-6 h-6" />
           <h1 className="text-3xl font-bold">{currentCategory.name}</h1>
         </div>
 
