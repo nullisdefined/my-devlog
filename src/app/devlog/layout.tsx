@@ -13,6 +13,11 @@ export const metadata: Metadata = {
   robots: {
     index: true,
     follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+    },
+    notranslate: true,
   },
   alternates: {
     canonical: "https://nullisdefined.site/devlog",

@@ -73,6 +73,7 @@ export const metadata: Metadata = {
       index: true,
       follow: true,
     },
+    notranslate: true,
   },
   icons: {
     icon: "./favicon.ico",

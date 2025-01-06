@@ -25,13 +25,21 @@ module.exports = {
     const posts = getPostList();
     const seriesPosts = getSeriesPostList();
 
+    const uniqueUrls = new Set();
     const allPosts = [...posts, ...seriesPosts];
 
-    return allPosts.map((post) => ({
-      loc: `/devlog/${post.urlCategory}/${post.slug}`,
-      lastmod: formatDate(post.date),
-      changefreq: "weekly",
-      priority: 0.8,
-    }));
+    return allPosts
+      .filter((post) => {
+        const url = `/devlog/${post.urlCategory}/${post.slug}`;
+        if (uniqueUrls.has(url)) return false;
+        uniqueUrls.add(url);
+        return true;
+      })
+      .map((post) => ({
+        loc: `/devlog/${post.urlCategory}/${post.slug}`,
+        lastmod: formatDate(post.date),
+        changefreq: "weekly",
+        priority: 0.8,
+      }));
   },
 };
