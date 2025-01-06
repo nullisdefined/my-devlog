@@ -39,7 +39,7 @@ module.exports = {
         loc: `/devlog/${post.urlCategory}/${post.slug}`,
         lastmod: formatDate(post.date),
         changefreq: "weekly",
-        priority: 0.8,
+        priority: 0.9,
       }));
   },
 };

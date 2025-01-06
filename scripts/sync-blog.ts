@@ -81,9 +81,9 @@ class BlogSync {
     watcher
       .on("add", (filePath: string) => this.handleFile(filePath))
       .on("change", (filePath: string) => this.handleFile(filePath))
+      .on("unlink", (filePath: string) => this.handleDelete(filePath)) // 파일 삭제 이벤트 추가
       .on("error", (error: Error) => console.error(`Watcher error: ${error}`))
       .on("ready", () => {
-        this.cleanupOrphanedPosts();
         console.log("Initial scan complete");
         process.exit(0);
       });
@@ -109,24 +109,45 @@ class BlogSync {
     await scanDir(this.nextContentDir);
   }
 
-  private cleanupOrphanedPosts(): void {
-    console.log("Cleaning up orphaned posts...");
-    this.existingNextPosts.forEach((filePath, slug) => {
-      if (fs.existsSync(filePath)) {
-        console.log(`Removing orphaned post: ${filePath}`);
-        fs.unlinkSync(filePath);
+  private handleDelete(filePath: string): void {
+    try {
+      // 삭제된 파일이 #devlog 태그를 가진 파일인지 확인
+      const nextFilePath = Array.from(this.existingNextPosts.entries()).find(
+        ([_, existingPath]) =>
+          existingPath.includes(path.basename(filePath, ".md"))
+      );
 
-        let dir = path.dirname(filePath);
-        while (dir !== this.nextContentDir) {
-          if (fs.readdirSync(dir).length === 0) {
-            fs.rmdirSync(dir);
-            dir = path.dirname(dir);
-          } else {
-            break;
+      if (nextFilePath) {
+        const [slug, path] = nextFilePath;
+        console.log(`Removing deleted post: ${path}`);
+        fs.unlinkSync(path);
+        this.existingNextPosts.delete(slug);
+      }
+    } catch (error) {
+      console.error(`Error handling delete for ${filePath}:`, error);
+    }
+  }
+
+  private cleanupOrphanedPosts(): void {
+    // 빈 디렉토리 정리만 수행
+    const cleanEmptyDirs = (dir: string) => {
+      const entries = fs.readdirSync(dir, { withFileTypes: true });
+
+      for (const entry of entries) {
+        if (entry.isDirectory()) {
+          const fullPath = path.join(dir, entry.name);
+          cleanEmptyDirs(fullPath);
+
+          // 디렉토리가 비어있으면 삭제
+          if (fs.readdirSync(fullPath).length === 0) {
+            fs.rmdirSync(fullPath);
+            console.log(`Removed empty directory: ${fullPath}`);
           }
         }
       }
-    });
+    };
+
+    cleanEmptyDirs(this.nextContentDir);
   }
 
   private formatDate(date: string | Date | undefined): string {
@@ -163,6 +184,9 @@ class BlogSync {
       const content = fs.readFileSync(filePath, "utf-8");
 
       if (!content.includes("#devlog")) return;
+
+      // 파일이 이미 처리되었는지 확인
+      if (this.processedFiles.has(filePath)) return;
 
       const updatedContent = content.replace(/#devlog/g, "").trim();
 
@@ -248,8 +272,9 @@ class BlogSync {
       fs.writeFileSync(destPath, yamlContent);
       console.log(`Processed: ${destPath}`);
 
-      this.existingNextPosts.delete(slug);
+      // 처리된 파일 추적
       this.processedFiles.add(filePath);
+      this.existingNextPosts.set(slug, destPath);
     } catch (error: any) {
       console.error("Error processing file:", filePath);
       console.error("Error:", error.message);
