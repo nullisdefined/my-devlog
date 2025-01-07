@@ -129,6 +129,8 @@ git cat-file -p <Hash>
 	- 타임스탬프: 1736240954 (Unix 시간), +0900 (시간대)
 - 메시지: Commit 메시지 (Initial Commit)
 
+---
+
 ## 번외) 대용량 파일의 처리
 
 Git은 기본적으로 모든 파일을 Blob 객체로 관리한다. 하지만 대용량 파일을 Blbo 객체로 저장된다면 .git/objects 디렉터리에 큰 영향을 끼치게 된다.
@@ -146,6 +148,7 @@ Git LFS는 대용량 파일의 효율적인 관리를 위해 Git에서 제공하
 
 ### 설정 방법
 1. Git LFS 설치
+
 Git LFS는 별도로 설치해야 한다.
 
 ```bash
@@ -153,11 +156,13 @@ brew install git-lfs
 ```
 
 2. 특정 파일 형식을 LFS로 관리
+
 예를 들어, .psd 파일과 같은 대용량 파일을 LFS로 관리하려면 다음과 같이 명령어를 사용한다.
 
 ![image](https://nullisdefined.s3.ap-northeast-2.amazonaws.com//images/05435353235d15446d1b10c1a383dec3.png)
 
 3. `.gitattributes` 파일 생성
+
 위 명령어를 실행하면 .gitattributes 파일이 생성되며, 추적할 파일 형식이 포함된다.
 
 ![image](https://nullisdefined.s3.ap-northeast-2.amazonaws.com//images/0b99e96e982f9df769bb04cb4b73972c.png)
@@ -165,6 +170,7 @@ brew install git-lfs
 ![image](https://nullisdefined.s3.ap-northeast-2.amazonaws.com//images/dd5391f93d58ceed89d53b86fcbf5794.png)
 
 4. 파일 추가 및 커밋
+
 이후 LFS로 추적되는 파일을 Git에 추가하고 커밋하면, 해당 파일의 실제 내용은 LFS 서버에 저장되고, Git에는 파일 포인터만 저장된다.
 
 ![image](https://nullisdefined.s3.ap-northeast-2.amazonaws.com//images/3cdfddd2b801c25513fcc5115511c5b0.png)
@@ -187,6 +193,9 @@ brew install git-lfs
 실제로 Git LFS를 활설화한 저장소에서 파일을 추가하면 .git 디렉터리 안에 lfs 디렉터리가 생성되는데, lfs/objects에 저장된 해시 값과 동일하다.
 
 ![image](https://nullisdefined.s3.ap-northeast-2.amazonaws.com//images/5eb53798e263b96d177920a8bdbab131.png)
+
+
+---
 
 ## 마무리
 
