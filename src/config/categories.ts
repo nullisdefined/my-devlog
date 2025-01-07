@@ -11,21 +11,16 @@ import {
   Binary,
   BookOpen,
   Layout,
-  FileCode,
-  Database,
+  GitBranch,
 } from "lucide-react";
 import {
   SiReact,
   SiNextdotjs,
   SiNestjs,
   SiSpring,
-  SiMysql,
-  SiRedis,
-  SiMongodb,
   SiAmazon,
   SiJavascript,
   SiTypescript,
-  SiExpress,
   SiNodedotjs,
   SiDocker,
 } from "react-icons/si";
@@ -80,23 +75,23 @@ export const categories: readonly CategoryItem[] = [
       },
     ],
   },
-  {
-    name: "Frontend",
-    path: "/devlog/categories/frontend",
-    icon: MonitorSmartphone,
-    subcategories: [
-      {
-        name: "React",
-        path: "/devlog/categories/frontend/react",
-        icon: SiReact,
-      },
-      {
-        name: "Next.js",
-        path: "/devlog/categories/frontend/nextjs",
-        icon: SiNextdotjs,
-      },
-    ],
-  },
+  // {
+  //   name: "Frontend",
+  //   path: "/devlog/categories/frontend",
+  //   icon: MonitorSmartphone,
+  //   subcategories: [
+  //     {
+  //       name: "React",
+  //       path: "/devlog/categories/frontend/react",
+  //       icon: SiReact,
+  //     },
+  //     {
+  //       name: "Next.js",
+  //       path: "/devlog/categories/frontend/nextjs",
+  //       icon: SiNextdotjs,
+  //     },
+  //   ],
+  // },
   {
     name: "Backend",
     path: "/devlog/categories/backend",
@@ -119,40 +114,45 @@ export const categories: readonly CategoryItem[] = [
       },
     ],
   },
+  // {
+  //   name: "Architecture",
+  //   path: "/devlog/categories/architecture",
+  //   icon: CircuitBoard,
+  //   subcategories: [
+  //     {
+  //       name: "MSA",
+  //       path: "/devlog/categories/architecture/msa",
+  //       icon: Network,
+  //     },
+  //   ],
+  // },
   {
-    name: "Architecture",
-    path: "/devlog/categories/architecture",
-    icon: CircuitBoard,
-    subcategories: [
-      {
-        name: "MSA",
-        path: "/devlog/categories/architecture/msa",
-        icon: Network,
-      },
-    ],
+    name: "Git",
+    path: "/devlog/categories/git",
+    icon: GitBranch,
   },
   {
     name: "Database",
     path: "/devlog/categories/database",
     icon: DatabaseIcon,
   },
-  {
-    name: "DevOps",
-    path: "/devlog/categories/devops",
-    icon: Cloud,
-    subcategories: [
-      {
-        name: "AWS",
-        path: "/devlog/categories/devops/aws",
-        icon: SiAmazon,
-      },
-      {
-        name: "Docker",
-        path: "/devlog/categories/devops/docker",
-        icon: SiDocker,
-      },
-    ],
-  },
+  // {
+  //   name: "DevOps",
+  //   path: "/devlog/categories/devops",
+  //   icon: Cloud,
+  //   subcategories: [
+  //     {
+  //       name: "AWS",
+  //       path: "/devlog/categories/devops/aws",
+  //       icon: SiAmazon,
+  //     },
+  //     {
+  //       name: "Docker",
+  //       path: "/devlog/categories/devops/docker",
+  //       icon: SiDocker,
+  //     },
+  //   ],
+  // },
 ] as const;
 
 export const seriesCategories: readonly CategoryItem[] = [

@@ -115,7 +115,7 @@ export const languageConfigs: Record<string, LanguageConfig> = {
     icon: "TXT",
     borderColor: "border-gray-400",
     color: "#9CA3AF",
-    aliases: ["txt"],
+    aliases: ["txt", "plaintext", "plaintxt"],
   },
 };
 
