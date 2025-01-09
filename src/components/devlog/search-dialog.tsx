@@ -11,6 +11,7 @@ import {
   CommandItem,
 } from "@/components/ui/command";
 import { DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import { Badge } from "@/components/ui/badge";
 import { searchPosts } from "@/lib/search";
 import type { Post } from "@/types/index";
 import { format } from "date-fns";
@@ -20,6 +21,31 @@ interface SearchDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }
+
+const highlightText = (text: string, query: string) => {
+  if (!query) return text;
+  const parts = text.split(new RegExp(`(${query})`, "gi"));
+  return parts.map((part, i) =>
+    part.toLowerCase() === query.toLowerCase() ? (
+      <span key={i} className="bg-yellow-200 dark:bg-yellow-800">
+        {part}
+      </span>
+    ) : (
+      part
+    )
+  );
+};
+
+const groupByCategory = (posts: Post[]) => {
+  return posts.reduce((groups, post) => {
+    const category = post.category || "Uncategorized";
+    if (!groups[category]) {
+      groups[category] = [];
+    }
+    groups[category].push(post);
+    return groups;
+  }, {} as Record<string, Post[]>);
+};
 
 export function SearchDialog({ posts, open, onOpenChange }: SearchDialogProps) {
   const router = useRouter();
@@ -36,10 +62,15 @@ export function SearchDialog({ posts, open, onOpenChange }: SearchDialogProps) {
   const handleSearch = useCallback(
     (value: string) => {
       setQuery(value);
-      if (value.length > 0) {
-        const results = searchPosts(posts, value);
-        setSearchResults(results || []);
-      } else {
+      try {
+        if (value.trim().length > 0) {
+          const results = searchPosts(posts, value.trim());
+          setSearchResults(results);
+        } else {
+          setSearchResults([]);
+        }
+      } catch (error) {
+        console.error("Search error:", error);
         setSearchResults([]);
       }
     },
@@ -53,11 +84,13 @@ export function SearchDialog({ posts, open, onOpenChange }: SearchDialogProps) {
         return;
       }
 
-      router.push(`/devlog/${post.category.toLowerCase()}/${post.slug}`);
+      router.push(`/devlog/posts/${post.category.toLowerCase()}/${post.slug}`);
       onOpenChange(false);
     },
     [router, onOpenChange]
   );
+
+  const groupedResults = groupByCategory(searchResults);
 
   return (
     <CommandDialog open={open} onOpenChange={onOpenChange}>
@@ -67,36 +100,59 @@ export function SearchDialog({ posts, open, onOpenChange }: SearchDialogProps) {
       </DialogDescription>
       <div className="flex flex-col overflow-hidden rounded-md border">
         <CommandInput
-          placeholder="검색어를 입력하세요 (제목, 내용, 태그) (Ctrl + K)"
+          placeholder="검색어를 입력하세요 (제목, 내용, 태그) (⌘ + K)"
           value={query}
           onValueChange={handleSearch}
         />
-        <CommandList className="max-h-[300px] overflow-y-auto">
+        <CommandList className="max-h-[400px] overflow-y-auto">
           <CommandEmpty className="py-6 text-center text-sm">
             {query.length === 0
               ? "검색어를 입력해주세요."
               : "검색 결과가 없습니다."}
           </CommandEmpty>
-          {searchResults.length > 0 && (
-            <CommandGroup heading={`검색 결과 (${searchResults.length})`}>
-              {searchResults.map((post) => (
+          {Object.entries(groupedResults).map(([category, categoryPosts]) => (
+            <CommandGroup
+              key={category}
+              heading={`${category} (${categoryPosts.length})`}
+            >
+              {categoryPosts.map((post) => (
                 <CommandItem
                   key={post.slug}
                   onSelect={() => handleSelect(post)}
                   className="flex flex-col items-start py-3 cursor-pointer"
                 >
-                  <div className="flex items-center justify-between w-full">
-                    <span className="font-semibold">{post.title}</span>
-                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                      <span>{post.category}</span>
-                      <span>•</span>
-                      <span>{format(new Date(post.date), "yyyy.MM.dd")}</span>
+                  <div className="flex flex-col w-full gap-1">
+                    <div className="flex items-center justify-between w-full">
+                      <span className="font-semibold">
+                        {highlightText(post.title, query)}
+                      </span>
+                      <span className="text-sm text-muted-foreground">
+                        {format(new Date(post.date), "yyyy.MM.dd")}
+                      </span>
                     </div>
+                    {post.excerpt && (
+                      <p className="text-sm text-muted-foreground line-clamp-2">
+                        {highlightText(post.excerpt, query)}
+                      </p>
+                    )}
+                    {post.tags && post.tags.length > 0 && (
+                      <div className="flex flex-wrap gap-1 mt-1">
+                        {post.tags.map((tag) => (
+                          <Badge
+                            key={tag}
+                            variant="secondary"
+                            className="text-xs"
+                          >
+                            {highlightText(tag, query)}
+                          </Badge>
+                        ))}
+                      </div>
+                    )}
                   </div>
                 </CommandItem>
               ))}
             </CommandGroup>
-          )}
+          ))}
         </CommandList>
       </div>
     </CommandDialog>
