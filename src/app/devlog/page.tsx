@@ -1,28 +1,20 @@
-import { PostCard } from "@/components/devlog/post-card";
-import { getPostList } from "@/lib/posts";
-import { Pagination } from "@/components/devlog/pagination";
 import { LayoutGrid } from "lucide-react";
 import { SortButton } from "@/components/devlog/sort-button";
+import { getPostList } from "@/lib/posts";
+import { InfiniteScrollPosts } from "@/components/devlog/infinite-scroll-posts";
 
 export default async function DevlogPage({
   searchParams,
 }: {
-  searchParams: { page?: string; order?: "asc" | "desc" };
+  searchParams: { order?: "asc" | "desc" };
 }) {
   const order = searchParams.order || "desc";
-  const posts = (await getPostList()).sort((a, b) => {
+  const posts = await getPostList();
+
+  const sortedPosts = [...posts].sort((a, b) => {
     const comparison = new Date(a.date).getTime() - new Date(b.date).getTime();
     return order === "asc" ? comparison : -comparison;
   });
-
-  const currentPage = Number(searchParams.page) || 1;
-  const postsPerPage = 6;
-  const totalPages = Math.ceil(posts.length / postsPerPage);
-
-  const currentPosts = posts.slice(
-    (currentPage - 1) * postsPerPage,
-    currentPage * postsPerPage
-  );
 
   return (
     <div className="space-y-8">
@@ -40,13 +32,11 @@ export default async function DevlogPage({
         </div>
       </div>
 
-      <div className="grid grid-cols-1 gap-4">
-        {currentPosts.map((post) => (
-          <PostCard key={post.slug} post={post} />
-        ))}
-      </div>
-
-      <Pagination currentPage={currentPage} totalPages={totalPages} />
+      <InfiniteScrollPosts
+        initialPosts={sortedPosts.slice(0, 6)}
+        allPosts={sortedPosts}
+        order={order}
+      />
     </div>
   );
 }

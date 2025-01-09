@@ -92,26 +92,26 @@ export default function Home() {
 
   const projects = [
     {
-      title: "핫식스 팀 블로그",
+      title: "나날모아",
       description:
-        "팀 단위의 특별한 협업 공간을 제공하는 웹 서비스입니다. 팀원이 작성한 게시글을 쉽게 공유하고 관리할 수 있습니다.",
+        "시니어와 가족 사용자를 대상으로 하는 AI 기반 자동 일정 관리 서비스입니다. 음성 인식, OCR, NLP를 활용하여 편리한 일정 등록을 지원합니다.",
       features: [
-        "팀 단위의 게시글 관리",
-        "사용자 인증 및 권한 관리",
-        "풍부한 에디터 기능",
-        "댓글 및 좋아요 기능",
-        "이메일 인증을 통한 비밀번호 변경",
-        "공개/비공개 게시글 설정",
+        "음성 인식을 통한 자동 일정 등록",
+        "이미지 인식(OCR)을 통한 일정 추출",
+        "시니어 케어 공유 서비스",
+        "카테고리별 일정 관리",
+        "가족/간병인과의 일정 공유",
+        "자연어 처리를 통한 일정 분석",
       ],
       tech: [
         { name: "TypeScript", icon: <SiTypescript className="h-5 w-5" /> },
         { name: "NestJS", icon: <SiNestjs className="h-5 w-5" /> },
         { name: "Node.js", icon: <SiNodedotjs className="h-5 w-5" /> },
-        { name: "MySQL", icon: <SiMysql className="h-5 w-5" /> },
+        { name: "PostgreSQL", icon: <SiPostgresql className="h-5 w-5" /> },
       ],
-      link: "https://github.com/nullisdefined/hotsix-teamblog",
+      link: "https://github.com/nullisdefined/nanalmoa-BE",
       image:
-        "https://storage.googleapis.com/hotsix-bucket/%EB%A9%94%EC%9D%B8%ED%8E%98%EC%9D%B4%EC%A7%80.gif",
+        "https://storage.googleapis.com/hotsix-bucket/%EB%82%98%EB%82%A0%EB%AA%A8%EC%95%84.png",
     },
     {
       title: "Travel Manager",
@@ -135,26 +135,26 @@ export default function Home() {
       image: "https://storage.googleapis.com/hotsix-bucket/travelmanager.png",
     },
     {
-      title: "나날모아",
+      title: "핫식스 팀 블로그",
       description:
-        "시니어와 가족 사용자를 대상으로 하는 AI 기반 자동 일정 관리 서비스입니다. 음성 인식, OCR, NLP를 활용하여 편리한 일정 등록을 지원합니다.",
+        "팀 단위의 특별한 협업 공간을 제공하는 웹 서비스입니다. 팀원이 작성한 게시글을 쉽게 공유하고 관리할 수 있습니다.",
       features: [
-        "음성 인식을 통한 자동 일정 등록",
-        "이미지 인식(OCR)을 통한 일정 추출",
-        "시니어 케어 공유 서비스",
-        "카테고리별 일정 관리",
-        "가족/간병인과의 일정 공유",
-        "자연어 처리를 통한 일정 분석",
+        "팀 단위의 게시글 관리",
+        "사용자 인증 및 권한 관리",
+        "풍부한 에디터 기능",
+        "댓글 및 좋아요 기능",
+        "이메일 인증을 통한 비밀번호 변경",
+        "공개/비공개 게시글 설정",
       ],
       tech: [
         { name: "TypeScript", icon: <SiTypescript className="h-5 w-5" /> },
         { name: "NestJS", icon: <SiNestjs className="h-5 w-5" /> },
         { name: "Node.js", icon: <SiNodedotjs className="h-5 w-5" /> },
-        { name: "PostgreSQL", icon: <SiPostgresql className="h-5 w-5" /> },
+        { name: "MySQL", icon: <SiMysql className="h-5 w-5" /> },
       ],
-      link: "https://github.com/nullisdefined/nanalmoa-BE",
+      link: "https://github.com/nullisdefined/hotsix-teamblog",
       image:
-        "https://storage.googleapis.com/hotsix-bucket/%EB%82%98%EB%82%A0%EB%AA%A8%EC%95%84.png",
+        "https://storage.googleapis.com/hotsix-bucket/%EB%A9%94%EC%9D%B8%ED%8E%98%EC%9D%B4%EC%A7%80.gif",
     },
   ];
 
