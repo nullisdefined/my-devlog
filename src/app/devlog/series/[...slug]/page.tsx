@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { seriesCategories } from "@/config/categories";
 import { SeriesView } from "@/components/devlog/series-view";
 import { getSeriesPostList } from "@/lib/posts";
+import { InfiniteScrollPosts } from "@/components/devlog/infinite-scroll-posts";
 
 export async function generateStaticParams() {
   const seriesPosts = await getSeriesPostList();
@@ -11,18 +12,19 @@ export async function generateStaticParams() {
   }));
 }
 
+interface SeriesPageProps {
+  params: { slug: string[] };
+  searchParams?: {
+    order?: "asc" | "desc";
+  };
+}
+
 export default async function SeriesPage({
   params,
   searchParams,
-}: {
-  params: { slug: string[] };
-  searchParams: {
-    page?: string;
-    order?: "asc" | "desc";
-  };
-}) {
+}: SeriesPageProps) {
   const seriesPath = `series/${params.slug.join("/")}`.toLowerCase();
-  const order = searchParams.order || "desc";
+  const order = searchParams?.order || "desc";
   const allPosts = await getSeriesPostList();
 
   const seriesPosts = allPosts
@@ -51,36 +53,9 @@ export default async function SeriesPage({
   };
 
   const currentSeries = findSeries();
-  if (!currentSeries) {
+  if (!currentSeries || seriesPosts.length === 0) {
     notFound();
   }
-
-  const currentPage = Number(searchParams.page) || 1;
-  const postsPerPage = 6;
-  const totalPages = Math.max(1, Math.ceil(seriesPosts.length / postsPerPage));
-
-  const currentPosts = seriesPosts.slice(
-    (currentPage - 1) * postsPerPage,
-    currentPage * postsPerPage
-  );
-
-  const findAdjacentSeries = () => {
-    const allSeries = seriesCategories[0].subcategories || [];
-    const currentIndex = allSeries.findIndex(
-      (series) =>
-        series.path.replace("/devlog/", "").toLowerCase() === seriesPath
-    );
-
-    return {
-      previous: currentIndex > 0 ? allSeries[currentIndex - 1] : null,
-      next:
-        currentIndex < allSeries.length - 1
-          ? allSeries[currentIndex + 1]
-          : null,
-    };
-  };
-
-  const { previous, next } = findAdjacentSeries();
 
   const currentSeriesForClient = {
     name: currentSeries.name,
@@ -89,32 +64,23 @@ export default async function SeriesPage({
     description: currentSeries.description,
   };
 
-  const previousForClient = previous
-    ? {
-        name: previous.name,
-        path: previous.path,
-        iconName: previous.icon.name,
-      }
-    : null;
-
-  const nextForClient = next
-    ? {
-        name: next.name,
-        path: next.path,
-        iconName: next.icon.name,
-      }
-    : null;
-
   return (
-    <SeriesView
-      currentPosts={currentPosts}
-      currentSeries={currentSeriesForClient}
-      seriesPosts={seriesPosts}
-      order={order}
-      currentPage={currentPage}
-      totalPages={totalPages}
-      previous={previousForClient}
-      next={nextForClient}
-    />
+    <div className="space-y-8">
+      <SeriesView
+        currentSeries={currentSeriesForClient}
+        currentPosts={seriesPosts}
+        seriesPosts={seriesPosts}
+        order={order}
+        currentPage={1}
+        totalPages={Math.ceil(seriesPosts.length / 10)}
+        previous={null}
+        next={null}
+      />
+      <InfiniteScrollPosts
+        initialPosts={seriesPosts.slice(0, 6)}
+        allPosts={seriesPosts}
+        order={order}
+      />
+    </div>
   );
 }

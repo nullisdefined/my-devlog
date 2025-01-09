@@ -20,7 +20,6 @@ export function InfiniteScrollPosts({
   const [posts, setPosts] = useState<Post[]>(initialPosts);
   const [hasMore, setHasMore] = useState(initialPosts.length < allPosts.length);
   const [page, setPage] = useState(1);
-  const [isLoading, setIsLoading] = useState(false);
   const postsPerPage = 6;
 
   const { ref, inView } = useInView({
@@ -29,44 +28,16 @@ export function InfiniteScrollPosts({
   });
 
   useEffect(() => {
-    const sortedPosts = [...allPosts].sort((a, b) => {
-      const comparison =
-        new Date(a.date).getTime() - new Date(b.date).getTime();
-      return order === "asc" ? comparison : -comparison;
-    });
-    setPosts(sortedPosts.slice(0, postsPerPage));
-    setPage(1);
-    setHasMore(postsPerPage < sortedPosts.length);
-  }, [order, allPosts]);
+    if (inView && hasMore) {
+      const nextPosts = allPosts.slice(0, (page + 1) * postsPerPage);
+      setPosts(nextPosts);
+      setPage((prev) => prev + 1);
 
-  useEffect(() => {
-    const loadMorePosts = async () => {
-      if (inView && hasMore && !isLoading) {
-        setIsLoading(true);
-
-        // 로딩 상태를 잠시 보여주기 위해 인위적인 딜레이 추가
-        await new Promise((resolve) => setTimeout(resolve, 500));
-
-        const sortedPosts = [...allPosts].sort((a, b) => {
-          const comparison =
-            new Date(a.date).getTime() - new Date(b.date).getTime();
-          return order === "asc" ? comparison : -comparison;
-        });
-
-        const nextPosts = sortedPosts.slice(0, (page + 1) * postsPerPage);
-        setPosts(nextPosts);
-        setPage((prev) => prev + 1);
-
-        if (nextPosts.length === sortedPosts.length) {
-          setHasMore(false);
-        }
-
-        setIsLoading(false);
+      if (nextPosts.length === allPosts.length) {
+        setHasMore(false);
       }
-    };
-
-    loadMorePosts();
-  }, [inView, hasMore, page, allPosts, order, isLoading]);
+    }
+  }, [inView, hasMore, page, allPosts]);
 
   // 페이지 단위로 포스트 그룹화
   const postPages = [];
@@ -78,15 +49,13 @@ export function InfiniteScrollPosts({
     <div className="space-y-12">
       {postPages.map((pageGroup, pageIndex) => (
         <div key={pageIndex} className="space-y-8">
-          {pageIndex > 0 && (
-            <div className="flex items-center gap-4">
-              <Separator />
-              <span className="text-sm text-muted-foreground whitespace-nowrap">
-                Page {pageIndex + 1}
-              </span>
-              <Separator />
-            </div>
-          )}
+          <div className="flex items-center gap-4">
+            <Separator />
+            <span className="text-sm text-muted-foreground whitespace-nowrap">
+              Page {pageIndex + 1}
+            </span>
+            <Separator />
+          </div>
           <div className="grid grid-cols-1 gap-4">
             {pageGroup.map((post) => (
               <PostCard key={post.slug} post={post} />

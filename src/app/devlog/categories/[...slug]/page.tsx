@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { categories, CategoryItem } from "@/config/categories";
 import { CategoryView } from "@/components/devlog/category-view";
 import { getPostList } from "@/lib/posts";
+import { InfiniteScrollPosts } from "@/components/devlog/infinite-scroll-posts";
 
 export async function generateStaticParams() {
   const paths: { slug: string[] }[] = [];
@@ -32,7 +33,6 @@ export default async function CategoryPage({
 }: {
   params: { slug: string[] };
   searchParams: {
-    page?: string;
     order?: "asc" | "desc";
   };
 }) {
@@ -76,18 +76,9 @@ export default async function CategoryPage({
 
   const currentCategory = findCategory(categoryPath);
 
-  if (!currentCategory) {
+  if (!currentCategory || categoryPosts.length === 0) {
     notFound();
   }
-
-  const currentPage = Number(searchParams.page) || 1;
-  const postsPerPage = 6;
-  const totalPages = Math.ceil(categoryPosts.length / postsPerPage);
-
-  const currentPosts = categoryPosts.slice(
-    (currentPage - 1) * postsPerPage,
-    currentPage * postsPerPage
-  );
 
   const categoryForClient = {
     name: currentCategory.name,
@@ -97,14 +88,21 @@ export default async function CategoryPage({
   };
 
   return (
-    <CategoryView
-      posts={currentPosts}
-      allPosts={allPosts}
-      currentCategory={categoryForClient}
-      order={order}
-      categoryPosts={categoryPosts}
-      currentPage={currentPage}
-      totalPages={totalPages}
-    />
+    <div className="space-y-8">
+      <CategoryView
+        posts={categoryPosts}
+        allPosts={allPosts}
+        currentCategory={categoryForClient}
+        order={order}
+        categoryPosts={categoryPosts}
+        currentPage={1}
+        totalPages={Math.ceil(categoryPosts.length / 10)}
+      />
+      <InfiniteScrollPosts
+        initialPosts={categoryPosts.slice(0, 6)}
+        allPosts={categoryPosts}
+        order={order}
+      />
+    </div>
   );
 }

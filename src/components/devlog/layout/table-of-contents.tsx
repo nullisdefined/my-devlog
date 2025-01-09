@@ -95,6 +95,7 @@ export function TableOfContents({ toc }: TocProps) {
       }
     }
   };
+
   return (
     <div
       ref={tocRef}
@@ -102,15 +103,19 @@ export function TableOfContents({ toc }: TocProps) {
     >
       <nav
         className={cn(
-          "toc-container pb-8",
+          "toc-container rounded-xl px-6 py-8",
+          "border border-border/[0.15]",
+          "bg-background/50",
+          "shadow-[0_0_1px_rgba(0,0,0,0.05)]",
+          "backdrop-blur-[1px]",
           isExpanded && "expanded",
-          "w-48 lg:w-52 overflow-y-auto",
-          "max-h-[50vh] lg:max-h-[60vh]"
+          "w-56 lg:w-60 overflow-y-auto",
+          "max-h-[70vh] lg:max-h-[80vh]"
         )}
       >
-        <p className="font-semibold mb-4 text-base hidden xl:block">Contents</p>
+        <p className="font-semibold mb-6 text-base hidden xl:block">Contents</p>
         {items.length > 0 && (
-          <ul className="space-y-2">
+          <ul className="space-y-3">
             {items.map((item) => (
               <li
                 key={item.id}

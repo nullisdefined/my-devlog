@@ -12,7 +12,6 @@ import { VisitorsWidget } from "@/components/visitor/visitors-widget";
 import { cn } from "@/lib/class-name-utils";
 import { ChevronRight } from "lucide-react";
 import BallWidget from "@/components/ball/ball-widget";
-import { ScrollArea } from "@/components/ui/scroll-area";
 
 interface DevlogSidebarProps {
   posts: Post[];
@@ -66,10 +65,10 @@ export function DevlogSidebar({ posts }: DevlogSidebarProps) {
   }, [posts]);
 
   return (
-    <ScrollArea className="h-[calc(100vh-8rem)]">
-      <div className="sticky top-20 space-y-8 pb-16">
+    <div className="relative h-[calc(100vh-4rem)] overflow-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none']">
+      <div className="space-y-4 py-2 px-4 min-h-full">
         {/* Profile Section */}
-        <div className="flex flex-col items-center space-y-4">
+        <div className="flex flex-col items-center space-y-2">
           <Link href="/">
             <Avatar className="h-32 w-32 border-2 border-primary/20 hover:border-primary/40 transition-colors">
               <AvatarImage
@@ -235,7 +234,11 @@ export function DevlogSidebar({ posts }: DevlogSidebarProps) {
           </div>
         </div>
         */}
+
+        {/* 하단 여백 */}
+        <div className="h-20" />
       </div>
-    </ScrollArea>
+      <div className="absolute bottom-0 left-0 right-0 h-20 pointer-events-none bg-gradient-to-t from-background to-transparent" />
+    </div>
   );
 }
