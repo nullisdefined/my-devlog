@@ -85,8 +85,8 @@ export function DevlogLayout({
             </main>
 
             {toc && (
-              <aside className="hidden md:block w-60 shrink-0">
-                <div className="sticky top-20 pt-[46px] flex flex-col gap-2">
+              <aside className="hidden md:block w-48 lg:w-52 shrink-0">
+                <div className="sticky top-20 lg:top-24 pt-[20px] pb-[100px] flex flex-col gap-2 mr-8 lg:mr-12">
                   <TableOfContents toc={toc} />
                 </div>
               </aside>

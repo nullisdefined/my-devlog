@@ -39,14 +39,18 @@ export function TableOfContents({ toc }: TocProps) {
       const windowHeight = window.innerHeight;
       const scrollY = window.scrollY;
       const docHeight = document.documentElement.scrollHeight;
-
       const distanceToBottom = docHeight - (scrollY + windowHeight);
 
       if (distanceToBottom <= footerHeight) {
-        const adjustment = footerHeight - distanceToBottom;
+        const adjustment = Math.min(
+          footerHeight - distanceToBottom,
+          footerHeight
+        );
         tocRef.current.style.transform = `translateY(-${adjustment}px)`;
+        tocRef.current.style.transition = "transform 0.1s ease-out";
       } else {
         tocRef.current.style.transform = "translateY(0)";
+        tocRef.current.style.transition = "transform 0.1s ease-out";
       }
     };
 
@@ -91,17 +95,17 @@ export function TableOfContents({ toc }: TocProps) {
       }
     }
   };
-
   return (
     <div
       ref={tocRef}
-      className="sticky top-24 transition-transform duration-200"
+      className="sticky transition-transform duration-200 top-20 lg:top-24"
     >
       <nav
         className={cn(
           "toc-container pb-8",
           isExpanded && "expanded",
-          "max-h-[60vh] overflow-y-auto"
+          "w-48 lg:w-52 overflow-y-auto",
+          "max-h-[50vh] lg:max-h-[60vh]"
         )}
       >
         <p className="font-semibold mb-4 text-base hidden xl:block">Contents</p>
