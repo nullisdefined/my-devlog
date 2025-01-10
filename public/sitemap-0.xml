@@ -41,6 +41,9 @@
 <url><loc>https://nullisdefined.site/devlog/series/devlog/optimizing-seo</loc><lastmod>2025-01-04</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
 <url><loc>https://nullisdefined.site/devlog/series/devlog/sitemap-script</loc><lastmod>2024-12-17</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
 <url><loc>https://nullisdefined.site/devlog/series/devlog/upstash-redis-chat</loc><lastmod>2024-11-25</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+<url><loc>https://nullisdefined.site/devlog/series/git-clone/blob-object-implementation</loc><lastmod>2025-01-10</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+<url><loc>https://nullisdefined.site/devlog/series/git-clone/commit-object-implementation</loc><lastmod>2025-01-10</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+<url><loc>https://nullisdefined.site/devlog/series/git-clone/tree-object-implementation</loc><lastmod>2025-01-10</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
 <url><loc>https://nullisdefined.site/devlog/series/thumbs-up/customizing-background</loc><lastmod>2024-10-30</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
 <url><loc>https://nullisdefined.site/devlog/series/thumbs-up/customizing-typography</loc><lastmod>2024-10-30</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
 <url><loc>https://nullisdefined.site/devlog/series/thumbs-up/image-download-and-copy-clipboard</loc><lastmod>2024-10-31</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
@@ -54,6 +57,9 @@
 <url><loc>https://nullisdefined.site/devlog/devlog/optimizing-seo</loc><lastmod>2025-01-04</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
 <url><loc>https://nullisdefined.site/devlog/devlog/sitemap-script</loc><lastmod>2024-12-17</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
 <url><loc>https://nullisdefined.site/devlog/devlog/upstash-redis-chat</loc><lastmod>2024-11-25</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+<url><loc>https://nullisdefined.site/devlog/git-clone/blob-object-implementation</loc><lastmod>2025-01-10</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+<url><loc>https://nullisdefined.site/devlog/git-clone/commit-object-implementation</loc><lastmod>2025-01-10</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+<url><loc>https://nullisdefined.site/devlog/git-clone/tree-object-implementation</loc><lastmod>2025-01-10</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
 <url><loc>https://nullisdefined.site/devlog/thumbs-up/customizing-background</loc><lastmod>2024-10-30</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
 <url><loc>https://nullisdefined.site/devlog/thumbs-up/customizing-typography</loc><lastmod>2024-10-30</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
 <url><loc>https://nullisdefined.site/devlog/thumbs-up/image-download-and-copy-clipboard</loc><lastmod>2024-10-31</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>

@@ -3,5 +3,8 @@ User-agent: *
 Allow: /
 Disallow: /admin/*
 
+# Host
+Host: https://nullisdefined.site
+
 # Sitemaps
 Sitemap: https://nullisdefined.site/sitemap.xml

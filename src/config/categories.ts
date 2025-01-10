@@ -175,6 +175,13 @@ export const seriesCategories: readonly CategoryItem[] = [
         description:
           "썸네일 제작 도구 Thumbs Up을 개발하면서 경험한 기능 구현과 개선 과정을 공유합니다.",
       },
+      {
+        name: "Git Clone",
+        path: "/devlog/series/git-clone",
+        icon: Layout,
+        description:
+          "버전 관리 도구 Git의 핵심 기능들을 Node.js로 구현하는 과정을 기록합니다.",
+      },
     ],
   },
 ] as const;
