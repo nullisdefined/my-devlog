@@ -236,13 +236,13 @@ export default function Home() {
                   className="bg-card rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow flex flex-col"
                 >
                   {project.image && (
-                    <div className="relative aspect-video">
+                    <div className="relative w-full h-64">
                       <Image
                         src={project.image}
                         alt={project.title}
-                        width={800}
-                        height={450}
-                        className="object-cover w-full h-full"
+                        fill
+                        className="object-cover"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                       />
                     </div>
                   )}
