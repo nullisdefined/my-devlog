@@ -98,11 +98,11 @@ export default async function CategoryPage({
         currentPage={1}
         totalPages={Math.ceil(categoryPosts.length / 10)}
       />
-      <InfiniteScrollPosts
+      {/* <InfiniteScrollPosts
         initialPosts={categoryPosts.slice(0, 6)}
         allPosts={categoryPosts}
         order={order}
-      />
+      /> */}
     </div>
   );
 }

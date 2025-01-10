@@ -3,7 +3,7 @@
 import { Post } from "@/types/index";
 import { PostCard } from "./post-card";
 import { Pagination } from "./pagination";
-import { Quote, ArrowLeft, ArrowRight } from "lucide-react";
+import { Quote, ArrowLeft, ArrowRight, Lightbulb } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { SortButton } from "./sort-button";
 import { Button } from "@/components/ui/button";
@@ -49,6 +49,7 @@ export function SeriesView({
       <div className="space-y-6">
         <div className="flex flex-col gap-4">
           <div className="flex items-center gap-2 pb-3">
+            <Lightbulb className="w-8 h-8 text-primary" />
             <IconMapper
               name={currentSeries.iconName}
               className="w-8 h-8 text-primary"

@@ -180,7 +180,7 @@ export const seriesCategories: readonly CategoryItem[] = [
         path: "/devlog/series/git-clone",
         icon: Layout,
         description:
-          "버전 관리 도구 Git의 핵심 기능들을 Node.js로 구현하는 과정을 기록합니다.",
+          "버전 관리 도구 git의 핵심 기능들을 Node.js로 구현하는 과정을 기록합니다.",
       },
     ],
   },

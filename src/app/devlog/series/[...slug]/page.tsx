@@ -76,11 +76,11 @@ export default async function SeriesPage({
         previous={null}
         next={null}
       />
-      <InfiniteScrollPosts
+      {/* <InfiniteScrollPosts
         initialPosts={seriesPosts.slice(0, 6)}
         allPosts={seriesPosts}
         order={order}
-      />
+      /> */}
     </div>
   );
 }
