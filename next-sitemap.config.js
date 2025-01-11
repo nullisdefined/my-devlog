@@ -26,16 +26,15 @@ module.exports = {
       },
     ],
   },
-  exclude: ["/devlog/admin/*", "/devlog/posts/*"],
+  exclude: ["/devlog/admin/*"],
   sitemapSize: 5000,
 
   async additionalPaths() {
     try {
       const posts = await getPostList();
-      const seriesPosts = await getSeriesPostList();
       const uniqueUrls = new Set();
 
-      return [...posts, ...seriesPosts]
+      return posts
         .filter((post) => {
           if (!post.urlCategory || !post.slug) {
             console.warn(
@@ -45,14 +44,18 @@ module.exports = {
             return false;
           }
 
-          const url = `/devlog/${post.urlCategory}/${post.slug}`;
+          if (post.urlCategory.startsWith("series/")) {
+            return false;
+          }
+
+          const url = `/devlog/posts/${post.urlCategory}/${post.slug}`;
           if (uniqueUrls.has(url)) return false;
 
           uniqueUrls.add(url);
           return true;
         })
         .map((post) => ({
-          loc: `/devlog/${post.urlCategory}/${post.slug}`,
+          loc: `/devlog/posts/${post.urlCategory}/${post.slug}`,
           lastmod: formatDate(post.date),
           changefreq: "weekly",
           priority: 0.9,
