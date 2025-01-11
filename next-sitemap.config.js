@@ -31,35 +31,36 @@ module.exports = {
 
   async additionalPaths() {
     try {
-      const posts = await getPostList();
-      const uniqueUrls = new Set();
+      const [posts, seriesPosts] = await Promise.all([
+        getPostList(),
+        getSeriesPostList(),
+      ]);
+      const uniqueUrls = new Map();
 
-      return posts
-        .filter((post) => {
-          if (!post.urlCategory || !post.slug) {
-            console.warn(
-              `Invalid post data: missing urlCategory or slug`,
-              post
-            );
-            return false;
-          }
-
-          if (post.urlCategory.startsWith("series/")) {
-            return false;
-          }
-
-          const url = `/devlog/posts/${post.urlCategory}/${post.slug}`;
-          if (uniqueUrls.has(url)) return false;
-
-          uniqueUrls.add(url);
-          return true;
-        })
-        .map((post) => ({
-          loc: `/devlog/posts/${post.urlCategory}/${post.slug}`,
+      posts.forEach((post) => {
+        const url = `/devlog/posts/${post.urlCategory}/${post.slug}`;
+        uniqueUrls.set(url, {
+          loc: url,
           lastmod: formatDate(post.date),
           changefreq: "weekly",
           priority: 0.9,
-        }));
+        });
+      });
+
+      seriesPosts.forEach((post) => {
+        const url = `/devlog/posts/series/${post.urlCategory.replace(
+          "series/",
+          ""
+        )}/${post.slug}`;
+        uniqueUrls.set(url, {
+          loc: url,
+          lastmod: formatDate(post.date),
+          changefreq: "weekly",
+          priority: 0.9,
+        });
+      });
+
+      return Array.from(uniqueUrls.values());
     } catch (error) {
       console.error("Failed to generate additional paths:", error);
       return [];
