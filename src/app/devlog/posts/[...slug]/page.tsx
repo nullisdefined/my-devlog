@@ -32,9 +32,9 @@ export async function generateMetadata({ params }: PostPageProps) {
     };
   }
 
-  const canonicalPath = post.series
-    ? `https://nullisdefined.site/devlog/series/${category}/${slug}`
-    : `https://nullisdefined.site/devlog/posts/${params.slug.join("/")}`;
+  const canonicalPath = `https://nullisdefined.site/devlog/posts/${params.slug.join(
+    "/"
+  )}`;
 
   return {
     title: post.title,
