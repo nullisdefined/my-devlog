@@ -5,7 +5,7 @@ date: 2024-11-29
 tags: ["JavaScript"]
 category: "Problem Solving"
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/5527369119ba6ac9455d02961c357398.png"
-draft: false
+draft: true
 ---
 ![image](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/5527369119ba6ac9455d02961c357398.png)
 
