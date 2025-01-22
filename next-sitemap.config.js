@@ -37,6 +37,36 @@ module.exports = {
       ]);
       const uniqueUrls = new Map();
 
+      // 메인 페이지
+      uniqueUrls.set("/devlog", {
+        loc: "/devlog",
+        changefreq: "daily",
+        priority: 1.0,
+      });
+
+      // 카테고리 리스트 페이지
+      const categories = new Set(posts.map((post) => post.urlCategory));
+      categories.forEach((category) => {
+        uniqueUrls.set(`/devlog/categories/${category}`, {
+          loc: `/devlog/categories/${category}`,
+          changefreq: "weekly",
+          priority: 0.8,
+        });
+      });
+
+      // 시리즈 리스트 페이지
+      const series = new Set(
+        seriesPosts.map((post) => post.urlCategory.replace("series/", ""))
+      );
+      series.forEach((seriesName) => {
+        uniqueUrls.set(`/devlog/series/${seriesName}`, {
+          loc: `/devlog/series/${seriesName}`,
+          changefreq: "weekly",
+          priority: 0.8,
+        });
+      });
+
+      // 일반 포스트
       posts.forEach((post) => {
         const url = `/devlog/posts/${post.urlCategory}/${post.slug}`;
         uniqueUrls.set(url, {
@@ -47,6 +77,7 @@ module.exports = {
         });
       });
 
+      // 시리즈 포스트
       seriesPosts.forEach((post) => {
         const url = `/devlog/posts/series/${post.urlCategory.replace(
           "series/",

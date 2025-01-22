@@ -12,6 +12,7 @@ import {
   BookOpen,
   Layout,
   GitBranch,
+  Wrench,
 } from "lucide-react";
 import {
   SiReact,
@@ -51,12 +52,12 @@ export const categories: readonly CategoryItem[] = [
         path: "/devlog/categories/cs/data-structure",
         icon: Network,
       },
+      {
+        name: "Database",
+        path: "/devlog/categories/cs/database",
+        icon: DatabaseIcon,
+      },
     ],
-  },
-  {
-    name: "Problem Solving",
-    path: "/devlog/categories/problem-solving",
-    icon: Binary,
   },
   {
     name: "Languages",
@@ -75,23 +76,6 @@ export const categories: readonly CategoryItem[] = [
       },
     ],
   },
-  // {
-  //   name: "Frontend",
-  //   path: "/devlog/categories/frontend",
-  //   icon: MonitorSmartphone,
-  //   subcategories: [
-  //     {
-  //       name: "React",
-  //       path: "/devlog/categories/frontend/react",
-  //       icon: SiReact,
-  //     },
-  //     {
-  //       name: "Next.js",
-  //       path: "/devlog/categories/frontend/nextjs",
-  //       icon: SiNextdotjs,
-  //     },
-  //   ],
-  // },
   {
     name: "Backend",
     path: "/devlog/categories/backend",
@@ -114,45 +98,18 @@ export const categories: readonly CategoryItem[] = [
       },
     ],
   },
-  // {
-  //   name: "Architecture",
-  //   path: "/devlog/categories/architecture",
-  //   icon: CircuitBoard,
-  //   subcategories: [
-  //     {
-  //       name: "MSA",
-  //       path: "/devlog/categories/architecture/msa",
-  //       icon: Network,
-  //     },
-  //   ],
-  // },
   {
-    name: "Git",
-    path: "/devlog/categories/git",
-    icon: GitBranch,
+    name: "Tools",
+    path: "/devlog/categories/tools",
+    icon: Wrench,
+    subcategories: [
+      {
+        name: "Git",
+        path: "/devlog/categories/tools/git",
+        icon: GitBranch,
+      },
+    ],
   },
-  {
-    name: "Database",
-    path: "/devlog/categories/database",
-    icon: DatabaseIcon,
-  },
-  // {
-  //   name: "DevOps",
-  //   path: "/devlog/categories/devops",
-  //   icon: Cloud,
-  //   subcategories: [
-  //     {
-  //       name: "AWS",
-  //       path: "/devlog/categories/devops/aws",
-  //       icon: SiAmazon,
-  //     },
-  //     {
-  //       name: "Docker",
-  //       path: "/devlog/categories/devops/docker",
-  //       icon: SiDocker,
-  //     },
-  //   ],
-  // },
 ] as const;
 
 export const seriesCategories: readonly CategoryItem[] = [
@@ -190,22 +147,14 @@ export type Category =
   | "All"
   | "CS"
   | "Data Structure"
-  | "Problem Solving"
-  | "Programming Languages"
+  | "Database"
+  | "Languages"
   | "JavaScript"
   | "TypeScript"
-  | "Frontend"
-  | "React"
-  | "Next.js"
   | "Backend"
+  | "Node.js"
   | "NestJS"
   | "SpringBoot"
-  | "Architecture"
-  | "MSA"
-  | "Database"
-  | "MySQL"
-  | "Redis"
-  | "MongoDB"
-  | "DevOps"
-  | "AWS"
+  | "Tools"
+  | "Git"
   | "Series";
