@@ -3,7 +3,7 @@ title: "[Git] Blob, Tree, Commit Object"
 slug: "git-blob-tree-commit-object"
 date: 2025-01-07
 tags: ["Git", "Blob", "Tree", "Commit"]
-category: "Git"
+category: "Tools/Git"
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com//images/1fc970460a95ea5faf0cef3764835021.png"
 draft: false
 ---
