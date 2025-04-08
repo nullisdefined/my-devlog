@@ -109,7 +109,7 @@ export default function Home() {
         { name: "Node.js", icon: <SiNodedotjs className="h-5 w-5" /> },
         { name: "PostgreSQL", icon: <SiPostgresql className="h-5 w-5" /> },
       ],
-      link: "https://github.com/nullisdefined/nanalmoa-BE",
+      link: "https://github.com/nanalmoa/nanalmoa",
       image:
         "https://storage.googleapis.com/hotsix-bucket/%EB%82%98%EB%82%A0%EB%AA%A8%EC%95%84.png",
     },
@@ -131,7 +131,7 @@ export default function Home() {
         { name: "Node.js", icon: <SiNodedotjs className="h-5 w-5" /> },
         { name: "MySQL", icon: <SiMysql className="h-5 w-5" /> },
       ],
-      link: "https://github.com/nullisdefined/travel-manager",
+      link: "https://github.com/Programmers-3th-Team-Kim/travel-manager",
       image: "https://storage.googleapis.com/hotsix-bucket/travelmanager.png",
     },
     {
