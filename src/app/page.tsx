@@ -24,11 +24,11 @@ import {
   SiTrello,
   SiSwagger,
   SiNotion,
+  SiOracle,
 } from "react-icons/si";
 import Image from "next/image";
 
 import { FaJava } from "react-icons/fa";
-import ScrollableSection from "@/components/ui/scrollable-section";
 
 import ThemeToggle from "@/components/theme-toggle";
 import Footer from "@/components/footer";
@@ -67,6 +67,7 @@ export default function Home() {
         { name: "MariaDB", icon: <SiMariadb className="h-5 w-5" /> },
         { name: "MySQL", icon: <SiMysql className="h-5 w-5" /> },
         { name: "PostgreSQL", icon: <SiPostgresql className="h-5 w-5" /> },
+        { name: "Oracle", icon: <SiOracle className="h-5 w-5" /> },
       ],
     },
     {
