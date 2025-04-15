@@ -25,6 +25,7 @@ import {
   SiSwagger,
   SiNotion,
   SiOracle,
+  SiSpringboot,
 } from "react-icons/si";
 import Image from "next/image";
 
@@ -59,6 +60,7 @@ export default function Home() {
         { name: "Node.js", icon: <SiNodedotjs className="h-5 w-5" /> },
         { name: "Express", icon: <SiExpress className="h-5 w-5" /> },
         { name: "NestJS", icon: <SiNestjs className="h-5 w-5" /> },
+        { name: "Spring Boot", icon: <SiSpringboot className="h-5 w-5" /> },
       ],
     },
     {
