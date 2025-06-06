@@ -320,7 +320,7 @@
   }
 
   main {
-    padding-top: 72px;
+    padding-top: 0 !important;
   }
 
   ::selection {

@@ -1,6 +1,7 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { pusherClient } from "@/lib/pusher";
 import { Message, ChatRoom } from "@/types/chat";
 import { format } from "date-fns";
@@ -21,27 +22,108 @@ export default function AdminChatPage() {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  useEffect(() => {
-    initializeAdmin();
-    return () => cleanup();
+  const scrollToBottom = useCallback(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, []);
 
-  useEffect(() => {
-    scrollToBottom();
-  }, [messages]);
+  const updateChatRoomList = useCallback(
+    (roomId: string, message: Message) => {
+      setChatRooms((prev) =>
+        prev
+          .map((room) => {
+            if (room.id === roomId) {
+              return {
+                ...room,
+                lastMessage: message.content,
+                updatedAt: message.timestamp,
+                unread:
+                  selectedRoom === roomId
+                    ? 0
+                    : room.unread + (message.sender === "user" ? 1 : 0),
+              };
+            }
+            return room;
+          })
+          .sort((a, b) => b.updatedAt - a.updatedAt)
+      );
+    },
+    [selectedRoom]
+  );
 
-  useEffect(() => {
-    if (selectedRoom) {
-      inputRef.current?.focus();
+  const fetchChatRooms = useCallback(async () => {
+    try {
+      const response = await fetch("/api/chat");
+      const data = await response.json();
+      setChatRooms(data.rooms || []);
+
+      // 각 채팅방에 직접 구독
+      data.rooms.forEach((room: ChatRoom) => {
+        const roomId = room.id;
+        if (roomId && !channelRefs.current[roomId]) {
+          const channel = pusherClient.subscribe(`chat-${roomId}`);
+          channel.bind("message", (message: Message) => {
+            if (selectedRoom === roomId) {
+              setMessages((prev) => {
+                const isDuplicate = prev.some((m) => m.id === message.id);
+                if (isDuplicate) return prev;
+                return [...prev, message];
+              });
+            }
+            updateChatRoomList(roomId, message);
+          });
+          channelRefs.current[roomId] = { channel, roomId };
+        }
+      });
+    } catch (error) {
+      console.error("Failed to fetch chat rooms:", error);
+      setChatRooms([]);
+    } finally {
+      setIsLoading(false);
     }
-  }, [selectedRoom]);
+  }, [selectedRoom, updateChatRoomList]);
 
-  const initializeAdmin = async () => {
+  const setupAdminNotifications = useCallback(() => {
+    if (!adminChannelRef.current) {
+      const channel = pusherClient.subscribe("admin-notifications");
+      channel.bind("new-chat", handleNewChat);
+      adminChannelRef.current = channel;
+    }
+  }, []);
+
+  const handleNewChat = useCallback(
+    (chatRoom: ChatRoom) => {
+      setChatRooms((prev) => {
+        const exists = prev.some((room) => room.id === chatRoom.id);
+        if (exists) return prev;
+        return [chatRoom, ...prev].sort((a, b) => b.updatedAt - a.updatedAt);
+      });
+      const roomId = chatRoom.id;
+      if (roomId && !channelRefs.current[roomId]) {
+        const channel = pusherClient.subscribe(`chat-${roomId}`);
+        channel.bind("message", (message: Message) => {
+          if (selectedRoom === roomId) {
+            setMessages((prev) => {
+              const isDuplicate = prev.some((m) => m.id === message.id);
+              if (isDuplicate) return prev;
+              return [...prev, message];
+            });
+          }
+
+          updateChatRoomList(roomId, message);
+        });
+
+        channelRefs.current[roomId] = { channel, roomId };
+      }
+    },
+    [selectedRoom, updateChatRoomList]
+  );
+
+  const initializeAdmin = useCallback(async () => {
     await fetchChatRooms();
     setupAdminNotifications();
-  };
+  }, [fetchChatRooms, setupAdminNotifications]);
 
-  const cleanup = () => {
+  const cleanup = useCallback(() => {
     Object.values(channelRefs.current).forEach(({ channel, roomId }) => {
       channel.unbind_all();
       pusherClient.unsubscribe(`chat-${roomId}`);
@@ -53,83 +135,24 @@ export default function AdminChatPage() {
       pusherClient.unsubscribe("admin-notifications");
       adminChannelRef.current = null;
     }
-  };
+  }, []);
 
-  const setupAdminNotifications = () => {
-    if (!adminChannelRef.current) {
-      const channel = pusherClient.subscribe("admin-notifications");
-      channel.bind("new-chat", handleNewChat);
-      adminChannelRef.current = channel;
+  useEffect(() => {
+    initializeAdmin();
+    return () => cleanup();
+  }, [initializeAdmin, cleanup]);
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages, scrollToBottom]);
+
+  useEffect(() => {
+    if (selectedRoom) {
+      inputRef.current?.focus();
     }
-  };
+  }, [selectedRoom]);
 
-  const handleNewChat = (chatRoom: ChatRoom) => {
-    setChatRooms((prev) => {
-      const exists = prev.some((room) => room.id === chatRoom.id);
-      if (exists) return prev;
-      return [chatRoom, ...prev].sort((a, b) => b.updatedAt - a.updatedAt);
-    });
-    subscribeToRoom(chatRoom.id);
-  };
-
-  const fetchChatRooms = async () => {
-    try {
-      const response = await fetch("/api/chat");
-      const data = await response.json();
-      setChatRooms(data.rooms || []);
-
-      data.rooms.forEach((room: ChatRoom) => {
-        subscribeToRoom(room.id);
-      });
-    } catch (error) {
-      console.error("Failed to fetch chat rooms:", error);
-      setChatRooms([]);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const subscribeToRoom = (roomId: string) => {
-    if (channelRefs.current[roomId]) return;
-
-    const channel = pusherClient.subscribe(`chat-${roomId}`);
-    channel.bind("message", (message: Message) => {
-      if (selectedRoom === roomId) {
-        setMessages((prev) => {
-          const isDuplicate = prev.some((m) => m.id === message.id);
-          if (isDuplicate) return prev;
-          return [...prev, message];
-        });
-      }
-
-      updateChatRoomList(roomId, message);
-    });
-
-    channelRefs.current[roomId] = { channel, roomId };
-  };
-
-  const updateChatRoomList = (roomId: string, message: Message) => {
-    setChatRooms((prev) =>
-      prev
-        .map((room) => {
-          if (room.id === roomId) {
-            return {
-              ...room,
-              lastMessage: message.content,
-              updatedAt: message.timestamp,
-              unread:
-                selectedRoom === roomId
-                  ? 0
-                  : room.unread + (message.sender === "user" ? 1 : 0),
-            };
-          }
-          return room;
-        })
-        .sort((a, b) => b.updatedAt - a.updatedAt)
-    );
-  };
-
-  const fetchMessages = async (roomId: string) => {
+  const fetchMessages = useCallback(async (roomId: string) => {
     setIsLoadingMessages(true);
     try {
       const response = await fetch(`/api/chat/${roomId}/messages`);
@@ -149,9 +172,9 @@ export default function AdminChatPage() {
     } finally {
       setIsLoadingMessages(false);
     }
-  };
+  }, []);
 
-  const markAsRead = async (roomId: string) => {
+  const markAsRead = useCallback(async (roomId: string) => {
     try {
       await fetch(`/api/chat/${roomId}/read`, { method: "POST" });
       setChatRooms((prev) =>
@@ -160,28 +183,27 @@ export default function AdminChatPage() {
     } catch (error) {
       console.error("Failed to mark as read:", error);
     }
-  };
+  }, []);
 
-  const handleRoomSelect = async (roomId: string) => {
-    setSelectedRoom(roomId);
-    setMessages([]); // 메시지 초기화
-    setIsLoadingMessages(true);
+  const handleRoomSelect = useCallback(
+    async (roomId: string) => {
+      setSelectedRoom(roomId);
+      setMessages([]); // 메시지 초기화
+      setIsLoadingMessages(true);
 
-    try {
-      await Promise.all([fetchMessages(roomId), markAsRead(roomId)]);
-    } finally {
-      setIsLoadingMessages(false);
-      // 메시지 로드 후 스크롤 및 포커스
-      setTimeout(() => {
-        scrollToBottom();
-        inputRef.current?.focus();
-      }, 100);
-    }
-  };
-
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
+      try {
+        await Promise.all([fetchMessages(roomId), markAsRead(roomId)]);
+      } finally {
+        setIsLoadingMessages(false);
+        // 메시지 로드 후 스크롤 및 포커스
+        setTimeout(() => {
+          scrollToBottom();
+          inputRef.current?.focus();
+        }, 100);
+      }
+    },
+    [fetchMessages, markAsRead]
+  );
 
   const groupMessagesByDate = (messages: Message[]) => {
     const groups: { [key: string]: Message[] } = {};
