@@ -1,7 +1,14 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Mail, FileText, ArrowDown } from "lucide-react";
+import {
+  Mail,
+  FileText,
+  ArrowDown,
+  ChevronLeft,
+  ChevronRight,
+} from "lucide-react";
 import {
   SiNodedotjs,
   SiExpress,
@@ -31,6 +38,11 @@ import {
   SiJira,
   SiJenkins,
   SiGithubactions,
+  SiTypeorm,
+  SiSpring,
+  SiGithubpages,
+  SiVite,
+  SiGooglecloud,
 } from "react-icons/si";
 import Image from "next/image";
 
@@ -40,17 +52,173 @@ import ThemeToggle from "@/components/theme-toggle";
 import Footer from "@/components/footer";
 import { useEffect, useState } from "react";
 
+// ProjectCard 컴포넌트
+const ProjectCard = ({
+  project,
+  isActive,
+}: {
+  project: any;
+  isActive: boolean;
+}) => {
+  return (
+    <div
+      className={`bg-card rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500 h-[1000px] lg:h-[1050px] w-full max-w-md lg:max-w-lg flex flex-col ${
+        isActive ? "shadow-2xl" : ""
+      }`}
+    >
+      {project.image && (
+        <div className="relative w-full h-48 lg:h-56 bg-gray-50 dark:bg-gray-900 flex items-center justify-center overflow-hidden flex-shrink-0 rounded-t-xl">
+          <Image
+            src={project.image}
+            alt={project.title}
+            fill
+            className="object-contain transition-transform duration-500 hover:scale-105"
+            sizes="(max-width: 1200px) 100vw, 33vw"
+          />
+          {!isActive && (
+            <div className="absolute inset-0 bg-black/20 transition-opacity duration-300" />
+          )}
+        </div>
+      )}
+      <div className={`p-6 lg:p-8 flex-1 flex flex-col`}>
+        {/* 프로젝트 제목 및 설명 */}
+        <div className="space-y-4 lg:space-y-5">
+          <div className="space-y-2">
+            <h3
+              className={`font-bold ${
+                isActive ? "text-xl lg:text-2xl" : "text-lg lg:text-xl"
+              }`}
+            >
+              {project.title}
+            </h3>
+            <p
+              className={`text-xs lg:text-sm text-blue-600 dark:text-blue-400 font-medium`}
+            >
+              {project.period}
+            </p>
+          </div>
+          <p className={`text-muted-foreground`}>{project.description}</p>
+        </div>
+
+        {/* 주요 기능 */}
+        <div className="space-y-4 lg:space-y-5 mt-6 lg:mt-8">
+          <h4
+            className={`font-semibold ${
+              isActive ? "text-sm lg:text-base" : "text-xs lg:text-sm"
+            }`}
+          >
+            주요 기능:
+          </h4>
+          <ul
+            className={`list-disc list-inside space-y-2 text-muted-foreground ${
+              isActive ? "text-xs lg:text-sm" : "text-xs"
+            }`}
+          >
+            {project.features.map((feature: string, idx: number) => (
+              <li key={idx}>{feature}</li>
+            ))}
+          </ul>
+        </div>
+
+        {/* 기술 스택 */}
+        <div className="space-y-4 lg:space-y-5 mt-3 lg:mt-4">
+          <h4
+            className={`font-semibold ${
+              isActive ? "text-sm lg:text-base" : "text-xs lg:text-sm"
+            }`}
+          >
+            기술 스택:
+          </h4>
+          <div className="flex flex-wrap gap-2 lg:gap-3">
+            {project.tech.map((tech: any, idx: number) => (
+              <div
+                key={idx}
+                className={`flex items-center space-x-1 text-muted-foreground hover:text-foreground transition-colors bg-muted/50 px-2 py-1 rounded-md ${
+                  isActive ? "text-xs lg:text-sm" : "text-xs"
+                }`}
+              >
+                <span className="text-xs">{tech.icon}</span>
+                <span>{tech.name}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* 레포지토리 버튼 */}
+        <div className="mt-auto pt-3 lg:pt-4">
+          <Button
+            variant={isActive ? "outline" : "ghost"}
+            className={`w-full ${isActive ? "text-sm" : "text-xs"}`}
+            asChild
+          >
+            <Link
+              href={project.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center"
+            >
+              <SiGithub className="mr-2 h-4 w-4" />
+              Repository
+            </Link>
+          </Button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 export default function Home() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isHovered, setIsHovered] = useState(false);
+  const [currentProjectIndex, setCurrentProjectIndex] = useState(0);
+  const [currentSection, setCurrentSection] = useState("");
 
+  // useEffect(() => {
+  //   const updateMousePosition = (e: MouseEvent) => {
+  //     setMousePosition({ x: e.clientX, y: e.clientY });
+  //   };
+
+  //   window.addEventListener("mousemove", updateMousePosition);
+  //   return () => window.removeEventListener("mousemove", updateMousePosition);
+  // }, []);
+
+  // 섹션 감지 및 커서 크기 조정
+  // useEffect(() => {
+  //   const handleScroll = () => {
+  //     const sections = ["projects", "experience", "skills"];
+  //     const scrollPosition = window.scrollY + window.innerHeight / 2;
+
+  //     for (const section of sections) {
+  //       const element = document.getElementById(section);
+  //       if (element) {
+  //         const { offsetTop, offsetHeight } = element;
+  //         if (
+  //           scrollPosition >= offsetTop &&
+  //           scrollPosition < offsetTop + offsetHeight
+  //         ) {
+  //           setCurrentSection(section);
+  //           break;
+  //         }
+  //       }
+  //     }
+  //   };
+
+  //   window.addEventListener("scroll", handleScroll);
+  //   return () => window.removeEventListener("scroll", handleScroll);
+  // }, []);
+
+  // 키보드 네비게이션 추가
   useEffect(() => {
-    const updateMousePosition = (e: MouseEvent) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
+    const handleKeyPress = (e: KeyboardEvent) => {
+      if (e.key === "ArrowLeft") {
+        prevProject();
+      } else if (e.key === "ArrowRight") {
+        nextProject();
+      }
     };
 
-    window.addEventListener("mousemove", updateMousePosition);
-    return () => window.removeEventListener("mousemove", updateMousePosition);
+    window.addEventListener("keydown", handleKeyPress);
+    return () => window.removeEventListener("keydown", handleKeyPress);
   }, []);
 
   const skills = [
@@ -102,7 +270,9 @@ export default function Home() {
         { name: "Node.js", icon: <SiNodedotjs className="h-5 w-5" /> },
         { name: "Express", icon: <SiExpress className="h-5 w-5" /> },
         { name: "NestJS", icon: <SiNestjs className="h-5 w-5" /> },
+        { name: "TypeORM", icon: <SiTypeorm className="h-5 w-5" /> },
         { name: "Spring Boot", icon: <SiSpringboot className="h-5 w-5" /> },
+        { name: "JPA", icon: <SiSpring className="h-5 w-5" /> },
       ],
     },
     {
@@ -122,7 +292,7 @@ export default function Home() {
         { name: "AWS", icon: <SiAmazon className="h-5 w-5" /> },
         {
           name: "GitHub Actions",
-          icon: <SiGithubactions className="h-4 w-4" />,
+          icon: <SiGithubactions className="h-5 w-5" />,
         },
         { name: "Jenkins", icon: <SiJenkins className="h-5 w-5" /> },
       ],
@@ -132,9 +302,9 @@ export default function Home() {
       techs: [
         { name: "VSCode", icon: <SiVisualstudiocode className="h-5 w-5" /> },
         { name: "Git", icon: <SiGit className="h-5 w-5" /> },
-        { name: "Swagger", icon: <SiSwagger className="h-5 w-5" /> },
-        { name: "Slack", icon: <SiSlack className="h-5 w-5" /> },
         { name: "Notion", icon: <SiNotion className="h-5 w-5" /> },
+        { name: "Slack", icon: <SiSlack className="h-5 w-5" /> },
+        { name: "Swagger", icon: <SiSwagger className="h-5 w-5" /> },
         { name: "Confluence", icon: <SiConfluence className="h-5 w-5" /> },
       ],
     },
@@ -142,7 +312,55 @@ export default function Home() {
 
   const projects = [
     {
+      title: "핫식스 팀 블로그",
+      period: "24.06 ~ 24.07",
+      description:
+        "팀 단위의 특별한 협업 공간을 제공하는 웹 서비스입니다. 팀원이 작성한 게시글을 쉽게 공유하고 관리할 수 있습니다.",
+      features: [
+        "팀 단위의 게시글 관리",
+        "사용자 인증 및 권한 관리",
+        "풍부한 에디터 기능",
+        "댓글 및 좋아요 기능",
+        "이메일 인증을 통한 비밀번호 변경",
+        "공개/비공개 게시글 설정",
+      ],
+      tech: [
+        { name: "Node.js", icon: <SiNodedotjs className="h-5 w-5" /> },
+        { name: "TypeScript", icon: <SiTypescript className="h-5 w-5" /> },
+        { name: "NestJS", icon: <SiNestjs className="h-5 w-5" /> },
+        { name: "MySQL", icon: <SiMysql className="h-5 w-5" /> },
+        { name: "GCP", icon: <SiGooglecloud className="h-5 w-5" /> },
+      ],
+      link: "https://github.com/nullisdefined/hotsix-teamblog",
+      image:
+        "https://storage.googleapis.com/hotsix-bucket/%EB%A9%94%EC%9D%B8%ED%8E%98%EC%9D%B4%EC%A7%80.gif",
+    },
+    {
+      title: "Travel Manager",
+      period: "24.08",
+      description:
+        "여행 일정과 경비를 효율적으로 관리할 수 있는 서비스입니다. 각 여행지별 일정을 등록하고 경비를 실시간으로 관리할 수 있습니다.",
+      features: [
+        "여행별 일정 관리",
+        "실시간 경비 추적",
+        "활동별 상세 기록",
+        "여행지별 통화 자동 변환",
+        "일정 순서 관리",
+        "경비 카테고리 관리",
+      ],
+      tech: [
+        { name: "Node.js", icon: <SiNodedotjs className="h-5 w-5" /> },
+        { name: "TypeScript", icon: <SiTypescript className="h-5 w-5" /> },
+        { name: "NestJS", icon: <SiNestjs className="h-5 w-5" /> },
+        { name: "MySQL", icon: <SiMysql className="h-5 w-5" /> },
+      ],
+      link: "https://github.com/Programmers-3th-Team-Kim/travel-manager",
+      image: "https://storage.googleapis.com/hotsix-bucket/travelmanager.png",
+    },
+
+    {
       title: "나날모아",
+      period: "24.08 ~ 25.02",
       description:
         "시니어와 가족 사용자를 대상으로 하는 AI 기반 자동 일정 관리 서비스입니다. 음성 인식, OCR, NLP를 활용하여 편리한 일정 등록을 지원합니다.",
       features: [
@@ -158,77 +376,113 @@ export default function Home() {
         { name: "NestJS", icon: <SiNestjs className="h-5 w-5" /> },
         { name: "Node.js", icon: <SiNodedotjs className="h-5 w-5" /> },
         { name: "PostgreSQL", icon: <SiPostgresql className="h-5 w-5" /> },
+        { name: "AWS", icon: <SiAmazon className="h-5 w-5" /> },
       ],
       link: "https://github.com/nanalmoa/nanalmoa",
       image:
         "https://storage.googleapis.com/hotsix-bucket/%EB%82%98%EB%82%A0%EB%AA%A8%EC%95%84.png",
     },
     {
-      title: "Travel Manager",
+      title: "Thumbs Up",
+      period: "25.03",
       description:
-        "여행 일정과 경비를 효율적으로 관리할 수 있는 서비스입니다. 각 여행지별 일정을 등록하고 경비를 실시간으로 관리할 수 있습니다.",
+        "직관적이고 간편한 썸네일 제작 도구입니다. 다양한 레이아웃과 배경 옵션을 제공하여 누구나 쉽게 전문적인 썸네일을 만들 수 있습니다. 실시간 미리보기 기능으로 즉시 결과를 확인하고 수정할 수 있어 효율적인 디자인 작업이 가능합니다.",
       features: [
-        "여행별 일정 관리",
-        "실시간 경비 추적",
-        "활동별 상세 기록",
-        "여행지별 통화 자동 변환",
-        "일정 순서 관리",
-        "경비 카테고리 관리",
+        "다양한 레이아웃 템플릿 제공",
+        "그라데이션, 단색, 이미지 배경 지원",
+        "실시간 텍스트 편집 및 미리보기",
+        "폰트 선택 및 텍스트 스타일링",
+        "색상 팔레트 및 랜덤 셔플 기능",
+        "썸네일 클립보드 복사 또는 다운로드",
       ],
       tech: [
+        { name: "React", icon: <SiReact className="h-5 w-5" /> },
         { name: "TypeScript", icon: <SiTypescript className="h-5 w-5" /> },
-        { name: "NestJS", icon: <SiNestjs className="h-5 w-5" /> },
-        { name: "Node.js", icon: <SiNodedotjs className="h-5 w-5" /> },
-        { name: "MySQL", icon: <SiMysql className="h-5 w-5" /> },
+        { name: "Vite", icon: <SiVite className="h-5 w-5" /> },
+        { name: "Tailwind CSS", icon: <SiTailwindcss className="h-5 w-5" /> },
+        { name: "Github Pages", icon: <SiGithubpages className="h-5 w-5" /> },
       ],
-      link: "https://github.com/Programmers-3th-Team-Kim/travel-manager",
-      image: "https://storage.googleapis.com/hotsix-bucket/travelmanager.png",
+      link: "https://github.com/nullisdefined/thumbs-up",
+      image:
+        "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/f10823a90684fc0263bde4ca637fea3f.gif",
     },
     {
-      title: "핫식스 팀 블로그",
+      title: "오운완 (오늘운동완료)",
+      period: "25.04 ~ 25.06",
       description:
-        "팀 단위의 특별한 협업 공간을 제공하는 웹 서비스입니다. 팀원이 작성한 게시글을 쉽게 공유하고 관리할 수 있습니다.",
+        "운동 습관 형성과 커뮤니티 기반 동기부여를 위한 웹 기반 운동 인증 플랫폼입니다. 사용자들이 운동 인증 사진을 실시간으로 촬영하여 공유하고, 그룹 단위의 경쟁과 협업을 통해 자연스럽게 운동 습관을 형성할 수 있도록 지원합니다.",
       features: [
-        "팀 단위의 게시글 관리",
-        "사용자 인증 및 권한 관리",
-        "풍부한 에디터 기능",
-        "댓글 및 좋아요 기능",
-        "이메일 인증을 통한 비밀번호 변경",
-        "공개/비공개 게시글 설정",
+        "실시간 사진 촬영을 통한 운동 인증",
+        "그룹 기반 경쟁 및 랭킹 시스템",
+        "통계 대시보드",
+        "스트릭(연속 출석) 기록 관리",
+        "피드 상호작용 (좋아요, 댓글)",
+        "인증글 공개 범위 제어 (전체/그룹 공개)",
+        "시간대별 운동 패턴 분석",
       ],
       tech: [
+        { name: "Node.js", icon: <SiNodedotjs className="h-5 w-5" /> },
         { name: "TypeScript", icon: <SiTypescript className="h-5 w-5" /> },
         { name: "NestJS", icon: <SiNestjs className="h-5 w-5" /> },
-        { name: "Node.js", icon: <SiNodedotjs className="h-5 w-5" /> },
-        { name: "MySQL", icon: <SiMysql className="h-5 w-5" /> },
+        { name: "PostgreSQL", icon: <SiPostgresql className="h-5 w-5" /> },
+        { name: "AWS", icon: <SiAmazon className="h-5 w-5" /> },
       ],
-      link: "https://github.com/nullisdefined/hotsix-teamblog",
+      link: "https://github.com/SSU-LED",
       image:
-        "https://storage.googleapis.com/hotsix-bucket/%EB%A9%94%EC%9D%B8%ED%8E%98%EC%9D%B4%EC%A7%80.gif",
+        "https://github.com/user-attachments/assets/db1dc04e-f2ae-419d-ad01-7e210f68b904",
     },
   ];
+
+  const nextProject = () => {
+    setCurrentProjectIndex((prev) => (prev + 1) % projects.length);
+  };
+
+  const prevProject = () => {
+    setCurrentProjectIndex(
+      (prev) => (prev - 1 + projects.length) % projects.length
+    );
+  };
+
+  const getCursorScale = () => {
+    if (currentSection === "projects") {
+      return isHovered ? 3 : 1;
+    } else if (currentSection === "skills") {
+      return isHovered ? 1.8 : 1;
+    }
+    return isHovered ? 1.5 : 1;
+  };
 
   return (
     <>
       {/* Custom Cursor */}
-      <div
-        className={`fixed w-16 h-16 bg-white rounded-full pointer-events-none z-50 transition-transform duration-150 ${
-          isHovered ? "scale-200" : "scale-100"
-        }`}
+      {/* <div
+        className={`fixed w-16 h-16 bg-white rounded-full pointer-events-none z-50 transition-transform duration-150`}
         style={{
           left: mousePosition.x - 30,
           top: mousePosition.y - 30,
-          transform: `translate(0, 0) scale(${isHovered ? 1.5 : 1})`,
+          transform: `translate(0, 0) scale(${getCursorScale()})`,
           mixBlendMode: "difference",
         }}
-      />
+      /> */}
 
       {/* Hide default cursor */}
-      <style jsx global>{`
+      {/* <style jsx global>{`
         * {
           cursor: none !important;
         }
-      `}</style>
+        .line-clamp-2 {
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+        }
+        .line-clamp-3 {
+          display: -webkit-box;
+          -webkit-line-clamp: 3;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+        }
+      `}</style> */}
 
       {/* 테마 토글 버튼 */}
       <div className="fixed top-8 right-8 z-50">
@@ -243,188 +497,281 @@ export default function Home() {
 
       <main className="min-h-screen bg-background">
         {/* 히어로 섹션 */}
-        <section className="min-h-screen bg-black text-white flex items-center justify-center relative overflow-hidden">
+        <section
+          className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50
+dark:bg-black dark:bg-gradient-to-br dark:from-black dark:via-gray-900 dark:to-black text-black dark:text-white flex items-center justify-center relative overflow-hidden"
+        >
           {/* 배경 그라디언트 */}
-          <div className="absolute inset-0 bg-gradient-to-br from-black via-gray-900 to-black"></div>
+          <div className="absolute inset-0 pointer-events-none"></div>
 
           {/* 애니메이션 배경 요소들 */}
           <div className="absolute inset-0 overflow-hidden">
-            <div className="absolute -top-40 -right-40 w-80 h-80 bg-blue-500/10 rounded-full blur-3xl animate-pulse"></div>
-            <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-purple-500/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
+            <div className="absolute -top-40 -right-40 w-80 h-80 bg-blue-300/20 rounded-full blur-3xl animate-pulse dark:bg-blue-500/10"></div>
+            <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-purple-300/20 rounded-full blur-3xl animate-pulse delay-1000 dark:bg-purple-500/10"></div>
           </div>
 
-          <div className="relative z-10 text-center max-w-6xl mx-auto px-6">
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter leading-none mb-16">
-              WEB
-              <br />
-              <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+          {/* 하단 블러 효과 */}
+          <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-background to-transparent pointer-events-none z-20 backdrop-blur-md"></div>
+
+          <div className="relative z-10 text-center max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black tracking-tighter leading-none mb-8 sm:mb-12 lg:mb-16">
+              <span className="block text-black dark:text-white drop-shadow-md">
+                WEB
+              </span>
+              <span className="block bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent font-extrabold drop-shadow-lg">
                 DEVELOPER
               </span>
             </h1>
 
-            <div className="mb-8">
-              <div className="inline-block mb-6">
-                <div className="w-32 h-32 rounded-full overflow-hidden ring-4 ring-gray-600/50 ring-offset-4 ring-offset-black">
-                  <Image
-                    src="https://storage.googleapis.com/hotsix-bucket/KakaoTalk_20241022_185833320.jpg"
-                    alt="Profile"
-                    width={128}
-                    height={128}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
+            <div className="mb-6 sm:mb-8">
+              <div
+                className="w-24 h-24 sm:w-28 sm:h-28 lg:w-32 lg:h-32 mx-auto rounded-full overflow-hidden ring-2 ring-gray-300 dark:ring-gray-700"
+                onMouseEnter={() => setIsHovered(false)}
+              >
+                <Image
+                  src="https://storage.googleapis.com/hotsix-bucket/KakaoTalk_20241022_185833320.jpg"
+                  alt="Profile"
+                  width={128}
+                  height={128}
+                  className="w-full h-full object-cover"
+                />
               </div>
             </div>
 
-            <div className="mb-4">
-              <h2 className="text-2xl md:text-3xl font-light text-gray-300 mb-2">
+            <div className="mb-3 sm:mb-4">
+              <h2 className="text-xl sm:text-2xl md:text-3xl font-light text-gray-900 dark:text-gray-300 mb-1 sm:mb-2">
                 Jaewoo Kim
               </h2>
-              <p className="text-lg text-gray-400">Full Stack Developer</p>
+              <p className="text-base sm:text-lg text-gray-700 dark:text-gray-400">
+                Full Stack Developer
+              </p>
             </div>
 
-            <p className="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto mb-12 leading-relaxed">
+            <p className="text-sm sm:text-base md:text-lg lg:text-xl text-gray-600 dark:text-gray-400 max-w-4xl mx-auto mb-8 sm:mb-10 lg:mb-12 leading-relaxed px-2">
               사용자 삶의 질 향상에 있어 변화의 물결을 주도하고, 그 물결의 크기
               자체를 키우며 다양한 분야에 영향력을 행사하는 웹 개발의 무한한
               가능성에 동력을 보태고 싶습니다.
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
-              <div
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center mb-12 sm:mb-16 px-4">
+              <Link
+                href="/devlog"
+                className="inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-4 bg-white text-black font-semibold rounded-full shadow-md hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 text-sm sm:text-base"
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
               >
-                <Link
-                  href="/devlog"
-                  className="inline-flex items-center px-8 py-4 bg-white text-black font-semibold rounded-full hover:bg-gray-200 transition-all duration-300 transform hover:scale-105"
-                >
-                  <FileText className="mr-2 h-5 w-5" />
-                  DEVLOG
-                </Link>
-              </div>
-              <div
-                className="mb-16"
+                <FileText className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
+                DEVLOG
+              </Link>
+              <Link
+                href="https://github.com/nullisdefined"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="
+inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-4 
+border border-gray-800 text-gray-900 font-semibold rounded-full 
+hover:bg-gray-800 hover:text-white
+transition-all duration-300 transform hover:scale-105 text-sm sm:text-base
+
+dark:border-gray-300 dark:text-gray-200
+dark:hover:bg-gray-600 dark:hover:text-white
+"
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
               >
-                <Link
-                  href="https://github.com/nullisdefined"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center px-8 py-4 border border-white text-white font-semibold rounded-full hover:bg-white hover:text-black transition-all duration-300 transform hover:scale-105"
-                >
-                  <SiGithub className="mr-2 h-5 w-5" />
-                  GITHUB
-                </Link>
-              </div>
+                <SiGithub className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
+                GITHUB
+              </Link>
             </div>
 
             {/* 스크롤 인디케이터 */}
             <div
-              className="absolute bottom-0 left-1/2 transform -translate-x-1/2 animate-bounce"
+              className="absolute bottom-4 sm:bottom-4 lg:bottom-4 left-1/2 transform -translate-x-1/2 animate-bounce"
               onMouseEnter={() => setIsHovered(true)}
               onMouseLeave={() => setIsHovered(false)}
             >
-              <ArrowDown className="h-6 w-6 text-gray-400" />
+              <ArrowDown className="h-5 w-5 sm:h-6 sm:w-6 text-gray-500 dark:text-gray-400" />
             </div>
           </div>
         </section>
 
         {/* 프로젝트 섹션 */}
-        <section className="py-24 bg-gradient-to-b from-background to-muted/50">
+        <section
+          id="projects"
+          className="py-24 bg-gradient-to-b from-background to-muted/50"
+        >
           <div className="container mx-auto px-6 lg:px-8">
             <div className="text-center mb-16">
-              <h2 className="text-4xl font-bold mb-6 text-black dark:text-white font-sans uppercase">
-                Projects
-              </h2>
+              <div className="relative inline-block">
+                <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tighter leading-none">
+                  <span
+                    className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent 
+                                 drop-shadow-lg relative
+                                 dark:from-blue-400 dark:via-purple-400 dark:to-pink-400 dark:opacity-80 px-1"
+                  >
+                    PROJECTS
+                  </span>
+                </h2>
+                {/* 배경 텍스트 효과 */}
+                <div className="absolute inset-0 -z-10">
+                  <span
+                    className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tighter leading-none 
+                                 text-gray-100 dark:text-gray-700 opacity-50 blur-sm"
+                  >
+                    PROJECTS
+                  </span>
+                </div>
+                {/* 언더라인 효과 */}
+                <div
+                  className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-24 sm:w-32 lg:w-48 h-1 
+                                bg-gradient-to-r from-blue-600 to-purple-600 rounded-full
+                                dark:from-blue-400 dark:to-purple-400 dark:opacity-70"
+                ></div>
+              </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-              {projects.map((project, index) => (
+            {/* 캐러셀 컨테이너 */}
+            <div className="relative max-w-7xl mx-auto overflow-hidden">
+              {/* 데스크톱용 3카드 캐러셀 (lg 이상) */}
+              <div className="hidden lg:flex items-center justify-center gap-6 lg:gap-8">
+                {/* 이전 프로젝트 카드 (왼쪽) */}
                 <div
-                  key={index}
-                  className="bg-card rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow flex flex-col"
+                  className="w-80 lg:w-96 flex-shrink-0 transform scale-75 lg:scale-85 opacity-60 hover:opacity-80 transition-all duration-500 cursor-pointer"
+                  onClick={prevProject}
                   onMouseEnter={() => setIsHovered(true)}
                   onMouseLeave={() => setIsHovered(false)}
                 >
-                  {project.image && (
-                    <div className="relative w-full h-64">
-                      <Image
-                        src={project.image}
-                        alt={project.title}
-                        fill
-                        className="object-cover"
-                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                      />
-                    </div>
-                  )}
-                  <div className="p-4 sm:p-6 flex-1 flex flex-col">
-                    <h3 className="text-xl sm:text-2xl font-bold mb-2">
-                      {project.title}
-                    </h3>
-                    <p className="text-sm sm:text-base text-muted-foreground mb-4">
-                      {project.description}
-                    </p>
-                    <div className="mb-4 flex-1">
-                      <h4 className="font-semibold mb-2 text-sm sm:text-base">
-                        주요 기능:
-                      </h4>
-                      <ul className="list-disc list-inside space-y-1 text-muted-foreground text-sm">
-                        {project.features.map((feature, idx) => (
-                          <li key={idx}>{feature}</li>
-                        ))}
-                      </ul>
-                    </div>
-                    <div className="mb-4">
-                      <h4 className="font-semibold mb-2 text-sm sm:text-base">
-                        기술 스택:
-                      </h4>
-                      <div className="flex flex-wrap gap-3">
-                        {project.tech.map((tech, idx) => (
-                          <div
-                            key={idx}
-                            className="flex items-center space-x-1 sm:space-x-2 text-muted-foreground hover:text-foreground transition-colors text-sm"
-                          >
-                            {tech.icon}
-                            <span>{tech.name}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                    <div
-                      onMouseEnter={() => setIsHovered(true)}
-                      onMouseLeave={() => setIsHovered(false)}
-                    >
-                      <Button
-                        variant="outline"
-                        className="w-full mt-auto"
-                        asChild
-                      >
-                        <Link
-                          href={project.link}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex items-center justify-center"
-                        >
-                          <SiGithub className="mr-2 h-4 w-4" />
-                          Repository
-                        </Link>
-                      </Button>
-                    </div>
-                  </div>
+                  <ProjectCard
+                    project={
+                      projects[
+                        (currentProjectIndex - 1 + projects.length) %
+                          projects.length
+                      ]
+                    }
+                    isActive={false}
+                  />
                 </div>
-              ))}
+
+                {/* 현재 프로젝트 카드 (중앙) */}
+                <div
+                  className="w-80 lg:w-[28rem] flex-shrink-0 transform scale-100 z-10 shadow-2xl"
+                  onMouseEnter={() => setIsHovered(true)}
+                  onMouseLeave={() => setIsHovered(false)}
+                >
+                  <ProjectCard
+                    project={projects[currentProjectIndex]}
+                    isActive={true}
+                  />
+                </div>
+
+                {/* 다음 프로젝트 카드 (오른쪽) */}
+                <div
+                  className="w-80 lg:w-96 flex-shrink-0 transform scale-75 lg:scale-85 opacity-60 hover:opacity-80 transition-all duration-500 cursor-pointer"
+                  onClick={nextProject}
+                  onMouseEnter={() => setIsHovered(true)}
+                  onMouseLeave={() => setIsHovered(false)}
+                >
+                  <ProjectCard
+                    project={
+                      projects[(currentProjectIndex + 1) % projects.length]
+                    }
+                    isActive={false}
+                  />
+                </div>
+              </div>
+
+              {/* 모바일/태블릿용 단일 카드 + 버튼 네비게이션 (lg 미만) */}
+              <div className="lg:hidden relative flex justify-center">
+                {/* 현재 프로젝트 카드 */}
+                <div
+                  className="w-full max-w-md mx-auto"
+                  onMouseEnter={() => setIsHovered(true)}
+                  onMouseLeave={() => setIsHovered(false)}
+                >
+                  <ProjectCard
+                    project={projects[currentProjectIndex]}
+                    isActive={true}
+                  />
+                </div>
+
+                {/* 좌측 네비게이션 버튼 */}
+                <Button
+                  variant="outline"
+                  size="icon"
+                  className="absolute left-4 top-1/2 -translate-y-1/2 h-14 w-14 rounded-full bg-white/95 dark:bg-gray-900/95 backdrop-blur-sm shadow-xl hover:bg-white dark:hover:bg-gray-800 border-2 border-gray-300 dark:border-gray-600 z-20 transition-all duration-200 hover:scale-110"
+                  onClick={prevProject}
+                  onMouseEnter={() => setIsHovered(true)}
+                  onMouseLeave={() => setIsHovered(false)}
+                >
+                  <ChevronLeft className="h-7 w-7 text-gray-800 dark:text-gray-100" />
+                </Button>
+
+                {/* 우측 네비게이션 버튼 */}
+                <Button
+                  variant="outline"
+                  size="icon"
+                  className="absolute right-4 top-1/2 -translate-y-1/2 h-14 w-14 rounded-full bg-white/95 dark:bg-gray-900/95 backdrop-blur-sm shadow-xl hover:bg-white dark:hover:bg-gray-800 border-2 border-gray-300 dark:border-gray-600 z-20 transition-all duration-200 hover:scale-110"
+                  onClick={nextProject}
+                  onMouseEnter={() => setIsHovered(true)}
+                  onMouseLeave={() => setIsHovered(false)}
+                >
+                  <ChevronRight className="h-7 w-7 text-gray-800 dark:text-gray-100" />
+                </Button>
+              </div>
+
+              {/* 네비게이션 인디케이터 */}
+              <div className="flex justify-center mt-12 space-x-3 mb-1">
+                {projects.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setCurrentProjectIndex(index)}
+                    className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                      index === currentProjectIndex
+                        ? "bg-blue-500 scale-125 shadow-lg"
+                        : "bg-gray-300 dark:bg-gray-600 hover:bg-gray-400 dark:hover:bg-gray-500 hover:scale-110"
+                    }`}
+                    onMouseEnter={() => setIsHovered(true)}
+                    onMouseLeave={() => setIsHovered(false)}
+                  />
+                ))}
+              </div>
             </div>
           </div>
         </section>
 
         {/* Experience 섹션 */}
-        <section className="py-24 bg-[#f5f5f5] dark:bg-[#262626]">
+        <section
+          id="experience"
+          className="py-24 bg-[#f5f5f5] dark:bg-[#262626]"
+        >
           <div className="container mx-auto px-6 lg:px-8">
             <div className="text-center mb-16">
-              <h2 className="text-4xl font-bold mb-6 text-black dark:text-white font-sans uppercase">
-                Experience
-              </h2>
+              <div className="relative inline-block">
+                <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tighter leading-none">
+                  <span
+                    className="bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 bg-clip-text text-transparent 
+                               drop-shadow-lg relative
+                               dark:from-emerald-400 dark:via-teal-400 dark:to-cyan-400 dark:opacity-80"
+                  >
+                    EXPERIENCE
+                  </span>
+                </h2>
+                {/* 배경 텍스트 효과 */}
+                <div className="absolute inset-0 -z-10">
+                  <span
+                    className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tighter leading-none 
+                               text-gray-100 dark:text-gray-700 opacity-50 blur-sm"
+                  >
+                    EXPERIENCE
+                  </span>
+                </div>
+                {/* 언더라인 효과 */}
+                <div
+                  className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-32 sm:w-40 lg:w-56 h-1 
+                              bg-gradient-to-r from-emerald-600 to-cyan-600 rounded-full
+                              dark:from-emerald-400 dark:to-cyan-400 dark:opacity-70"
+                ></div>
+              </div>
             </div>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               {/* Education 카드 */}
@@ -466,6 +813,15 @@ export default function Home() {
                       2024.04 ~ 2024.10
                     </div>
                   </li>
+                  {/* <li>
+                    <div className="font-semibold">정보통신산업진흥원</div>
+                    <div className="text-muted-foreground text-sm sm:text-base">
+                      [KSTA] NIPA-AWS Developer 부트캠프 2기
+                    </div>
+                    <div className="text-xs sm:text-sm text-muted-foreground">
+                      2025.06 ~ 2025.08
+                    </div>
+                  </li> */}
                 </ul>
               </div>
 
@@ -494,6 +850,12 @@ export default function Home() {
                       한국산업인력공단
                     </div>
                   </li>
+                  {/* <li>
+                    <div className="font-semibold">DIAT 스프레드시트 고급</div>
+                    <div className="text-sm sm:text-base text-muted-foreground">
+                      한국정보통신진흥협회
+                    </div>
+                  </li> */}
                   <li>
                     <div className="font-semibold">네트워크관리사 2급</div>
                     <div className="text-sm sm:text-base text-muted-foreground">
@@ -520,11 +882,34 @@ export default function Home() {
 
         {/* Skills 섹션 */}
         <section className="py-24 bg-gradient-to-b from-muted/50 to-background">
-          <div className="container mx-auto px-6 lg:px-8">
+          <div className="container mx-auto px-8 lg:px-12">
             <div className="text-center mb-16">
-              <h2 className="text-4xl font-bold mb-6 text-black dark:text-white font-sans uppercase">
-                Skills
-              </h2>
+              <div className="relative inline-block px-4">
+                <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tighter leading-none">
+                  <span
+                    className="bg-gradient-to-r from-gray-900 via-slate-700 to-zinc-900 bg-clip-text text-transparent 
+                                 drop-shadow-lg relative
+                                 dark:from-gray-300 dark:via-slate-400 dark:to-gray-300 px-1"
+                  >
+                    SKILLS
+                  </span>
+                </h2>
+                {/* 배경 텍스트 효과 */}
+                <div className="absolute inset-0 -z-10">
+                  <span
+                    className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tighter leading-none 
+                                 text-gray-200 dark:text-gray-700 opacity-50 blur-sm"
+                  >
+                    SKILLS
+                  </span>
+                </div>
+                {/* 언더라인 효과 */}
+                <div
+                  className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-20 sm:w-24 lg:w-32 h-1 
+                                bg-gradient-to-r from-slate-800 via-gray-700 to-zinc-800 rounded-full
+                                dark:from-gray-500 dark:via-slate-400 dark:to-gray-500"
+                ></div>
+              </div>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4">
               {skills.map((skill) => (
@@ -534,14 +919,14 @@ export default function Home() {
                   onMouseEnter={() => setIsHovered(true)}
                   onMouseLeave={() => setIsHovered(false)}
                 >
-                  <h3 className="font-bold mb-4 text-lg sm:text-xl">
+                  <h3 className="font-bold mb-4 text-base sm:text-lg">
                     {skill.category}
                   </h3>
                   <ul className="space-y-3">
                     {skill.techs.map((tech) => (
                       <li
                         key={tech.name}
-                        className="flex items-center space-x-2 text-muted-foreground hover:text-foreground transition-colors text-sm sm:text-base"
+                        className="flex items-center space-x-2 text-muted-foreground hover:text-foreground transition-colors text-xs sm:text-sm"
                       >
                         {tech.icon}
                         <span>{tech.name}</span>
