@@ -4,6 +4,7 @@ import { useEffect, useState, useRef, useMemo } from "react";
 import { TableOfContentsItem } from "@/types/index";
 import { cn } from "@/lib/class-name-utils";
 import { useHeaderStore } from "@/store/header-store";
+import { Menu } from "lucide-react";
 
 interface TocProps {
   toc: TableOfContentsItem[] | null;
@@ -13,7 +14,6 @@ export function TableOfContents({ toc }: TocProps) {
   const [activeId, setActiveId] = useState<string>("");
   const [isExpanded, setIsExpanded] = useState(false);
   const { setForceHidden } = useHeaderStore();
-  const tocRef = useRef<HTMLDivElement>(null);
 
   const items = toc || [];
 
@@ -32,30 +32,6 @@ export function TableOfContents({ toc }: TocProps) {
     const headings = document.querySelectorAll("h2, h3, h4");
     headings.forEach((elem) => observer.observe(elem));
 
-    const handleScroll = () => {
-      if (!tocRef.current) return;
-
-      const footerHeight = 200;
-      const windowHeight = window.innerHeight;
-      const scrollY = window.scrollY;
-      const docHeight = document.documentElement.scrollHeight;
-      const distanceToBottom = docHeight - (scrollY + windowHeight);
-
-      if (distanceToBottom <= footerHeight) {
-        const adjustment = Math.min(
-          footerHeight - distanceToBottom,
-          footerHeight
-        );
-        tocRef.current.style.transform = `translateY(-${adjustment}px)`;
-        tocRef.current.style.transition = "transform 0.1s ease-out";
-      } else {
-        tocRef.current.style.transform = "translateY(0)";
-        tocRef.current.style.transition = "transform 0.1s ease-out";
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-
     const handleTocClick = (e: Event) => {
       if (window.innerWidth <= 767) {
         const target = e.target as HTMLElement;
@@ -71,12 +47,12 @@ export function TableOfContents({ toc }: TocProps) {
     return () => {
       observer.disconnect();
       tocContainer?.removeEventListener("click", handleTocClick);
-      window.removeEventListener("scroll", handleScroll);
     };
   }, []);
 
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
     e.preventDefault();
+    setActiveId(id); // 클릭시 즉시 활성 상태 설정
     const element = document.getElementById(id);
     if (element) {
       setForceHidden(true);
@@ -96,51 +72,56 @@ export function TableOfContents({ toc }: TocProps) {
     }
   };
 
+  if (!items.length) return null;
+
   return (
-    <div
-      ref={tocRef}
-      className="sticky transition-transform duration-200 top-20 lg:top-24"
-    >
+    <div className="w-full h-full">
       <nav
         className={cn(
-          "toc-container rounded-xl px-6 py-8",
-          "border border-border/[0.15]",
-          "bg-background/50",
-          "shadow-[0_0_1px_rgba(0,0,0,0.05)]",
-          "backdrop-blur-[1px]",
+          "toc-container",
           isExpanded && "expanded",
-          "w-56 lg:w-60 overflow-y-auto",
-          "max-h-[70vh] lg:max-h-[80vh]"
+          "w-full h-full overflow-y-auto scrollbar-thin"
         )}
       >
-        <p className="font-semibold mb-6 text-base hidden xl:block">Contents</p>
-        {items.length > 0 && (
-          <ul className="space-y-3">
-            {items.map((item) => (
-              <li
-                key={item.id}
+        {/* 헤더 */}
+        <div className="flex items-center justify-center gap-2 mb-3 pb-3 pt-14 border-b border-border/30">
+          <Menu className="w-4 h-4 text-muted-foreground" />
+          <h3 className="font-medium text-sm text-foreground hidden lg:block">
+            목차
+          </h3>
+        </div>
+
+        {/* 목차 리스트 */}
+        <ul className="space-y-1 px-4 pb-8">
+          {items.map((item, index) => (
+            <li
+              key={item.id}
+              className={cn(
+                "transition-all duration-200",
+                item.level === 2 ? "ml-0" : item.level === 3 ? "ml-3" : "ml-6"
+              )}
+            >
+              <a
+                href={`#${item.id}`}
+                onClick={(e) => handleClick(e, item.id)}
                 className={cn(
-                  "text-sm transition-colors duration-200",
-                  item.level === 2
-                    ? "ml-0"
-                    : item.level === 3
-                    ? "ml-4"
-                    : "ml-6",
+                  "block px-2 py-1.5 rounded-md transition-all duration-200",
+                  "text-sm leading-relaxed text-left",
+                  "hover:bg-accent/30",
+                  "relative",
                   activeId === item.id
-                    ? "text-primary font-medium"
-                    : "text-muted-foreground hover:text-foreground"
+                    ? "text-primary font-medium bg-primary/5"
+                    : "text-muted-foreground hover:text-foreground",
+                  item.level === 2 && "font-medium",
+                  item.level === 3 && "text-sm",
+                  item.level === 4 && "text-xs"
                 )}
               >
-                <a
-                  href={`#${item.id}`}
-                  onClick={(e) => handleClick(e, item.id)}
-                >
-                  {item.title}
-                </a>
-              </li>
-            ))}
-          </ul>
-        )}
+                {item.title}
+              </a>
+            </li>
+          ))}
+        </ul>
       </nav>
     </div>
   );
