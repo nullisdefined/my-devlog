@@ -1,6 +1,7 @@
 import { LayoutGrid } from "lucide-react";
 import { SortButton } from "@/components/devlog/sort-button";
-import { getPostList } from "@/lib/posts";
+import { ViewModeToggle } from "@/components/devlog/view-mode-toggle";
+import { getAllPosts } from "@/lib/posts";
 import { InfiniteScrollPosts } from "@/components/devlog/infinite-scroll-posts";
 
 export default async function DevlogPage({
@@ -9,7 +10,7 @@ export default async function DevlogPage({
   searchParams: { order?: "asc" | "desc" };
 }) {
   const order = searchParams.order || "desc";
-  const posts = await getPostList();
+  const posts = await getAllPosts();
 
   const sortedPosts = [...posts].sort((a, b) => {
     const comparison = new Date(a.date).getTime() - new Date(b.date).getTime();
@@ -28,12 +29,15 @@ export default async function DevlogPage({
           <p className="text-muted-foreground">
             {posts.length} {posts.length === 1 ? "Post" : "Posts"} found
           </p>
-          <SortButton order={order} />
+          <div className="flex items-center gap-3">
+            <ViewModeToggle />
+            <SortButton order={order} />
+          </div>
         </div>
       </div>
 
       <InfiniteScrollPosts
-        initialPosts={sortedPosts.slice(0, 6)}
+        initialPosts={sortedPosts.slice(0, 8)}
         allPosts={sortedPosts}
         order={order}
       />
