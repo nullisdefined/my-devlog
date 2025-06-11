@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
 const { getPostList, getSeriesPostList } = require("./scripts/posts-data");
 
 function formatDate(date) {
@@ -17,17 +18,21 @@ function formatDate(date) {
 module.exports = {
   siteUrl: "https://nullisdefined.site",
   generateRobotsTxt: true,
+  generateIndexSitemap: false,
   robotsTxtOptions: {
     policies: [
       {
         userAgent: "*",
         allow: "/",
-        disallow: ["/admin/*"],
+        disallow: ["/admin/*", "/api/*"],
       },
     ],
+    additionalSitemaps: ["https://nullisdefined.site/sitemap.xml"],
   },
-  exclude: ["/devlog/admin/*"],
+  exclude: ["/devlog/admin/*", "/admin/*", "/api/*"],
   sitemapSize: 5000,
+  priority: 0.7,
+  changefreq: "weekly",
 
   async additionalPaths() {
     try {
@@ -38,10 +43,19 @@ module.exports = {
       const uniqueUrls = new Map();
 
       // 메인 페이지
+      uniqueUrls.set("/", {
+        loc: "/",
+        changefreq: "daily",
+        priority: 1.0,
+        lastmod: new Date().toISOString().split("T")[0],
+      });
+
+      // 메인 페이지
       uniqueUrls.set("/devlog", {
         loc: "/devlog",
         changefreq: "daily",
-        priority: 1.0,
+        priority: 0.9,
+        lastmod: new Date().toISOString().split("T")[0],
       });
 
       // 카테고리 리스트 페이지
@@ -51,6 +65,7 @@ module.exports = {
           loc: `/devlog/categories/${category}`,
           changefreq: "weekly",
           priority: 0.8,
+          lastmod: new Date().toISOString().split("T")[0],
         });
       });
 
@@ -63,6 +78,7 @@ module.exports = {
           loc: `/devlog/series/${seriesName}`,
           changefreq: "weekly",
           priority: 0.8,
+          lastmod: new Date().toISOString().split("T")[0],
         });
       });
 
@@ -72,7 +88,7 @@ module.exports = {
         uniqueUrls.set(url, {
           loc: url,
           lastmod: formatDate(post.date),
-          changefreq: "weekly",
+          changefreq: "monthly",
           priority: 0.9,
         });
       });
@@ -86,7 +102,7 @@ module.exports = {
         uniqueUrls.set(url, {
           loc: url,
           lastmod: formatDate(post.date),
-          changefreq: "weekly",
+          changefreq: "monthly",
           priority: 0.9,
         });
       });
@@ -96,5 +112,14 @@ module.exports = {
       console.error("Failed to generate additional paths:", error);
       return [];
     }
+  },
+
+  transform: async (config, path) => {
+    return {
+      loc: path,
+      changefreq: config.changefreq,
+      priority: config.priority,
+      lastmod: config.autoLastmod ? new Date().toISOString() : undefined,
+    };
   },
 };
