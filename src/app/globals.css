@@ -2,49 +2,235 @@
 @tailwind components;
 @tailwind utilities;
 
+/* 초기 테마 설정 - FOUC 방지 */
+:root {
+  color-scheme: light;
+}
+
+:root.light {
+  color-scheme: light;
+}
+
+:root.dark {
+  color-scheme: dark;
+}
+
+/* rehype-pretty-code를 위한 기본 코드 블록 스타일 */
+pre {
+  @apply relative overflow-x-auto rounded-lg p-4 text-sm;
+  font-family: "JetBrains Mono", "Fira Code", "Cascadia Code", "Monaco", "Menlo",
+    monospace;
+  line-height: 1.6;
+  tab-size: 2;
+  white-space: pre;
+  word-break: normal;
+  word-wrap: normal;
+  /* 기본 텍스트 색상 설정 */
+  color: #374151; /* 라이트 모드: 진한 회색 */
+}
+
+.dark pre {
+  color: #d1d5db; /* 다크 모드: 밝은 회색 */
+}
+
+pre code {
+  @apply block w-full;
+  background: transparent !important;
+  color: inherit !important;
+  font-size: inherit;
+  font-family: inherit;
+}
+
+/* Shiki 테마 변수를 실제 색상으로 변환 */
+pre code span {
+  color: var(--shiki-light) !important;
+}
+
+/* 다크모드에서 더 강한 선택자 사용 */
+:root.dark pre code span,
+.dark pre code span,
+html.dark pre code span,
+[data-theme="dark"] pre code span {
+  color: var(--shiki-dark) !important;
+}
+
+/* 인라인 코드 스타일 */
+:not(pre) > code {
+  @apply px-1.5 py-0.5 rounded bg-zinc-100 dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 text-sm font-mono;
+}
+
+/* Shiki/rehype-pretty-code 라인 스타일 */
+.line {
+  display: block;
+  min-height: 1.5rem;
+}
+
+/* 하이라이트된 라인 */
+.line.highlighted {
+  background-color: rgba(101, 117, 133, 0.16) !important;
+  border-left: 2px solid #22d3ee;
+  padding-left: 0.75rem;
+  margin-left: -0.75rem;
+  margin-right: -1rem;
+}
+
+/* 코드 제목 */
+pre[data-title]::before {
+  content: attr(data-title);
+  @apply block w-full bg-zinc-800 dark:bg-zinc-900 text-zinc-200 px-4 py-2 text-xs font-medium rounded-t-lg -mb-4;
+  margin-bottom: 0;
+  border-bottom: 1px solid rgb(63 63 70);
+}
+
+pre[data-title] {
+  @apply rounded-t-none;
+}
+
 /* 코드 블록 기본 스타일 */
 .prose pre {
-  @apply relative my-4 rounded-lg !important;
-  @apply bg-[#2e333c] dark:bg-[#1a1b26] !important;
+  @apply relative my-3 rounded-xl overflow-hidden !important;
+  /* 라이트모드: 깔끔한 회색 테마 */
+  @apply bg-slate-50 border border-slate-200 !important;
+  /* 다크모드: 진한 배경 */
+  @apply dark:bg-slate-900 dark:border-slate-700 !important;
   font-size: 0.9rem !important;
-  padding: 2rem 0 1rem !important;
+  padding: 2.5rem 0 1rem !important;
   overflow-x: auto;
   white-space: pre;
   position: relative;
+  /* 부드러운 그림자 */
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* 다크모드에서 그림자 조정 */
+.dark .prose pre {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
 }
 
 /* TOC 컨테이너 기본 스타일 */
 .toc-container {
-  @apply bg-background border border-border rounded-lg p-4;
+  @apply bg-background;
   position: sticky;
-  top: 5rem;
-  bottom: 1rem;
-  left: 2rem;
-  /* width: 100%; */
-  max-height: calc(100vh - 8rem);
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   overflow-y: auto;
+  direction: ltr; /* 스크롤바를 오른쪽에 고정 */
 }
 
-/* 스크롤바 스타일링 */
+/* TOC 전용 스크롤바 스타일 */
 .toc-container::-webkit-scrollbar {
-  width: 4px;
+  width: 6px;
 }
 
 .toc-container::-webkit-scrollbar-track {
-  @apply bg-muted;
-  border-radius: 2px;
+  @apply bg-transparent;
 }
 
 .toc-container::-webkit-scrollbar-thumb {
+  @apply bg-muted-foreground/30 hover:bg-muted-foreground/50;
+  border-radius: 3px;
+  transition: background-color 0.2s ease;
+}
+
+.toc-container::-webkit-scrollbar-thumb:hover {
+  @apply bg-muted-foreground/60;
+}
+
+.dark .toc-container::-webkit-scrollbar-thumb {
+  @apply bg-muted-foreground/40 hover:bg-muted-foreground/60;
+}
+
+.dark .toc-container::-webkit-scrollbar-thumb:hover {
+  @apply bg-muted-foreground/70;
+}
+
+/* 전역 스크롤바 스타일 통일 */
+* {
+  border-color: hsl(var(--border));
+}
+
+*::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+*::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  @apply bg-muted-foreground/20 hover:bg-muted-foreground/30;
+  border-radius: 3px;
+  transition: background-color 0.2s ease;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  @apply bg-muted-foreground/40;
+}
+
+*::-webkit-scrollbar-corner {
+  @apply bg-transparent;
+}
+
+/* 다크모드에서 스크롤바 조정 */
+.dark *::-webkit-scrollbar-thumb {
+  @apply bg-muted-foreground/30 hover:bg-muted-foreground/40;
+}
+
+.dark *::-webkit-scrollbar-thumb:hover {
   @apply bg-muted-foreground/50;
-  border-radius: 2px;
+}
+
+/* 특정 컴포넌트용 스크롤바 스타일 */
+.scrollbar-thin {
+  scrollbar-width: thin;
+  scrollbar-color: hsl(var(--muted-foreground) / 0.2) transparent;
+}
+
+.scrollbar-thin::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  @apply bg-muted-foreground/20 hover:bg-muted-foreground/30;
+  border-radius: 3px;
+  transition: background-color 0.2s ease;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  @apply bg-muted-foreground/40;
+}
+
+.scrollbar-thin::-webkit-scrollbar-corner {
+  @apply bg-transparent;
+}
+
+/* 다크모드에서 thin 스크롤바 조정 */
+.dark .scrollbar-thin {
+  scrollbar-color: hsl(var(--muted-foreground) / 0.3) transparent;
+}
+
+.dark .scrollbar-thin::-webkit-scrollbar-thumb {
+  @apply bg-muted-foreground/30 hover:bg-muted-foreground/40;
+}
+
+.dark .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  @apply bg-muted-foreground/50;
 }
 
 /* 데스크톱 스타일 (xl 브레이크포인트 이상) */
 @media (min-width: 1280px) {
   .toc-container {
     width: 240px;
-    margin-left: 2rem;
+    margin-left: 0.5rem;
   }
 }
 
@@ -52,7 +238,7 @@
 @media (max-width: 1279px) and (min-width: 768px) {
   .toc-container {
     width: 200px;
-    margin-left: 1rem;
+    margin-left: 0.25rem;
   }
 }
 
@@ -91,10 +277,15 @@
 /* 언어 배지 스타일 */
 .prose pre[data-language]::before {
   content: attr(data-language-icon);
-  @apply absolute top-2 left-3 z-10;
-  @apply px-2 py-0.5 text-xs font-mono font-bold;
-  @apply bg-black/30 rounded-md;
+  @apply absolute top-2 left-4 z-10;
+  @apply px-2.5 py-1 text-xs font-bold;
+  /* 라이트모드: 더 진한 배지 */
+  @apply bg-slate-700 text-slate-100 rounded-md;
+  /* 다크모드: 어두운 배지 */
+  @apply dark:bg-slate-600 dark:text-slate-100;
   color: var(--language-color);
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Consolas,
+    "Liberation Mono", Menlo, monospace;
 }
 
 /* 코드 타이틀 스타일 */
@@ -109,15 +300,97 @@
   transform: translateX(-50%);
 }
 
-/* 이미지 캡션 스타일 */
+/* 이미지 캡션 스타일 - 이미지 중앙 정렬 */
 .prose img + em {
-  @apply block text-center text-sm text-muted-foreground mt-2;
+  @apply block text-xs mt-1 mb-4 text-center;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.3;
+  color: #9ca3af; /* 라이트 모드: 더 옅은 회색 */
+  /* 이미지 너비를 JavaScript로 동적 계산하여 적용 */
+  width: var(--image-width, 65%);
+  margin-left: 0;
+  margin-right: auto;
+}
+
+.dark .prose img + em {
+  color: #6b7280; /* 다크 모드: 더 옅은 회색 */
 }
 
 /* 코드 컨테이너 */
 .prose pre > code {
   counter-reset: line;
   display: grid;
+  /* 라이트모드 - 더 진한 색상으로 변경 */
+  @apply text-gray-700;
+  /* 다크모드 - 더 밝은 색상으로 변경 */
+  @apply dark:text-gray-200;
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Consolas,
+    "Liberation Mono", Menlo, monospace;
+}
+
+/* 기본 코드 스타일링 - 더 강력하게 적용 */
+.prose pre code {
+  background: transparent !important;
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Consolas,
+    "Liberation Mono", Menlo, monospace !important;
+  /* plain text 코드 블록을 위한 기본 색상 */
+  color: #374151 !important; /* 라이트 모드 */
+}
+
+.dark .prose pre code {
+  color: #d1d5db !important; /* 다크 모드 */
+}
+
+/* 모든 코드 토큰에 기본 스타일 적용 */
+.prose pre code span {
+  font-family: inherit !important;
+}
+
+/* 강력한 하이라이팅 스타일 적용 */
+.prose pre code span[style*="color"] {
+  font-weight: 500 !important;
+}
+
+/* 클라이언트 사이드 하이라이팅 클래스 */
+.prose pre code .syntax-keyword {
+  color: #0066cc !important;
+  font-weight: 700 !important;
+}
+
+.dark .prose pre code .syntax-keyword {
+  color: #ff6b6b !important;
+  font-weight: 700 !important;
+}
+
+.prose pre code .syntax-string {
+  color: #22863a !important;
+  font-weight: 500 !important;
+}
+
+.dark .prose pre code .syntax-string {
+  color: #a9dc76 !important;
+  font-weight: 500 !important;
+}
+
+.prose pre code .syntax-number {
+  color: #b91c1c !important;
+  font-weight: 600 !important;
+}
+
+.dark .prose pre code .syntax-number {
+  color: #fd971f !important;
+  font-weight: 600 !important;
+}
+
+.prose pre code .syntax-comment {
+  color: #6b7280 !important;
+  font-style: italic !important;
+}
+
+.dark .prose pre code .syntax-comment {
+  color: #5c6370 !important;
+  font-style: italic !important;
 }
 
 /* 줄 번호 및 하이라이팅 스타일 */
@@ -126,66 +399,198 @@
   counter-increment: line;
   display: inline-block;
   width: 100%;
-  padding: 0 !important;
+  padding: 0 1rem 0 0 !important;
 }
 
 .prose pre > code > span::before {
   content: counter(line);
-  @apply inline-block w-12 pr-4 text-gray-500 text-right border-r border-gray-700/50;
-  @apply select-none opacity-50;
+  @apply inline-block w-12 pr-4 text-right border-r;
+  /* 라이트모드: 회색 줄 번호 */
+  @apply text-slate-400 border-slate-300;
+  /* 다크모드: 어두운 줄 번호 */
+  @apply dark:text-slate-500 dark:border-slate-600;
+  @apply select-none opacity-80;
   margin-right: 1rem;
-  margin-left: 0;
+  margin-left: 1rem;
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Consolas,
+    "Liberation Mono", Menlo, monospace;
 }
 
 /* 호버 효과 */
 .prose pre > code > span:hover {
-  @apply bg-white/5;
+  /* 라이트모드: 부드러운 호버 */
+  @apply bg-slate-100;
+  /* 다크모드: 어두운 호버 */
+  @apply dark:bg-slate-800;
 }
 
 /* 복사 버튼 스타일 */
 .copy-button {
-  @apply absolute top-2 right-2 p-2 rounded-lg;
+  @apply absolute top-2 right-4 p-1.5 rounded-md;
   @apply opacity-0 group-hover:opacity-100;
-  @apply bg-black/30 hover:bg-black/50;
+  /* 라이트모드: 깔끔한 버튼 */
+  @apply bg-slate-200 hover:bg-slate-400 text-slate-700;
+  /* 다크모드: 어두운 버튼 */
+  @apply dark:bg-slate-700 dark:hover:bg-slate-500 dark:text-slate-300;
   @apply transition-all duration-200;
   z-index: 10;
-  position: absolute;
+  width: auto !important;
+  height: auto !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
 }
 
-/* 구문 하이라이팅 */
-.prose pre code .token.comment {
-  color: #5c6370;
+/* rehype-pretty-code 구문 하이라이팅 개선 */
+.prose pre code [data-line] {
+  /* 기본 라인 스타일 */
+  @apply border-l border-transparent;
+}
+
+/* 키워드 (async, function, const, let, var, if, else, etc.) */
+.prose pre code .token.keyword,
+.prose pre code [style*="color:#0070f3"],
+.prose pre code [style*="color:#d73a49"],
+.prose pre code [style*="color:#005cc5"] {
+  /* 라이트모드: 파란색 키워드 */
+  color: #0066cc !important;
+  font-weight: 600;
+}
+
+.dark .prose pre code .token.keyword,
+.dark .prose pre code [style*="color:#0070f3"],
+.dark .prose pre code [style*="color:#d73a49"],
+.dark .prose pre code [style*="color:#005cc5"] {
+  /* 다크모드: 밝은 보라색 */
+  color: #c792ea !important;
+  font-weight: 600;
+}
+
+/* JavaScript/TypeScript 키워드 특별 처리 */
+.prose pre code span:is([data-token="keyword"], [class*="keyword"]) {
+  color: #0066cc !important;
+  font-weight: 600;
+}
+
+.dark .prose pre code span:is([data-token="keyword"], [class*="keyword"]) {
+  color: #c792ea !important;
+  font-weight: 600;
+}
+
+/* 문자열 */
+.prose pre code .token.string,
+.prose pre code [style*="color:#032f62"],
+.prose pre code [style*="color:#22863a"] {
+  /* 라이트모드: 진한 숲 초록색 문자열 */
+  color: #0d5016 !important;
+}
+
+.dark .prose pre code .token.string,
+.dark .prose pre code [style*="color:#032f62"],
+.dark .prose pre code [style*="color:#22863a"] {
+  /* 다크모드: 밝은 초록색 */
+  color: #a9dc76 !important;
+}
+
+/* 숫자 */
+.prose pre code .token.number,
+.prose pre code [style*="color:#005cc5"] {
+  /* 라이트모드: 진한 빨간색 숫자 */
+  color: #b91c1c !important;
+  font-weight: 600;
+}
+
+.dark .prose pre code .token.number {
+  /* 다크모드: 밝은 주황색 */
+  color: #fd971f !important;
+  font-weight: 600;
+}
+
+/* 함수명 */
+.prose pre code .token.function,
+.prose pre code [style*="color:#6f42c1"] {
+  /* 라이트모드: 진한 네이비 함수 */
+  color: #1e3a8a !important;
+  font-weight: 500;
+}
+
+.dark .prose pre code .token.function,
+.dark .prose pre code [style*="color:#6f42c1"] {
+  /* 다크모드: 밝은 파란색 */
+  color: #82b1ff !important;
+  font-weight: 500;
+}
+
+/* 연산자 */
+.prose pre code .token.operator,
+.prose pre code [style*="color:#d73a49"] {
+  /* 라이트모드: 검정색 연산자 */
+  color: #000000 !important;
+  font-weight: 600;
+}
+
+.dark .prose pre code .token.operator {
+  /* 다크모드: 밝은 청록색 */
+  color: #89ddff !important;
+  font-weight: 600;
+}
+
+/* 클래스명 */
+.prose pre code .token.class-name {
+  /* 라이트모드: 진한 인디고 클래스 */
+  color: #4338ca !important;
+  font-weight: 500;
+}
+
+.dark .prose pre code .token.class-name {
+  /* 다크모드: 밝은 황금색 */
+  color: #ffcb6b !important;
+  font-weight: 500;
+}
+
+/* 속성 */
+.prose pre code .token.property {
+  /* 라이트모드: 진한 마젠타 속성 */
+  color: #be185d !important;
+}
+
+.dark .prose pre code .token.property {
+  /* 다크모드: 밝은 장미색 */
+  color: #f07178 !important;
+}
+
+/* 주석 */
+.prose pre code .token.comment,
+.prose pre code [style*="color:#6a737d"] {
+  /* 라이트모드: 회색 주석 */
+  color: #6b7280 !important;
   font-style: italic;
 }
-.prose pre code .token.keyword {
-  color: #c678dd;
-}
-.prose pre code .token.string {
-  color: #98c379;
-}
-.prose pre code .token.number {
-  color: #d19a66;
-}
-.prose pre code .token.function {
-  color: #61afef;
-}
-.prose pre code .token.operator {
-  color: #56b6c2;
-}
-.prose pre code .token.class-name {
-  color: #e5c07b;
-}
-.prose pre code .token.property {
-  color: #e06c75;
+
+.dark .prose pre code .token.comment,
+.dark .prose pre code [style*="color:#6a737d"] {
+  /* 다크모드: 밝은 회색 주석 */
+  color: #5c6370 !important;
+  font-style: italic;
 }
 
-/* 인라인 코드 스타일 */
-.prose code:not(pre code) {
-  @apply bg-gray-100 dark:bg-gray-800;
-  @apply text-rose-600 dark:text-rose-400;
-  @apply rounded px-1.5 py-0.5;
-  @apply text-[0.85em] font-normal;
-  @apply border border-gray-200/50 dark:border-gray-700/50;
+/* 인라인 코드 스타일 대폭 개선 */
+.prose :not(pre) > code {
+  /* 라이트모드: 연한 회색 배경 */
+  @apply bg-slate-100 text-slate-800 border border-slate-200 !important;
+  /* 다크모드: 어두운 배경 */
+  @apply dark:bg-slate-800 dark:text-slate-200 dark:border-slate-600 !important;
+  @apply rounded-md px-1.5 py-0.5 !important;
+  @apply text-[0.85em] font-mono !important;
+  /* 부드러운 그림자 */
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05) !important;
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Consolas,
+    "Liberation Mono", Menlo, monospace !important;
+}
+
+/* 다크모드에서 인라인 코드 그림자 조정 */
+.dark .prose :not(pre) > code {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2) !important;
 }
 
 /* 이미지 다크모드 처리 */
@@ -267,139 +672,100 @@
     --popover: 0 0% 3.9%;
     --popover-foreground: 0 0% 88%;
 
-    --primary: 0 0% 88%;
+    --primary: 0 0% 90%;
     --primary-foreground: 0 0% 9%;
 
     --secondary: 0 0% 14.9%;
-    --secondary-foreground: 0 0% 96%;
+    --secondary-foreground: 0 0% 88%;
 
     --muted: 0 0% 14.9%;
-    --muted-foreground: 0 0% 60%;
+    --muted-foreground: 0 0% 63.9%;
 
     --accent: 0 0% 14.9%;
-    --accent-foreground: 0 0% 96%;
+    --accent-foreground: 0 0% 88%;
 
     --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 85.7% 97.3%;
+    --destructive-foreground: 0 0% 88%;
 
-    --border: 0 0% 14.9%;
+    --border: 0 0% 20%;
     --input: 0 0% 14.9%;
-    --ring: 0 0% 83.9%;
-  }
-}
-
-@layer base {
-  * {
-    @apply border-border;
+    --ring: 0 0% 83.1%;
   }
 
-  :root {
-    color-scheme: light;
-  }
-
+  /* 다크모드 기본 텍스트 색상 보장 */
   .dark {
     color-scheme: dark;
+    color: hsl(var(--foreground));
   }
 
-  body,
-  body * {
-    @apply antialiased;
-    transition: background-color 22ms ease-out, color 22ms ease-out;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+  .dark body {
+    color: hsl(var(--foreground));
   }
 
-  body {
-    @apply bg-background text-foreground;
+  /* 사이드바와 프로필 영역의 텍스트 가시성 확보 */
+  .dark .text-foreground {
+    color: hsl(var(--foreground)) !important;
   }
 
-  .transform-gpu {
-    transform: translateZ(0);
-    will-change: transform;
+  .dark .text-muted-foreground {
+    color: hsl(var(--muted-foreground)) !important;
   }
 
-  main {
-    padding-top: 0 !important;
+  .dark .text-primary {
+    color: hsl(var(--primary)) !important;
   }
 
-  ::selection {
-    background-color: rgba(16, 185, 129, 0.2);
-    color: inherit;
+  /* 코드블록 내 텍스트는 예외 처리 */
+  .dark .prose pre * {
+    color: inherit !important;
   }
 
-  /* 기본 스크롤바 스타일 */
-  * {
-    /* Firefox */
-    scrollbar-width: thin;
-    scrollbar-color: rgba(156, 163, 175, 0.3) transparent;
-  }
-
-  /* Webkit 브라우저용 스크롤바 스타일 */
-  ::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
-  }
-
-  ::-webkit-scrollbar-track {
-    background: transparent;
-  }
-
-  ::-webkit-scrollbar-thumb {
-    background-color: rgba(156, 163, 175, 0.3);
-    border-radius: 3px;
-    transition: background-color 0.2s ease;
-  }
-
-  ::-webkit-scrollbar-thumb:hover {
-    background-color: rgba(156, 163, 175, 0.5);
-  }
-
-  /* 다크 모드 스크롤바 */
-  .dark ::-webkit-scrollbar-thumb {
-    background-color: rgba(255, 255, 255, 0.1);
-  }
-
-  .dark ::-webkit-scrollbar-thumb:hover {
-    background-color: rgba(255, 255, 255, 0.2);
-  }
-
-  /* 코드 블록의 특별한 스크롤바 스타일 유지 */
+  /* 코드 블록의 특별한 스크롤바 스타일 */
   .prose pre::-webkit-scrollbar {
     width: 8px;
     height: 8px;
   }
 
   .prose pre::-webkit-scrollbar-track {
-    background: #2e333c;
+    /* 라이트모드: 연한 회색 */
+    @apply bg-slate-200;
+    /* 다크모드: 어두운 회색 */
+    @apply dark:bg-slate-800;
     border-radius: 10px;
   }
 
   .prose pre::-webkit-scrollbar-thumb {
-    background-color: #4a4f59;
+    /* 라이트모드: 회색 */
+    @apply bg-slate-400;
+    /* 다크모드: 밝은 회색 */
+    @apply dark:bg-slate-600;
     border-radius: 10px;
-    border: 2px solid #2e333c;
+    border: 2px solid transparent;
   }
 
   .prose pre::-webkit-scrollbar-thumb:hover {
-    background-color: #5a5f69;
+    /* 라이트모드: 진한 회색 */
+    @apply bg-slate-500;
+    /* 다크모드: 더 밝은 회색 */
+    @apply dark:bg-slate-500;
   }
 }
 
 /* 제목 스타일 */
 .prose h1 {
-  @apply text-3xl font-bold mt-8 mb-4;
+  @apply mt-8 mb-4;
 }
 
 .prose h2 {
-  @apply text-2xl font-semibold mt-8 mb-4;
+  @apply mt-6 mb-3;
 }
 
 .prose h3 {
-  @apply text-xl font-medium mt-6 mb-3;
+  @apply mt-5 mb-2;
 }
 
 .prose h4 {
-  @apply text-lg font-medium mt-4 mb-2;
+  @apply mt-4 mb-2;
 }
 
 .prose.dark\:prose-invert {
@@ -473,31 +839,221 @@
 }
 
 .prose blockquote {
-  quotes: none;
-  @apply pl-6 border-l-2 border-gray-200 dark:border-gray-800;
+  @apply border-l-4 border-primary/30 pl-6 py-3 my-6 bg-muted/30 italic rounded-r-lg;
 }
 
 .prose blockquote p::before,
 .prose blockquote p::after {
-  content: none;
+  content: none !important;
 }
 
-.prose pre::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+/* Notion 스타일 개선 */
+.prose {
+  @apply text-foreground leading-6;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica,
+    "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol";
+  font-size: 16px;
 }
 
-.prose pre::-webkit-scrollbar-track {
-  background: #2e333c;
-  border-radius: 10px;
+.prose h1,
+.prose h2,
+.prose h3,
+.prose h4,
+.prose h5,
+.prose h6 {
+  @apply font-semibold text-foreground mt-6 mb-3 leading-tight;
+  scroll-margin-top: 80px; /* 스크롤 시 헤더 고려 */
 }
 
-.prose pre::-webkit-scrollbar-thumb {
-  background-color: #4a4f59;
-  border-radius: 10px;
-  border: 2px solid #2e333c;
+.prose h1 {
+  @apply text-2xl md:text-3xl;
 }
 
-.prose pre::-webkit-scrollbar-thumb:hover {
-  background-color: #5a5f69;
+.prose h2 {
+  @apply text-xl md:text-2xl border-b border-border/30 pb-2;
+}
+
+.prose h3 {
+  @apply text-lg md:text-xl;
+}
+
+.prose h4 {
+  @apply text-base md:text-lg;
+}
+
+.prose p {
+  @apply text-foreground leading-6 mb-4;
+}
+
+.prose img {
+  @apply rounded-lg shadow-sm my-4;
+  max-width: 65%;
+  height: auto;
+  margin-left: 0;
+  margin-right: auto;
+  display: block;
+  transition: filter 0.3s ease;
+}
+
+/* 첫 번째 이미지는 더 작게 */
+.prose p:first-of-type img:first-child {
+  max-width: 45%;
+}
+
+/* 다크모드에서 이미지 어둡게 처리 */
+.dark .prose img {
+  filter: brightness(0.7) contrast(1.1);
+}
+
+/* 다크모드에서 이미지 호버 시 원본 표시 */
+.dark .prose img:hover {
+  filter: brightness(1) contrast(1);
+}
+
+.prose table {
+  @apply w-full border-collapse border border-border rounded-lg overflow-hidden my-4;
+}
+
+.prose th {
+  @apply bg-muted/50 border border-border px-3 py-2 text-left font-semibold;
+}
+
+.prose td {
+  @apply border border-border px-3 py-2;
+}
+
+.prose hr {
+  @apply border-border/50 my-6;
+}
+
+/* 리스트 스타일 개선 - 간격 줄임 */
+.prose ol,
+.prose ul {
+  @apply my-4;
+}
+
+.prose li {
+  @apply leading-6 mb-1;
+}
+
+.prose ul > li {
+  @apply mb-1;
+}
+
+.prose ol > li {
+  @apply mb-1;
+}
+
+/* 중첩 리스트 간격 더 줄임 */
+.prose ul ul,
+.prose ol ol,
+.prose ul ol,
+.prose ol ul {
+  @apply my-1;
+}
+
+/* 강조 텍스트 스타일 */
+.prose strong {
+  @apply font-semibold text-foreground;
+}
+
+.prose em {
+  @apply italic text-foreground/90;
+}
+
+/* 글 마무리 섹션 스타일 - 에메랄드 그린 테마 */
+.prose p:last-child,
+.post-content p:last-child,
+.prose > div:last-child p:last-child {
+  position: relative;
+  margin-top: 3rem;
+  padding: 1.5rem 1.5rem 1.5rem 2.5rem;
+  background: linear-gradient(
+    135deg,
+    #ecfdf5 0%,
+    #d1fae5 100%
+  ); /* emerald gradient */
+  border-radius: 0.5rem;
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: #065f46; /* emerald-800 */
+  box-shadow: 0 1px 3px rgba(16, 185, 129, 0.2);
+  border: 1px solid rgba(16, 185, 129, 0.1);
+}
+
+.dark .prose p:last-child,
+.dark .post-content p:last-child,
+.dark .prose > div:last-child p:last-child {
+  background: linear-gradient(
+    135deg,
+    #022c22 0%,
+    #064e3b 100%
+  ); /* dark emerald gradient */
+  color: #a7f3d0; /* emerald-200 */
+  box-shadow: 0 1px 3px rgba(52, 211, 153, 0.3);
+  border: 1px solid rgba(52, 211, 153, 0.2);
+}
+
+/* Quote 아이콘은 JavaScript로 동적 생성됨 */
+
+/* 픽셀아트 이미지 렌더링 */
+.pixelated {
+  image-rendering: -moz-crisp-edges;
+  image-rendering: -webkit-crisp-edges;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+
+/* 드래그 선택 색상 - 에메랄드 그린 */
+::selection {
+  background-color: rgba(16, 185, 129, 0.2); /* emerald-500 with opacity */
+  color: inherit;
+}
+
+::-moz-selection {
+  background-color: rgba(16, 185, 129, 0.2); /* emerald-500 with opacity */
+  color: inherit;
+}
+
+.dark ::selection {
+  background-color: rgba(52, 211, 153, 0.3); /* emerald-400 with opacity */
+  color: inherit;
+}
+
+.dark ::-moz-selection {
+  background-color: rgba(52, 211, 153, 0.3); /* emerald-400 with opacity */
+  color: inherit;
+}
+
+/* GitHub 링크 스타일 - 에메랄드 그린 테마 */
+.prose p:last-child a,
+.post-content p:last-child a,
+.prose > div:last-child p:last-child a {
+  color: #059669 !important; /* 라이트 모드: 에메랄드-600 */
+  font-weight: 600 !important;
+  text-decoration: underline !important;
+  text-underline-offset: 2px !important;
+  transition: all 0.2s ease !important;
+  padding: 1 0.125rem !important;
+}
+
+.dark .prose p:last-child a,
+.dark .post-content p:last-child a,
+.dark .prose > div:last-child p:last-child a {
+  color: #34d399 !important; /* 다크 모드: 에메랄드-400 */
+}
+
+.prose p:last-child a:hover,
+.post-content p:last-child a:hover,
+.prose > div:last-child p:last-child a:hover {
+  color: #047857 !important; /* 에메랄드-700 */
+  background: rgba(16, 185, 129, 0.1) !important;
+  border-radius: 0.25rem !important;
+}
+
+.dark .prose p:last-child a:hover,
+.dark .post-content p:last-child a:hover,
+.dark .prose > div:last-child p:last-child a:hover {
+  color: #6ee7b7 !important; /* 에메랄드-300 */
+  background: rgba(52, 211, 153, 0.1) !important;
 }
