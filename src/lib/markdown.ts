@@ -11,7 +11,7 @@ import { TableOfContentsItem } from "@/types/index";
 import { languageConfigs, normalizeLanguage } from "./code-languages";
 
 // 하이라이터 인스턴스를 캐시하기 위한 전역 변수
-let highlighter: any = null;
+const highlighter: any = null;
 
 function createCopyButton(): Element {
   return {
@@ -71,23 +71,44 @@ export async function markdownToHtml(content: string): Promise<string> {
       allowDangerousHtml: true,
     })
     .use(rehypePrettyCode, {
-      theme: "one-dark-pro",
-      keepBackground: true,
-      defaultLang: "plaintext",
+      theme: {
+        dark: "github-dark",
+        light: "github-light",
+      },
+      keepBackground: false,
+      defaultLang: "javascript",
+      grid: false,
+      transformers: [
+        {
+          name: "line-numbers",
+          line(node, line) {
+            node.properties["data-line"] = line;
+          },
+        },
+      ],
+      onVisitLine(node) {
+        if (node.children.length === 0) {
+          node.children = [{ type: "text", value: " " }];
+        }
+      },
       onVisitHighlightedLine(node) {
         if (!node.properties) {
           node.properties = {};
         }
-        if (!node.properties.className) {
-          node.properties.className = [];
-        }
-        if (Array.isArray(node.properties.className)) {
-          node.properties.className.push("highlighted");
+        const className = node.properties.className || [];
+        if (Array.isArray(className)) {
+          className.push("highlighted");
+          node.properties.className = className;
         }
       },
-      onVisitLine(node) {
-        if (node.children.length === 0) {
-          node.children = [{ type: "text", value: " " }];
+      onVisitHighlightedChars(node) {
+        if (!node.properties) {
+          node.properties = {};
+        }
+        const className = node.properties.className || [];
+        if (Array.isArray(className)) {
+          className.push("highlighted-chars");
+          node.properties.className = className;
         }
       },
     })
@@ -97,22 +118,26 @@ export async function markdownToHtml(content: string): Promise<string> {
         if (node.tagName === "pre") {
           const codeEl = node.children[0] as Element;
           if (codeEl?.tagName === "code") {
-            let language = codeEl?.properties?.["data-language"] || "plaintext";
-            const className = codeEl.properties?.className;
+            let language = "javascript";
 
+            if (codeEl.properties?.["data-language"]) {
+              language = codeEl.properties["data-language"] as string;
+            }
+
+            const className = codeEl.properties?.className;
             if (Array.isArray(className)) {
               const languageClass = className.find((cls): cls is string => {
                 return typeof cls === "string" && cls.startsWith("language-");
               });
-
-              if (languageClass && typeof languageClass === "string") {
+              if (languageClass) {
                 language = languageClass.substring(9);
               }
             }
 
-            const normalizedLang = normalizeLanguage(language as string);
+            const normalizedLang = normalizeLanguage(language);
             const config = languageConfigs[normalizedLang];
             const copyButton = createCopyButton();
+
             node.children.push(copyButton);
 
             if (!node.properties) {
@@ -131,6 +156,7 @@ export async function markdownToHtml(content: string): Promise<string> {
                 "overflow-hidden",
                 config.borderColor,
                 "border-l-4",
+                "my-6",
               ],
             };
           }

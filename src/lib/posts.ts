@@ -2,6 +2,7 @@ import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
 import { Post } from "@/types/index";
+import { getFirstParagraph } from "@/lib/remove-markdown-utils";
 
 const POSTS_PATH = path.join(process.cwd(), "src/content/posts");
 const SERIES_PATH = path.join(process.cwd(), "src/content/posts/series");
@@ -102,7 +103,7 @@ export async function getPostList(): Promise<Post[]> {
           slug: path.basename(file, ".md"),
           tags: data.tags || [],
           thumbnail: data.thumbnail,
-          content: content.slice(0, 200),
+          content: getFirstParagraph(content, 200),
           urlCategory,
         });
       }
@@ -154,7 +155,7 @@ export async function getSeriesPostList(): Promise<Post[]> {
           slug: data.slug || path.basename(file, ".md"),
           tags: data.tags || [],
           thumbnail: data.thumbnail,
-          content: content.slice(0, 200),
+          content: getFirstParagraph(content, 200),
           urlCategory,
         });
       }
@@ -210,4 +211,28 @@ export async function getAllTags(): Promise<string[]> {
   });
 
   return Array.from(tagsSet).sort();
+}
+
+export async function getAllPosts(): Promise<Post[]> {
+  const [posts, seriesPosts] = await Promise.all([
+    getPostList(),
+    getSeriesPostList(),
+  ]);
+
+  // 중복 제거를 위한 map
+  const uniquePosts = new Map<string, Post>();
+
+  // 모든 포스트를 순회하면서 중복 체크
+  [...posts, ...seriesPosts].forEach((post) => {
+    // slug와 category를 조합하여 고유 키 생성
+    const uniqueKey = `${post.category}/${post.slug}`;
+    if (!uniquePosts.has(uniqueKey)) {
+      uniquePosts.set(uniqueKey, post);
+    }
+  });
+
+  // map의 값들을 배열로 변환하여 반환하고 날짜순 정렬
+  return Array.from(uniquePosts.values()).sort(
+    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+  );
 }
