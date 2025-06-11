@@ -4,47 +4,40 @@ import { SiGithub, SiLinkedin, SiNotion } from "react-icons/si";
 
 export function Footer() {
   return (
-    <footer className="bg-muted">
+    <footer className="bg-background border-t border-border">
       <div className="container mx-auto px-6 md:px-8">
-        <div className="flex flex-col items-start py-8 space-y-6">
-          <div className="flex flex-col items-start space-y-2">
-            <h3 className="text-lg font-semibold text-primary">
-              {/* Contact */}
-            </h3>
-          </div>
-
-          <div className="flex justify-start items-center gap-8">
+        <div className="flex flex-col items-center py-8 space-y-6">
+          {/* Social Links */}
+          <div className="flex justify-center items-center gap-6">
             <Link
               href="mailto:jaeuu.dev@gmail.com"
-              className="text-primary hover:text-primary/80 transition-colors"
+              className="text-muted-foreground hover:text-foreground transition-colors p-2 rounded-lg hover:bg-accent"
               aria-label="Email"
             >
-              <Mail className="h-6 w-6" />
+              <Mail className="h-5 w-5" />
             </Link>
             <Link
               href="https://github.com/nullisdefined"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-primary hover:text-primary/80 transition-colors"
+              className="text-muted-foreground hover:text-foreground transition-colors p-2 rounded-lg hover:bg-accent"
               aria-label="GitHub"
             >
-              <SiGithub className="h-6 w-6" />
+              <SiGithub className="h-5 w-5" />
             </Link>
             <Link
               href="https://linkedin.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-primary hover:text-primary/80 transition-colors"
+              className="text-muted-foreground hover:text-foreground transition-colors p-2 rounded-lg hover:bg-accent"
               aria-label="LinkedIn"
             >
-              <SiLinkedin className="h-6 w-6" />
+              <SiLinkedin className="h-5 w-5" />
             </Link>
           </div>
-        </div>
 
-        {/* Bottom Bar */}
-        <div className="border-t border-muted-foreground/20 dark:border-muted-foreground/30 pb-5 pt-4">
-          <div className="flex justify-center">
+          {/* Copyright */}
+          <div className="text-center">
             <p className="text-sm text-muted-foreground">
               © 2025 Jaewoo Kim. All rights reserved.
             </p>

@@ -12,6 +12,8 @@ export function VisitorsWidget() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    let isInitialLoad = true;
+
     const trackVisit = async () => {
       try {
         const response = await fetch("/api/visitors", {
@@ -29,15 +31,41 @@ export function VisitorsWidget() {
       }
     };
 
+    const updateStats = async () => {
+      try {
+        const response = await fetch("/api/visitors");
+        const data = await response.json();
+        setStats({ total: data.total });
+      } catch (error) {
+        // console.error("Error updating stats:", error);
+      }
+    };
+
+    // 초기 방문 추적
     trackVisit();
 
-    const interval = setInterval(async () => {
-      const response = await fetch("/api/visitors");
-      const data = await response.json();
-      setStats({ total: data.total });
-    }, 5 * 60 * 1000);
+    // 페이지 포커스 시에만 업데이트 (탭 전환 등)
+    const handleFocus = () => {
+      if (!isInitialLoad) {
+        updateStats();
+      }
+      isInitialLoad = false;
+    };
 
-    return () => clearInterval(interval);
+    // 페이지 가시성 변경 시 업데이트
+    const handleVisibilityChange = () => {
+      if (!document.hidden && !isInitialLoad) {
+        updateStats();
+      }
+    };
+
+    window.addEventListener("focus", handleFocus);
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    return () => {
+      window.removeEventListener("focus", handleFocus);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+    };
   }, []);
 
   if (loading) {
