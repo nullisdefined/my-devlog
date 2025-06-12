@@ -962,9 +962,28 @@ pre[data-title] {
 }
 
 /* 글 마무리 섹션 스타일 - 에메랄드 그린 테마 */
-.prose p:last-child,
-.post-content p:last-child,
-.prose > div:last-child p:last-child {
+/* 특정 마무리 문구를 포함한 문단에만 적용 */
+/* 1. GitHub 프로젝트 마무리 문구 */
+.prose p:last-child:has([href*="github.com"]),
+.prose p:last-child:has(a[href*="github"]),
+.post-content p:last-child:has([href*="github.com"]),
+.post-content p:last-child:has(a[href*="github"]),
+.prose > div:last-child p:last-child:has([href*="github.com"]),
+.prose > div:last-child p:last-child:has(a[href*="github"]),
+/* 2. 강의/공부 마무리 문구 */
+.prose p:last-child:has([href*="udemy.com"]),
+.prose p:last-child:has(a[href*="udemy"]),
+.post-content p:last-child:has([href*="udemy.com"]),
+.post-content p:last-child:has(a[href*="udemy"]),
+.prose > div:last-child p:last-child:has([href*="udemy.com"]),
+.prose > div:last-child p:last-child:has(a[href*="udemy"]),
+/* 3. 기타 참고 자료 링크가 있는 마무리 문구 */
+.prose p:last-child:has([href*="plainenglish.io"]),
+.prose p:last-child:has(a[href*="plainenglish"]),
+.post-content p:last-child:has([href*="plainenglish.io"]),
+.post-content p:last-child:has(a[href*="plainenglish"]),
+.prose > div:last-child p:last-child:has([href*="plainenglish.io"]),
+.prose > div:last-child p:last-child:has(a[href*="plainenglish"]) {
   position: relative;
   margin-top: 3rem;
   padding: 1.5rem 1.5rem 1.5rem 2.5rem;
@@ -981,9 +1000,24 @@ pre[data-title] {
   border: 1px solid rgba(16, 185, 129, 0.1);
 }
 
-.dark .prose p:last-child,
-.dark .post-content p:last-child,
-.dark .prose > div:last-child p:last-child {
+.dark .prose p:last-child:has([href*="github.com"]),
+.dark .prose p:last-child:has(a[href*="github"]),
+.dark .post-content p:last-child:has([href*="github.com"]),
+.dark .post-content p:last-child:has(a[href*="github"]),
+.dark .prose > div:last-child p:last-child:has([href*="github.com"]),
+.dark .prose > div:last-child p:last-child:has(a[href*="github"]),
+.dark .prose p:last-child:has([href*="udemy.com"]),
+.dark .prose p:last-child:has(a[href*="udemy"]),
+.dark .post-content p:last-child:has([href*="udemy.com"]),
+.dark .post-content p:last-child:has(a[href*="udemy"]),
+.dark .prose > div:last-child p:last-child:has([href*="udemy.com"]),
+.dark .prose > div:last-child p:last-child:has(a[href*="udemy"]),
+.dark .prose p:last-child:has([href*="plainenglish.io"]),
+.dark .prose p:last-child:has(a[href*="plainenglish"]),
+.dark .post-content p:last-child:has([href*="plainenglish.io"]),
+.dark .post-content p:last-child:has(a[href*="plainenglish"]),
+.dark .prose > div:last-child p:last-child:has([href*="plainenglish.io"]),
+.dark .prose > div:last-child p:last-child:has(a[href*="plainenglish"]) {
   background: linear-gradient(
     135deg,
     #022c22 0%,
@@ -1025,10 +1059,25 @@ pre[data-title] {
   color: inherit;
 }
 
-/* GitHub 링크 스타일 - 에메랄드 그린 테마 */
-.prose p:last-child a,
-.post-content p:last-child a,
-.prose > div:last-child p:last-child a {
+/* 마무리 섹션 링크 스타일 - 에메랄드 그린 테마 */
+.prose p:last-child:has([href*="github.com"]) a,
+.prose p:last-child:has(a[href*="github"]) a,
+.post-content p:last-child:has([href*="github.com"]) a,
+.post-content p:last-child:has(a[href*="github"]) a,
+.prose > div:last-child p:last-child:has([href*="github.com"]) a,
+.prose > div:last-child p:last-child:has(a[href*="github"]) a,
+.prose p:last-child:has([href*="udemy.com"]) a,
+.prose p:last-child:has(a[href*="udemy"]) a,
+.post-content p:last-child:has([href*="udemy.com"]) a,
+.post-content p:last-child:has(a[href*="udemy"]) a,
+.prose > div:last-child p:last-child:has([href*="udemy.com"]) a,
+.prose > div:last-child p:last-child:has(a[href*="udemy"]) a,
+.prose p:last-child:has([href*="plainenglish.io"]) a,
+.prose p:last-child:has(a[href*="plainenglish"]) a,
+.post-content p:last-child:has([href*="plainenglish.io"]) a,
+.post-content p:last-child:has(a[href*="plainenglish"]) a,
+.prose > div:last-child p:last-child:has([href*="plainenglish.io"]) a,
+.prose > div:last-child p:last-child:has(a[href*="plainenglish"]) a {
   color: #059669 !important; /* 라이트 모드: 에메랄드-600 */
   font-weight: 600 !important;
   text-decoration: underline !important;
@@ -1037,23 +1086,76 @@ pre[data-title] {
   padding: 1 0.125rem !important;
 }
 
-.dark .prose p:last-child a,
-.dark .post-content p:last-child a,
-.dark .prose > div:last-child p:last-child a {
+.dark .prose p:last-child:has([href*="github.com"]) a,
+.dark .prose p:last-child:has(a[href*="github"]) a,
+.dark .post-content p:last-child:has([href*="github.com"]) a,
+.dark .post-content p:last-child:has(a[href*="github"]) a,
+.dark .prose > div:last-child p:last-child:has([href*="github.com"]) a,
+.dark .prose > div:last-child p:last-child:has(a[href*="github"]) a,
+.dark .prose p:last-child:has([href*="udemy.com"]) a,
+.dark .prose p:last-child:has(a[href*="udemy"]) a,
+.dark .post-content p:last-child:has([href*="udemy.com"]) a,
+.dark .post-content p:last-child:has(a[href*="udemy"]) a,
+.dark .prose > div:last-child p:last-child:has([href*="udemy.com"]) a,
+.dark .prose > div:last-child p:last-child:has(a[href*="udemy"]) a,
+.dark .prose p:last-child:has([href*="plainenglish.io"]) a,
+.dark .prose p:last-child:has(a[href*="plainenglish"]) a,
+.dark .post-content p:last-child:has([href*="plainenglish.io"]) a,
+.dark .post-content p:last-child:has(a[href*="plainenglish"]) a,
+.dark .prose > div:last-child p:last-child:has([href*="plainenglish.io"]) a,
+.dark .prose > div:last-child p:last-child:has(a[href*="plainenglish"]) a {
   color: #34d399 !important; /* 다크 모드: 에메랄드-400 */
 }
 
-.prose p:last-child a:hover,
-.post-content p:last-child a:hover,
-.prose > div:last-child p:last-child a:hover {
+.prose p:last-child:has([href*="github.com"]) a:hover,
+.prose p:last-child:has(a[href*="github"]) a:hover,
+.post-content p:last-child:has([href*="github.com"]) a:hover,
+.post-content p:last-child:has(a[href*="github"]) a:hover,
+.prose > div:last-child p:last-child:has([href*="github.com"]) a:hover,
+.prose > div:last-child p:last-child:has(a[href*="github"]) a:hover,
+.prose p:last-child:has([href*="udemy.com"]) a:hover,
+.prose p:last-child:has(a[href*="udemy"]) a:hover,
+.post-content p:last-child:has([href*="udemy.com"]) a:hover,
+.post-content p:last-child:has(a[href*="udemy"]) a:hover,
+.prose > div:last-child p:last-child:has([href*="udemy.com"]) a:hover,
+.prose > div:last-child p:last-child:has(a[href*="udemy"]) a:hover,
+.prose p:last-child:has([href*="plainenglish.io"]) a:hover,
+.prose p:last-child:has(a[href*="plainenglish"]) a:hover,
+.post-content p:last-child:has([href*="plainenglish.io"]) a:hover,
+.post-content p:last-child:has(a[href*="plainenglish"]) a:hover,
+.prose > div:last-child p:last-child:has([href*="plainenglish.io"]) a:hover,
+.prose > div:last-child p:last-child:has(a[href*="plainenglish"]) a:hover {
   color: #047857 !important; /* 에메랄드-700 */
   background: rgba(16, 185, 129, 0.1) !important;
   border-radius: 0.25rem !important;
 }
 
-.dark .prose p:last-child a:hover,
-.dark .post-content p:last-child a:hover,
-.dark .prose > div:last-child p:last-child a:hover {
+.dark .prose p:last-child:has([href*="github.com"]) a:hover,
+.dark .prose p:last-child:has(a[href*="github"]) a:hover,
+.dark .post-content p:last-child:has([href*="github.com"]) a:hover,
+.dark .post-content p:last-child:has(a[href*="github"]) a:hover,
+.dark .prose > div:last-child p:last-child:has([href*="github.com"]) a:hover,
+.dark .prose > div:last-child p:last-child:has(a[href*="github"]) a:hover,
+.dark .prose p:last-child:has([href*="udemy.com"]) a:hover,
+.dark .prose p:last-child:has(a[href*="udemy"]) a:hover,
+.dark .post-content p:last-child:has([href*="udemy.com"]) a:hover,
+.dark .post-content p:last-child:has(a[href*="udemy"]) a:hover,
+.dark .prose > div:last-child p:last-child:has([href*="udemy.com"]) a:hover,
+.dark .prose > div:last-child p:last-child:has(a[href*="udemy"]) a:hover,
+.dark .prose p:last-child:has([href*="plainenglish.io"]) a:hover,
+.dark .prose p:last-child:has(a[href*="plainenglish"]) a:hover,
+.dark .post-content p:last-child:has([href*="plainenglish.io"]) a:hover,
+.dark .post-content p:last-child:has(a[href*="plainenglish"]) a:hover,
+.dark
+  .prose
+  > div:last-child
+  p:last-child:has([href*="plainenglish.io"])
+  a:hover,
+.dark
+  .prose
+  > div:last-child
+  p:last-child:has(a[href*="plainenglish"])
+  a:hover {
   color: #6ee7b7 !important; /* 에메랄드-300 */
   background: rgba(52, 211, 153, 0.1) !important;
 }
