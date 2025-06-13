@@ -69,8 +69,8 @@ function CardView({ post }: PostCardProps) {
         </div>
 
         {/* 컨텐츠 영역 */}
-        <div className="p-4 space-y-3">
-          <div className="flex flex-wrap items-center gap-2">
+        <div className="p-4 sm:p-5">
+          <div className="flex flex-wrap items-center gap-2 mb-3">
             {post.category && (
               <span className="text-xs tracking-wide font-semibold text-primary/90 uppercase bg-primary/10 px-2 py-1 rounded">
                 {post.category}
@@ -81,27 +81,14 @@ function CardView({ post }: PostCardProps) {
             </span>
           </div>
 
-          <h2 className="text-lg font-bold leading-tight line-clamp-2 group-hover:text-emerald-500 transition-colors">
+          <h2 className="text-lg sm:text-xl font-bold mb-2 sm:mb-3 leading-tight line-clamp-2 group-hover:text-emerald-500 transition-colors">
             {post.title}
           </h2>
 
           {previewText && (
-            <p className="text-sm text-muted-foreground leading-relaxed line-clamp-3">
+            <p className="text-sm sm:text-base text-muted-foreground leading-relaxed line-clamp-3">
               {previewText}
             </p>
-          )}
-
-          {post.tags && post.tags.length > 0 && (
-            <div className="pt-2 border-t border-border/50 flex flex-wrap gap-1">
-              {post.tags.slice(0, 5).map((tag) => (
-                <Tag key={tag} tag={tag} />
-              ))}
-              {post.tags.length > 5 && (
-                <span className="text-[10px] text-muted-foreground">
-                  +{post.tags.length - 5}
-                </span>
-              )}
-            </div>
           )}
         </div>
       </article>
@@ -155,38 +142,6 @@ function ListView({ post }: PostCardProps) {
                 </p>
               )}
             </div>
-
-            {post.tags && post.tags.length > 0 && (
-              <div className="mt-3 pt-3 border-t border-border/50 flex flex-wrap gap-1">
-                {post.tags.map((tag) => (
-                  <Tag key={tag} tag={tag} />
-                ))}
-              </div>
-            )}
-          </div>
-          <div className="relative sm:w-[240px] shrink-0 order-1 sm:order-2">
-            {post.thumbnail ? (
-              <div className="relative aspect-[16/9] sm:aspect-[4/3] sm:h-full group overflow-hidden">
-                <Image
-                  src={post.thumbnail}
-                  alt={post.title}
-                  fill
-                  className="object-cover transition-all duration-300 ease-in-out
-                   group-hover:scale-105
-                   dark:opacity-90 dark:brightness-90
-                   dark:group-hover:opacity-100 dark:group-hover:brightness-100"
-                  sizes="(max-width: 768px) 100vw, 240px"
-                  priority={false}
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              </div>
-            ) : (
-              <div className="relative aspect-square sm:h-full bg-gradient-to-br from-emerald-500/20 to-sky-500/20 flex items-center justify-center border-l border-border/50">
-                <span className="text-3xl sm:text-4xl font-bold text-muted-foreground/60">
-                  {post.title.charAt(0)}
-                </span>
-              </div>
-            )}
           </div>
         </div>
       </article>
@@ -201,7 +156,7 @@ function MasonryView({ post }: PostCardProps) {
   return (
     <Link
       href={`/devlog/posts/${post.urlCategory}/${post.slug}`}
-      className="block mb-4 break-inside-avoid"
+      className="block mb-4 md:mb-6 break-inside-avoid"
     >
       <article className="group relative bg-card rounded-lg border border-border overflow-hidden transition-all hover:shadow-lg hover:scale-[1.02] duration-300">
         {/* 썸네일 영역 */}
@@ -230,7 +185,7 @@ function MasonryView({ post }: PostCardProps) {
         )}
 
         {/* 컨텐츠 영역 */}
-        <div className="p-4 space-y-3">
+        <div className="p-4 sm:p-5">
           <div className="flex flex-wrap items-center gap-2">
             {post.category && (
               <span className="text-xs tracking-wide font-semibold text-primary/90 uppercase bg-primary/10 px-2 py-1 rounded">
@@ -242,27 +197,14 @@ function MasonryView({ post }: PostCardProps) {
             </span>
           </div>
 
-          <h2 className="text-base font-bold leading-tight group-hover:text-emerald-500 transition-colors">
+          <h2 className="text-lg sm:text-xl font-bold mb-2 sm:mb-3 leading-tight line-clamp-2 group-hover:text-emerald-500 transition-colors">
             {post.title}
           </h2>
 
           {previewText && (
-            <p className="text-sm text-muted-foreground leading-relaxed">
+            <p className="text-sm sm:text-base text-muted-foreground leading-relaxed line-clamp-3">
               {previewText}
             </p>
-          )}
-
-          {post.tags && post.tags.length > 0 && (
-            <div className="pt-2 border-t border-border/50 flex flex-wrap gap-1">
-              {post.tags.slice(0, 4).map((tag) => (
-                <Tag key={tag} tag={tag} />
-              ))}
-              {post.tags.length > 4 && (
-                <span className="text-[10px] text-muted-foreground">
-                  +{post.tags.length - 4}
-                </span>
-              )}
-            </div>
           )}
         </div>
       </article>

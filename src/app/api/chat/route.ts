@@ -69,13 +69,15 @@ export async function GET() {
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { content, sender, roomId, userId } = body;
+    const { content, sender, roomId, userId, userName, userImage } = body;
 
     if (!roomId && sender === "user") {
       const newRoomId = uuidv4();
       const chatRoom: ChatRoom = {
         id: newRoomId,
         userId: userId || "anonymous",
+        userName: userName,
+        userImage: userImage,
         lastMessage: content,
         updatedAt: Date.now(),
         unread: 1,
@@ -86,6 +88,9 @@ export async function POST(request: Request) {
         content,
         sender,
         timestamp: Date.now(),
+        userName,
+        userImage,
+        isRead: false, // 새 메시지는 읽지 않음으로 설정
       };
 
       const messageStr = JSON.stringify(message);
@@ -111,6 +116,9 @@ export async function POST(request: Request) {
         content,
         sender,
         timestamp: Date.now(),
+        userName,
+        userImage,
+        isRead: false, // 새 메시지는 읽지 않음으로 설정
       };
 
       const roomKey = getRoomKey(roomId);
@@ -128,12 +136,19 @@ export async function POST(request: Request) {
         const roomDataStr =
           typeof roomData === "string" ? roomData : JSON.stringify(roomData);
         const chatRoom = JSON.parse(roomDataStr) as ChatRoom;
+
+        // 사용자 정보 업데이트 (user 메시지인 경우에만)
         const updatedRoom: ChatRoom = {
           ...chatRoom,
           lastMessage: content,
           updatedAt: Date.now(),
           unread:
             sender === "user" ? (chatRoom.unread || 0) + 1 : chatRoom.unread,
+          // 사용자 정보가 있으면 업데이트
+          userName:
+            sender === "user" && userName ? userName : chatRoom.userName,
+          userImage:
+            sender === "user" && userImage ? userImage : chatRoom.userImage,
         };
 
         const messageStr = JSON.stringify(message);

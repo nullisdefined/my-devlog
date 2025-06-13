@@ -12,9 +12,88 @@ import {
   MoreVertical,
   Send,
   LogOut,
+  User,
+  X,
+  ExternalLink,
 } from "lucide-react";
 import ScrollableSection from "@/components/ui/scrollable-section";
 import { formatMessageDate } from "@/lib/date";
+import Image from "next/image";
+
+// 사용자 정보 모달 컴포넌트
+function UserInfoModal({
+  user,
+  onClose,
+}: {
+  user: { userId: string; userName?: string; userImage?: string } | null;
+  onClose: () => void;
+}) {
+  if (!user) return null;
+
+  return (
+    <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+      <div className="bg-white dark:bg-gray-900 rounded-lg shadow-xl max-w-md w-full">
+        <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700">
+          <h3 className="font-semibold text-gray-900 dark:text-gray-100">
+            User Info
+          </h3>
+          <button
+            onClick={onClose}
+            className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+          >
+            <X className="h-5 w-5" />
+          </button>
+        </div>
+        <div className="p-6">
+          <div className="flex items-center gap-4 mb-4">
+            {user.userImage ? (
+              <Image
+                src={user.userImage}
+                alt={user.userName || "User"}
+                width={64}
+                height={64}
+                className="w-16 h-16 rounded-full border-2 border-gray-200 dark:border-gray-700 object-cover"
+              />
+            ) : (
+              <div className="w-16 h-16 bg-gradient-to-br from-emerald-400 to-emerald-600 rounded-full flex items-center justify-center text-white font-bold text-xl">
+                {user.userId.slice(0, 2).toUpperCase()}
+              </div>
+            )}
+            <div>
+              <h4 className="font-semibold text-lg text-gray-900 dark:text-gray-100">
+                {user.userName || `User ${user.userId.slice(0, 8)}`}
+              </h4>
+              <p className="text-sm text-gray-500 dark:text-gray-400">
+                ID: {user.userId}
+              </p>
+            </div>
+          </div>
+          {user.userName && (
+            <div className="mt-4">
+              <a
+                href={`https://github.com/${user.userName}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-4 py-2 bg-gray-900 hover:bg-gray-800 dark:bg-gray-700 dark:hover:bg-gray-600 text-white rounded-lg transition-colors"
+              >
+                <svg
+                  width="16"
+                  height="16"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M12 0C5.37 0 0 5.373 0 12c0 5.303 3.438 9.8 8.205 11.387.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.726-4.042-1.61-4.042-1.61-.546-1.387-1.333-1.756-1.333-1.756-1.09-.745.083-.729.083-.729 1.205.085 1.84 1.237 1.84 1.237 1.07 1.834 2.807 1.304 3.492.997.108-.775.418-1.305.762-1.605-2.665-.305-5.466-1.334-5.466-5.931 0-1.31.468-2.381 1.236-3.221-.124-.303-.535-1.523.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.984-.399 3.003-.404 1.018.005 2.046.138 3.006.404 2.291-1.553 3.297-1.23 3.297-1.23.653 1.653.242 2.873.119 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.803 5.624-5.475 5.921.43.372.823 1.104.823 2.225 0 1.606-.015 2.898-.015 3.293 0 .322.218.694.825.576C20.565 21.796 24 17.299 24 12c0-6.627-5.373-12-12-12z" />
+                </svg>
+                GitHub Profile
+                <ExternalLink className="h-4 w-4" />
+              </a>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
 
 function LoginForm({
   onAuth,
@@ -119,6 +198,12 @@ export default function AdminChatPage() {
   const [notificationPermission, setNotificationPermission] =
     useState<NotificationPermission | null>(null);
   const [showDeleteMenu, setShowDeleteMenu] = useState(false);
+  const [selectedUserInfo, setSelectedUserInfo] = useState<{
+    userId: string;
+    userName?: string;
+    userImage?: string;
+  } | null>(null);
+
   const channelRefs = useRef<Record<string, any>>({});
   const adminChannelRef = useRef<any>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -152,10 +237,9 @@ export default function AdminChatPage() {
 
               // 새 메시지가 오고 현재 선택된 채팅방이 아닐 때 알림 표시
               if (newMessage.sender === "user" && selectedRoom !== roomId) {
-                showNotification(
-                  `User ${room.userId.slice(0, 8)}`,
-                  newMessage.content
-                );
+                const displayName =
+                  newMessage.userName || `User ${room.userId.slice(0, 8)}`;
+                showNotification(displayName, newMessage.content);
               }
 
               return {
@@ -163,6 +247,8 @@ export default function AdminChatPage() {
                 lastMessage: newMessage.content,
                 updatedAt: newMessage.timestamp,
                 unread: isUnread ? (room.unread || 0) + 1 : 0,
+                userName: newMessage.userName || room.userName,
+                userImage: newMessage.userImage || room.userImage,
               };
             }
             return room;
@@ -222,9 +308,11 @@ export default function AdminChatPage() {
         if (exists) return prev;
 
         // 새로운 채팅방 알림
+        const displayName =
+          chatRoom.userName || `User ${chatRoom.userId.slice(0, 8)}`;
         showNotification(
           "새로운 채팅",
-          `User ${chatRoom.userId.slice(0, 8)}님이 채팅을 시작했습니다.`
+          `${displayName}님이 채팅을 시작했습니다.`
         );
 
         return [chatRoom, ...prev].sort((a, b) => b.updatedAt - a.updatedAt);
@@ -396,6 +484,14 @@ export default function AdminChatPage() {
     cleanup();
   }, [cleanup]);
 
+  const handleProfileClick = useCallback((room: ChatRoom) => {
+    setSelectedUserInfo({
+      userId: room.userId,
+      userName: room.userName,
+      userImage: room.userImage,
+    });
+  }, []);
+
   // 모든 useEffect를 선언
   useEffect(() => {
     if (isAuthenticated) {
@@ -472,6 +568,50 @@ export default function AdminChatPage() {
               message.sender === "admin" ? "justify-end" : "justify-start"
             } mb-4`}
           >
+            {message.sender === "user" && (
+              <div className="mr-2">
+                {message.userImage ? (
+                  <Image
+                    src={message.userImage}
+                    alt={message.userName || "User"}
+                    width={32}
+                    height={32}
+                    className="w-8 h-8 rounded-full border border-border object-cover cursor-pointer hover:ring-2 hover:ring-emerald-500 transition-all"
+                    onClick={() =>
+                      setSelectedUserInfo({
+                        userId:
+                          chatRooms.find((room) => room.id === selectedRoom)
+                            ?.userId || "unknown",
+                        userName: message.userName,
+                        userImage: message.userImage,
+                      })
+                    }
+                  />
+                ) : (
+                  <div
+                    className="w-8 h-8 bg-gradient-to-br from-emerald-400 to-emerald-600 rounded-full flex items-center justify-center text-white font-semibold text-xs cursor-pointer hover:ring-2 hover:ring-emerald-500 transition-all"
+                    onClick={() =>
+                      setSelectedUserInfo({
+                        userId:
+                          chatRooms.find((room) => room.id === selectedRoom)
+                            ?.userId || "unknown",
+                        userName: message.userName,
+                        userImage: message.userImage,
+                      })
+                    }
+                  >
+                    {(
+                      message.userName ||
+                      chatRooms.find((room) => room.id === selectedRoom)
+                        ?.userId ||
+                      "U"
+                    )
+                      .slice(0, 2)
+                      .toUpperCase()}
+                  </div>
+                )}
+              </div>
+            )}
             <div
               className={`max-w-[70%] rounded-2xl p-3 shadow-sm ${
                 message.sender === "admin"
@@ -479,6 +619,11 @@ export default function AdminChatPage() {
                   : "bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
               }`}
             >
+              {message.sender === "user" && message.userName && (
+                <div className="text-xs font-semibold mb-1 text-emerald-700 dark:text-emerald-300 flex items-center gap-1">
+                  {message.userName}
+                </div>
+              )}
               <p className="text-sm break-words">{message.content}</p>
               <p className="text-xs mt-1 opacity-80">
                 {format(message.timestamp, "HH:mm")}
@@ -499,7 +644,7 @@ export default function AdminChatPage() {
     setNewMessage(""); // 즉시 입력창 비우기
 
     try {
-      await fetch("/api/chat", {
+      const response = await fetch("/api/chat", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -510,6 +655,18 @@ export default function AdminChatPage() {
           roomId: selectedRoom,
         }),
       });
+
+      if (response.ok) {
+        const data = await response.json();
+
+        // 전송된 메시지를 로컬 상태에 즉시 추가 (isRead: false로 설정)
+        const newMsg: Message = {
+          ...data.message,
+          isRead: false,
+        };
+
+        setMessages((prev) => [...prev, newMsg]);
+      }
 
       // 전송 후 포커스 처리
       requestAnimationFrame(() => {
@@ -541,27 +698,13 @@ export default function AdminChatPage() {
 
   return (
     <div className="flex h-screen">
-      {/* 헤더 */}
-      <div className="fixed top-0 left-0 right-0 h-16 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 z-20 flex items-center justify-between px-4">
-        <h1 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
-          관리자 채팅
-        </h1>
-        <div className="flex items-center gap-2">
-          {notificationPermission === "granted" && (
-            <span className="text-xs text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-900/20 px-2 py-1 rounded-full">
-              알림 활성화됨
-            </span>
-          )}
-          <button
-            onClick={handleLogout}
-            className="flex items-center gap-2 px-3 py-1.5 text-sm text-red-600 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-md transition-colors"
-          >
-            <LogOut className="h-4 w-4" />
-            로그아웃
-          </button>
-        </div>
-      </div>
+      {/* 사용자 정보 모달 */}
+      <UserInfoModal
+        user={selectedUserInfo}
+        onClose={() => setSelectedUserInfo(null)}
+      />
 
+      {/* 채팅방 목록 */}
       <div className="w-1/4 border-r overflow-y-auto mt-16">
         {chatRooms.length === 0 ? (
           <div className="p-8 text-center text-gray-500 dark:text-gray-400">
@@ -580,13 +723,31 @@ export default function AdminChatPage() {
                 onClick={() => handleRoomSelect(room.id)}
               >
                 <div className="flex justify-between items-center">
-                  <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 bg-gradient-to-br from-emerald-400 to-emerald-600 rounded-full flex items-center justify-center text-white font-semibold text-sm">
-                      {room.userId.slice(0, 2).toUpperCase()}
+                  <div className="flex items-center gap-3">
+                    <div
+                      className="cursor-pointer hover:ring-2 hover:ring-emerald-500 rounded-full transition-all"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleProfileClick(room);
+                      }}
+                    >
+                      {room.userImage ? (
+                        <Image
+                          src={room.userImage}
+                          alt={room.userName || "User"}
+                          width={40}
+                          height={40}
+                          className="w-10 h-10 rounded-full border border-gray-200 dark:border-gray-700 object-cover"
+                        />
+                      ) : (
+                        <div className="w-10 h-10 bg-gradient-to-br from-emerald-400 to-emerald-600 rounded-full flex items-center justify-center text-white font-semibold text-sm">
+                          {room.userId.slice(0, 2).toUpperCase()}
+                        </div>
+                      )}
                     </div>
                     <div>
                       <span className="font-medium text-gray-900 dark:text-gray-100 text-sm">
-                        User {room.userId.slice(0, 8)}
+                        {room.userName || `User ${room.userId.slice(0, 8)}`}
                       </span>
                       <p className="text-xs text-gray-500 dark:text-gray-400">
                         {format(room.updatedAt, "HH:mm")}
@@ -612,17 +773,47 @@ export default function AdminChatPage() {
         )}
       </div>
 
+      {/* 채팅창 */}
       <div className="flex-1 flex flex-col bg-gray-50 dark:bg-gray-950 mt-16">
         {selectedRoom ? (
           <>
             <div className="p-4 border-b bg-white dark:bg-gray-900 shadow-sm relative">
               <div className="flex items-center justify-between">
-                <h2 className="font-semibold text-gray-900 dark:text-gray-100">
-                  User{" "}
-                  {chatRooms
-                    .find((room) => room.id === selectedRoom)
-                    ?.userId.slice(0, 8)}
-                </h2>
+                <div className="flex items-center gap-3">
+                  {(() => {
+                    const currentRoom = chatRooms.find(
+                      (room) => room.id === selectedRoom
+                    );
+                    return (
+                      <>
+                        <div
+                          className="cursor-pointer hover:ring-2 hover:ring-emerald-500 rounded-full transition-all"
+                          onClick={() =>
+                            currentRoom && handleProfileClick(currentRoom)
+                          }
+                        >
+                          {currentRoom?.userImage ? (
+                            <Image
+                              src={currentRoom.userImage}
+                              alt={currentRoom.userName || "User"}
+                              width={32}
+                              height={32}
+                              className="w-8 h-8 rounded-full border border-gray-200 dark:border-gray-700 object-cover"
+                            />
+                          ) : (
+                            <div className="w-8 h-8 bg-gradient-to-br from-emerald-400 to-emerald-600 rounded-full flex items-center justify-center text-white font-semibold text-xs">
+                              {currentRoom?.userId.slice(0, 2).toUpperCase()}
+                            </div>
+                          )}
+                        </div>
+                        <h2 className="font-semibold text-gray-900 dark:text-gray-100">
+                          {currentRoom?.userName ||
+                            `User ${currentRoom?.userId.slice(0, 8)}`}
+                        </h2>
+                      </>
+                    );
+                  })()}
+                </div>
                 <div className="relative">
                   <button
                     onClick={() => setShowDeleteMenu(!showDeleteMenu)}

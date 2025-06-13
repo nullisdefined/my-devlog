@@ -21,25 +21,31 @@ export async function GET(
 
     // 메시지 데이터 검증 및 처리
     const messages = rawMessages
-      .map((msg) => {
-        // 타입과 필수 필드 검증
-        if (!msg || typeof msg !== "object") {
-          console.error("Invalid message format:", msg);
+      .map((msgStr) => {
+        try {
+          const msg = typeof msgStr === "string" ? JSON.parse(msgStr) : msgStr;
+
+          // Message 타입 검증
+          if (
+            !msg ||
+            typeof msg !== "object" ||
+            !msg.id ||
+            !msg.content ||
+            !msg.sender ||
+            typeof msg.timestamp !== "number"
+          ) {
+            console.error("Invalid message format:", msg);
+            return null;
+          }
+
+          return {
+            ...msg,
+            isRead: msg.isRead ?? false, // 기본값 false
+          } as Message;
+        } catch (error) {
+          console.error("Error parsing message:", error);
           return null;
         }
-
-        // Message 타입 검증
-        if (
-          !("id" in msg) ||
-          !("content" in msg) ||
-          !("sender" in msg) ||
-          !("timestamp" in msg)
-        ) {
-          console.error("Missing required message fields:", msg);
-          return null;
-        }
-
-        return msg as Message;
       })
       .filter((msg): msg is Message => msg !== null)
       .sort((a, b) => a.timestamp - b.timestamp);

@@ -1,3 +1,4 @@
+"use client";
 import { format } from "date-fns";
 import { Comments } from "@/components/devlog/comments";
 import { PostContent } from "@/components/devlog/post-content";

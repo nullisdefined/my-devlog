@@ -3,12 +3,16 @@ export interface Message {
   content: string;
   sender: "user" | "admin";
   timestamp: number;
+  userName?: string;
+  userImage?: string;
+  isRead?: boolean;
 }
 
 export interface ChatRoom {
   id: string;
   userId: string;
   userName?: string;
+  userImage?: string;
   lastMessage?: string;
   updatedAt: number;
   unread: number;
