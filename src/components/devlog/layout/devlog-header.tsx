@@ -14,8 +14,6 @@ interface DevlogHeaderProps {
 }
 
 export function DevlogHeader({ posts }: DevlogHeaderProps) {
-  // console.log("Posts in header:", posts);
-
   const [isOpen, setIsOpen] = useState(false);
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [visible, setVisible] = useState(true);
@@ -25,6 +23,7 @@ export function DevlogHeader({ posts }: DevlogHeaderProps) {
       const currentScrollPos = window.scrollY;
       const isScrollingUp = prevScrollPos > currentScrollPos;
 
+      // 스크롤 위치가 10px 미만이거나 위로 스크롤할 때만 보이기
       setVisible(currentScrollPos < 10 || isScrollingUp);
       setPrevScrollPos(currentScrollPos);
     };
@@ -47,7 +46,7 @@ export function DevlogHeader({ posts }: DevlogHeaderProps) {
 
   return (
     <header
-      className={`sticky top-0 z-[60] w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-[60] w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 transition-transform duration-300 ease-in-out ${
         visible ? "translate-y-0" : "-translate-y-full"
       }`}
     >

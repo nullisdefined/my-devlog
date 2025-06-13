@@ -1,244 +1,233 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 interface DynamicBannerProps {
   thumbnail: string;
 }
 
-// 색상 추출 및 그라디언트 생성 함수 - 개선된 버전
+// 색상 추출 및 그라디언트 생성 함수
 function extractColorsAndCreateGradient(imageSrc: string): Promise<string> {
   return new Promise((resolve) => {
     // 브라우저 환경이 아닌 경우 기본값 반환
     if (typeof window === "undefined") {
-      console.log("서버 환경에서 기본 그라디언트 반환");
       resolve(
-        "linear-gradient(135deg, #2d7d5f 0%, #4ade80 30%, #a3e635 70%, #d9f99d 100%)"
+        "linear-gradient(135deg, #059669 0%, #10b981 35%, #34d399 70%, #6ee7b7 100%)"
       );
       return;
     }
 
-    console.log("🎨 이미지 색상 추출 시작:", imageSrc);
+    // CORS 프록시 시도 목록
+    const corsProxies = [
+      "", // 원본 URL 먼저 시도
+      "https://api.allorigins.win/raw?url=",
+      "https://corsproxy.io/?",
+      "https://cors-anywhere.herokuapp.com/",
+    ];
 
-    const img = new window.Image();
+    let currentProxyIndex = 0;
 
-    // CORS 설정 및 타임아웃 추가
-    img.crossOrigin = "anonymous";
+    const tryLoadImage = () => {
+      const img = new window.Image();
 
-    // 타임아웃 설정 (5초)
-    const timeout = setTimeout(() => {
-      console.warn("⏰ 이미지 로드 타임아웃 - 기본 그라디언트 사용");
-      resolve(
-        "linear-gradient(135deg, #2d7d5f 0%, #4ade80 30%, #a3e635 70%, #d9f99d 100%)"
-      );
-    }, 5000);
+      // CORS 설정
+      img.crossOrigin = "anonymous";
 
-    img.onload = () => {
-      clearTimeout(timeout);
-      console.log("✅ 이미지 로드 완료:", img.width, "x", img.height);
+      // 타임아웃 설정 (각 프록시당 2초)
+      const timeout = setTimeout(() => {
+        // console.log(`이미지 로딩 타임아웃 (프록시 ${currentProxyIndex})`);
+        tryNextProxy();
+      }, 2000);
 
-      try {
-        const canvas = document.createElement("canvas");
-        const ctx = canvas.getContext("2d");
+      const tryNextProxy = () => {
+        clearTimeout(timeout);
+        currentProxyIndex++;
 
-        if (!ctx) {
-          console.warn("❌ Canvas context 생성 실패");
+        if (currentProxyIndex < corsProxies.length) {
+          // console.log(
+          //   `다음 프록시 시도 (${currentProxyIndex}/${corsProxies.length - 1})`
+          // );
+          tryLoadImage();
+        } else {
+          // console.log("모든 프록시 시도 실패 - 기본 그라디언트 사용");
           resolve(
-            "linear-gradient(135deg, #2d7d5f 0%, #4ade80 30%, #a3e635 70%, #d9f99d 100%)"
+            "linear-gradient(135deg, #059669 0%, #10b981 35%, #34d399 70%, #6ee7b7 100%)"
           );
-          return;
         }
+      };
 
-        // 이미지 크기 최적화 - 성능과 정확도의 균형
-        const maxSize = 150;
-        const scale = Math.min(maxSize / img.width, maxSize / img.height);
-        canvas.width = Math.max(50, img.width * scale);
-        canvas.height = Math.max(50, img.height * scale);
+      img.onload = () => {
+        clearTimeout(timeout);
+        // console.log("이미지 로드 성공:", img.width, "x", img.height);
 
-        console.log("📐 Canvas 크기:", canvas.width, "x", canvas.height);
+        try {
+          const canvas = document.createElement("canvas");
+          const ctx = canvas.getContext("2d", { willReadFrequently: true });
 
-        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+          if (!ctx) {
+            // console.log("Canvas context 생성 실패");
+            tryNextProxy();
+            return;
+          }
 
-        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-        const data = imageData.data;
-
-        console.log("🔍 픽셀 데이터 추출:", data.length / 4, "픽셀");
-
-        // K-means 클러스터링을 위한 색상 샘플링
-        const sampleColors: number[][] = [];
-        const step = 4; // 매 4번째 픽셀만 샘플링하여 성능 향상
-
-        for (let i = 0; i < data.length; i += 4 * step) {
-          const r = data[i];
-          const g = data[i + 1];
-          const b = data[i + 2];
-          const alpha = data[i + 3];
-
-          if (alpha < 200) continue; // 투명한 픽셀 제외
-
-          // 색상 필터링 개선
-          const brightness = r * 0.299 + g * 0.587 + b * 0.114; // 인간의 시각적 인지도 고려
-          const saturation = Math.max(r, g, b) - Math.min(r, g, b);
-
-          // 너무 어둡거나 밝거나 채도가 낮은 색상 제외
-          if (brightness < 40 || brightness > 220 || saturation < 25) continue;
-
-          sampleColors.push([r, g, b]);
-        }
-
-        console.log("🎯 유효한 색상 샘플:", sampleColors.length);
-
-        if (sampleColors.length < 10) {
-          console.warn("⚠️ 색상 샘플 부족 - 기본 그라디언트 사용");
-          resolve(
-            "linear-gradient(135deg, #2d7d5f 0%, #4ade80 30%, #a3e635 70%, #d9f99d 100%)"
+          // 이미지 크기 최적화
+          const targetSize = 80; // 더 작게 설정
+          const scale = Math.min(
+            targetSize / img.width,
+            targetSize / img.height
           );
-          return;
+          canvas.width = Math.max(40, Math.floor(img.width * scale));
+          canvas.height = Math.max(40, Math.floor(img.height * scale));
+
+          // 이미지 그리기
+          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+          // console.log("Canvas 크기:", canvas.width, "x", canvas.height);
+
+          // 이미지 데이터 추출
+          const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+          const data = imageData.data;
+
+          // 색상 히스토그램 생성
+          const colorMap = new Map<string, number>();
+
+          for (let i = 0; i < data.length; i += 4) {
+            const r = data[i];
+            const g = data[i + 1];
+            const b = data[i + 2];
+            const alpha = data[i + 3];
+
+            // 투명한 픽셀 무시
+            if (alpha < 128) continue;
+
+            // 너무 어둡거나 밝은 색상 필터링
+            const brightness = (r + g + b) / 3;
+            if (brightness < 40 || brightness > 220) continue;
+
+            // 색상을 20단위로 반올림하여 비슷한 색상들을 그룹화
+            const rRounded = Math.round(r / 20) * 20;
+            const gRounded = Math.round(g / 20) * 20;
+            const bRounded = Math.round(b / 20) * 20;
+
+            const colorKey = `${rRounded},${gRounded},${bRounded}`;
+            colorMap.set(colorKey, (colorMap.get(colorKey) || 0) + 1);
+          }
+
+          // console.log("추출된 색상 개수:", colorMap.size);
+
+          if (colorMap.size === 0) {
+            // console.log("유효한 색상이 없음");
+            tryNextProxy();
+            return;
+          }
+
+          // 가장 많이 나타나는 색상들 찾기
+          const sortedColors = Array.from(colorMap.entries())
+            .sort((a, b) => b[1] - a[1])
+            .slice(0, 5);
+
+          // console.log("상위 색상들:", sortedColors);
+
+          // 주요 색상 선택
+          let dominantColor: number[] | null = null;
+
+          for (const [colorStr] of sortedColors) {
+            const [r, g, b] = colorStr.split(",").map(Number);
+
+            // 채도 계산
+            const max = Math.max(r, g, b);
+            const min = Math.min(r, g, b);
+            const saturation = max === 0 ? 0 : (max - min) / max;
+
+            // 적절한 채도를 가진 첫 번째 색상 선택
+            if (saturation > 0.1) {
+              dominantColor = [r, g, b];
+              break;
+            }
+          }
+
+          // 채도가 있는 색상을 찾지 못했다면, 가장 빈도가 높은 색상 사용
+          if (!dominantColor && sortedColors.length > 0) {
+            const [colorStr] = sortedColors[0];
+            dominantColor = colorStr.split(",").map(Number);
+          }
+
+          if (!dominantColor) {
+            // console.log("주요 색상 추출 실패");
+            tryNextProxy();
+            return;
+          }
+
+          // console.log("선택된 주요 색상:", dominantColor);
+
+          // HSL 변환
+          const hsl = rgbToHsl(
+            dominantColor[0],
+            dominantColor[1],
+            dominantColor[2]
+          );
+          // console.log("HSL 값:", hsl);
+
+          // 조화로운 색상 팔레트 생성
+          const palette = generateImprovedPalette(hsl);
+          // console.log("생성된 팔레트:", palette);
+
+          // 그라디언트 생성
+          const gradient = `linear-gradient(135deg, 
+            rgb(${palette.color1.join(",")}) 0%, 
+            rgb(${palette.color2.join(",")}) 35%, 
+            rgb(${palette.color3.join(",")}) 70%, 
+            rgb(${palette.color4.join(",")}) 100%)`;
+
+          // console.log("생성된 그라디언트:", gradient);
+          resolve(gradient);
+        } catch (error) {
+          // console.error("색상 추출 중 오류:", error);
+          tryNextProxy();
         }
+      };
 
-        // 간단한 K-means 클러스터링으로 주요 색상 찾기
-        const dominantColor = findDominantColor(sampleColors);
-        console.log("🌈 주요 색상 발견:", dominantColor);
+      img.onerror = (error) => {
+        clearTimeout(timeout);
+        // console.error(`이미지 로드 실패 (프록시 ${currentProxyIndex}):`, error);
+        tryNextProxy();
+      };
 
-        // HSL 변환 및 그라디언트 생성
-        const hsl = rgbToHsl(
-          dominantColor[0],
-          dominantColor[1],
-          dominantColor[2]
-        );
-        console.log("🎨 HSL 변환:", hsl);
+      // 프록시 URL 생성
+      const currentProxy = corsProxies[currentProxyIndex];
+      const imageUrl = currentProxy
+        ? currentProxy + encodeURIComponent(imageSrc)
+        : imageSrc;
 
-        // 더 자연스럽고 조화로운 색상 팔레트 생성
-        const colors = generateHarmoniousColors(hsl);
-
-        const gradient = `linear-gradient(135deg, 
-          rgb(${colors.light.join(",")}) 0%, 
-          rgb(${colors.base.join(",")}) 30%, 
-          rgb(${colors.medium.join(",")}) 60%, 
-          rgb(${colors.dark.join(",")}) 100%)`;
-
-        console.log("✨ 최종 그라디언트:", gradient);
-        resolve(gradient);
-      } catch (error) {
-        console.error("💥 색상 추출 중 오류:", error);
-        resolve(
-          "linear-gradient(135deg, #2d7d5f 0%, #4ade80 30%, #a3e635 70%, #d9f99d 100%)"
-        );
-      }
+      // console.log(`이미지 로드 시도 (프록시 ${currentProxyIndex}):`, imageUrl);
+      img.src = imageUrl;
     };
 
-    img.onerror = (error) => {
-      clearTimeout(timeout);
-      console.error("❌ 이미지 로드 실패:", error);
-      resolve(
-        "linear-gradient(135deg, #2d7d5f 0%, #4ade80 30%, #a3e635 70%, #d9f99d 100%)"
-      );
-    };
-
-    img.src = imageSrc;
+    // 첫 번째 시도 시작
+    tryLoadImage();
   });
 }
 
-// 주요 색상 찾기 (개선된 클러스터링)
-function findDominantColor(colors: number[][]): number[] {
-  if (colors.length === 0) return [5, 150, 105]; // 기본 에메랄드 색상
-
-  // 색상을 HSL 공간에서 분석하여 더 정확한 클러스터링
-  const colorAnalysis: Array<{
-    rgb: number[];
-    hsl: number[];
-    weight: number;
-  }> = [];
-
-  colors.forEach((color) => {
-    const hsl = rgbToHsl(color[0], color[1], color[2]);
-    const saturation = hsl[1];
-    const lightness = hsl[2];
-
-    // 채도와 명도를 기반으로 가중치 계산 (더 생생한 색상에 높은 가중치)
-    const weight = saturation * 0.7 + (1 - Math.abs(lightness - 0.5) * 2) * 0.3;
-
-    colorAnalysis.push({
-      rgb: color,
-      hsl: hsl,
-      weight: weight,
-    });
-  });
-
-  // 가중치 기반으로 정렬
-  colorAnalysis.sort((a, b) => b.weight - a.weight);
-
-  // 상위 30% 색상들을 대상으로 클러스터링
-  const topColors = colorAnalysis.slice(
-    0,
-    Math.max(5, Math.floor(colorAnalysis.length * 0.3))
-  );
-
-  // 색조(Hue) 기반 클러스터링
-  const hueGroups: { [key: number]: Array<{ rgb: number[]; weight: number }> } =
-    {};
-
-  topColors.forEach(({ rgb, hsl, weight }) => {
-    const hueGroup = Math.round(hsl[0] / 30) * 30; // 30도 단위로 그룹화
-    if (!hueGroups[hueGroup]) hueGroups[hueGroup] = [];
-    hueGroups[hueGroup].push({ rgb, weight });
-  });
-
-  // 가장 가중치가 높은 색조 그룹 찾기
-  let bestGroup: Array<{ rgb: number[]; weight: number }> = [];
-  let maxTotalWeight = 0;
-
-  Object.values(hueGroups).forEach((group) => {
-    const totalWeight = group.reduce((sum, item) => sum + item.weight, 0);
-    if (totalWeight > maxTotalWeight) {
-      maxTotalWeight = totalWeight;
-      bestGroup = group;
-    }
-  });
-
-  if (bestGroup.length === 0) {
-    return [5, 150, 105]; // 기본 에메랄드 색상
-  }
-
-  // 가중 평균으로 최종 색상 계산
-  let totalWeight = 0;
-  let weightedR = 0,
-    weightedG = 0,
-    weightedB = 0;
-
-  bestGroup.forEach(({ rgb, weight }) => {
-    weightedR += rgb[0] * weight;
-    weightedG += rgb[1] * weight;
-    weightedB += rgb[2] * weight;
-    totalWeight += weight;
-  });
-
-  const finalR = Math.round(weightedR / totalWeight);
-  const finalG = Math.round(weightedG / totalWeight);
-  const finalB = Math.round(weightedB / totalWeight);
-
-  console.log(
-    `🎯 최종 주요 색상: RGB(${finalR}, ${finalG}, ${finalB}), 가중치: ${maxTotalWeight.toFixed(
-      2
-    )}`
-  );
-
-  return [finalR, finalG, finalB];
-}
-
-// 조화로운 색상 팔레트 생성
-function generateHarmoniousColors(hsl: [number, number, number]) {
+// 개선된 색상 팔레트 생성
+function generateImprovedPalette(hsl: [number, number, number]) {
   const [h, s, l] = hsl;
 
+  // 채도와 명도 조정으로 더 자연스러운 그라디언트 생성
+  const baseSaturation = Math.max(0.4, Math.min(0.8, s)); // 채도를 적절한 범위로 제한
+  const baseLightness = Math.max(0.3, Math.min(0.7, l)); // 명도를 적절한 범위로 제한
+
   return {
-    light: hslToRgb(h, Math.max(0.2, s * 0.6), Math.min(0.85, l * 1.4)),
-    base: hslToRgb(h, s, l),
-    medium: hslToRgb(h, Math.min(1, s * 1.1), Math.max(0.25, l * 0.8)),
-    dark: hslToRgb(h, Math.min(1, s * 1.2), Math.max(0.15, l * 0.6)),
+    color1: hslToRgb(
+      h,
+      baseSaturation * 0.9,
+      Math.min(0.8, baseLightness * 1.3)
+    ), // 가장 밝은 색
+    color2: hslToRgb(h, baseSaturation, baseLightness), // 기본 색
+    color3: hslToRgb(h, baseSaturation * 1.1, baseLightness * 0.8), // 조금 더 진한 색
+    color4: hslToRgb(h, baseSaturation * 1.2, baseLightness * 0.6), // 가장 진한 색
   };
 }
 
-// RGB to HSL 변환 함수
+// RGB to HSL 변환 함수 (수정됨)
 function rgbToHsl(r: number, g: number, b: number): [number, number, number] {
   r /= 255;
   g /= 255;
@@ -271,8 +260,9 @@ function rgbToHsl(r: number, g: number, b: number): [number, number, number] {
   return [h * 360, s, l];
 }
 
-// HSL to RGB 변환 함수
+// HSL to RGB 변환 함수 (수정됨)
 function hslToRgb(h: number, s: number, l: number): [number, number, number] {
+  h = ((h % 360) + 360) % 360; // 색조값을 0-360 범위로 정규화
   h /= 360;
 
   const hue2rgb = (p: number, q: number, t: number) => {
@@ -296,15 +286,23 @@ function hslToRgb(h: number, s: number, l: number): [number, number, number] {
     b = hue2rgb(p, q, h - 1 / 3);
   }
 
-  return [Math.round(r * 255), Math.round(g * 255), Math.round(b * 255)];
+  return [
+    Math.max(0, Math.min(255, Math.round(r * 255))),
+    Math.max(0, Math.min(255, Math.round(g * 255))),
+    Math.max(0, Math.min(255, Math.round(b * 255))),
+  ];
 }
 
 export function DynamicBanner({ thumbnail }: DynamicBannerProps) {
-  const [gradientStyle, setGradientStyle] = useState<string>(
-    "linear-gradient(135deg, #2d7d5f 0%, #4ade80 30%, #a3e635 70%, #d9f99d 100%)"
-  );
+  const [gradientStyle, setGradientStyle] = useState<string>("transparent");
   const [isMounted, setIsMounted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [debugInfo, setDebugInfo] = useState<string>("");
+
+  // 색상 캐시 - 같은 이미지 재처리 방지
+  const gradientCache = useRef<Map<string, string>>(new Map());
+  // 현재 처리 중인 썸네일 추적
+  const currentThumbnail = useRef<string>("");
 
   useEffect(() => {
     setIsMounted(true);
@@ -312,47 +310,127 @@ export function DynamicBanner({ thumbnail }: DynamicBannerProps) {
 
   useEffect(() => {
     if (isMounted && thumbnail) {
-      console.log("🚀 배너 색상 추출 시작 - 썸네일:", thumbnail);
+      // 같은 썸네일이면 처리하지 않음
+      if (currentThumbnail.current === thumbnail) return;
+
+      currentThumbnail.current = thumbnail;
+
+      // 캐시에서 확인
+      if (gradientCache.current.has(thumbnail)) {
+        const cachedGradient = gradientCache.current.get(thumbnail)!;
+        // console.log("캐시된 그라디언트 사용:", thumbnail);
+        setGradientStyle(cachedGradient);
+        return;
+      }
+
+      // console.log("새 썸네일 처리 시작:", thumbnail);
       setIsLoading(true);
+      setDebugInfo("Analyzing colors...");
 
       extractColorsAndCreateGradient(thumbnail)
         .then((gradient) => {
-          console.log("🎉 배너 그라디언트 적용 완료:", gradient);
-          setGradientStyle(gradient);
+          // 현재 처리 중인 썸네일과 일치하는지 확인 (경쟁 상태 방지)
+          if (currentThumbnail.current === thumbnail) {
+            // console.log("그라디언트 적용:", gradient);
+
+            // 캐시에 저장
+            gradientCache.current.set(thumbnail, gradient);
+
+            setGradientStyle(gradient);
+            setDebugInfo("Colors extracted");
+          }
         })
         .catch((error) => {
-          console.error("❌ 배너 색상 추출 실패:", error);
-          setGradientStyle(
-            "linear-gradient(135deg, #2d7d5f 0%, #4ade80 30%, #a3e635 70%, #d9f99d 100%)"
-          );
+          if (currentThumbnail.current === thumbnail) {
+            // console.error("그라디언트 생성 실패:", error);
+            const fallbackGradient =
+              "linear-gradient(135deg, #059669 0%, #10b981 35%, #34d399 70%, #6ee7b7 100%)";
+
+            gradientCache.current.set(thumbnail, fallbackGradient);
+            setGradientStyle(fallbackGradient);
+            setDebugInfo("Using default colors");
+          }
         })
         .finally(() => {
-          setIsLoading(false);
+          if (currentThumbnail.current === thumbnail) {
+            setIsLoading(false);
+            setTimeout(() => setDebugInfo(""), 1500);
+          }
         });
     }
   }, [thumbnail, isMounted]);
 
   return (
-    <div className="relative w-screen h-[28vh] min-h-[200px] max-h-[320px] sm:h-[32vh] sm:min-h-[240px] sm:max-h-[360px] -mx-4 -mt-[40px] sm:-mt-[76px] mb-8 left-1/2 right-1/2 -ml-[50vw]">
+    <div className="relative w-screen h-[24vh] min-h-[180px] max-h-[280px] sm:h-[28vh] sm:min-h-[220px] sm:max-h-[320px] -mx-4 -mt-[40px] sm:-mt-[0px] mb-8 left-1/2 right-1/2 -ml-[50vw] overflow-hidden">
+      {/* 메인 배경 레이어 */}
       <div
-        className={`absolute inset-0 transition-all duration-700 ease-out ${
-          isLoading ? "opacity-80" : "opacity-100"
-        }`}
-        style={{ background: gradientStyle }}
+        className="absolute inset-0 transition-all duration-[2000ms] ease-out"
+        style={{
+          background: gradientStyle,
+          opacity: gradientStyle === "transparent" ? 0 : 1,
+        }}
       />
 
-      {/* 다크모드에서 배너 어둡게 처리 */}
-      <div className="absolute inset-0 bg-black/0 dark:bg-black/40 transition-colors duration-300" />
-
-      {/* 부드러운 오버레이 */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-transparent" />
-
-      {/* 로딩 인디케이터 (선택사항) */}
+      {/* 로딩 */}
       {isLoading && (
-        <div className="absolute top-4 right-4 opacity-50">
-          <div className="w-4 h-4 border-2 border-white/30 border-t-white/70 rounded-full animate-spin" />
+        <div className="absolute inset-0">
+          {/* 베이스 스켈레톤 */}
+          <div className="absolute inset-0 bg-gradient-to-br from-slate-100 via-slate-50 to-slate-100 dark:from-slate-800 dark:via-slate-700 dark:to-slate-800" />
+
+          <div className="absolute inset-0 overflow-hidden">
+            <div
+              className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 dark:via-white/10 to-transparent transform -translate-x-full animate-[scan_2s_ease-in-out_infinite]"
+              style={{ width: "200%" }}
+            />
+          </div>
+
+          <div
+            className="absolute inset-0 opacity-[0.03] dark:opacity-[0.05]"
+            style={{
+              backgroundImage: `
+                linear-gradient(90deg, currentColor 1px, transparent 1px),
+                linear-gradient(currentColor 1px, transparent 1px)
+              `,
+              backgroundSize: "20px 20px",
+            }}
+          />
         </div>
       )}
+
+      {/* 다크모드에서 배너 어둡게 처리 */}
+      <div className="absolute inset-0 bg-black/0 dark:bg-black/20 transition-colors duration-300" />
+
+      {/* 부드러운 오버레이 */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/5 via-transparent to-transparent" />
+
+      {/* 로딩 인디케이터 */}
+      {(isLoading || debugInfo) && (
+        <div className="absolute top-6 right-6 flex items-center gap-3 bg-white/10 dark:bg-black/20 backdrop-blur-md rounded-full px-4 py-2 border border-white/10 dark:border-white/5 transition-all duration-300">
+          {isLoading && (
+            <div className="relative">
+              <div className="w-3 h-3 rounded-full border border-current opacity-20" />
+              <div className="absolute inset-0 w-3 h-3 rounded-full border border-transparent border-t-current animate-spin" />
+            </div>
+          )}
+          {debugInfo && (
+            <span className="text-slate-700 dark:text-slate-300 text-xs font-medium tracking-wide">
+              {debugInfo}
+            </span>
+          )}
+        </div>
+      )}
+
+      {/* 스타일 정의 */}
+      <style jsx>{`
+        @keyframes scan {
+          0% {
+            transform: translateX(-100%);
+          }
+          100% {
+            transform: translateX(50%);
+          }
+        }
+      `}</style>
     </div>
   );
 }
