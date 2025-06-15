@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { IconMapper } from "./icon-mapper";
 import { useViewMode } from "@/app/context/view-mode-provider";
+import React from "react";
 
 interface SeriesViewProps {
   currentPosts: Post[];
@@ -35,6 +36,20 @@ interface SeriesViewProps {
     path: string;
     iconName: string;
   } | null;
+}
+
+function splitPostsToColumns(
+  posts: (Post | React.ReactElement)[],
+  columnCount: number
+): Array<Post | React.ReactElement>[] {
+  const columns: Array<Post | React.ReactElement>[] = Array.from(
+    { length: columnCount },
+    () => []
+  );
+  posts.forEach((post, idx) => {
+    columns[idx % columnCount].push(post);
+  });
+  return columns;
 }
 
 export function SeriesView({
@@ -62,7 +77,6 @@ export function SeriesView({
     }
   };
 
-  // Masonry 레이아웃에서 팝캣을 확률적으로 끼워넣는 함수
   const renderMasonryContent = () => {
     if (viewMode !== "masonry") {
       return currentPosts.map((post: Post) => (
@@ -76,12 +90,17 @@ export function SeriesView({
       ));
     }
 
-    const content: React.ReactNode[] = [];
+    let columnCount = 1;
+    if (typeof window !== "undefined") {
+      if (window.innerWidth >= 1280) columnCount = 3;
+      else if (window.innerWidth >= 768) columnCount = 2;
+    }
+    const columns = splitPostsToColumns(currentPosts, columnCount);
 
-    // 페이지당 3% 확률로 팝캣 1개 추가 (시리즈 페이지 시작 부분에)
+    // 팝캣은 첫번째 컬럼 맨 앞에만 확률적으로 추가
     if (Math.random() < 0.03) {
       const popcatVariant = (Math.random() < 0.5 ? 1 : 2) as 1 | 2;
-      content.push(
+      columns[0].unshift(
         <PopcatCard
           key={`popcat-series-${currentPage}`}
           variant={popcatVariant}
@@ -89,20 +108,28 @@ export function SeriesView({
       );
     }
 
-    currentPosts.forEach((post) => {
-      // 포스트 추가
-      content.push(
-        <PostCard
-          key={`${post.urlCategory}/${post.slug}`}
-          post={{
-            ...post,
-            category: currentSeries.name,
-          }}
-        />
-      );
-    });
-
-    return content;
+    return (
+      <div className="flex gap-4">
+        {columns.map((col, colIdx) => (
+          <div key={colIdx} className="flex-1 flex flex-col gap-4">
+            {col.map((item, idx) => {
+              if (React.isValidElement(item)) {
+                return React.cloneElement(item, { key: item.key ?? idx });
+              }
+              return (
+                <PostCard
+                  key={
+                    ((item as Post).urlCategory || "") +
+                    ((item as Post).slug || idx)
+                  }
+                  post={{ ...(item as Post), category: currentSeries.name }}
+                />
+              );
+            })}
+          </div>
+        ))}
+      </div>
+    );
   };
 
   return (
@@ -143,7 +170,7 @@ export function SeriesView({
 
       {seriesPosts.length > 0 ? (
         <>
-          <div className={getGridClassName()}>{renderMasonryContent()}</div>
+          <div>{renderMasonryContent()}</div>
 
           <Pagination currentPage={currentPage} totalPages={totalPages} />
         </>
