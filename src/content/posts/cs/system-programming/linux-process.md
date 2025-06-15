@@ -2,7 +2,7 @@
 title: "Process"
 slug: "linux-process"
 date: 2025-05-09
-tags: ["SystemProgramming", "Linux", "Fork", "Exec", "MemoryLayout", "ELF", "SystemCalls"]
+tags: ["SystemProgramming", "Linux", "Fork", "Exec", "MemoryLayout", "ELF", "SystemCall"]
 category: "CS/System Programming"
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/0cc54a08d91b1979cec6fa3915b32f18.png"
 draft: false
@@ -36,7 +36,7 @@ Segmentation Fault는 프로세스가 접근해서는 안 되는 메모리 영�
 
 ### 메모리 세그먼트 구조
 
-![image](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/318778ed38e89abbb35701e426ebbef1.png)
+![image|500](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/318778ed38e89abbb35701e426ebbef1.png)
 
 |세그먼트|내용|특징|
 |---|---|---|
@@ -72,7 +72,7 @@ int main() {
 
 ### 프로세스 상태 다이어그램
 
-![image](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/1137e3df0641323d033dbccac7528b49.png)
+![image|500](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/1137e3df0641323d033dbccac7528b49.png)
 
 1. 실행 파일 로그 → 프로세스 생성 (sleep 상태)
 2. 사용자/커널 모드에서 실행
@@ -90,7 +90,7 @@ int main() {
 
 ### 프로세스 식별
 
-![image](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/ecd4fa4441315b46e80eebf9c1b02732.png)
+![image|550](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/ecd4fa4441315b46e80eebf9c1b02732.png)
 
 **예시**
 
@@ -130,7 +130,7 @@ printf("Return Value: %d\n", ret);
 
 ### 프로세스 생성 - fork()
 
-`fork()`는 현재 프로세스를 복제하여 새로운 프로세스를 생성합니다.
+`fork()`는 현재 프로세스를 복제하여 새로운 프로세스를 생성한다.
 
 **특징:**
 
@@ -205,7 +205,7 @@ int main() {
 
 ### 프로세스 실행 - exec 함수군
 
-`exec` 함수들은 현재 프로세스의 메모리를 새로운 프로그램으로 교체합니다.
+`exec` 함수들은 현재 프로세스의 메모리를 새로운 프로그램으로 교체한다.
 
 **주요 함수들:**
 
@@ -252,8 +252,6 @@ int main() {
 
 ### wait() 함수
 
-c
-
 ```c
 #include <sys/wait.h>
 
@@ -262,8 +260,6 @@ pid_t waitpid(pid_t pid, int *status, int options);
 ```
 
 **예시:**
-
-c
 
 ```c
 #include <sys/types.h>
