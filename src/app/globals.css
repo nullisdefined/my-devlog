@@ -1102,8 +1102,16 @@ pre[data-title] {
 .dark .prose p:last-child:has(a[href*="plainenglish"]) a,
 .dark .post-content p:last-child:has([href*="plainenglish.io"]) a,
 .dark .post-content p:last-child:has(a[href*="plainenglish"]) a,
-.dark .prose > div:last-child p:last-child:has([href*="plainenglish.io"]) a,
-.dark .prose > div:last-child p:last-child:has(a[href*="plainenglish"]) a {
+.dark
+  .prose
+  > div:last-child
+  p:last-child:has([href*="plainenglish.io"])
+  a:hover,
+.dark
+  .prose
+  > div:last-child
+  p:last-child:has(a[href*="plainenglish"])
+  a:hover {
   color: #34d399 !important; /* 다크 모드: 에메랄드-400 */
 }
 
