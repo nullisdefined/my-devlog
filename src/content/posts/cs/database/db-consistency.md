@@ -3,7 +3,7 @@ title: "일관성(Consistency)"
 slug: "db-consistency"
 date: 2024-12-18
 tags: ["Database", "Transaction", "ACID"]
-category: "Database"
+category: "CS/Database"
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/432972f52003de35f8bc825a2f8d1a2d.png"
 draft: false
 ---

@@ -13,6 +13,8 @@ import {
   Layout,
   GitBranch,
   Wrench,
+  Wifi,
+  Cpu,
 } from "lucide-react";
 import {
   SiReact,
@@ -38,7 +40,7 @@ export interface CategoryItem {
 
 export const categories: readonly CategoryItem[] = [
   {
-    name: "All",
+    name: "All Posts",
     path: "/devlog",
     icon: LayoutGrid,
   },
@@ -56,6 +58,16 @@ export const categories: readonly CategoryItem[] = [
         name: "Database",
         path: "/devlog/categories/cs/database",
         icon: DatabaseIcon,
+      },
+      {
+        name: "Network Programming",
+        path: "/devlog/categories/cs/network-programming",
+        icon: Wifi,
+      },
+      {
+        name: "System Programming",
+        path: "/devlog/categories/cs/system-programming",
+        icon: Cpu,
       },
     ],
   },
@@ -77,23 +89,23 @@ export const categories: readonly CategoryItem[] = [
     ],
   },
   {
-    name: "Backend",
-    path: "/devlog/categories/backend",
+    name: "Frameworks",
+    path: "/devlog/categories/frameworks",
     icon: Server,
     subcategories: [
       {
         name: "Node.js",
-        path: "/devlog/categories/backend/nodejs",
+        path: "/devlog/categories/frameworks/nodejs",
         icon: SiNodedotjs,
       },
       {
         name: "NestJS",
-        path: "/devlog/categories/backend/nestjs",
+        path: "/devlog/categories/frameworks/nestjs",
         icon: SiNestjs,
       },
       {
         name: "SpringBoot",
-        path: "/devlog/categories/backend/spring-boot",
+        path: "/devlog/categories/frameworks/spring-boot",
         icon: SiSpring,
       },
     ],
@@ -148,10 +160,12 @@ export type Category =
   | "CS"
   | "Data Structure"
   | "Database"
+  | "Network Programming"
+  | "System Programming"
   | "Languages"
   | "JavaScript"
   | "TypeScript"
-  | "Backend"
+  | "Frameworks"
   | "Node.js"
   | "NestJS"
   | "SpringBoot"
