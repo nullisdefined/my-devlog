@@ -105,8 +105,28 @@ function ListView({ post }: PostCardProps) {
       href={`/devlog/posts/${post.urlCategory}/${post.slug}`}
       className="block"
     >
-      <article className="group relative bg-card rounded-lg border border-border overflow-hidden transition-all hover:shadow-lg hover:scale-[1.01] duration-300">
-        <div className="flex flex-col sm:flex-row min-h-[180px]">
+      <article className="group relative bg-card border-t-2 border-border overflow-hidden transition-all duration-300">
+        <div className="flex flex-col sm:flex-row-reverse min-h-[180px]">
+          {/* 썸네일 영역 */}
+          {post.thumbnail ? (
+            <div className="relative w-full sm:w-56 h-40 sm:h-auto flex-shrink-0">
+              <Image
+                src={post.thumbnail}
+                alt={post.title}
+                fill
+                className="object-cover rounded-none sm:rounded-r-lg"
+                sizes="(max-width: 640px) 100vw, 224px"
+                priority={false}
+              />
+            </div>
+          ) : (
+            <div className="w-full sm:w-56 h-40 sm:h-auto flex-shrink-0 bg-gradient-to-br from-emerald-500/20 to-sky-500/20 flex items-center justify-center">
+              <span className="text-4xl font-bold text-muted-foreground/60">
+                {post.title.charAt(0)}
+              </span>
+            </div>
+          )}
+          {/* 본문 영역 */}
           <div className="flex-1 p-4 sm:p-5 flex flex-col order-2 sm:order-1">
             <div className="flex flex-wrap items-center gap-2 mb-3">
               {post.category && (
