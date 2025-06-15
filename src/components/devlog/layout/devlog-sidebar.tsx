@@ -33,9 +33,8 @@ export function DevlogSidebar({ posts }: DevlogSidebarProps) {
     );
   };
 
-  const tagCounts = useMemo(() => {
+  const allTagCounts = useMemo(() => {
     const counts = new Map<string, number>();
-
     posts.forEach((post) => {
       if (post.tags) {
         post.tags.forEach((tag) => {
@@ -43,15 +42,17 @@ export function DevlogSidebar({ posts }: DevlogSidebarProps) {
         });
       }
     });
-
     return Array.from(counts.entries())
       .sort((a, b) => b[1] - a[1])
-      .slice(0, 10)
       .map(([tag, count]) => ({
         name: tag,
         count: count,
       }));
   }, [posts]);
+
+  const [showAllTags, setShowAllTags] = useState(false);
+
+  const tagCounts = showAllTags ? allTagCounts : allTagCounts.slice(0, 10);
 
   const seriesCounts = useMemo(() => {
     const counts = new Map<string, number>();
@@ -210,7 +211,7 @@ export function DevlogSidebar({ posts }: DevlogSidebarProps) {
             Tags
           </h4>
           {tagCounts.length > 0 ? (
-            <div className="flex flex-wrap gap-1.5 px-2">
+            <div className="flex flex-wrap gap-1.5 px-2 items-center">
               {tagCounts.map(({ name, count }) => (
                 <Link
                   key={name}
@@ -230,6 +231,17 @@ export function DevlogSidebar({ posts }: DevlogSidebarProps) {
             <p className="text-xs text-muted-foreground px-2">
               태그가 없습니다
             </p>
+          )}
+          {allTagCounts.length > 10 && (
+            <div className="w-full flex justify-center mt-2">
+              <button
+                className="px-4 py-1.5 rounded-md text-xs font-semibold text-muted-foreground hover:text-muted-foreground/80 transition-colors"
+                onClick={() => setShowAllTags((show) => !show)}
+                type="button"
+              >
+                {showAllTags ? "Show less" : "Show more"}
+              </button>
+            </div>
           )}
         </div>
 
