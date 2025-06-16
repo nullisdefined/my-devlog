@@ -3,6 +3,8 @@ title: "Memory Sharing"
 slug: "memory-sharing"
 date: 2025-06-14
 tags: ["SystemProgramming", "IPC", "Cache", "WritePropagation", "MemoryBarrier", "mmap", "ELF"]
+category: "CS/System Programming"
+thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/a2e2454068d9e97caefc3b7f9480cc18.png"
 draft: false
 ---
 ## 공유 메모리란?
@@ -77,6 +79,8 @@ void* thread_function(void* arg) {
 - 뮤텍스, 세마포어 등으로 동기화 필요
 
 ### 3. 프로세스 간 자원 공유
+
+![image|550](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/a2e2454068d9e97caefc3b7f9480cc18.png)
 
 **상황**: 서로 다른 프로세스들이 자원에 접근하는 경우
 

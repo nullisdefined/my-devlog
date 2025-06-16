@@ -961,6 +961,17 @@ pre[data-title] {
   @apply italic text-foreground/90;
 }
 
+/* 마무리 문구 스타일 */
+.prose h2:has(+ hr + p) + hr + p {
+  @apply mt-8 text-sm text-muted-foreground italic;
+  border-left: 3px solid hsl(var(--muted));
+  padding-left: 1rem;
+}
+
+.dark .prose h2:has(+ hr + p) + hr + p {
+  border-left-color: hsl(var(--muted));
+}
+
 /* 글 마무리 섹션 스타일 - 에메랄드 그린 테마 */
 /* 특정 마무리 문구를 포함한 문단에만 적용 */
 /* 1. GitHub 프로젝트 마무리 문구 */

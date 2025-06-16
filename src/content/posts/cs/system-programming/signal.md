@@ -3,6 +3,7 @@ title: "Signal"
 slug: "signal"
 date: 2025-06-13
 tags: ["SystemProgramming", "Signal"]
+category: "CS/System Programming"
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/1137e3df0641323d033dbccac7528b49.png"
 draft: false
 ---
