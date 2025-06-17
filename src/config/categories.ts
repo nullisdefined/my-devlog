@@ -99,6 +99,11 @@ export const categories: readonly CategoryItem[] = [
         icon: SiNodedotjs,
       },
       {
+        name: "React",
+        path: "/devlog/categories/frameworks/react",
+        icon: SiReact,
+      },
+      {
         name: "NestJS",
         path: "/devlog/categories/frameworks/nestjs",
         icon: SiNestjs,
@@ -107,6 +112,18 @@ export const categories: readonly CategoryItem[] = [
         name: "SpringBoot",
         path: "/devlog/categories/frameworks/spring-boot",
         icon: SiSpring,
+      },
+    ],
+  },
+  {
+    name: "Cloud",
+    path: "/devlog/categories/cloud",
+    icon: Cloud,
+    subcategories: [
+      {
+        name: "AWS",
+        path: "/devlog/categories/cloud/aws",
+        icon: SiAmazon,
       },
     ],
   },
@@ -166,9 +183,12 @@ export type Category =
   | "JavaScript"
   | "TypeScript"
   | "Frameworks"
+  | "React"
   | "Node.js"
   | "NestJS"
   | "SpringBoot"
+  | "Cloud"
+  | "AWS"
   | "Tools"
   | "Git"
   | "Series";
