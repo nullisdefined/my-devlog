@@ -1006,6 +1006,17 @@ dark:hover:bg-gray-700 dark:hover:scale-105 dark:hover:shadow-lg
                       2024.04 ~ 2024.10
                     </div>
                   </li>
+                  <li>
+                    <div className="font-semibold text-sm">
+                      KSTA(한국인공지능소프트웨어산업협회)
+                    </div>
+                    <div className="text-muted-foreground text-xs sm:text-sm">
+                      [NIPA] AWS Developer 부트캠프 2기
+                    </div>
+                    <div className="text-xs text-muted-foreground">
+                      2025.06 ~ 2025.08
+                    </div>
+                  </li>
                 </ul>
               </div>
 
