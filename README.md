@@ -15,5 +15,4 @@
 
 ## Recently
 
-<!-- BLOG:START -->
-<!-- BLOG:END -->
+<!-- BLOG:START -->- [TCP Flow, Congestion, Error Control](https://nullisdefined.site/devlog/posts/cs/network-programming/tcp-flow-congestion-error-control)- [TCP Segment](https://nullisdefined.site/devlog/posts/cs/network-programming/tcp-segment)- [Concurrency](https://nullisdefined.site/devlog/posts/cs/system-programming/concurrency)- [Memory Sharing](https://nullisdefined.site/devlog/posts/cs/system-programming/memory-sharing)- [Connection-Oriented TCP](https://nullisdefined.site/devlog/posts/cs/network-programming/connection-oriented-tcp)<!-- BLOG:END -->
