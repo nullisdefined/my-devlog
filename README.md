@@ -15,7 +15,10 @@
 
 ## Recently
 
-<!-- BLOG:START --><table>
+<div style="counter-reset: blog-counter;">
+
+<!-- BLOG:START -->
+<table>
 <tr>
 <td align="center">
 📝
@@ -65,7 +68,10 @@
 <sub>2025.00.13</sub>
 </td>
 </tr>
-</table><!-- BLOG:END -->
+</table>
+<!-- BLOG:END -->
+
+</div>
 
 ---
 

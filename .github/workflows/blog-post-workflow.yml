@@ -25,17 +25,11 @@ jobs:
           template: |
             <table>
             <tr>
-            <td align="center">
-            📝
-            </td>
-            <td>
-            <strong><a href="$url">$title</a></strong><br/>
-            <sub>$date</sub>
-            </td>
+            <td align="center">📌</td>
+            <td><strong><a href="$url">$title</a></strong></td>
             </tr>
             </table>
           commit_message: "Updated with latest blog posts"
-          committer_username: "blog-post-bot"
-          committer_email: "blog-post-bot@example.com"
+          committer_username: "nullisdefined"
+          committer_email: "jaeuu.dev@gmail.com"
           gh_token: ${{ secrets.GH_TOKEN }}
-          date_format: "yyyy.MM.dd"
