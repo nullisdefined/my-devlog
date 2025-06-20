@@ -17,59 +17,32 @@
 
 <div style="counter-reset: blog-counter;">
 
-<!-- BLOG:START -->
-<table>
+<!-- BLOG:START --><table>
 <tr>
-<td align="center">
-📝
-</td>
-<td>
-<strong><a href="https://nullisdefined.site/devlog/posts/cs/network-programming/tcp-flow-congestion-error-control">TCP Flow, Congestion, Error Control</a></strong><br/>
-<sub>2025.00.18</sub>
-</td>
+<td align="center">📌</td>
+<td><strong><a href="https://nullisdefined.site/devlog/posts/cs/network-programming/tcp-flow-congestion-error-control">TCP Flow, Congestion, Error Control</a></strong></td>
 </tr>
 </table><table>
 <tr>
-<td align="center">
-📝
-</td>
-<td>
-<strong><a href="https://nullisdefined.site/devlog/posts/cs/network-programming/tcp-segment">TCP Segment</a></strong><br/>
-<sub>2025.00.15</sub>
-</td>
+<td align="center">📌</td>
+<td><strong><a href="https://nullisdefined.site/devlog/posts/cs/network-programming/tcp-segment">TCP Segment</a></strong></td>
 </tr>
 </table><table>
 <tr>
-<td align="center">
-📝
-</td>
-<td>
-<strong><a href="https://nullisdefined.site/devlog/posts/cs/system-programming/concurrency">Concurrency</a></strong><br/>
-<sub>2025.00.14</sub>
-</td>
+<td align="center">📌</td>
+<td><strong><a href="https://nullisdefined.site/devlog/posts/cs/system-programming/concurrency">Concurrency</a></strong></td>
 </tr>
 </table><table>
 <tr>
-<td align="center">
-📝
-</td>
-<td>
-<strong><a href="https://nullisdefined.site/devlog/posts/cs/system-programming/memory-sharing">Memory Sharing</a></strong><br/>
-<sub>2025.00.14</sub>
-</td>
+<td align="center">📌</td>
+<td><strong><a href="https://nullisdefined.site/devlog/posts/cs/system-programming/memory-sharing">Memory Sharing</a></strong></td>
 </tr>
 </table><table>
 <tr>
-<td align="center">
-📝
-</td>
-<td>
-<strong><a href="https://nullisdefined.site/devlog/posts/cs/network-programming/connection-oriented-tcp">Connection-Oriented TCP</a></strong><br/>
-<sub>2025.00.13</sub>
-</td>
+<td align="center">📌</td>
+<td><strong><a href="https://nullisdefined.site/devlog/posts/cs/network-programming/connection-oriented-tcp">Connection-Oriented TCP</a></strong></td>
 </tr>
-</table>
-<!-- BLOG:END -->
+</table><!-- BLOG:END -->
 
 </div>
 
