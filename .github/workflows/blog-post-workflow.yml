@@ -38,4 +38,4 @@ jobs:
           committer_username: "blog-post-bot"
           committer_email: "blog-post-bot@example.com"
           gh_token: ${{ secrets.GH_TOKEN }}
-          date_format: "MMM dd, yyyy"
+          date_format: "yyyy.MM.dd"
