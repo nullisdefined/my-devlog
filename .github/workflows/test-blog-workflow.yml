@@ -1,23 +1,19 @@
-name: Latest blog post workflow
+name: Test Blog Post Workflow
 on:
-  schedule: # RSS 피드를 매일 확인
-    - cron: "0 0 * * *"
-  workflow_dispatch: # 수동 실행 가능
+  workflow_dispatch: # 수동 실행만 가능
 
 jobs:
-  update-readme-with-blog:
-    name: Update this repo's README with latest blog posts
+  test-blog-update:
+    name: Test README update with blog posts
     runs-on: ubuntu-latest
     permissions:
       contents: write
-      actions: read
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.GH_TOKEN }}
-      - name: Pull in blog posts
-        uses: gautamkrishnar/blog-post-workflow@v1
+
+      - name: Update README with blog posts
+        uses: gautamkrishnar/blog-post-workflow@master
         with:
           comment_tag_name: "BLOG"
           feed_list: "https://nullisdefined.site/feed.xml"
@@ -26,4 +22,3 @@ jobs:
           commit_message: "Updated with latest blog posts"
           committer_username: "blog-post-bot"
           committer_email: "blog-post-bot@example.com"
-          gh_token: ${{ secrets.GH_TOKEN }}
