@@ -15,4 +15,13 @@
 
 ## Recently
 
-<!-- BLOG:START -->- [TCP Flow, Congestion, Error Control](https://nullisdefined.site/devlog/posts/cs/network-programming/tcp-flow-congestion-error-control)- [TCP Segment](https://nullisdefined.site/devlog/posts/cs/network-programming/tcp-segment)- [Concurrency](https://nullisdefined.site/devlog/posts/cs/system-programming/concurrency)- [Memory Sharing](https://nullisdefined.site/devlog/posts/cs/system-programming/memory-sharing)- [Connection-Oriented TCP](https://nullisdefined.site/devlog/posts/cs/network-programming/connection-oriented-tcp)<!-- BLOG:END -->
+<!-- BLOG:START -->
+<!-- BLOG:END -->
+
+---
+
+<p align="center">
+  <a href="https://nullisdefined.site/devlog">
+    <img src="https://img.shields.io/badge/Read%20More%20Posts-Dev%20Blog-ff6b6b?style=for-the-badge&logo=rss&logoColor=white" alt="More Posts"/>
+  </a>
+</p>

@@ -22,8 +22,20 @@ jobs:
           comment_tag_name: "BLOG"
           feed_list: "https://nullisdefined.site/feed.xml"
           max_post_count: 5
-          template: "- [$title]($url)"
+          template: |
+            <table>
+            <tr>
+            <td align="center">
+            📝
+            </td>
+            <td>
+            <strong><a href="$url">$title</a></strong><br/>
+            <sub>$date</sub>
+            </td>
+            </tr>
+            </table>
           commit_message: "Updated with latest blog posts"
           committer_username: "blog-post-bot"
           committer_email: "blog-post-bot@example.com"
           gh_token: ${{ secrets.GH_TOKEN }}
+          date_format: "MMM dd, yyyy"
