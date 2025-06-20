@@ -22,7 +22,7 @@
 </td>
 <td>
 <strong><a href="https://nullisdefined.site/devlog/posts/cs/network-programming/tcp-flow-congestion-error-control">TCP Flow, Congestion, Error Control</a></strong><br/>
-<sub>000 18, 2025</sub>
+<sub>2025.00.18</sub>
 </td>
 </tr>
 </table><table>
@@ -32,7 +32,7 @@
 </td>
 <td>
 <strong><a href="https://nullisdefined.site/devlog/posts/cs/network-programming/tcp-segment">TCP Segment</a></strong><br/>
-<sub>000 15, 2025</sub>
+<sub>2025.00.15</sub>
 </td>
 </tr>
 </table><table>
@@ -42,7 +42,7 @@
 </td>
 <td>
 <strong><a href="https://nullisdefined.site/devlog/posts/cs/system-programming/concurrency">Concurrency</a></strong><br/>
-<sub>000 14, 2025</sub>
+<sub>2025.00.14</sub>
 </td>
 </tr>
 </table><table>
@@ -52,7 +52,7 @@
 </td>
 <td>
 <strong><a href="https://nullisdefined.site/devlog/posts/cs/system-programming/memory-sharing">Memory Sharing</a></strong><br/>
-<sub>000 14, 2025</sub>
+<sub>2025.00.14</sub>
 </td>
 </tr>
 </table><table>
@@ -62,7 +62,7 @@
 </td>
 <td>
 <strong><a href="https://nullisdefined.site/devlog/posts/cs/network-programming/connection-oriented-tcp">Connection-Oriented TCP</a></strong><br/>
-<sub>000 13, 2025</sub>
+<sub>2025.00.13</sub>
 </td>
 </tr>
 </table><!-- BLOG:END -->
