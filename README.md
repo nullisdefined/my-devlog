@@ -11,14 +11,9 @@
 - **Styling**: Tailwind CSS, shadcn/ui
 - **Content**: Markdown (MDX)
 - **Deployment**: Vercel
-- **CMS**: Obsidian (로컬 마크다운 파일)
+- **CMS**: Obsidian
 
 ## Recently
 
 <!-- BLOG:START -->
-- [TCP Flow, Congestion, Error Control](https://nullisdefined.site/devlog/posts/cs/network-programming/tcp-flow-congestion-error-control)
-- [TCP Segment](https://nullisdefined.site/devlog/posts/cs/network-programming/tcp-segment)
-- [Concurrency](https://nullisdefined.site/devlog/posts/cs/system-programming/concurrency)
-- [Memory Sharing](https://nullisdefined.site/devlog/posts/cs/system-programming/memory-sharing)
-- [Signal](https://nullisdefined.site/devlog/posts/cs/system-programming/signal)
 <!-- BLOG:END -->
