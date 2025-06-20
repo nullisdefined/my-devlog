@@ -1,11 +1,32 @@
-# *
+# Basic crawling rules
 User-agent: *
 Allow: /
-Disallow: /admin/*
-Disallow: /api/*
+Allow: /devlog
+Allow: /devlog/
+Allow: /devlog/posts/
+Allow: /devlog/categories/
+Allow: /devlog/series/
+Allow: /devlog/tags/
+Disallow: /admin/
+Disallow: /api/
 
-# Host
+# Google Bot specific rules
+User-agent: Googlebot
+Allow: /
+Allow: /devlog
+Allow: /devlog/
+Allow: /devlog/posts/
+Allow: /devlog/categories/
+Allow: /devlog/series/
+Allow: /devlog/tags/
+Disallow: /admin/
+Disallow: /api/
+Crawl-delay: 1
+
+# Host declaration
 Host: https://nullisdefined.site
 
 # Sitemaps
 Sitemap: https://nullisdefined.site/sitemap.xml
+Sitemap: https://nullisdefined.site/sitemap-0.xml
+Sitemap: https://nullisdefined.site/feed.xml

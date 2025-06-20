@@ -15,135 +15,81 @@ function formatDate(date) {
   }
 }
 
+/** @type {import('next-sitemap').IConfig} */
 module.exports = {
-  siteUrl: "https://nullisdefined.site",
-  generateRobotsTxt: true,
-  generateIndexSitemap: false,
+  siteUrl: process.env.SITE_URL || "https://nullisdefined.site",
+  generateRobotsTxt: false, // robots.txt는 수동 관리
   autoLastmod: false,
+  changefreq: "weekly",
+  priority: 0.7,
+  sitemapSize: 5000,
+
+  // 추가 경로 및 우선순위 설정
+  additionalPaths: async (config) => {
+    return [
+      await config.transform(config, "/devlog", {
+        priority: 1.0,
+        changefreq: "daily",
+        lastmod: new Date().toISOString(),
+      }),
+    ];
+  },
+
+  transform: async (config, path) => {
+    // 기본 설정
+    let priority = 0.7;
+    let changefreq = "weekly";
+
+    // 메인 페이지
+    if (path === "/") {
+      priority = 1.0;
+      changefreq = "daily";
+    }
+
+    // 블로그 메인 페이지
+    else if (path === "/devlog") {
+      priority = 1.0;
+      changefreq = "daily";
+    }
+
+    // 개별 포스트 페이지
+    else if (path.includes("/devlog/posts/")) {
+      priority = 0.9;
+      changefreq = "monthly";
+    }
+
+    // 카테고리 페이지
+    else if (path.includes("/devlog/categories/")) {
+      priority = 0.8;
+      changefreq = "weekly";
+    }
+
+    // 시리즈 페이지
+    else if (path.includes("/devlog/series/")) {
+      priority = 0.8;
+      changefreq = "weekly";
+    }
+
+    // 태그 페이지
+    else if (path.includes("/devlog/tags/")) {
+      priority = 0.6;
+      changefreq = "weekly";
+    }
+
+    return {
+      loc: path,
+      changefreq,
+      priority,
+      lastmod: new Date().toISOString(),
+    };
+  },
+
   robotsTxtOptions: {
     policies: [
       {
         userAgent: "*",
         allow: "/",
-        disallow: ["/admin/*", "/api/*"],
       },
     ],
-    additionalSitemaps: ["https://nullisdefined.site/sitemap.xml"],
-  },
-  exclude: ["/devlog/admin/*", "/admin/*", "/api/*"],
-  sitemapSize: 5000,
-  priority: 0.7,
-  changefreq: "weekly",
-
-  async additionalPaths() {
-    try {
-      const [posts, seriesPosts] = await Promise.all([
-        getPostList(),
-        getSeriesPostList(),
-      ]);
-      const uniqueUrls = new Map();
-
-      // 메인 페이지
-      uniqueUrls.set("/", {
-        loc: "/",
-        changefreq: "daily",
-        priority: 1.0,
-        lastmod: new Date().toISOString().split("T")[0],
-      });
-
-      // 블로그 메인 페이지
-      uniqueUrls.set("/devlog", {
-        loc: "/devlog",
-        changefreq: "daily",
-        priority: 0.9,
-        lastmod: new Date().toISOString().split("T")[0],
-      });
-
-      // 카테고리 리스트 페이지
-      const categories = new Set(posts.map((post) => post.urlCategory));
-      categories.forEach((category) => {
-        uniqueUrls.set(`/devlog/categories/${category}`, {
-          loc: `/devlog/categories/${category}`,
-          changefreq: "weekly",
-          priority: 0.8,
-          lastmod: new Date().toISOString().split("T")[0],
-        });
-      });
-
-      // 시리즈 리스트 페이지
-      const series = new Set(
-        seriesPosts.map((post) => post.urlCategory.replace("series/", ""))
-      );
-      series.forEach((seriesName) => {
-        uniqueUrls.set(`/devlog/series/${seriesName}`, {
-          loc: `/devlog/series/${seriesName}`,
-          changefreq: "weekly",
-          priority: 0.8,
-          lastmod: new Date().toISOString().split("T")[0],
-        });
-      });
-
-      // 일반 포스트
-      posts.forEach((post) => {
-        const url = `/devlog/posts/${post.urlCategory}/${post.slug}`;
-        uniqueUrls.set(url, {
-          loc: url,
-          lastmod: formatDate(post.date),
-          changefreq: "monthly",
-          priority: 0.9,
-        });
-      });
-
-      // 시리즈 포스트
-      seriesPosts.forEach((post) => {
-        const url = `/devlog/posts/series/${post.urlCategory.replace(
-          "series/",
-          ""
-        )}/${post.slug}`;
-        uniqueUrls.set(url, {
-          loc: url,
-          lastmod: formatDate(post.date),
-          changefreq: "monthly",
-          priority: 0.9,
-        });
-      });
-
-      return Array.from(uniqueUrls.values());
-    } catch (error) {
-      console.error("Failed to generate additional paths:", error);
-      return [];
-    }
-  },
-
-  transform: async (config, path) => {
-    // 포스트 페이지에 대해 더 높은 우선순위 부여
-    const isPost = path.includes("/devlog/posts/");
-    const isCategory = path.includes("/devlog/categories/");
-    const isSeries = path.includes("/devlog/series/");
-
-    let priority = config.priority || 0.7;
-    let changefreq = config.changefreq || "weekly";
-
-    if (isPost) {
-      priority = 0.9;
-      changefreq = "monthly";
-    } else if (isCategory || isSeries) {
-      priority = 0.8;
-      changefreq = "weekly";
-    } else if (path === "/devlog") {
-      priority = 0.9;
-      changefreq = "daily";
-    } else if (path === "/") {
-      priority = 1.0;
-      changefreq = "daily";
-    }
-
-    return {
-      loc: path,
-      changefreq: changefreq,
-      priority: priority,
-      lastmod: config.lastmod || new Date().toISOString().split("T")[0],
-      alternateRefs: config.alternateRefs ?? [],
-    };
   },
 };

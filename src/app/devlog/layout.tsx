@@ -86,6 +86,7 @@ export const metadata: Metadata = {
       "소프트웨어 개발에 대한 인사이트와 경험을 공유하는 개인 블로그",
     images: ["https://nullisdefined.site/favicon.ico"],
     creator: "@nullisdefined",
+    site: "@nullisdefined",
   },
   alternates: {
     canonical: "https://nullisdefined.site/devlog",
@@ -101,6 +102,7 @@ export const metadata: Metadata = {
   other: {
     "google-site-verification": "ff3317b463f80ded",
     "naver-site-verification": "acc1996a3ef10bb25b7449629e79dcb2",
+    "Cache-Control": "public, max-age=0, must-revalidate",
   },
 };
 
