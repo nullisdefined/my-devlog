@@ -19,6 +19,7 @@ module.exports = {
   siteUrl: "https://nullisdefined.site",
   generateRobotsTxt: true,
   generateIndexSitemap: false,
+  autoLastmod: false,
   robotsTxtOptions: {
     policies: [
       {
@@ -50,7 +51,7 @@ module.exports = {
         lastmod: new Date().toISOString().split("T")[0],
       });
 
-      // 메인 페이지
+      // 블로그 메인 페이지
       uniqueUrls.set("/devlog", {
         loc: "/devlog",
         changefreq: "daily",
@@ -115,11 +116,34 @@ module.exports = {
   },
 
   transform: async (config, path) => {
+    // 포스트 페이지에 대해 더 높은 우선순위 부여
+    const isPost = path.includes("/devlog/posts/");
+    const isCategory = path.includes("/devlog/categories/");
+    const isSeries = path.includes("/devlog/series/");
+
+    let priority = config.priority || 0.7;
+    let changefreq = config.changefreq || "weekly";
+
+    if (isPost) {
+      priority = 0.9;
+      changefreq = "monthly";
+    } else if (isCategory || isSeries) {
+      priority = 0.8;
+      changefreq = "weekly";
+    } else if (path === "/devlog") {
+      priority = 0.9;
+      changefreq = "daily";
+    } else if (path === "/") {
+      priority = 1.0;
+      changefreq = "daily";
+    }
+
     return {
       loc: path,
-      changefreq: config.changefreq,
-      priority: config.priority,
-      lastmod: config.autoLastmod ? new Date().toISOString() : undefined,
+      changefreq: changefreq,
+      priority: priority,
+      lastmod: config.lastmod || new Date().toISOString().split("T")[0],
+      alternateRefs: config.alternateRefs ?? [],
     };
   },
 };

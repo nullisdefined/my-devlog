@@ -6,62 +6,101 @@ import { TocProvider } from "../context/toc-provider";
 export const metadata: Metadata = {
   title: {
     default: "개발새발",
-    template: "%s | 개발새발",
+    template: "%s",
   },
   description:
-    "소프트웨어 개발에 대한 인사이트와 경험을 공유하는 개인 블로그입니다.",
+    "소프트웨어 개발에 대한 인사이트와 경험을 공유하는 개인 블로그입니다. JavaScript, TypeScript, Node.js, NestJS 등 웹 개발 기술을 다룹니다.",
   keywords: [
     "개발 블로그",
     "JavaScript",
     "TypeScript",
     "Node.js",
+    "Express",
     "NestJS",
     "프로그래밍",
     "웹 개발",
     "백엔드",
+    "Backend",
     "프론트엔드",
+    "Frontend",
+    "소프트웨어 개발",
+    "Software Development",
+    "기술 블로그",
+    "Tech Blog",
+    "개발자",
+    "Developer",
+    "코딩",
+    "Coding",
+    "React",
+    "Next.js",
+    "Cloud",
+    "AWS",
   ],
-  authors: [{ name: "nullisdefined" }],
+  authors: [{ name: "nullisdefined", url: "https://nullisdefined.site" }],
   creator: "nullisdefined",
   publisher: "nullisdefined",
+  category: "Technology",
   robots: {
     index: true,
     follow: true,
+    noarchive: false,
+    nosnippet: false,
+    noimageindex: false,
+    nocache: false,
     googleBot: {
       index: true,
       follow: true,
+      noimageindex: false,
       "max-video-preview": -1,
       "max-image-preview": "large",
       "max-snippet": -1,
     },
-    notranslate: true,
+  },
+  verification: {
+    google: "ff3317b463f80ded",
+    other: {
+      "naver-site-verification": "acc1996a3ef10bb25b7449629e79dcb2",
+    },
   },
   openGraph: {
-    title: "개발새발",
+    title: "개발새발 | 소프트웨어 개발 블로그",
     description:
-      "소프트웨어 개발에 대한 인사이트와 경험을 공유하는 개인 블로그",
+      "소프트웨어 개발에 대한 인사이트와 경험을 공유하는 개인 블로그입니다. JavaScript, TypeScript, Node.js, NestJS 등 웹 개발 기술을 다룹니다.",
     url: "https://nullisdefined.site/devlog",
-    siteName: "Devlog",
+    siteName: "개발새발",
     locale: "ko_KR",
     type: "website",
     images: [
       {
-        url: "/favicon.ico",
+        url: "https://nullisdefined.site/favicon.ico",
         width: 800,
         height: 600,
-        alt: "Devlog",
+        alt: "개발새발 로고",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "개발새발",
+    title: "개발새발 | 소프트웨어 개발 블로그",
     description:
       "소프트웨어 개발에 대한 인사이트와 경험을 공유하는 개인 블로그",
-    images: ["/favicon.ico"],
+    images: ["https://nullisdefined.site/favicon.ico"],
+    creator: "@nullisdefined",
   },
   alternates: {
     canonical: "https://nullisdefined.site/devlog",
+    types: {
+      "application/rss+xml": [
+        {
+          url: "https://nullisdefined.site/feed.xml",
+          title: "개발새발 RSS Feed",
+        },
+      ],
+    },
+  },
+  other: {
+    "google-site-verification": "ff3317b463f80ded",
+    "naver-site-verification": "acc1996a3ef10bb25b7449629e79dcb2",
   },
 };
 
@@ -71,8 +110,42 @@ export default async function Layout({
   children: React.ReactNode;
 }) {
   const posts = await getAllPosts();
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Blog",
+    name: "개발새발",
+    description:
+      "소프트웨어 개발에 대한 인사이트와 경험을 공유하는 개인 블로그",
+    url: "https://nullisdefined.site/devlog",
+    author: {
+      "@type": "Person",
+      name: "nullisdefined",
+      url: "https://nullisdefined.site",
+    },
+    publisher: {
+      "@type": "Person",
+      name: "nullisdefined",
+    },
+    inLanguage: "ko-KR",
+    blogPost: posts.slice(0, 10).map((post) => ({
+      "@type": "BlogPosting",
+      headline: post.title,
+      url: `https://nullisdefined.site/devlog/posts/${post.urlCategory}/${post.slug}`,
+      datePublished: post.date,
+      author: {
+        "@type": "Person",
+        name: "nullisdefined",
+      },
+    })),
+  };
+
   return (
     <TocProvider>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <DevlogLayout posts={posts} isListPage={true}>
         {children}
       </DevlogLayout>

@@ -1,0 +1,23 @@
+name: Latest blog post workflow
+on:
+  schedule: # RSS 피드를 매일 확인
+    - cron: "0 0 * * *"
+  workflow_dispatch: # 수동 실행 가능
+
+jobs:
+  update-readme-with-blog:
+    name: Update this repo's README with latest blog posts
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Pull in dev.to posts
+        uses: gautamkrishnar/blog-post-workflow@v1
+        with:
+          comment_tag_name: "BLOG"
+          feed_list: "https://nullisdefined.site/feed.xml"
+          max_post_count: 5
+          template: "- [$title]($url)"
+          commit_message: "Updated with latest blog posts"
+          committer_username: "blog-post-bot"
+          committer_email: "blog-post-bot@example.com"

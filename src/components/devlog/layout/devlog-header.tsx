@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import { Search } from "lucide-react";
+import { Search, Rss } from "lucide-react";
 import ThemeToggle from "@/components/theme-toggle";
 import { useState, useEffect } from "react";
 import { SearchDialog } from "../search-dialog";
@@ -79,6 +79,16 @@ export function DevlogHeader({ posts }: DevlogHeaderProps) {
               <span className="sr-only">검색 게시물 (Ctrl + K)</span>
             </Button>
             <ThemeToggle />
+            <Link
+              href="/feed.xml"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 px-3 py-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
+              title="RSS 피드 구독"
+            >
+              <Rss className="h-4 w-4" />
+              <span className="hidden sm:inline">RSS</span>
+            </Link>
           </div>
         </div>
       </div>
