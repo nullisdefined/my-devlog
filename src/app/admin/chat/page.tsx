@@ -275,7 +275,17 @@ export default function AdminChatPage() {
           channel.bind("message", (message: Message) => {
             if (selectedRoom === roomId) {
               setMessages((prev) => {
-                const isDuplicate = prev.some((m) => m.id === message.id);
+                // ID로 먼저 체크하고, ID가 없거나 같으면 내용과 시간으로 체크
+                const isDuplicate = prev.some(
+                  (m) =>
+                    (m.id && message.id && m.id === message.id) ||
+                    (m.content === message.content &&
+                      Math.abs(
+                        new Date(m.timestamp).getTime() -
+                          new Date(message.timestamp).getTime()
+                      ) < 1000 &&
+                      m.sender === message.sender)
+                );
                 if (isDuplicate) return prev;
                 return [...prev, message];
               });
@@ -323,7 +333,17 @@ export default function AdminChatPage() {
         channel.bind("message", (message: Message) => {
           if (selectedRoom === roomId) {
             setMessages((prev) => {
-              const isDuplicate = prev.some((m) => m.id === message.id);
+              // ID로 먼저 체크하고, ID가 없거나 같으면 내용과 시간으로 체크
+              const isDuplicate = prev.some(
+                (m) =>
+                  (m.id && message.id && m.id === message.id) ||
+                  (m.content === message.content &&
+                    Math.abs(
+                      new Date(m.timestamp).getTime() -
+                        new Date(message.timestamp).getTime()
+                    ) < 1000 &&
+                    m.sender === message.sender)
+              );
               if (isDuplicate) return prev;
               return [...prev, message];
             });
@@ -341,6 +361,12 @@ export default function AdminChatPage() {
   const initializeAdmin = useCallback(async () => {
     await fetchChatRooms();
     setupAdminNotifications();
+
+    // 어드민 페이지 접속 시 읽지 않은 메시지 정리
+    if (typeof window !== "undefined") {
+      const { unreadMessages } = await import("@/lib/notification");
+      unreadMessages.clear();
+    }
   }, [fetchChatRooms, setupAdminNotifications]);
 
   const cleanup = useCallback(() => {
@@ -385,6 +411,12 @@ export default function AdminChatPage() {
       setChatRooms((prev) =>
         prev.map((room) => (room.id === roomId ? { ...room, unread: 0 } : room))
       );
+
+      // localStorage에서 해당 채팅방의 읽지 않은 메시지 정리
+      if (typeof window !== "undefined") {
+        const { unreadMessages } = await import("@/lib/notification");
+        unreadMessages.clear();
+      }
     } catch (error) {
       console.error("Failed to mark as read:", error);
     }
@@ -549,6 +581,28 @@ export default function AdminChatPage() {
     return groups;
   };
 
+  // 시간 표시 여부를 결정하는 함수
+  const shouldShowTimestamp = (
+    currentMessage: Message,
+    previousMessage: Message | null,
+    isLastMessage: boolean
+  ) => {
+    if (!previousMessage) return true;
+
+    // 각 날짜 그룹의 마지막 메시지는 항상 시간 표시
+    if (isLastMessage) return true;
+
+    const currentTime = new Date(currentMessage.timestamp);
+    const previousTime = new Date(previousMessage.timestamp);
+    const timeDiffInMinutes =
+      Math.abs(currentTime.getTime() - previousTime.getTime()) / (1000 * 60);
+
+    // 다른 발신자이거나 1분 이상 차이가 나면 시간 표시
+    return (
+      currentMessage.sender !== previousMessage.sender || timeDiffInMinutes >= 1
+    );
+  };
+
   const renderMessages = () => {
     const groupedMessages = groupMessagesByDate(messages);
 
@@ -561,76 +615,94 @@ export default function AdminChatPage() {
           </span>
           <div className="border-t border-gray-200 dark:border-gray-800 flex-grow" />
         </div>
-        {msgs.map((message) => (
-          <div
-            key={message.id}
-            className={`flex ${
-              message.sender === "admin" ? "justify-end" : "justify-start"
-            } mb-4`}
-          >
-            {message.sender === "user" && (
-              <div className="mr-2">
-                {message.userImage ? (
-                  <Image
-                    src={message.userImage}
-                    alt={message.userName || "User"}
-                    width={32}
-                    height={32}
-                    className="w-8 h-8 rounded-full border border-border object-cover cursor-pointer hover:ring-2 hover:ring-emerald-500 transition-all"
-                    onClick={() =>
-                      setSelectedUserInfo({
-                        userId:
-                          chatRooms.find((room) => room.id === selectedRoom)
-                            ?.userId || "unknown",
-                        userName: message.userName,
-                        userImage: message.userImage,
-                      })
-                    }
-                  />
-                ) : (
-                  <div
-                    className="w-8 h-8 bg-gradient-to-br from-emerald-400 to-emerald-600 rounded-full flex items-center justify-center text-white font-semibold text-xs cursor-pointer hover:ring-2 hover:ring-emerald-500 transition-all"
-                    onClick={() =>
-                      setSelectedUserInfo({
-                        userId:
-                          chatRooms.find((room) => room.id === selectedRoom)
-                            ?.userId || "unknown",
-                        userName: message.userName,
-                        userImage: message.userImage,
-                      })
-                    }
-                  >
-                    {(
-                      message.userName ||
-                      chatRooms.find((room) => room.id === selectedRoom)
-                        ?.userId ||
-                      "U"
-                    )
-                      .slice(0, 2)
-                      .toUpperCase()}
-                  </div>
-                )}
-              </div>
-            )}
+        {msgs.map((message, index) => {
+          const previousMessage = index > 0 ? msgs[index - 1] : null;
+          const isLastMessage = index === msgs.length - 1;
+          const showTimestamp = shouldShowTimestamp(
+            message,
+            previousMessage,
+            isLastMessage
+          );
+
+          return (
             <div
-              className={`max-w-[70%] rounded-2xl p-3 shadow-sm ${
-                message.sender === "admin"
-                  ? "bg-emerald-500 dark:bg-emerald-600 text-white"
-                  : "bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
-              }`}
+              key={message.id}
+              className={`flex ${
+                message.sender === "admin" ? "justify-end" : "justify-start"
+              } ${showTimestamp ? "mb-4" : "mb-1"}`}
             >
-              {message.sender === "user" && message.userName && (
-                <div className="text-xs font-semibold mb-1 text-emerald-700 dark:text-emerald-300 flex items-center gap-1">
-                  {message.userName}
+              {message.sender === "user" && (
+                <div className="mr-2 flex-shrink-0">
+                  {message.userImage ? (
+                    <Image
+                      src={message.userImage}
+                      alt={message.userName || "User"}
+                      width={32}
+                      height={32}
+                      className="w-8 h-8 rounded-full border border-border object-cover cursor-pointer hover:ring-2 hover:ring-emerald-500 transition-all"
+                      onClick={() =>
+                        setSelectedUserInfo({
+                          userId:
+                            chatRooms.find((room) => room.id === selectedRoom)
+                              ?.userId || "unknown",
+                          userName: message.userName,
+                          userImage: message.userImage,
+                        })
+                      }
+                    />
+                  ) : (
+                    <div
+                      className="w-8 h-8 bg-gradient-to-br from-emerald-400 to-emerald-600 rounded-full flex items-center justify-center text-white font-semibold text-xs cursor-pointer hover:ring-2 hover:ring-emerald-500 transition-all"
+                      onClick={() =>
+                        setSelectedUserInfo({
+                          userId:
+                            chatRooms.find((room) => room.id === selectedRoom)
+                              ?.userId || "unknown",
+                          userName: message.userName,
+                          userImage: message.userImage,
+                        })
+                      }
+                    >
+                      {(
+                        message.userName ||
+                        chatRooms.find((room) => room.id === selectedRoom)
+                          ?.userId ||
+                        "U"
+                      )
+                        .slice(0, 2)
+                        .toUpperCase()}
+                    </div>
+                  )}
                 </div>
               )}
-              <p className="text-sm break-words">{message.content}</p>
-              <p className="text-xs mt-1 opacity-80">
-                {format(message.timestamp, "HH:mm")}
-              </p>
+              <div
+                className={`flex flex-col ${
+                  message.sender === "admin" ? "items-end" : "items-start"
+                } max-w-[70%]`}
+              >
+                <div
+                  className={`rounded-2xl p-3 shadow-sm ${
+                    message.sender === "admin"
+                      ? "bg-emerald-500 dark:bg-emerald-600 text-white"
+                      : "bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
+                  }`}
+                >
+                  {message.sender === "user" && message.userName && (
+                    <div className="text-xs font-semibold mb-1 text-emerald-700 dark:text-emerald-300 flex items-center gap-1">
+                      {message.userName}
+                    </div>
+                  )}
+                  <p className="text-sm break-words">{message.content}</p>
+                </div>
+                {showTimestamp && (
+                  <span className="text-xs text-gray-500 dark:text-gray-400 mt-1 px-1">
+                    {format(message.timestamp, "HH:mm")}
+                  </span>
+                )}
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     ));
   };
@@ -656,22 +728,23 @@ export default function AdminChatPage() {
         }),
       });
 
-      if (response.ok) {
-        const data = await response.json();
+      if (!response.ok) {
+        throw new Error("Failed to send message");
+      }
 
-        // 전송된 메시지를 로컬 상태에 즉시 추가 (isRead: false로 설정)
-        const newMsg: Message = {
-          ...data.message,
-          isRead: false,
-        };
-
-        setMessages((prev) => [...prev, newMsg]);
+      // localStorage에서 읽지 않은 메시지 정리 (관리자가 답장을 보냈으므로)
+      if (typeof window !== "undefined") {
+        const { unreadMessages } = await import("@/lib/notification");
+        unreadMessages.clear();
       }
 
       // 전송 후 포커스 처리
-      requestAnimationFrame(() => {
-        inputRef.current?.focus();
-      });
+      setTimeout(() => {
+        if (inputRef.current) {
+          inputRef.current.focus();
+        }
+      }, 100);
+
       // 스크롤 처리
       scrollToBottom();
     } catch (error) {
@@ -680,6 +753,13 @@ export default function AdminChatPage() {
       setNewMessage(messageContent);
     } finally {
       setIsSending(false);
+
+      // 성공/실패 관계없이 포커스 처리
+      setTimeout(() => {
+        if (inputRef.current) {
+          inputRef.current.focus();
+        }
+      }, 100);
     }
   };
 

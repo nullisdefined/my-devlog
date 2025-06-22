@@ -94,7 +94,19 @@ export const metadata: Metadata = {
       "application/rss+xml": [
         {
           url: "https://nullisdefined.site/feed.xml",
-          title: "개발새발 RSS Feed",
+          title: "개발새발 - 전체 RSS Feed",
+        },
+        {
+          url: "https://nullisdefined.site/feed/category/javascript",
+          title: "개발새발 - JavaScript 카테고리 RSS",
+        },
+        {
+          url: "https://nullisdefined.site/feed/category/typescript",
+          title: "개발새발 - TypeScript 카테고리 RSS",
+        },
+        {
+          url: "https://nullisdefined.site/feed/series/devlog",
+          title: "개발새발 - Devlog 시리즈 RSS",
         },
       ],
     },

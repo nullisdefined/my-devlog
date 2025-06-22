@@ -148,6 +148,14 @@ export const metadata: Metadata = {
   },
   alternates: {
     canonical: "https://nullisdefined.site",
+    types: {
+      "application/rss+xml": [
+        {
+          url: "https://nullisdefined.site/feed.xml",
+          title: "개발새발 RSS Feed",
+        },
+      ],
+    },
   },
 };
 

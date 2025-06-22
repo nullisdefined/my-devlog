@@ -7,6 +7,7 @@ import { Calendar, Tag as TagIcon } from "lucide-react";
 import { cn } from "@/lib/class-name-utils";
 import { DynamicBanner } from "./dynamic-banner";
 import { TocInitializer } from "./toc-initializer";
+import Link from "next/link";
 
 interface PostViewProps {
   post: Post;
@@ -17,23 +18,29 @@ interface PostViewProps {
 // 포스트 상세 페이지용 태그 컴포넌트
 function Tag({ tag, className }: { tag: string; className?: string }) {
   return (
-    <span
+    <Link
+      href={`/devlog/tags/${encodeURIComponent(tag)}`}
       className={cn(
         "inline-flex items-center gap-1.5",
         "px-3 py-1.5 rounded-full",
         "bg-secondary text-secondary-foreground",
         "hover:bg-secondary/80 transition-colors",
-        "text-sm font-medium",
+        "text-sm font-medium cursor-pointer",
         className
       )}
     >
       <TagIcon className="w-3.5 h-3.5" />
       {tag}
-    </span>
+    </Link>
   );
 }
 
 export function PostView({ post, content, toc }: PostViewProps) {
+  // URL에서 공백을 하이픈으로 변환하는 함수
+  const normalizeUrlPath = (path: string) => {
+    return path.toLowerCase().replace(/\s+/g, "-");
+  };
+
   return (
     <>
       {/* TOC 초기화 */}
@@ -49,9 +56,20 @@ export function PostView({ post, content, toc }: PostViewProps) {
             {/* 카테고리 */}
             {post.category && (
               <div className="inline-block">
-                <span className="text-xs font-medium text-muted-foreground uppercase tracking-wider bg-secondary px-3 py-1.5 rounded-full border">
+                <Link
+                  href={
+                    post.category.toLowerCase().startsWith("series/")
+                      ? `/devlog/${normalizeUrlPath(
+                          post.urlCategory || post.category || ""
+                        )}`
+                      : `/devlog/categories/${normalizeUrlPath(
+                          post.urlCategory || post.category || ""
+                        )}`
+                  }
+                  className="text-xs font-medium text-muted-foreground uppercase tracking-wider bg-secondary px-3 py-1.5 rounded-full border hover:bg-secondary/80 transition-colors cursor-pointer"
+                >
                   {post.category}
-                </span>
+                </Link>
               </div>
             )}
 

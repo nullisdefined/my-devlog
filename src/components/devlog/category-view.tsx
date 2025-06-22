@@ -131,7 +131,9 @@ export function CategoryView({
 
       {categoryPosts.length > 0 ? (
         <>
-          <div>{renderMasonryContent()}</div>
+          <div className={viewMode === "card" ? getGridClassName() : ""}>
+            {renderMasonryContent()}
+          </div>
 
           {totalPages > 1 && (
             <Pagination currentPage={currentPage} totalPages={totalPages} />

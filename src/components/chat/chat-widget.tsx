@@ -38,6 +38,28 @@ export function ChatWidget() {
     return Object.entries(groups);
   };
 
+  // 시간 표시 여부를 결정하는 함수
+  const shouldShowTimestamp = (
+    currentMessage: Message,
+    previousMessage: Message | null,
+    isLastMessage: boolean
+  ) => {
+    if (!previousMessage) return true;
+
+    // 각 날짜 그룹의 마지막 메시지는 항상 시간 표시
+    if (isLastMessage) return true;
+
+    const currentTime = new Date(currentMessage.timestamp);
+    const previousTime = new Date(previousMessage.timestamp);
+    const timeDiffInMinutes =
+      Math.abs(currentTime.getTime() - previousTime.getTime()) / (1000 * 60);
+
+    // 다른 발신자이거나 1분 이상 차이가 나면 시간 표시
+    return (
+      currentMessage.sender !== previousMessage.sender || timeDiffInMinutes >= 1
+    );
+  };
+
   useEffect(() => {
     if (isOpen) {
       const storedRoomId = sessionStorage.getItem("chatRoomId");
@@ -168,13 +190,24 @@ export function ChatWidget() {
       }
 
       setNewMessage("");
-      if (inputElement) {
-        inputElement.focus();
-      }
+
+      // 비동기적으로 포커스 처리
+      setTimeout(() => {
+        if (inputRef.current) {
+          inputRef.current.focus();
+        }
+      }, 100);
     } catch (error) {
       console.error("Failed to send message:", error);
     } finally {
       setIsLoading(false);
+
+      // 성공/실패 관계없이 포커스 처리
+      setTimeout(() => {
+        if (inputRef.current) {
+          inputRef.current.focus();
+        }
+      }, 100);
     }
   };
 
@@ -343,45 +376,65 @@ export function ChatWidget() {
                     </span>
                     <div className="border-t border-gray-200 dark:border-gray-800 flex-grow" />
                   </div>
-                  {msgs.map((message) => (
-                    <div
-                      key={message.id}
-                      className={`flex ${
-                        message.sender === "user"
-                          ? "justify-end"
-                          : "justify-start"
-                      } mb-2`}
-                    >
-                      {message.sender === "admin" && (
-                        <div className="w-8 h-8 rounded-full mr-2 overflow-hidden">
-                          <Image
-                            src="https://avatars.githubusercontent.com/u/164657817?v=4"
-                            alt="Admin"
-                            width={32}
-                            height={32}
-                            className="w-full h-full object-cover"
-                          />
-                        </div>
-                      )}
+                  {msgs.map((message, index) => {
+                    const previousMessage = index > 0 ? msgs[index - 1] : null;
+                    const isLastMessage = index === msgs.length - 1;
+                    const showTimestamp = shouldShowTimestamp(
+                      message,
+                      previousMessage,
+                      isLastMessage
+                    );
+
+                    return (
                       <div
-                        className={`max-w-[85%] rounded-3xl p-3 ${
+                        key={message.id}
+                        className={`flex ${
                           message.sender === "user"
-                            ? "bg-emerald-500 dark:bg-emerald-600 text-white"
-                            : "bg-gray-200 dark:bg-gray-800 text-gray-900 dark:text-white"
-                        }`}
+                            ? "justify-end"
+                            : "justify-start"
+                        } ${showTimestamp ? "mb-3" : "mb-1"}`}
                       >
                         {message.sender === "admin" && (
-                          <div className="text-xs font-semibold mb-1 text-gray-600 dark:text-gray-300">
-                            Jaewoo Kim
+                          <div className="w-8 h-8 rounded-full mr-2 overflow-hidden flex-shrink-0">
+                            <Image
+                              src="https://avatars.githubusercontent.com/u/164657817?v=4"
+                              alt="Admin"
+                              width={32}
+                              height={32}
+                              className="w-full h-full object-cover"
+                            />
                           </div>
                         )}
-                        <p className="text-sm">{message.content}</p>
-                        <span className="text-[10px] opacity-70">
-                          {format(message.timestamp, "HH:mm")}
-                        </span>
+                        <div
+                          className={`flex flex-col ${
+                            message.sender === "user"
+                              ? "items-end"
+                              : "items-start"
+                          } max-w-[85%]`}
+                        >
+                          <div
+                            className={`rounded-3xl p-3 ${
+                              message.sender === "user"
+                                ? "bg-emerald-500 dark:bg-emerald-600 text-white"
+                                : "bg-gray-200 dark:bg-gray-800 text-gray-900 dark:text-white"
+                            }`}
+                          >
+                            {message.sender === "admin" && (
+                              <div className="text-xs font-semibold mb-1 text-gray-600 dark:text-gray-300">
+                                Jaewoo Kim
+                              </div>
+                            )}
+                            <p className="text-sm">{message.content}</p>
+                          </div>
+                          {showTimestamp && (
+                            <span className="text-[10px] text-gray-500 dark:text-gray-400 mt-1 px-1">
+                              {format(message.timestamp, "HH:mm")}
+                            </span>
+                          )}
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
               ))}
               <div ref={messagesEndRef} />

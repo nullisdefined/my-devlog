@@ -122,7 +122,7 @@ pre[data-title] {
 
 /* TOC 전용 스크롤바 스타일 */
 .toc-container::-webkit-scrollbar {
-  width: 6px;
+  width: 4px;
 }
 
 .toc-container::-webkit-scrollbar-track {
@@ -131,7 +131,7 @@ pre[data-title] {
 
 .toc-container::-webkit-scrollbar-thumb {
   @apply bg-muted-foreground/30 hover:bg-muted-foreground/50;
-  border-radius: 3px;
+  border-radius: 2px;
   transition: background-color 0.2s ease;
 }
 
@@ -184,6 +184,76 @@ pre[data-title] {
   @apply bg-muted-foreground/50;
 }
 
+/* 형광펜 스타일 (== == 구문) */
+.prose mark.highlight-mark {
+  background: linear-gradient(
+    104deg,
+    rgba(130, 255, 173, 0) 0.9%,
+    rgba(130, 255, 173, 1.25) 2.4%,
+    rgba(130, 255, 173, 0.5) 5.8%,
+    rgba(130, 255, 173, 0.1) 93%,
+    rgba(130, 255, 173, 0.7) 96%,
+    rgba(130, 255, 173, 0) 98%
+  );
+  color: inherit;
+  font-weight: 600;
+  padding: 0.15em 0.4em;
+  margin: 0 -0.1em;
+  border-radius: 0;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+  text-decoration: none;
+  position: relative;
+  display: inline;
+  line-height: 1.2;
+}
+
+/* 다크모드용 형광펜 스타일 */
+.dark .prose mark.highlight-mark {
+  background: linear-gradient(
+    104deg,
+    rgba(255, 255, 130, 0) 0.9%,
+    rgba(255, 255, 130, 0.8) 2.4%,
+    rgba(255, 255, 130, 0.3) 5.8%,
+    rgba(255, 255, 130, 0.1) 93%,
+    rgba(255, 255, 130, 0.4) 96%,
+    rgba(255, 255, 130, 0) 98%
+  );
+  color: inherit;
+}
+
+/* 대안으로 더 단순한 형광펜 스타일 */
+.prose mark.highlight-mark.simple {
+  background: linear-gradient(120deg, #a8edea 0%, #fed6e3 100%);
+  background-size: 100% 0.37em;
+  background-position: 0 88%;
+  background-repeat: no-repeat;
+  color: inherit;
+  text-decoration: none;
+  padding: 0;
+}
+
+.dark .prose mark.highlight-mark.simple {
+  background: linear-gradient(
+    120deg,
+    rgba(168, 237, 234, 0.5) 0%,
+    rgba(254, 214, 227, 0.5) 100%
+  );
+  background-size: 100% 0.37em;
+  background-position: 0 88%;
+  background-repeat: no-repeat;
+}
+
+/* 코드 하이라이팅에서 변수명 강조 비활성화 */
+.prose pre code .highlighted-chars,
+.prose pre code mark[data-highlighted-chars] {
+  background: transparent !important;
+  color: inherit !important;
+  border: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
 /* 특정 컴포넌트용 스크롤바 스타일 */
 .scrollbar-thin {
   scrollbar-width: thin;
@@ -229,7 +299,7 @@ pre[data-title] {
 /* 데스크톱 스타일 (xl 브레이크포인트 이상) */
 @media (min-width: 1280px) {
   .toc-container {
-    width: 240px;
+    width: 250px;
     margin-left: 0.5rem;
   }
 }
@@ -237,7 +307,7 @@ pre[data-title] {
 /* 태블릿 스타일 */
 @media (max-width: 1279px) and (min-width: 768px) {
   .toc-container {
-    width: 200px;
+    width: 210px;
     margin-left: 0.25rem;
   }
 }
@@ -893,6 +963,42 @@ pre[data-title] {
   margin-right: auto;
   display: block;
   transition: filter 0.3s ease;
+}
+
+/* width 속성이 있는 이미지는 해당 크기를 우선 사용 */
+.prose img[width] {
+  max-width: none !important;
+  width: attr(width px) !important;
+}
+
+/* CSS attr() 미지원 브라우저를 위한 대안 */
+.prose img[width="200"] {
+  width: 200px !important;
+  max-width: none !important;
+}
+.prose img[width="300"] {
+  width: 300px !important;
+  max-width: none !important;
+}
+.prose img[width="400"] {
+  width: 400px !important;
+  max-width: none !important;
+}
+.prose img[width="500"] {
+  width: 500px !important;
+  max-width: none !important;
+}
+.prose img[width="600"] {
+  width: 600px !important;
+  max-width: none !important;
+}
+.prose img[width="700"] {
+  width: 700px !important;
+  max-width: none !important;
+}
+.prose img[width="800"] {
+  width: 800px !important;
+  max-width: none !important;
 }
 
 /* 첫 번째 이미지는 더 작게 */
