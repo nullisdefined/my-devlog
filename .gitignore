@@ -38,3 +38,6 @@ next-env.d.ts
 .vercel
 
 gcp-key.json
+
+# RSS statistics
+.rss-stats.json

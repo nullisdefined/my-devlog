@@ -244,6 +244,18 @@ class BlogSync {
 
       const destPath = path.join(postsDir, `${slug}.md`);
 
+      // 기존 파일이 있으면 frontmatter 읽어서 views 유지
+      let existingViews = 0;
+      if (fs.existsSync(destPath)) {
+        try {
+          const existingContent = fs.readFileSync(destPath, "utf-8");
+          const { data: existingData } = matter(existingContent);
+          existingViews = existingData.views || 0;
+        } catch (error) {
+          console.warn(`Failed to read existing views for ${destPath}:`, error);
+        }
+      }
+
       const yamlContent = [
         "---",
         `title: "${frontMatter.title}"`,
@@ -253,6 +265,7 @@ class BlogSync {
         frontMatter.category ? `category: "${frontMatter.category}"` : null,
         thumbnail ? `thumbnail: "${thumbnail}"` : null,
         `draft: ${frontMatter.draft || false}`,
+        `views: ${existingViews}`,
         "---",
         "",
         processedContent,
@@ -270,7 +283,11 @@ class BlogSync {
       }
 
       fs.writeFileSync(destPath, yamlContent);
-      console.log(`Processed: ${destPath}`);
+      console.log(
+        `Processed: ${destPath}${
+          existingViews > 0 ? ` (Views preserved: ${existingViews})` : ""
+        }`
+      );
 
       // 처리된 파일 추적
       this.processedFiles.add(filePath);
@@ -290,18 +307,50 @@ class BlogSync {
 
     for (const match of matches) {
       const [fullMatch, wikiLink, altText, standardLink] = match;
-      const imagePath = wikiLink || standardLink;
+      let imagePath = wikiLink || standardLink;
       if (!imagePath) continue;
 
+      // 옵시디언 이미지 크기 설정 처리
+      let imageWidth = "";
+      let processedAltText = altText || "";
+
+      // 1. 위키링크에서 크기 정보 추출 (![[image.png|400]])
+      if (wikiLink && wikiLink.includes("|")) {
+        const parts = wikiLink.split("|");
+        imagePath = parts[0].trim();
+        imageWidth = parts[1].trim();
+      }
+
+      // 2. 표준 마크다운 alt text에서 크기 정보 추출 (![image|400](url))
+      if (altText && altText.includes("|")) {
+        const parts = altText.split("|");
+        processedAltText = parts[0].trim();
+        imageWidth = parts[1].trim();
+      }
+
+      // 이미지 URL 처리 (https 이미지의 경우 firstImageUrl 설정)
       if (imagePath.startsWith("https://")) {
         if (!firstImageUrl) firstImageUrl = imagePath;
+      }
+
+      // 모든 이미지 처리 (로컬 및 원격)
+      const finalAltText =
+        processedAltText || imagePath.split("/").pop() || "image";
+
+      if (imageWidth) {
+        // 크기가 지정된 경우 HTML img 태그로 변환
+        updatedContent = updatedContent.replace(
+          fullMatch,
+          `<img src="${imagePath}" alt="${finalAltText}" width="${imageWidth}" />`
+        );
+      } else {
+        // 크기가 없는 경우 표준 마크다운으로 변환
         if (wikiLink) {
           updatedContent = updatedContent.replace(
             fullMatch,
-            `![${wikiLink}](${imagePath})`
+            `![${finalAltText}](${imagePath})`
           );
         }
-        continue;
       }
     }
 

@@ -23,10 +23,32 @@ Disallow: /admin/
 Disallow: /api/
 Crawl-delay: 1
 
+# Bing Bot specific rules
+User-agent: Bingbot
+Allow: /
+Allow: /devlog
+Allow: /devlog/
+Allow: /devlog/posts/
+Allow: /devlog/categories/
+Allow: /devlog/series/
+Allow: /devlog/tags/
+Disallow: /admin/
+Disallow: /api/
+Crawl-delay: 1
+
 # Host declaration
 Host: https://nullisdefined.site
 
 # Sitemaps
 Sitemap: https://nullisdefined.site/sitemap.xml
 Sitemap: https://nullisdefined.site/sitemap-0.xml
+
+# RSS Feeds (for better SEO discovery)
 Sitemap: https://nullisdefined.site/feed.xml
+
+# RSS Feed discovery for crawlers
+Allow: /feed.xml
+Allow: /feed/
+Allow: /feed/category/
+Allow: /feed/tags/
+Allow: /feed/series/
