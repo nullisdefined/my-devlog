@@ -139,31 +139,3 @@ export async function generateStaticParams() {
     return [];
   }
 }
-
-// 메타데이터 생성
-export async function generateMetadata({ params }: Props) {
-  const [type, identifier] = params.params;
-  const decodedIdentifier = decodeURIComponent(identifier);
-
-  const titles = {
-    category: `개발새발 - ${decodedIdentifier} 카테고리`,
-    tags: `개발새발 - ${decodedIdentifier} 태그`,
-    series: `개발새발 - ${decodedIdentifier} 시리즈`,
-  };
-
-  const descriptions = {
-    category: `${decodedIdentifier} 카테고리의 모든 글을 RSS로 구독하세요`,
-    tags: `${decodedIdentifier} 태그가 포함된 모든 글을 RSS로 구독하세요`,
-    series: `${decodedIdentifier} 시리즈의 모든 글을 RSS로 구독하세요`,
-  };
-
-  return {
-    title: titles[type as keyof typeof titles] || "RSS Feed",
-    description: descriptions[type as keyof typeof descriptions] || "RSS Feed",
-    alternates: {
-      types: {
-        "application/rss+xml": `https://nullisdefined.site/feed/${type}/${identifier}`,
-      },
-    },
-  };
-}

@@ -49,7 +49,7 @@ function fetchRSSFeed(endpoint) {
 // Google에 RSS 피드 업데이트 알림
 function notifyGoogle(feedUrl) {
   return new Promise((resolve, reject) => {
-    const pingUrl = `http://www.google.com/ping?sitemap=${encodeURIComponent(
+    const pingUrl = `https://www.google.com/ping?sitemap=${encodeURIComponent(
       feedUrl
     )}`;
 
@@ -75,7 +75,7 @@ function notifyGoogle(feedUrl) {
 // Bing에 RSS 피드 업데이트 알림
 function notifyBing(feedUrl) {
   return new Promise((resolve, reject) => {
-    const pingUrl = `http://www.bing.com/ping?sitemap=${encodeURIComponent(
+    const pingUrl = `https://www.bing.com/ping?sitemap=${encodeURIComponent(
       feedUrl
     )}`;
 
