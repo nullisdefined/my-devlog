@@ -13,6 +13,82 @@ import { languageConfigs, normalizeLanguage } from "./code-languages";
 // 하이라이터 인스턴스를 캐시하기 위한 전역 변수
 const highlighter: any = null;
 
+// 형광펜(Highlight) 커스텀 플러그인
+function remarkHighlight() {
+  return (tree: any) => {
+    visit(tree, "text", (node, index, parent) => {
+      if (!node.value || typeof node.value !== "string") return;
+
+      // 코드 블록 내부인지 확인 (부모가 code나 pre인 경우 제외)
+      let currentParent = parent;
+      while (currentParent) {
+        if (
+          currentParent.type === "code" ||
+          currentParent.type === "inlineCode"
+        ) {
+          return; // 코드 블록 내부에서는 형광펜 처리하지 않음
+        }
+        currentParent = currentParent.parent;
+      }
+
+      // == 문법을 찾아서 처리
+      const regex = /==(.*?)==/g;
+      const matches = [...node.value.matchAll(regex)];
+
+      if (matches.length === 0) return;
+
+      // 새로운 children 배열 생성
+      const newChildren = [];
+      let lastIndex = 0;
+
+      matches.forEach((match) => {
+        const matchStart = match.index!;
+        const matchEnd = matchStart + match[0].length;
+
+        // 매치 이전의 텍스트
+        if (matchStart > lastIndex) {
+          newChildren.push({
+            type: "text",
+            value: node.value.slice(lastIndex, matchStart),
+          });
+        }
+
+        // 하이라이트 요소 생성
+        newChildren.push({
+          type: "strong",
+          children: [
+            {
+              type: "text",
+              value: match[1],
+            },
+          ],
+          data: {
+            hName: "mark",
+            hProperties: {
+              className: ["highlight-mark"],
+            },
+          },
+        });
+
+        lastIndex = matchEnd;
+      });
+
+      // 마지막 텍스트
+      if (lastIndex < node.value.length) {
+        newChildren.push({
+          type: "text",
+          value: node.value.slice(lastIndex),
+        });
+      }
+
+      // 부모 노드의 children 교체
+      if (parent && typeof index === "number") {
+        parent.children.splice(index, 1, ...newChildren);
+      }
+    });
+  };
+}
+
 function createCopyButton(): Element {
   return {
     type: "element",
@@ -67,6 +143,7 @@ export async function markdownToHtml(content: string): Promise<string> {
   const result = await unified()
     .use(remarkParse)
     .use(remarkGfm)
+    .use(remarkHighlight)
     .use(remarkRehype, {
       allowDangerousHtml: true,
     })
@@ -98,16 +175,6 @@ export async function markdownToHtml(content: string): Promise<string> {
         const className = node.properties.className || [];
         if (Array.isArray(className)) {
           className.push("highlighted");
-          node.properties.className = className;
-        }
-      },
-      onVisitHighlightedChars(node) {
-        if (!node.properties) {
-          node.properties = {};
-        }
-        const className = node.properties.className || [];
-        if (Array.isArray(className)) {
-          className.push("highlighted-chars");
           node.properties.className = className;
         }
       },
