@@ -18,27 +18,27 @@
 <!-- BLOG:START --><table>
 <tr>
 <td align="center">📌</td>
-<td><strong><a href="https://nullisdefined.site/devlog/posts/cs/network-programming/tcp-flow-congestion-error-control">TCP Flow, Congestion, Error Control</a></strong></td>
+<td><strong><a href="https://nullisdefined.site/devlog/posts/cloud/aws/aws-database">AWS - Database</a></strong></td>
 </tr>
 </table><table>
 <tr>
 <td align="center">📌</td>
-<td><strong><a href="https://nullisdefined.site/devlog/posts/cs/network-programming/tcp-segment">TCP Segment</a></strong></td>
+<td><strong><a href="https://nullisdefined.site/devlog/posts/cloud/aws/aws-storage">AWS - Storage</a></strong></td>
 </tr>
 </table><table>
 <tr>
 <td align="center">📌</td>
-<td><strong><a href="https://nullisdefined.site/devlog/posts/cs/system-programming/concurrency">Concurrency</a></strong></td>
+<td><strong><a href="https://nullisdefined.site/devlog/posts/series/devlog/implement-dynamic-gradient-banner-for-using-canvas-api">[Canvas API] 동적 그라디언트 배너 만들기</a></strong></td>
 </tr>
 </table><table>
 <tr>
 <td align="center">📌</td>
-<td><strong><a href="https://nullisdefined.site/devlog/posts/cs/system-programming/memory-sharing">Memory Sharing</a></strong></td>
+<td><strong><a href="https://nullisdefined.site/devlog/posts/cloud/aws/aws-networking">AWS - Networking</a></strong></td>
 </tr>
 </table><table>
 <tr>
 <td align="center">📌</td>
-<td><strong><a href="https://nullisdefined.site/devlog/posts/cs/network-programming/connection-oriented-tcp">Connection-Oriented TCP</a></strong></td>
+<td><strong><a href="https://nullisdefined.site/devlog/posts/cloud/aws/aws-computing">AWS - Computing</a></strong></td>
 </tr>
 </table><!-- BLOG:END -->
 
