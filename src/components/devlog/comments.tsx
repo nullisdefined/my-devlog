@@ -22,7 +22,7 @@ export function Comments() {
     script.setAttribute("data-input-position", "top");
     script.setAttribute(
       "data-theme",
-      theme === "dark" ? "noborder_dark" : "light_tritanopia"
+      theme === "dark" ? "dark_dimmed" : "light"
     );
     script.setAttribute("data-lang", "ko");
     script.crossOrigin = "anonymous";
