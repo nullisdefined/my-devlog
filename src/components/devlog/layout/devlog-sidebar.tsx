@@ -12,7 +12,14 @@ import { Tag } from "../tag";
 import { Post } from "@/types/index";
 import { VisitorsWidget } from "@/components/visitor/visitors-widget";
 import { cn } from "@/lib/class-name-utils";
-import { ChevronRight } from "lucide-react";
+import {
+  ChevronRight,
+  Folder,
+  BookOpen,
+  Tag as TagIcon,
+  FileText,
+  LayoutGrid,
+} from "lucide-react";
 
 interface DevlogSidebarProps {
   posts: Post[];
@@ -32,6 +39,52 @@ export function DevlogSidebar({ posts }: DevlogSidebarProps) {
         : [...prev, category.path]
     );
   };
+
+  // 카테고리별 글 개수 계산
+  const categoryCounts = useMemo(() => {
+    const counts = new Map<string, number>();
+
+    posts.forEach((post) => {
+      const postCategory =
+        post.urlCategory?.toLowerCase() || post.category?.toLowerCase();
+      if (postCategory) {
+        // 정확한 카테고리 경로 매칭
+        categories.forEach((category) => {
+          const categoryPath = category.path
+            .toLowerCase()
+            .replace("/devlog/categories/", "");
+
+          if (
+            postCategory === categoryPath ||
+            postCategory.startsWith(`${categoryPath}/`)
+          ) {
+            counts.set(category.path, (counts.get(category.path) || 0) + 1);
+          }
+
+          // 하위 카테고리도 체크
+          if (category.subcategories) {
+            category.subcategories.forEach((subcategory) => {
+              const subcategoryPath = subcategory.path
+                .toLowerCase()
+                .replace("/devlog/categories/", "");
+
+              if (
+                postCategory === subcategoryPath ||
+                postCategory.startsWith(`${subcategoryPath}/`)
+              ) {
+                counts.set(
+                  subcategory.path,
+                  (counts.get(subcategory.path) || 0) + 1
+                );
+              }
+            });
+          }
+        });
+      }
+    });
+
+    return counts;
+  }, [posts]);
 
   const allTagCounts = useMemo(() => {
     const counts = new Map<string, number>();
@@ -89,85 +142,150 @@ export function DevlogSidebar({ posts }: DevlogSidebarProps) {
           </div>
         </div>
 
+        {/* All Posts */}
+        <div>
+          <Link
+            href="/devlog"
+            className={cn(
+              "flex items-center justify-between w-full px-2 py-2 rounded-md",
+              "hover:bg-accent hover:text-accent-foreground",
+              "transition-colors cursor-pointer group"
+            )}
+          >
+            <div className="flex items-center gap-2">
+              <LayoutGrid className="w-4 h-4 text-muted-foreground group-hover:text-foreground transition-colors" />
+              <span className="text-sm font-semibold text-foreground">
+                All Posts
+              </span>
+            </div>
+            <div className="flex items-center gap-1">
+              <FileText className="w-3 h-3 text-muted-foreground" />
+              <span className="text-xs text-muted-foreground">
+                {posts.length}
+              </span>
+            </div>
+          </Link>
+        </div>
+
+        <div className="border-t border-border/50" />
+
         {/* Categories */}
         <div>
-          <h4 className="text-sm font-semibold mb-2 px-2 text-foreground">
+          <h4 className="text-sm font-semibold mb-2 px-2 text-foreground flex items-center gap-2">
+            <Folder className="w-4 h-4" />
             Categories
           </h4>
           <nav className="space-y-0.5">
-            {categories.map((category) => (
-              <div key={category.path} className="space-y-0.5">
-                {category.subcategories && category.subcategories.length > 0 ? (
-                  <div
-                    className="group relative"
-                    onClick={(e) => handleCategoryClick(category, e)}
-                  >
-                    <button
+            {categories.map((category) => {
+              const categoryCount = categoryCounts.get(category.path) || 0;
+
+              return (
+                <div key={category.path} className="space-y-0.5">
+                  {category.subcategories &&
+                  category.subcategories.length > 0 ? (
+                    <div
+                      className="group relative"
+                      onClick={(e) => handleCategoryClick(category, e)}
+                    >
+                      <button
+                        className={cn(
+                          "flex items-center justify-between w-full px-2 py-1 rounded-md",
+                          "hover:bg-accent hover:text-accent-foreground",
+                          "transition-colors cursor-pointer font-medium text-foreground"
+                        )}
+                      >
+                        <div className="flex items-center">
+                          <ChevronRight
+                            className={cn(
+                              "h-3 w-3 transition-transform mr-2 text-muted-foreground group-hover:text-foreground",
+                              expandedCategories.includes(category.path) &&
+                                "rotate-90"
+                            )}
+                          />
+                          <category.icon className="w-3 h-3 mr-2 text-muted-foreground group-hover:text-foreground transition-colors" />
+                          <span className="text-sm font-semibold text-foreground">
+                            {category.name}
+                          </span>
+                        </div>
+                        {categoryCount > 0 && (
+                          <div className="flex items-center gap-1">
+                            <FileText className="w-3 h-3 text-muted-foreground" />
+                            <span className="text-xs text-muted-foreground">
+                              {categoryCount}
+                            </span>
+                          </div>
+                        )}
+                      </button>
+                    </div>
+                  ) : (
+                    <Link
+                      href={category.path}
                       className={cn(
-                        "flex items-center w-full px-2 py-1 rounded-md text-foreground",
+                        "flex items-center justify-between w-full px-2 py-1 rounded-md",
                         "hover:bg-accent hover:text-accent-foreground",
-                        "transition-colors cursor-pointer"
+                        "transition-colors cursor-pointer group"
                       )}
                     >
-                      <ChevronRight
-                        className={cn(
-                          "h-3 w-3 transition-transform mr-2 text-muted-foreground",
-                          expandedCategories.includes(category.path) &&
-                            "rotate-90"
-                        )}
-                      />
-                      <category.icon className="w-3 h-3 mr-2 text-muted-foreground" />
-                      <span className="text-sm text-foreground">
-                        {category.name}
-                      </span>
-                    </button>
-                  </div>
-                ) : (
-                  <Link
-                    href={category.path}
-                    className={cn(
-                      "flex items-center w-full px-2 py-1 rounded-md text-foreground",
-                      "hover:bg-accent hover:text-accent-foreground",
-                      "transition-colors cursor-pointer"
-                    )}
-                  >
-                    <div className="w-3 mr-2" />
-                    <category.icon className="w-3 h-3 mr-2 text-muted-foreground" />
-                    <span className="text-sm text-foreground">
-                      {category.name}
-                    </span>
-                  </Link>
-                )}
-
-                {category.subcategories &&
-                  category.subcategories.length > 0 &&
-                  expandedCategories.includes(category.path) && (
-                    <div className="ml-6 space-y-0.5">
-                      {category.subcategories.map((subcategory) => (
-                        <Link
-                          key={subcategory.path}
-                          href={subcategory.path}
-                          className={cn(
-                            "flex items-center px-2 py-1 rounded-md text-foreground",
-                            "hover:bg-accent hover:text-accent-foreground",
-                            "transition-colors text-xs relative"
-                          )}
-                        >
-                          <span className="absolute -left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground text-xs">
-                            └
+                      <div className="flex items-center">
+                        <div className="w-3 mr-2" />
+                        <category.icon className="w-3 h-3 mr-2 text-muted-foreground group-hover:text-foreground transition-colors" />
+                        <span className="text-sm font-semibold text-foreground">
+                          {category.name}
+                        </span>
+                      </div>
+                      {categoryCount > 0 && (
+                        <div className="flex items-center gap-1">
+                          <FileText className="w-3 h-3 text-muted-foreground" />
+                          <span className="text-xs text-muted-foreground">
+                            {categoryCount}
                           </span>
-                          {subcategory.icon && (
-                            <subcategory.icon className="w-3 h-3 mr-2 text-muted-foreground" />
-                          )}
-                          <span className="text-xs text-foreground">
-                            {subcategory.name}
-                          </span>
-                        </Link>
-                      ))}
-                    </div>
+                        </div>
+                      )}
+                    </Link>
                   )}
-              </div>
-            ))}
+
+                  {category.subcategories &&
+                    category.subcategories.length > 0 &&
+                    expandedCategories.includes(category.path) && (
+                      <div className="ml-6 space-y-0.5">
+                        {category.subcategories.map((subcategory) => {
+                          const subcategoryCount =
+                            categoryCounts.get(subcategory.path) || 0;
+
+                          return (
+                            <Link
+                              key={subcategory.path}
+                              href={subcategory.path}
+                              className={cn(
+                                "flex items-center justify-between px-2 py-1 rounded-md",
+                                "hover:bg-accent hover:text-accent-foreground",
+                                "transition-colors text-xs relative group"
+                              )}
+                            >
+                              <div className="flex items-center">
+                                <span className="absolute -left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground text-xs">
+                                  └
+                                </span>
+                                <subcategory.icon className="w-3 h-3 mr-2 text-muted-foreground group-hover:text-foreground transition-colors" />
+                                <span className="text-xs text-foreground">
+                                  {subcategory.name}
+                                </span>
+                              </div>
+                              {subcategoryCount > 0 && (
+                                <div className="flex items-center gap-1">
+                                  <span className="text-xs text-muted-foreground">
+                                    {subcategoryCount}
+                                  </span>
+                                </div>
+                              )}
+                            </Link>
+                          );
+                        })}
+                      </div>
+                    )}
+                </div>
+              );
+            })}
           </nav>
         </div>
 
@@ -175,7 +293,8 @@ export function DevlogSidebar({ posts }: DevlogSidebarProps) {
 
         {/* Series */}
         <div>
-          <h4 className="text-sm font-semibold mb-2 px-2 text-foreground">
+          <h4 className="text-sm font-semibold mb-2 px-2 text-foreground flex items-center gap-2">
+            <BookOpen className="w-4 h-4" />
             Series
           </h4>
           <nav className="space-y-0.5 ml-2">
@@ -189,13 +308,18 @@ export function DevlogSidebar({ posts }: DevlogSidebarProps) {
                   href={series.path}
                   className="group block px-2 py-1.5 rounded-md hover:bg-accent/50 transition-colors"
                 >
-                  <div className="flex items-center gap-2 min-w-0">
+                  <div className="flex items-center justify-between min-w-0">
                     <span className="truncate text-xs flex-1 text-foreground">
                       {series.name}
                     </span>
-                    <span className="text-xs text-muted-foreground group-hover:text-primary whitespace-nowrap flex-shrink-0">
-                      {postCount}개의 글
-                    </span>
+                    {postCount > 0 && (
+                      <div className="flex items-center gap-1 ml-2">
+                        <FileText className="w-3 h-3 text-muted-foreground group-hover:text-primary transition-colors" />
+                        <span className="text-xs text-muted-foreground group-hover:text-primary whitespace-nowrap flex-shrink-0 transition-colors">
+                          {postCount}
+                        </span>
+                      </div>
+                    )}
                   </div>
                 </Link>
               );
@@ -207,7 +331,8 @@ export function DevlogSidebar({ posts }: DevlogSidebarProps) {
 
         {/* Tags */}
         <div>
-          <h4 className="text-sm font-semibold mb-2 px-2 text-foreground">
+          <h4 className="text-sm font-semibold mb-2 px-2 text-foreground flex items-center gap-2">
+            <TagIcon className="w-4 h-4" />
             Tags
           </h4>
           {tagCounts.length > 0 ? (

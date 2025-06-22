@@ -40,11 +40,6 @@ export interface CategoryItem {
 
 export const categories: readonly CategoryItem[] = [
   {
-    name: "All Posts",
-    path: "/devlog",
-    icon: LayoutGrid,
-  },
-  {
     name: "CS",
     path: "/devlog/categories/cs",
     icon: BrainCircuit,

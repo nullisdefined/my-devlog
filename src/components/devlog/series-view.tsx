@@ -170,7 +170,9 @@ export function SeriesView({
 
       {seriesPosts.length > 0 ? (
         <>
-          <div>{renderMasonryContent()}</div>
+          <div className={viewMode === "card" ? getGridClassName() : ""}>
+            {renderMasonryContent()}
+          </div>
 
           <Pagination currentPage={currentPage} totalPages={totalPages} />
         </>

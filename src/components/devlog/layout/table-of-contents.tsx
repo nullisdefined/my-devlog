@@ -92,7 +92,7 @@ export function TableOfContents({ toc }: TocProps) {
         </div>
 
         {/* 목차 리스트 */}
-        <ul className="space-y-1 px-4 pb-8">
+        <ul className="space-y-1 pl-4 pr-1 pb-8">
           {items.map((item, index) => (
             <li
               key={item.id}
@@ -106,7 +106,7 @@ export function TableOfContents({ toc }: TocProps) {
                 onClick={(e) => handleClick(e, item.id)}
                 className={cn(
                   "block px-2 py-1.5 rounded-md transition-all duration-200",
-                  "text-sm leading-relaxed text-left",
+                  "text-sm leading-tight text-left break-words",
                   "hover:bg-accent/30",
                   "relative",
                   activeId === item.id

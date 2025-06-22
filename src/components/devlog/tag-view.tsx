@@ -90,7 +90,7 @@ export function TagView({ sortedPosts, decodedTag, order }: TagViewProps) {
       <div className="flex flex-col gap-4">
         <div className="flex items-center gap-2">
           <TagIcon className="w-6 h-6" />
-          <h1 className="text-3xl font-bold">#{decodedTag}</h1>
+          <h1 className="text-3xl font-bold">{decodedTag}</h1>
         </div>
 
         <div className="flex items-center justify-between">
@@ -105,7 +105,9 @@ export function TagView({ sortedPosts, decodedTag, order }: TagViewProps) {
         </div>
       </div>
 
-      <div>{renderMasonryContent()}</div>
+      <div className={viewMode === "card" ? getGridClassName() : ""}>
+        {renderMasonryContent()}
+      </div>
     </div>
   );
 }
