@@ -6,6 +6,7 @@ tags: ["NetworkProgramming", "NetworkLayer", "IP", "Forwarding", "Routing"]
 category: "CS/Network Programming"
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/3eaad1217a0fa061d01c5c2b53d7ea98.png"
 draft: false
+views: 0
 ---
 ## 패킷 전달(Delivery) 개념
 
@@ -18,7 +19,7 @@ draft: false
 
 #### 직접 전달(Direct Delivery)
 
-![image|600](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/3eaad1217a0fa061d01c5c2b53d7ea98.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/3eaad1217a0fa061d01c5c2b53d7ea98.png" alt="image" width="600" />
 
 - 목적지 호스트가 같은 물리 네트워크(LAN)에 있는 경우
 - 라우터를 거치지 않고 직접 전송
@@ -31,7 +32,7 @@ draft: false
 
 #### 간접 전달(Indirect Delivery)
 
-![image|600](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/6f86cc163c447e3e92b220e22ec0cc23.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/6f86cc163c447e3e92b220e22ec0cc23.png" alt="image" width="600" />
 
 - 목적지 호스트가 **다른 네트워크**에 있는 경우
 - **하나 이상의 라우터**를 경유하여 전달
@@ -79,7 +80,7 @@ draft: false
 
 ### 1. Next-hop Method (다음 홉 방법)
 
-![image|600](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/5fe5ea3977e61daea7feb4ee6d14311b.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/5fe5ea3977e61daea7feb4ee6d14311b.png" alt="image" width="600" />
 
 **가장 일반적이고 효율적인 방식**
 
@@ -97,7 +98,7 @@ draft: false
 
 ### 2. Network-specific Method (네트워크 지정 방법)
 
-![image|600](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/f5e96f6834ea0d78e593e04e87d8e328.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/f5e96f6834ea0d78e593e04e87d8e328.png" alt="image" width="600" />
 
 **실제 라우팅 테이블에서 주로 사용**
 
@@ -115,7 +116,7 @@ draft: false
 
 ### 3. Host-specific Method (호스트 지정 방법)
 
-![image|600](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/728c19efb2265193ebfb2629b032483d.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/728c19efb2265193ebfb2629b032483d.png" alt="image" width="600" />
 
 **특별한 용도로 제한적 사용**
 
@@ -132,7 +133,7 @@ draft: false
 
 ### 4. Default Method (디폴트 방법)
 
-![image|600](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/01a581300ea49a89c558747a13314dbf.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/01a581300ea49a89c558747a13314dbf.png" alt="image" width="600" />
 
 **인터넷 연결 시 필수**
 
@@ -159,7 +160,7 @@ draft: false
 
 ## Classful Addressing Forwarding
 
-![image|600](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/d3d385cb667495279d066cea37e3cd2b.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/d3d385cb667495279d066cea37e3cd2b.png" alt="image" width="600" />
 
 ### 동작 과정
 
@@ -198,7 +199,7 @@ draft: false
 
 ## Classless Addressing Forwarding
 
-![image|600](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/48bd219d8c0b6b77ef58e3fa7ae30c91.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/48bd219d8c0b6b77ef58e3fa7ae30c91.png" alt="image" width="600" />
 
 ### 특징
 
@@ -208,7 +209,7 @@ draft: false
 
 ### Longest Prefix Match 원리
 
-![image|600](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/50716411ff30be1b80f820f79d815bbe.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/50716411ff30be1b80f820f79d815bbe.png" alt="image" width="600" />
 
 **가장 긴 마스크(가장 구체적인 경로)를 우선적으로 선택**하는 방식
 
@@ -249,7 +250,7 @@ draft: false
 
 ## 계층적 라우팅(Hierarchical Routing)
 
-![image|600](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/ec6c5bb9570d98a44d5efb2b666d463a.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/ec6c5bb9570d98a44d5efb2b666d463a.png" alt="image" width="600" />
 
 ### 계층적 라우팅의 필요성
 
@@ -319,7 +320,7 @@ Local ISP C: 120.14.96.0/20  (120.14.96.0 ~ 120.14.111.255)
 
 ### MPLS 개념
 
-![image|600](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/88f752aca45b1c31f5084a5d595b501b.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/88f752aca45b1c31f5084a5d595b501b.png" alt="image" width="600" />
 
 - **레이블 기반 포워딩** 방식
 - IP 주소 대신 **짧은 레이블**로 빠른 포워딩
@@ -348,13 +349,13 @@ Local ISP C: 120.14.96.0/20  (120.14.96.0 ~ 120.14.111.255)
 
 ## 라우터 구조와 포워딩
 
-![image|600](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/aabece87a7dfe80d6f367f98e5a9516c.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/aabece87a7dfe80d6f367f98e5a9516c.png" alt="image" width="600" />
 
 ### 라우터 주요 구성요소
 
-![image|600](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/109eb191b2f217887fd5c2a89da5b0da.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/109eb191b2f217887fd5c2a89da5b0da.png" alt="image" width="600" />
 
-![image|600](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/23d54eb4f7ac9a3eb1bf43f67585556b.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/23d54eb4f7ac9a3eb1bf43f67585556b.png" alt="image" width="600" />
 
 1. **입력 포트**: 패킷 수신 및 역캡슐화
 2. **출력 포트**: 패킷 캡슐화 및 전송
@@ -365,7 +366,7 @@ Local ISP C: 120.14.96.0/20  (120.14.96.0 ~ 120.14.111.255)
 
 #### 1. Crossbar Switch
 
-![image|600](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/5952aee767556fd2d1b1f7a68054120f.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/5952aee767556fd2d1b1f7a68054120f.png" alt="image" width="600" />
 
 - **직접 연결** 방식
 - 각 입력과 출력 사이에 스위치 배치
@@ -373,7 +374,7 @@ Local ISP C: 120.14.96.0/20  (120.14.96.0 ~ 120.14.111.255)
 
 #### 2. Banyan Switch
 
-![image|600](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/2cad25a5391aff503034fda49ead01d5.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/2cad25a5391aff503034fda49ead01d5.png" alt="image" width="600" />
 
 - **다단계 스위칭** 방식
 - 여러 단계를 거쳐 경로 설정
@@ -381,7 +382,7 @@ Local ISP C: 120.14.96.0/20  (120.14.96.0 ~ 120.14.111.255)
 
 #### 3. Batcher-Banyan Switch
 
-![image|600](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/1387969a52b809fbf82faf43427aed10.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/1387969a52b809fbf82faf43427aed10.png" alt="image" width="600" />
 
 - **충돌 방지** 기능 추가
 - 동일 출력 포트 경합 해결

@@ -2,10 +2,11 @@
 title: "Thumbs Up v1.0"
 slug: "thumbs-up-v1-0"
 date: 2024-11-02
-tags: ["토이프로젝트", "React", "TypeScript", "TailwindCSS"]
+tags: ["React", "TypeScript", "TailwindCSS", "ToyProject"]
 category: "Series/thumbs-up"
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/96853286d6745f087ef00bf2d48b8a3d.png"
 draft: false
+views: 0
 ---
 ![image](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/96853286d6745f087ef00bf2d48b8a3d.png)
 

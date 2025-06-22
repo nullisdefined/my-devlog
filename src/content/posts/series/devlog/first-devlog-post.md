@@ -2,9 +2,10 @@
 title: "Devlog 시작"
 slug: "first-devlog-post"
 date: 2024-10-28
-tags: []
+tags: ["Devlog"]
 category: "Series/devlog"
 draft: false
+views: 0
 ---
 요즘 많은 개발자들이 자신의 지식과 경험을 블로그에 기록하며 소통하고 있다. Tistory나 Velog 같은 검증된 플랫폼이 있지만, 직접 개발해보기로 정했다.
 
@@ -31,5 +32,4 @@ draft: false
 
 개발자로서 성장해가는 과정을 기록하고, 그 속에서 겪은 시행착오와 배움을 담아내고 싶다. 그리고 그 경험을 솔직하게 나누며 함께 성장할 수 있는 공간이 되었으면 한다.
 
----
-이 프로젝트의 모든 소스 코드는 [GitHub](https://github.com/nullisdefined/next-devlog)에 공개되어 있습니다. 코드 품질 개선이나 새로운 기능 제안에 대한 피드백은 언제나 환영합니다.
+> 이 프로젝트의 모든 소스 코드는 [GitHub](https://github.com/nullisdefined/mydevlog)에 공개되어 있습니다. 코드 품질 개선이나 새로운 기능 제안에 대한 피드백은 언제나 환영합니다.

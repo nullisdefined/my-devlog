@@ -6,6 +6,7 @@ tags: ["TypeScript", "NestJS", "Decorator", "DI"]
 category: "Backend/NestJS"
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com//images/3bb31a31921899f34eef88d27f2ceeb2.png"
 draft: false
+views: 0
 ---
 최근 개발 중인 일정 관리 서비스 나날모아에서 코드 리팩토링을 진행했다. 프로젝트가 진행되면서 자연스레 복잡도가 높아졌고, 특히 일정 관리 로직이 담긴 `SchedulesService`가 1,000줄이 넘어가는 상황이 되었다.
 

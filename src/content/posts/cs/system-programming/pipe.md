@@ -6,6 +6,7 @@ tags: ["SystemProgramming", "IPC", "Pipe", "SystemCall"]
 category: "CS/System Programming"
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/ccb112cf7e9468d89ee4c6bf47a0aa93.png"
 draft: false
+views: 0
 ---
 프로세스 간 통신(IPC, Inter-Process Communication) 중에서도 파이프(Pipe)는 유닉스/리눅스 시스템에서 가장 기본적인 IPC 메커니즘이다.
 

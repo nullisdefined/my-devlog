@@ -5,6 +5,7 @@ date: 2025-01-31
 tags: ["JavaScript"]
 category: "Languages/JavaScript"
 draft: true
+views: 0
 ---
 JavaScript에서는 언어 자체에서 제공하는 원시 타입(Primitive Type)과 참조 타입(Reference Type)이 존재한다.
 

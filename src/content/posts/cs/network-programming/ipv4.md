@@ -6,12 +6,13 @@ tags: ["NetworkProgramming", "NetworkLayer", "IP", "IPv4", "Forwarding", "CIDR",
 category: "CS/Network Programming"
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/8f7a5baa17e6aa063b861db32b978d75.png"
 draft: false
+views: 0
 ---
 ## IPv4 Address
 
 ### IPv4 주소 기본 개념
 
-![IPv4|500](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/8f7a5baa17e6aa063b861db32b978d75.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/8f7a5baa17e6aa063b861db32b978d75.png" alt="IPv4" width="500" />
 
 - **32비트 식별자**로 인터넷상 호스트나 라우터를 유일하게 식별
 - IP 주소는 **인터페이스의 주소**임 (호스트 자체가 아님)
@@ -19,7 +20,7 @@ draft: false
 
 ### 클래스기반 주소지정(Classful Addressing)
 
-![classful addressing|550](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/679cf7e94f26b98a820f554bce2e8476.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/679cf7e94f26b98a820f554bce2e8476.png" alt="classful addressing" width="550" />
 
 | 클래스 | 시작 비트 | 첫 옥텟 범위 | Netid 크기 | Hostid 크기 | 주소 개수    | 용도       |
 | --- | ----- | ------- | -------- | --------- | -------- | -------- |
@@ -174,7 +175,7 @@ n_super = n - log₂(c)
 
 ### 구조
 
-![계층적 라우팅 구조|550](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/4ef905403ee4dd73228258adcfa80bc0.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/4ef905403ee4dd73228258adcfa80bc0.png" alt="계층적 라우팅 구조" width="550" />
 
 - **Backbone ISP** → **Regional ISP** → **Local ISP**
 - 각 단계에서 자신의 범위만 관리
@@ -190,7 +191,7 @@ n_super = n - log₂(c)
 
 ### IP 프로토콜 특성
 
-![IP 프로토콜|600](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/46818d951985a3d80f39b0e07eceac74.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/46818d951985a3d80f39b0e07eceac74.png" alt="IP 프로토콜" width="600" />
 
 - **Unreliable**: 신뢰성 제공 안함
 - **Connectionless**: 비연결형 데이터그램 프로토콜
@@ -198,7 +199,7 @@ n_super = n - log₂(c)
 
 ### IP 데이터그램 헤더 (고정 20바이트)
 
-![IP 데이터그램 헤더|550](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/250ad2539d1b8ec705cc91b172f931b9.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/250ad2539d1b8ec705cc91b172f931b9.png" alt="IP 데이터그램 헤더" width="550" />
 
 |필드|크기|설명|
 |---|---|---|
@@ -218,7 +219,7 @@ n_super = n - log₂(c)
 
 #### 단편화 관련 필드
 
-![단편화 플래그 필드|600](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/2ec383f33dc89c1e7d666e63a93308e2.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/2ec383f33dc89c1e7d666e63a93308e2.png" alt="단편화 플래그 필드" width="600" />
 
 - **Identification**: 같은 데이터그램 조각 식별
 - **Flags**:
@@ -239,7 +240,7 @@ n_super = n - log₂(c)
 - `offset≠0, MF=1`: 중간 조각
 - `offset≠0, MF=0`: 마지막 조각
 
-![단편화 예시|600](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/c6e432bc48d549b8530ebd36b41a1227.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/c6e432bc48d549b8530ebd36b41a1227.png" alt="단편화 예시" width="600" />
 
 ### IP 옵션 (가변 길이, 최대 40바이트)
 
@@ -251,7 +252,7 @@ n_super = n - log₂(c)
 
 #### 주요 옵션들
 
-![IP 옵션|600](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/d75e8b1f26702ab8d4b018aafdb1a8fd.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/d75e8b1f26702ab8d4b018aafdb1a8fd.png" alt="IP 옵션" width="600" />
 
 1. **No Operation (1)**: 패딩용
 2. **End of Option (0)**: 옵션 종료
@@ -262,13 +263,13 @@ n_super = n - log₂(c)
 
 ### 체크섬(Checksum)
 
-![체크섬|600](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/ed51282676e03652248837fcac0b684e.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/ed51282676e03652248837fcac0b684e.png" alt="체크섬" width="600" />
 
 #### 송신 측 계산
 
-![송신지 체크섬|600](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/8ba6d0a46b9dc1682ebc93a165a02c27.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/8ba6d0a46b9dc1682ebc93a165a02c27.png" alt="송신지 체크섬" width="600" />
 
-![검사합|600](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/76a32c8ab11c9f7e57bb856c61843344.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/76a32c8ab11c9f7e57bb856c61843344.png" alt="검사합" width="600" />
 
 1. 헤더를 16비트씩 분할
 2. 모두 합산 후 1의 보수 계산
@@ -299,11 +300,11 @@ n_super = n - log₂(c)
 
 ## 5. Address Resolution Protocol (ARP)
 
-![ARP|600](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/cb6f6b1848c2f126b25c80beeb89ad74.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/cb6f6b1848c2f126b25c80beeb89ad74.png" alt="ARP" width="600" />
 
 ### ARP 개념
 
-![ARP 동작|600](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/f0f8645fc6d422298d81552cb85cde83.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/f0f8645fc6d422298d81552cb85cde83.png" alt="ARP 동작" width="600" />
 
 - **논리 주소(IP) → 물리 주소(MAC) 변환**
 - 동적 매핑 방식 사용
@@ -311,7 +312,7 @@ n_super = n - log₂(c)
 
 ### ARP 패킷 구조
 
-![ARP 패킷|600](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/8a464fb38003f681bb35fb8d35496901.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/8a464fb38003f681bb35fb8d35496901.png" alt="ARP 패킷" width="600" />
 
 |필드|크기|설명|
 |---|---|---|
@@ -333,7 +334,7 @@ n_super = n - log₂(c)
 
 ### ARP 사용 경우 4가지
 
-![ARP 사용하는 경우|650](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/8c509d2f7b20fbccf12236ec9850da6f.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/8c509d2f7b20fbccf12236ec9850da6f.png" alt="ARP 사용하는 경우" width="650" />
 
 1. **호스트 → 같은 네트워크 호스트**: 목적지 IP 변환
 2. **호스트 → 다른 네트워크**: 라우터 IP 변환
@@ -354,7 +355,7 @@ n_super = n - log₂(c)
 
 ## 6. Internet Control Message Protocol Version 4 (ICMPv4)
 
-![ICMP|600](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/4d5790e1a34970ee68809eaad18fe825.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/4d5790e1a34970ee68809eaad18fe825.png" alt="ICMP" width="600" />
 
 ### ICMP 역할
 
@@ -363,7 +364,7 @@ n_super = n - log₂(c)
 
 ### ICMP 메시지 구조
 
-![ICMP 메시지 구조|600](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/b85894ec994d6b42d2fe1fa07e1ca9c3.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/b85894ec994d6b42d2fe1fa07e1ca9c3.png" alt="ICMP 메시지 구조" width="600" />
 
 |필드|크기|설명|
 |---|---|---|
@@ -374,11 +375,11 @@ n_super = n - log₂(c)
 
 ### 오류 보고 메시지 (Error Reporting)
 
-![오류 보고 메시지|600](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/98f97e2456a20dda5adfca5b709e6ad3.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/98f97e2456a20dda5adfca5b709e6ad3.png" alt="오류 보고 메시지" width="600" />
 
 #### 1. Destination Unreachable (Type 3)
 
-![image|600](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/13f5d8aeebd715376b4ecfb9157019b8.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/13f5d8aeebd715376b4ecfb9157019b8.png" alt="image" width="600" />
 
 
 - 목적지 도달 불가 시 발생
@@ -409,16 +410,16 @@ n_super = n - log₂(c)
 
 #### Echo Request/Reply (Type 8/0)
 
-![image|600](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/0c402f1873da3f37172ced2cf4911684.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/0c402f1873da3f37172ced2cf4911684.png" alt="image" width="600" />
 
 - **Ping 명령어**로 연결성 테스트
 - RTT(Round Trip Time) 측정 가능
 
 #### Traceroute 도구
 
-![image|600](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/5112e08c290df8f9d52089d82aefba8d.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/5112e08c290df8f9d52089d82aefba8d.png" alt="image" width="600" />
 
-![image|600](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/8074402533fcd77f0fe98e5e2e1b727e.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/8074402533fcd77f0fe98e5e2e1b727e.png" alt="image" width="600" />
 
 - TTL을 1부터 증가시키며 전송
 - 각 라우터에서 Time Exceeded 응답 받음
@@ -468,7 +469,7 @@ n_super = n - log₂(c)
 
 ### OSPF 구조
 
-![image|600](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/dcbc02881819b2bf9e01d0ba58b466a7.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/dcbc02881819b2bf9e01d0ba58b466a7.png" alt="image" width="600" />
 
 #### Area 개념
 
@@ -477,7 +478,7 @@ n_super = n - log₂(c)
 
 #### 라우터 유형
 
-![image|600](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/74ca40f9af9490d3dba56452391cb0c8.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/74ca40f9af9490d3dba56452391cb0c8.png" alt="image" width="600" />
 
 - **Internal Router**: 단일 Area 내 라우터
 - **Backbone Router**: Area 0에 속한 라우터

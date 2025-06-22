@@ -6,6 +6,7 @@ tags: ["Git", "CLI", "Commit", "Blob", "Tree"]
 category: "Series/Git-Clone"
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com//images/fefdcff0971b15a5a9a327ee02fe693a.png"
 draft: false
+views: 0
 ---
 Git의 기본 명령어인 `init`, `add`, `commit`을 유사하게 구현한 과정이다.
 

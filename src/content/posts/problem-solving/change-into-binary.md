@@ -5,6 +5,7 @@ date: 2024-12-06
 tags: []
 category: "Problem Solving"
 draft: true
+views: 0
 ---
 ## 문제 설명
 0과 1로 이루어진 문자열 x에 대한 이진 변환을 다음과 같이 정의한다.

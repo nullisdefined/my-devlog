@@ -6,12 +6,13 @@ tags: ["NetworkProgramming", "TransportLayer", "UDP"]
 category: "CS/Network Programming"
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/ea39122b061587fc322b39717a9a325c.png"
 draft: false
+views: 0
 ---
 UDP(User Datagram Protocol)는 TCP와 함께 인터넷의 핵심 전송 계층 프로토콜이다. 실시간 애플리케이션과 고성능 네트워크 서비스의 백본 역할을 한다.
 
 ## UDP란?
 
-![image|600](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/ea39122b061587fc322b39717a9a325c.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/ea39122b061587fc322b39717a9a325c.png" alt="image" width="600" />
 
 UDP는 연결 없는(Connectionless) 프로토콜로, TCP보다 단순하지만 빠른 데이터 전송을 제공한다. "Fire and Forget" 방식으로 동작하여 실시간 통신에 최적화되어 있다.
 
@@ -26,7 +27,7 @@ UDP는 연결 없는(Connectionless) 프로토콜로, TCP보다 단순하지만 
 
 UDP 데이터그램은 간단하면서도 효율적인 구조를 가진다.
 
-![image|600](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/6dad97cad9537738b2f1854ca4845dd5.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/6dad97cad9537738b2f1854ca4845dd5.png" alt="image" width="600" />
 
 ### 필드 설명
 
@@ -60,7 +61,7 @@ UDP 체크섬은 IP 프로토콜과 다른 계산 방식을 사용한다.
 
 ### 체크섬 구성 요소
 
-![image|600](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/ee3c399e79517e1f5d1ec8f15ac17189.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/ee3c399e79517e1f5d1ec8f15ac17189.png" alt="image" width="600" />
 
 1. **Pseudoheader**: IP 헤더의 일부 필드
 2. **UDP Header**: 실제 UDP 헤더

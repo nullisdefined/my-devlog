@@ -6,6 +6,7 @@ tags: ["Database", "DBMS", "SQL", "Oracle"]
 category: "CS/Database"
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/f43c80d23e5108e341f51d9ca9dd9e39.png"
 draft: false
+views: 0
 ---
 # 4장. 오라클 실습 1
 
@@ -54,7 +55,7 @@ draft: false
 
 ### DBA로 사용자 생성하기
 
-![image|550](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/f43c80d23e5108e341f51d9ca9dd9e39.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/f43c80d23e5108e341f51d9ca9dd9e39.png" alt="image" width="550" />
 
 
 ```sql

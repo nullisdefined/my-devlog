@@ -5,6 +5,7 @@ date: 2025-01-25
 tags: []
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com//images/1cacdfa02414a2a9841aa69b5b031f58.png"
 draft: true
+views: 0
 ---
 기존 pit add시 blob으로만 저장하고 스테이징 상태는 전혀 기록하지 않아 스테이징 관리의 기능이 없었다. 이번에는 스테이징 상태를 기록하는 기능을 추가하고, 커밋에서 스테이징 상태를 사용해본다.
 

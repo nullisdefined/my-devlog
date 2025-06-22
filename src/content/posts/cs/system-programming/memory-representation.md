@@ -6,6 +6,7 @@ tags: ["Structure", "FloatingPoint", "SystemProgramming", "MemoryAlignment"]
 category: "CS/System Programming"
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/32a8aae5665c773a1e858ad4a6473eae.png"
 draft: false
+views: 0
 ---
 ## 미리 알아둘 개념
 

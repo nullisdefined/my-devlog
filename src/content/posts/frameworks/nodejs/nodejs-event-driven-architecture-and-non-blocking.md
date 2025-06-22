@@ -3,9 +3,10 @@ title: "[Node.js] 이벤트 기반 아키텍처와 비동기 처리"
 slug: "nodejs-event-driven-architecture-and-non-blocking"
 date: 2024-11-18
 tags: ["NodeJS"]
-category: "Backend/NodeJS"
+category: "Frameworks/NodeJS"
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/443cb67c45a8f2e9fc5d6c753e981266.png"
 draft: false
+views: 0
 ---
 ![image](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/443cb67c45a8f2e9fc5d6c753e981266.png)
 

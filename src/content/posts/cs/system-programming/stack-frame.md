@@ -6,6 +6,7 @@ tags: ["SystemProgramming", "Stack"]
 category: "CS/System Programming"
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/e20d7bd10eda332d91274bb1b8d529b5.png"
 draft: false
+views: 0
 ---
 ## 기본 개념 및 용어 정리
 
@@ -100,7 +101,7 @@ int main() {
 
 ### 스택 포인터 레지스터
 
-![image|400](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/e20d7bd10eda332d91274bb1b8d529b5.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/e20d7bd10eda332d91274bb1b8d529b5.png" alt="image" width="400" />
 *rbp와 rsp*
 
 **주요 레지스터:**
@@ -110,7 +111,7 @@ int main() {
 
 ### Call Stack 과정
 
-![image|500](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/c08071defec74dd908f79e02f03a5539.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/c08071defec74dd908f79e02f03a5539.png" alt="image" width="500" />
 *함수 호출 시 스택 프레임 생성 과정*
 
 **각 함수 호출은 스택 프레임(stack frame)을 생성하며, 프레임 안에는:**
@@ -135,7 +136,7 @@ void foo() {
 }
 ```
 
-![image|500](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/8a0a8badf10eb3b02ded5fcbea6de981.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/8a0a8badf10eb3b02ded5fcbea6de981.png" alt="image" width="500" />
 
 **2단계: 프롤로그(Prologue) - 스택 공간 확보**
 
@@ -151,11 +152,11 @@ void bar(int i) {
 }
 ```
 
-![image|550](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/0b7041c0075f85e62ddc84e3a5ead9d8.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/0b7041c0075f85e62ddc84e3a5ead9d8.png" alt="image" width="550" />
 
 **3단계: 함수 호출 및 인자 전달**
 
-![image|550](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/e42bf61d36d9a33f910010f1897a8772.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/e42bf61d36d9a33f910010f1897a8772.png" alt="image" width="550" />
 *프롤로그 실행 후 스택 상태 - foo()의 지역변수를 위한 공간 확보*
 
 **4단계: 새로운 스택 프레임 생성**
@@ -192,7 +193,7 @@ int factorial(int n) {
 
 **재귀 호출 시 스택 상태:**
 
-![image|500](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/a4dbf4ee9eed81282c1f7134eefa739f.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/a4dbf4ee9eed81282c1f7134eefa739f.png" alt="image" width="500" />
 *출처: https://velog.io/@haminggu/Java-%EC%9E%AC%EA%B7%80%EC%99%80-%EC%8A%A4%ED%83%9D-%EC%98%A4%EB%B2%84%ED%94%8C%EB%A1%9C%EC%9A%B0*
 
 **스택 오버플로우**: 재귀 깊이가 너무 깊어지면 스택 공간이 부족해져 스택 오버플로우가 발생한다.

@@ -6,6 +6,7 @@ tags: ["JavaScript", "Promise"]
 category: "Languages/JavaScript"
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/7089d24aaadae68bb65e4270e212017a.png"
 draft: false
+views: 0
 ---
 ![image](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/7089d24aaadae68bb65e4270e212017a.png)
 

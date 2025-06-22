@@ -2,10 +2,11 @@
 title: "SEO 최적화"
 slug: "optimizing-seo"
 date: 2025-01-04
-tags: ["NextJS", "SEO"]
+tags: ["NextJS", "SEO", "Devlog"]
 category: "Series/devlog"
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com//images/86e097f8a63c767c7b899c570e74c017.png"
-draft: true
+draft: false
+views: 0
 ---
 ![image](https://nullisdefined.s3.ap-northeast-2.amazonaws.com//images/86e097f8a63c767c7b899c570e74c017.png)
 
@@ -153,7 +154,7 @@ fi
 4. Google Search Console에서 색인 생성 확인
 
 ## 마무리
+
 SEO 최적화와 배포 자동화를 통해 블로그 운영의 효율성을 크게 높일 수 있었다. 특히 Next.js의 App Router와 next-sitemap을 활용한 구조화된 접근이 중요했다. 이제 검색엔진에서의 노출도 기대할 수 있게 되었다. Google뿐만 아니라 다른 검색엔진에서도 게시글이 잘 노출될 수 있도록 지속적으로 개선해 나갈 예정이다. 또한 지금은 간단한 배시 스크립트로 배포 자동화를 구현했지만, 추후 GitHub Actions를 활용한 CI/CD 파이프라인을 구축해 더 안정적인 배포 프로세스를 만들어 갈 계획이다.
 
----
-이 프로젝트의 모든 소스 코드는 [GitHub](https://github.com/nullisdefined/next-devlog)에 공개되어 있습니다. 코드 품질 개선이나 새로운 기능 제안에 대한 피드백은 언제나 환영합니다.
+이 프로젝트의 모든 소스 코드는 [GitHub](https://github.com/nullisdefined/mydevlog)에 공개되어 있습니다. 코드 품질 개선이나 새로운 기능 제안에 대한 피드백은 언제나 환영합니다.

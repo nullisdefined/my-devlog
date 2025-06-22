@@ -6,6 +6,7 @@ tags: ["NetworkProgramming", "NetworkLayer", "IP", "RIP", "OSPF"]
 category: "CS/Network Programming"
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/dcbc02881819b2bf9e01d0ba58b466a7.png"
 draft: false
+views: 0
 ---
 ## 라우팅 프로토콜
 
@@ -210,7 +211,7 @@ router rip
 
 #### Area 개념
 
-![image|600](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/40b4bca7bd445894e5add562f9383060.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/40b4bca7bd445894e5add562f9383060.png" alt="image" width="600" />
 
 #### Area 유형
 
@@ -260,7 +261,7 @@ router rip
 
 #### Hello 패킷
 
-![image|600](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/6937fb9e04344436344c5ff7300da3c4.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/6937fb9e04344436344c5ff7300da3c4.png" alt="image" width="600" />
 
 ```
 Hello 패킷 주요 필드:
@@ -303,7 +304,7 @@ Hello 패킷 주요 필드:
 
 #### Type 1: Router LSA
 
-![image|600](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/3102cc2cdfcee9ec473bc8b96f9bf033.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/3102cc2cdfcee9ec473bc8b96f9bf033.png" alt="image" width="600" />
 
 ```
 생성자: 모든 라우터
@@ -316,7 +317,7 @@ Hello 패킷 주요 필드:
 
 #### Type 2: Network LSA
 
-![image|600](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/f60cad8a349c1dcef5fbb0d8fd3f3d14.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/f60cad8a349c1dcef5fbb0d8fd3f3d14.png" alt="image" width="600" />
 
 ```
 생성자: DR (Designated Router)
@@ -348,7 +349,7 @@ Hello 패킷 주요 필드:
 
 #### Type 5: External LSA
 
-![image|600](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/92b60f5a17a6c3829f109f4565c62590.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/92b60f5a17a6c3829f109f4565c62590.png" alt="image" width="600" />
 
 ```
 생성자: ASBR

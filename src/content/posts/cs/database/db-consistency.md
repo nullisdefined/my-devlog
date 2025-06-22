@@ -6,6 +6,7 @@ tags: ["Database", "Transaction", "ACID"]
 category: "CS/Database"
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/432972f52003de35f8bc825a2f8d1a2d.png"
 draft: false
+views: 0
 ---
 ![image](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/432972f52003de35f8bc825a2f8d1a2d.png)
 

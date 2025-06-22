@@ -5,6 +5,7 @@ date: 2025-02-01
 tags: ["JavaScript", "React"]
 category: "Frontend/React"
 draft: true
+views: 0
 ---
 리액트(React)는 사용자 인터페이스(UI)를 구축하기 위한 자바스크립트 라이브러리이다.
 

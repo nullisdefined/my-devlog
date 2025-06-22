@@ -6,6 +6,7 @@ tags: ["Git", "Blob"]
 category: "Series/Git-Clone"
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com//images/99a4cf003ce62de5e855762653ac5af3.png"
 draft: false
+views: 0
 ---
 ![image](https://nullisdefined.s3.ap-northeast-2.amazonaws.com//images/99a4cf003ce62de5e855762653ac5af3.png)
 

@@ -6,6 +6,7 @@ tags: ["Git", "Tree"]
 category: "Series/Git-Clone"
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com//images/583b9a6c00a3eebcfc2ac59121a31c2e.png"
 draft: false
+views: 0
 ---
 ![image](https://nullisdefined.s3.ap-northeast-2.amazonaws.com//images/583b9a6c00a3eebcfc2ac59121a31c2e.png)
 

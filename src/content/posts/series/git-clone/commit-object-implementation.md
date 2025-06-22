@@ -6,6 +6,7 @@ tags: ["Git", "Commit"]
 category: "Series/Git-Clone"
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com//images/688911e9cb91ab25262d00076f5e75ee.png"
 draft: false
+views: 0
 ---
 ![image](https://nullisdefined.s3.ap-northeast-2.amazonaws.com//images/688911e9cb91ab25262d00076f5e75ee.png)
 

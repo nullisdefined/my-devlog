@@ -6,6 +6,7 @@ tags: ["NetworkProgramming", "TransportLayer", "TCP", "Handshake", "Connection"]
 category: "CS/Network Programming"
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/e7e4047ee1cbaa795440e2c65f278c4d.png"
 draft: false
+views: 0
 ---
 TCP(Transmission Control Protocol)는 인터넷의 전송 계층에서 가장 중요한 프로토콜 중 하나로, 신뢰성 있는 데이터 전송을 보장한다. 다음은 TCP의 기본 개념과 연결 관리 메커니즘에 대해 정리한 내용이다.
 
@@ -43,7 +44,7 @@ TCP 연결은 **3-Way Handshake** 과정을 통해 설정된다. 이 과정에�
 
 ### 3-Way Handshake 과정
 
-![image|600](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/e7e4047ee1cbaa795440e2c65f278c4d.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/e7e4047ee1cbaa795440e2c65f278c4d.png" alt="image" width="600" />
 
 #### 1단계: SYN (Synchronize)
 
@@ -85,7 +86,7 @@ TCP 연결 종료는 **4-Way Handshake** 과정을 통해 이루어진다. 양�
 
 ### 4-Way Handshake 과정
 
-![image|600](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/fa11aab03da3b7ef565f8b8f80a28f0e.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/fa11aab03da3b7ef565f8b8f80a28f0e.png" alt="image" width="600" />
   
 
 #### 1단계: FIN (Finish)
@@ -154,7 +155,7 @@ TCP 연결은 다양한 상태를 가지며, 각 상태 간의 전이는 엄격�
 
 ### 상태 전이도
 
-![image|660](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/ce9e3e7a2192620bf211d1e4e96d9651.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/ce9e3e7a2192620bf211d1e4e96d9651.png" alt="image" width="660" />
 
 ## 시퀀스 번호와 확인응답 번호
 

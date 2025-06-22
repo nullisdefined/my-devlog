@@ -2,10 +2,11 @@
 title: "Upstash Redis 활용 실시간 채팅 기능 구현하기"
 slug: "upstash-redis-chat"
 date: 2024-11-25
-tags: ["NextJS", "Upstash", "Redis", "TypeScript"]
+tags: ["NextJS", "Upstash", "Redis", "TypeScript", "Devlog"]
 category: "Series/devlog"
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/833f02d8c2bb631bb74e5c71cd617c0e.png"
 draft: false
+views: 0
 ---
 블로그에 채팅 기능이 꼭 필요하지는 않았다. 하지만 Redis를 처음 사용해보고 싶었고, 채팅 기능은 Redis의 장점을 실험해보기 좋은 대상이라고 생각했다. 채팅은 실시간으로 메시지를 주고받아야 하며, 데이터를 빠르게 읽고 쓰는 성능이 필요하기 때문이다. 또한 Redis는 방문자의 수를 집계하는 위젯으로도 활용하고 있다.
 
@@ -144,5 +145,4 @@ Redis를 처음 사용하면서 (클라우드 서비스인데도 불구하고) �
 - **GitHub 로그인** 연동
 - **기능 추가**: 채팅방 삭제, 메시지 차단
 
----
-이 프로젝트의 모든 소스 코드는 [GitHub](https://github.com/nullisdefined/next-devlog)에 공개되어 있습니다. 코드 품질 개선이나 새로운 기능 제안에 대한 피드백은 언제나 환영합니다.
+이 프로젝트의 모든 소스 코드는 [GitHub](https://github.com/nullisdefined/mydevlog)에 공개되어 있습니다. 코드 품질 개선이나 새로운 기능 제안에 대한 피드백은 언제나 환영합니다.

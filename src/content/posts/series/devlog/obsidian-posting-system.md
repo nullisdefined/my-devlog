@@ -2,10 +2,11 @@
 title: "옵시디언을 활용한 포스팅 시스템 구축하기"
 slug: "obsidian-posting-system"
 date: 2024-11-06
-tags: ["NextJS", "Obsidian", "TypeScript"]
+tags: ["NextJS", "Obsidian", "TypeScript", "Devlog"]
 category: "Series/devlog"
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/4b0d4c2a638da87b152486f37bc04cf3.png"
 draft: false
+views: 0
 ---
 ![image](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/4b0d4c2a638da87b152486f37bc04cf3.png)
 
@@ -79,7 +80,7 @@ private createSlug(title: string): string {
 - 변환 예: `[NestJS] HTTP 요청 처리` → `nestjs-http-요청-처리.md`
 
 ### 4. 이미지 처리 및 썸네일 설정
-옵시디언의 `![[image]]` 형식과 표준 마크다운 이미지 링크를 모두 처리하고, 첫 번째 이미지를 썸네일로 설정한다.
+옵시디언의 `![image](image)` 형식과 표준 마크다운 이미지 링크를 모두 처리하고, 첫 번째 이미지를 썸네일로 설정한다.
 ```ts
 const imagePattern = /!\[\[([^\]]+)\]\]|!\[([^\]]*)\]\(([^)]+)\)/g;
 
@@ -423,5 +424,4 @@ try {
 
 글 작성에만 집중할 수 있는 환경이 갖춰졌고, 블로그 관리의 번거로움이 사라졌다. 작은 고민에서 시작한 이 작업이 효율성을 크게 높여줬다.
 
----
-이 프로젝트의 모든 소스 코드는 [GitHub](https://github.com/nullisdefined/next-devlog)에 공개되어 있습니다. 코드 품질 개선이나 새로운 기능 제안에 대한 피드백은 언제나 환영합니다.
+이 프로젝트의 모든 소스 코드는 [GitHub](https://github.com/nullisdefined/mydevlog)에 공개되어 있습니다. 코드 품질 개선이나 새로운 기능 제안에 대한 피드백은 언제나 환영합니다.

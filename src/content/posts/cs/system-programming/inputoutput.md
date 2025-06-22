@@ -6,6 +6,7 @@ tags: ["SystemProgramming", "I/O", "FileDescriptor", "SystemCall"]
 category: "CS/System Programming"
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/ea871f02a5c9ad139a95b1d50d57dfd4.png"
 draft: false
+views: 0
 ---
 유닉스/리눅스 시스템에서 "모든 것은 파일"이라는 철학에 따라, 파일뿐만 아니라 디바이스, 네트워크 소켓 등 모든 I/O 작업이 파일 인터페이스를 통해 이루어진다. 
 다음은 Low Level과 High Level 파일 I/O의 차이점과 특징을 정리한 내용이다.
@@ -26,7 +27,7 @@ open() → fd 할당 → 파일 사용 → close()
 
 ### 파일 디스크립터(File Descriptor)
 
-![image|500](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/ea871f02a5c9ad139a95b1d50d57dfd4.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/ea871f02a5c9ad139a95b1d50d57dfd4.png" alt="image" width="500" />
 
 파일 디스크립터는 열린 파일을 식별하는 정수 값이다. 운영체제는 각 프로세스마다 파일 디스크립터 테이블을 관리한다.
 
@@ -223,7 +224,7 @@ fopen() → 파일 사용 → fclose()
 
 ### File Pointer vs File Descriptor
 
-![image|500](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/1bb087375657d54661749cece80252fb.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/1bb087375657d54661749cece80252fb.png" alt="image" width="500" />
 
 - **파일 디스크립터**: 정수형, 운영체제가 직접 관리
 - **파일 포인터**: `FILE *` 형, 디스크에서 메모리에 로드된 파일(FILE 구조체)의 위치 주소 정보를 담은 포인터

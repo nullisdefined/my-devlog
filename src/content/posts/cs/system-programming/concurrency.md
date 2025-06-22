@@ -6,6 +6,7 @@ tags: ["SystemProgramming", "Synchronization", "RaceCondition", "MutualExclusion
 category: "CS/System Programming"
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/e8657206458849ba82d348ef177b8933.png"
 draft: false
+views: 0
 ---
 ## 동시성(Concurrency)이란?
 

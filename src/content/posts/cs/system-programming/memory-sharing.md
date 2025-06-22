@@ -6,6 +6,7 @@ tags: ["SystemProgramming", "IPC", "Cache", "WritePropagation", "MemoryBarrier",
 category: "CS/System Programming"
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/a2e2454068d9e97caefc3b7f9480cc18.png"
 draft: false
+views: 0
 ---
 ## 공유 메모리란?
 
@@ -80,7 +81,7 @@ void* thread_function(void* arg) {
 
 ### 3. 프로세스 간 자원 공유
 
-![image|550](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/a2e2454068d9e97caefc3b7f9480cc18.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/a2e2454068d9e97caefc3b7f9480cc18.png" alt="image" width="550" />
 
 **상황**: 서로 다른 프로세스들이 자원에 접근하는 경우
 

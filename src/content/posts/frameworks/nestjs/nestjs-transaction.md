@@ -3,9 +3,10 @@ title: "[NestJS] 트랜잭션(Transaction)"
 slug: "nestjs-transaction"
 date: 2024-12-15
 tags: ["NestJS", "Transaction"]
-category: "Backend/NestJS"
+category: "Frameworks/NestJS"
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/e48e6fd88f6339a761df1c6155770ce4.png"
 draft: false
+views: 0
 ---
 ![image](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/e48e6fd88f6339a761df1c6155770ce4.png)
 트랜잭션은 데이터베이스에서 논리적인 작업 단위를 구성하는 하나의 연산 집합을 의미한다. 모든 작업이 성공적으로 완료되면 데이터를 저장(commit)하고, 하나의 작업이라도 실패하면 이전 상태로 되돌린다(rollback). 이를 통해 데이터의 무결성과 일관성을 보장할 수 있다.

@@ -6,6 +6,7 @@ tags: ["Database", "DBS", "DBMS", "Schema"]
 category: "CS/Database"
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/20b59c601d35c90800ef41e2e5c0e6b8.png"
 draft: false
+views: 0
 ---
 # 1장. 데이터베이스 소개
 ## 학습 목표
@@ -72,7 +73,7 @@ draft: false
 
 ### 3단계 스키마 구조
 
-![image|550](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/20b59c601d35c90800ef41e2e5c0e6b8.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/20b59c601d35c90800ef41e2e5c0e6b8.png" alt="image" width="550" />
 
 ## 1.3 데이터베이스 특징
 
@@ -99,7 +100,7 @@ draft: false
 
 ### Entity-Relationship (ER) 다이어그램 예제
 
-![image|550](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/a7b3694aa15dd9ebd9a90475b6694395.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/a7b3694aa15dd9ebd9a90475b6694395.png" alt="image" width="550" />
 
 
 ### DBMS 구성 요소
@@ -109,7 +110,7 @@ draft: false
 
 ### DBS 단순 구조도
 
-![image|550](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/6b18d9ce0e91986391f3cfccd78bd7c0.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/6b18d9ce0e91986391f3cfccd78bd7c0.png" alt="image" width="550" />
 
 ## 1.5 데이터베이스 설계
 

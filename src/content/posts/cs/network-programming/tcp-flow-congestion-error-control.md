@@ -6,6 +6,7 @@ tags: ["NetworkProgramming", "TransportLayer", "TCP", "FlowControl", "Congestion
 category: "CS/Network Programming"
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/5814c335ba54be65ec30bc11c9b781c4.png"
 draft: false
+views: 0
 ---
 TCP 서비스의 특징은 네트워크 상황과 수신자의 처리 능력에 맞춰 데이터 전송 속도를 조절한다는 것이다. 다음은 TCP의 흐름 제어, 혼잡 제어, 그리고 오류 제어 메커니즘에 정리한 내용이다.
 
@@ -39,14 +40,14 @@ TCP는 **슬라이딩 윈도우** 방식을 사용하여 효율적인 데이터 
 
 #### 윈도우 구성 요소
 
-![image|600](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/5814c335ba54be65ec30bc11c9b781c4.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/5814c335ba54be65ec30bc11c9b781c4.png" alt="image" width="600" />
 *송신자 측 윈도우*
 
-![image|600](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/ef56a8dc0873e552802f21ed4d4f3dad.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/ef56a8dc0873e552802f21ed4d4f3dad.png" alt="image" width="600" />
 *수신자 측 윈도우*
 #### 윈도우 슬라이딩
 
-![image|600](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/3bd00b97a368b53278867e45cb296a6f.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/3bd00b97a368b53278867e45cb296a6f.png" alt="image" width="600" />
 - **Sent and acknowledged**: 애플리케이션이 처리한 바이트
 - **Sent but not acknowledgeed**: 수신했지만 미처리 바이트
 - **Segments waiting for transmission**: 수신 가능한 바이트(rwnd)
@@ -84,7 +85,7 @@ CWND(Congestion Window)는 네트워크 혼잡 상황을 고려한 송신 윈도
 
 ### TCP 혼잡 제어 알고리즘  
 
-![image|600](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/b3920717dc29ee1fce2ffffce1b07ce9.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/b3920717dc29ee1fce2ffffce1b07ce9.png" alt="image" width="600" />
 
 #### 1. Slow Start
 
@@ -92,7 +93,7 @@ CWND(Congestion Window)는 네트워크 혼잡 상황을 고려한 송신 윈도
 - **동작**: CWND를 지수적으로 증가
 - **초기값**: 일반적으로 1 MSS
 
-![image|600](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/8fbfc0739568f85e94606aea040578d3.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/8fbfc0739568f85e94606aea040578d3.png" alt="image" width="600" />
 
 
 ```
@@ -129,7 +130,7 @@ RTT 3: CWND = 8 MSS
 - **동작**: Slow Start 건너뛰고 Congestion Avoidance 진입
 - **목적**: 성능 급격한 저하 방지
 
-![image|600](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/e68a41550bfb4a6539ef3f2827ed499b.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/e68a41550bfb4a6539ef3f2827ed499b.png" alt="image" width="600" />
 
 ## 오류 제어 (Error Control)
 
@@ -155,7 +156,7 @@ TCP는 데이터의 신뢰성을 보장하기 위해 다양한 오류 제어 메
 
 **Stop-and-Wait ARQ**
 
-![image|600](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/cb20220ff5fb4f000cdbcaf848c61362.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/cb20220ff5fb4f000cdbcaf848c61362.png" alt="image" width="600" />
 *출처:https://ajay-yadav.medium.com/computer-networks-stop-wait-protocol-33fe8f4725f9
 
 **Go-Back-N ARQ**
@@ -201,7 +202,7 @@ RTO = SRTT + 4 × RTTVAR
 
 #### 1. Normal Operation
 
-![image|600](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/f5c1e4d9c429e0eecb342982984c44a5.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/f5c1e4d9c429e0eecb342982984c44a5.png" alt="image" width="600" />
 
   - **Rule 1**: 응답 데이터가 있을 경우, 즉시 ACK
 	- 클라이언트가 서버로 데이터를 전송할 때(Seq: 1201–1400), 이전에 받은 데이터(Ack: 4001)에 대한 ACK를 **동시에 전송**
@@ -218,7 +219,7 @@ ACK는 무조건 바로 보내지 않고, 상황에 따라 지연된다. 응답�
 
 #### 2. Lost Segment
 
-![image|600](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/70270a3d9be3caa86264fd3082ace2b3.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/70270a3d9be3caa86264fd3082ace2b3.png" alt="image" width="600" />
 
 - **Rule 3**: 순서대로 받은 데이터에 대해 ACK 전송
 - **Rule 4**: 순서가 어긋난 데이터는 버퍼에 저장하되, ACK는 여전히 기대하는 번호(701)를 보냄
@@ -228,7 +229,7 @@ ACK는 무조건 바로 보내지 않고, 상황에 따라 지연된다. 응답�
 
 #### 3. Fast Retransmit
 
-![image|600](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/5d4493a53c244b617c9eddb9978700eb.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/5d4493a53c244b617c9eddb9978700eb.png" alt="image" width="600" />
 
 - **Rule 3**: 순서대로 수신된 경우 → 다음 기대 시퀀스 번호로 ACK
 - **Fast retransmit**: 같은 ACK를 3번 받으면 타이머 기다리지 않고 즉시 재전송
@@ -237,7 +238,7 @@ ACK는 무조건 바로 보내지 않고, 상황에 따라 지연된다. 응답�
 
 #### 4. Lost acknowledgement
 
-![image|600](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/b74799f3780aba53dabdc34fa92ce48d.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/b74799f3780aba53dabdc34fa92ce48d.png" alt="image" width="600" />
 
 ![image](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/50ff2f0bbe1366e0c78906636fe35a54.png)
 
@@ -249,7 +250,7 @@ ACK는 무조건 바로 보내지 않고, 상황에 따라 지연된다. 응답�
 
 #### SACK 블록 예제
 
-![image|600](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/312a6b12dc5e595ee8dec41d09d5a895.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/312a6b12dc5e595ee8dec41d09d5a895.png" alt="image" width="600" />
 
 #### SACK의 장점
 

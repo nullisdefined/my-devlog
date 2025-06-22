@@ -6,6 +6,7 @@ tags: ["Git", "Blob", "Tree", "Commit"]
 category: "Series/Git-Clone"
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com//images/90e9e5e2c16cb5e09c58335cb84ca52a.png"
 draft: false
+views: 0
 ---
 
 Git의 핵심 객체들의 구현을 마쳤다. 실제로 이 객체들이 파일시스템에 잘 저장되는지 확인해 볼 필요가 있었다.

@@ -2,10 +2,11 @@
 title: "[Next.js] 사이트맵 자동 생성하기"
 slug: "sitemap-script"
 date: 2024-12-17
-tags: ["NextJS", "SEO"]
+tags: ["NextJS", "SEO", "Devlog"]
 category: "Series/devlog"
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/c9870b4f6ce1b0451761374cd9403ea1.png"
 draft: false
+views: 0
 ---
 블로그를 개발하면서 SEO(검색 엔진 최적화)는 필수로 챙겨야 할 요소라고 생각했다. 또 블로그에 새로운 페이지가 업데이트될 때마다 Google이나 다른 검색 엔진에서 어떤 과정을 거치게 될까 궁금해 찾아보다 사이트맵이라는 개념을 알게 되었다. 이 글에서는 next-sitemap 라이브러리를 사용해서 사이트맵을 생성하고, Google Search Console에 도메인을 등록하는 과정을 정리한 내용이다.
 
@@ -155,10 +156,7 @@ Vercel이나 CI/CD 과정에서 자동으로 `npm run build` 이후 `postbuild`�
 *데이터를 처리하는데 시간이 조금 걸리는 듯하다*
 
 ## 마무리
-이번 작업을 통해서 사이트맵과 SEO를 효과적으로 관리하는 방법을 배울 수 있었다. next-sitemap 라이브러리 덕분에 정적 페이지와 동적 경로를 손쉽게 사이트맵에 추가할 수 있었다. 특히 그 과정에서 빌드된 JS 파일만 접근 가능하다는 점을 깨닫고 별도의 스크립트를 작성해 해결한 것은 좋은 경험인 것 같다.
 
-### 개선할 점
-페이지 우선순위를 세분화하여 중요도에 따라 크롤링이 더 효율적으로 이뤄지도록 개선
+이번 작업을 통해 사이트맵과 SEO를 효과적으로 관리하는 방법을 익힐 수 있었다. next-sitemap 라이브러리를 활용해 정적 페이지와 동적 경로를 손쉽게 사이트맵에 포함시킬 수 있었고, 빌드된 JS 파일만 접근 가능한 구조라는 점을 알게 되면서, 이를 해결하기 위해 별도의 스크립트를 작성한 경험도 값진 배움이 되었다.
 
----
-이 프로젝트의 모든 소스 코드는 [GitHub](https://github.com/nullisdefined/next-devlog)에 공개되어 있습니다. 코드 품질 개선이나 새로운 기능 제안에 대한 피드백은 언제나 환영합니다.
+이 프로젝트의 모든 소스 코드는 [GitHub](https://github.com/nullisdefined/mydevlog)에 공개되어 있습니다. 코드 품질 개선이나 새로운 기능 제안에 대한 피드백은 언제나 환영합니다.

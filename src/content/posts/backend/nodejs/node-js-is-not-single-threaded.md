@@ -6,6 +6,7 @@ tags: ["NodeJS", "JavaScript"]
 category: "Backend/NodeJS"
 thumbnail: "https://miro.medium.com/v2/resize:fit:1400/1*ZA75t1puirE_p7gbZ9aZpQ.png"
 draft: false
+views: 0
 ---
 ![](https://miro.medium.com/v2/resize:fit:1400/1*ZA75t1puirE_p7gbZ9aZpQ.png)
 Node.js는 싱글 스레드 아키텍처를 통해 서버 자원을 효율적으로 활용하며 빠른 속도를 자랑한다. 하지만 정말 단일 스레드만으로 이러한 성능을 낼 수 있을까?

@@ -6,6 +6,7 @@ tags: ["Git", "Branch"]
 category: "Tools/Git"
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com//images/d37ba7b75f9d2f6f46456346d75b8b1e.png"
 draft: false
+views: 0
 ---
 ![image](https://nullisdefined.s3.ap-northeast-2.amazonaws.com//images/d37ba7b75f9d2f6f46456346d75b8b1e.png)
 

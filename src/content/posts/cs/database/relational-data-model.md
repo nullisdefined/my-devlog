@@ -6,6 +6,7 @@ tags: ["Database", "RelationalAlgebra"]
 category: "CS/Database"
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/0c4e3564f81c421b75c7949ab712eb9d.png"
 draft: false
+views: 0
 ---
 # 2장. 관계형 데이터 모델
 ## 학습 목표
@@ -27,7 +28,7 @@ draft: false
 
 #### Student 관계의 예
 
-![image|550](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/0c4e3564f81c421b75c7949ab712eb9d.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/0c4e3564f81c421b75c7949ab712eb9d.png" alt="image" width="550" />
 
 - **student 관계의 예제**
 - **관계형 데이터 모델에서 의미하는 관계는 테이블 형태**
@@ -35,7 +36,7 @@ draft: false
 
 ### 동일한 용어
 
-![image|550](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/2c27517cf850e4f30176aa07fff2f012.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/2c27517cf850e4f30176aa07fff2f012.png" alt="image" width="550" />
 
 - **관계 = 테이블, 릴레이션 = 레코드, 속성 = 칼럼**
 
@@ -77,7 +78,7 @@ draft: false
 
 ### Schema Diagram
 
-![image|550](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/80b8c1627eebb1d4314895af022dfffb.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/80b8c1627eebb1d4314895af022dfffb.png" alt="image" width="550" />
 
 ### 테이블 간 관계 설명
 
@@ -110,7 +111,7 @@ draft: false
 
 #### 선택 연산 사례
 
-![image|550](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/7e21ff038ef507bf3857a0b12559bff7.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/7e21ff038ef507bf3857a0b12559bff7.png" alt="image" width="550" />
 
 
 ### 투영 연산 예제
@@ -120,7 +121,7 @@ draft: false
 - **투영 연산은 관계에서 임의의 속성을 선택하는 연산**
 - **투영 후에 중복된 튜플이 생기면, 결과 관계에는 동일한 튜플이 두 번 이상 나타나지 않는다**
 
-![image|550](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/a91acc7da85f6c5cdcb6a9c409e85284.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/a91acc7da85f6c5cdcb6a9c409e85284.png" alt="image" width="550" />
 
 ### 합집합 연산 예제
 
@@ -136,7 +137,7 @@ draft: false
 - **r, s must have the same arity (same number of attributes)**
 - **attribute domains must be compatible**
 
-![image|550](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/088703471704098d510ff6f5e9adfbaf.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/088703471704098d510ff6f5e9adfbaf.png" alt="image" width="550" />
 
 ### 차집합 연산
 
@@ -144,11 +145,11 @@ draft: false
 
 - **차집합 연산은 commutative하지 않으므로 r−s와 s−r 연산 결과는 다르다**
 
-![image|550](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/48ece83d477b8d512b4f954660a89c86.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/48ece83d477b8d512b4f954660a89c86.png" alt="image" width="550" />
 
 **Example: 2014년 가을에 가르치는 과목 중에서 2015년 봄에는 가르치지 않는 과목**
 
-![image|550](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/e52e3e0a832dc55ebd4b5c386e266b42.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/e52e3e0a832dc55ebd4b5c386e266b42.png" alt="image" width="550" />
 
 ### 카티시안곱 연산 예제
 
@@ -156,7 +157,7 @@ draft: false
 
 - **카티시안곱 연산의 결과에는 모든 가능한 r과 s의 튜플 조합이 포함**
 
-![image|550](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/2b470a6cb102fa444cd19d7bc56d2f68.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/2b470a6cb102fa444cd19d7bc56d2f68.png" alt="image" width="550" />
 
 ### 재명명 연산
 
@@ -166,14 +167,14 @@ draft: false
 - **X를 관계명으로, A1, ..., An을 속성명으로 나타냄**
 - **관계명만 또는 속성명만 재명명이 가능**
 
-![image|550](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/5320f841e10a129a6bae5bb89f8bf809.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/5320f841e10a129a6bae5bb89f8bf809.png" alt="image" width="550" />
 
 ### 관계 대수식
 
 - **상기 나타난 관계 대수 6개가 기본적인 관계 대수 연산**
 - **이들을 조합하여 복잡한 질의를 표현할 수 있음**
 
-![image|550](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/0d822405954ccf13d49f6269ca2aee38.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/0d822405954ccf13d49f6269ca2aee38.png" alt="image" width="550" />
 
 ## 2.4 추가 관계 대수
 

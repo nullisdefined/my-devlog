@@ -6,6 +6,7 @@ tags: ["Database", "DBMS", "SQL", "Oracle", "Join", "GroupBy"]
 category: "CS/Database"
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/a9eb3eec458968e0a3f88a28115a0d53.png"
 draft: false
+views: 0
 ---
 # 5장. SQL2 (고급 SQL)
 
@@ -21,7 +22,7 @@ draft: false
 
 ### 집계 함수
 
-![image|550](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/a9eb3eec458968e0a3f88a28115a0d53.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/a9eb3eec458968e0a3f88a28115a0d53.png" alt="image" width="550" />
 
 - avg: 평균  
 - min: 최소값  
@@ -65,7 +66,7 @@ WHERE semester = 'Spring' AND year = 2010;
 
 ### GROUP BY 절
 
-![image|550](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/1846e1fd6f1cc0290386b0a3d763b0c0.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/1846e1fd6f1cc0290386b0a3d763b0c0.png" alt="image" width="550" />
 
 ```sql
 -- 학과별 교수 수
@@ -105,7 +106,7 @@ HAVING avg(salary) > 6900;
 
 ### 널 값과 집계 함수
 
-![image|550](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/1bf960972ad69133e467d79bbe1da30c.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/1bf960972ad69133e467d79bbe1da30c.png" alt="image" width="550" />
 
 ```sql
 SELECT sum(salary)
@@ -114,7 +115,7 @@ FROM professor;
 
 ## 5.2 조인 테이블
 
-![image|550](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/34ebcabe0b12c3804cc48225345bf7f1.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/34ebcabe0b12c3804cc48225345bf7f1.png" alt="image" width="550" />
 
 ### 조인 테이블 개요
 

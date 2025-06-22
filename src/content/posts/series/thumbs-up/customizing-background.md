@@ -2,10 +2,11 @@
 title: "배경 커스터마이징 기능 구현하기"
 slug: "customizing-background"
 date: 2024-10-30
-tags: ["토이프로젝트", "React", "TypeScript", "TailwindCSS"]
+tags: ["React", "TypeScript", "TailwindCSS", "ToyProject"]
 category: "Series/thumbs-up"
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/c80c482a1207d43b83b93c6cb8a2558b.png"
 draft: false
+views: 0
 ---
 배경에서는 그라디언트, 단색, 이미지로 커스터마이징할 수 있게 구현했다. 특히 색상 선택의 어려움을 해결하기 위해 셔플 버튼으로 미리 준비된 색상 조합을 제공하는 기능을 추가했다.
 ## 주요 기능

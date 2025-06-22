@@ -4,6 +4,7 @@ slug: "ps-javascript-array"
 date: 2025-01-28
 tags: []
 draft: true
+views: 0
 ---
 JavaScript에서 배열은 데이터를 저장하고 관리하는 데 가장 많이 사용되는 자료구조 중 하나이다.
 배열은 여러 가지 방식으로 선언하고 조작할 수 있으며, 다양한 내장 메서드를 제공한다.

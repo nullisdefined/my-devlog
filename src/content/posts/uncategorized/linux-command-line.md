@@ -4,6 +4,7 @@ slug: "linux-command-line"
 date: 2024-12-21
 tags: ["Linux"]
 draft: true
+views: 0
 ---
 Man Page Synopsis
 리눅스 기반 시스템에서 명령어의 사용법을 설명하는 메뉴얼 페이지에서 제공하는 간략한 명령어 사용법 요약

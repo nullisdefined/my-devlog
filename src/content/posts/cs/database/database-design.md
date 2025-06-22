@@ -6,6 +6,7 @@ tags: ["Database", "DBMS", "ERD"]
 category: "CS/Database"
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/32a452c922eb2e81ffa06799956fa0a5.png"
 draft: false
+views: 0
 ---
 # 6장. 데이터베이스 설계 (ER 모델)
 
@@ -44,7 +45,7 @@ draft: false
 
 ## 6.2 ER 다이어그램
 
-![image|550](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/32a452c922eb2e81ffa06799956fa0a5.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/32a452c922eb2e81ffa06799956fa0a5.png" alt="image" width="550" />
 
 ### ER 다이어그램 기호
 
@@ -68,7 +69,7 @@ draft: false
 
 ### 강한 vs 약한 엔터티
 
-![image|550](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/710aec2776e23dc3d456e3c23bb72697.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/710aec2776e23dc3d456e3c23bb72697.png" alt="image" width="550" />
 
 
 - 강한 엔터티: 기본키 있음, 독립 존재
@@ -87,7 +88,7 @@ draft: false
 
 ### 관계의 카디널리티
 
-![image|550](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/71978b18d8a3a1f62e755b2bef5f423f.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/71978b18d8a3a1f62e755b2bef5f423f.png" alt="image" width="550" />
 
 - 1:1 (예: 부서-부서장)
 - 1:N (예: 교수-학생)
@@ -95,7 +96,7 @@ draft: false
 
 ### 참여 제약조건
 
-![image|550](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/0df9464aaedad8a9e2eba66f4b3287f1.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/0df9464aaedad8a9e2eba66f4b3287f1.png" alt="image" width="550" />
 
 - 전체 참여: 모든 엔터티가 관계에 참여 (이중선)
 - 부분 참여: 일부만 참여 (단일선)
@@ -104,7 +105,7 @@ draft: false
 
 ### 대학 데이터베이스 예제
 
-![image|600](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/c72ec828ae038b7314eeddc4ad7d50cc.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/c72ec828ae038b7314eeddc4ad7d50cc.png" alt="image" width="600" />
 
 엔터티:
 - 학생(학번, 이름, 주소, 전화번호)
@@ -154,7 +155,7 @@ Takes(학번, 과목번호, 성적, 수강년도)
 
 ## 6.7 확장된 ER 모델
 
-![image|550](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/d05628f379509d052a6b5fadfddde6b5.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/d05628f379509d052a6b5fadfddde6b5.png" alt="image" width="550" />
 
 - 특수화: 상위 엔터티를 하위 엔터티로 나눔 (ISA)
 - 일반화: 하위 엔터티의 공통 특성을 상위로 추상화

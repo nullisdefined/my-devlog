@@ -6,6 +6,7 @@ tags: ["Git", "Index", "StagingArea"]
 category: "Tools/Git"
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com//images/dfeb95ba0c2ed042ed25f03b783c8b4e.png"
 draft: false
+views: 0
 ---
 ![image](https://nullisdefined.s3.ap-northeast-2.amazonaws.com//images/dfeb95ba0c2ed042ed25f03b783c8b4e.png)
 

@@ -6,6 +6,7 @@ tags: ["SystemProgramming", "mmap", "C"]
 category: "CS/System Programming"
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/2527d03f6f1ac767b53dddf97d0bf843.png"
 draft: false
+views: 0
 ---
 대용량 파일을 처리할 때 일반적인 `read()`와 `write()` 함수를 사용하면 성능이 떨어지는 경우가 많다. 특히 파일의 일부분만 수정하거나, 파일을 여러 프로세스가 공유해야 할 때는 더욱 비효율적이다. 이럴 때 Memory Mapping을 사용하면 파일을 마치 메모리 배열처럼 직접 접근할 수 있어 성능을 크게 향상시킬 수 있다.
 
@@ -91,7 +92,7 @@ void *mmap(void *addr, size_t length, int prot, int flags, int fd, off_t offset)
 
 ### 리턴값과 에러 처리
 
-![image|550](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/69f8ce2c37fce62825c397e696ab9e78.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/69f8ce2c37fce62825c397e696ab9e78.png" alt="image" width="550" />
 
 
 ```c

@@ -6,16 +6,17 @@ tags: ["NetworkProgramming", "NetworkLayer", "IP", "ARP"]
 category: "CS/Network Programming"
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/eb452982ace322630a199d104f8272a0.png"
 draft: false
+views: 0
 ---
 ## ARP 개념과 필요성
 
-![image|600](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/eb452982ace322630a199d104f8272a0.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/eb452982ace322630a199d104f8272a0.png" alt="image" width="600" />
 
-![image|600](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/12956c2c0a042fe774d1f3dad24ff271.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/12956c2c0a042fe774d1f3dad24ff271.png" alt="image" width="600" />
 
 ### ARP란?
 
-![image|600](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/5e399a3e92103b163e794f5b22a66e2e.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/5e399a3e92103b163e794f5b22a66e2e.png" alt="image" width="600" />
 
 Address Resolution Protocol의 약자로, 논리 주소(IP)를 물리 주소(MAC)로 변환하는 프로토콜이다.
 
@@ -60,7 +61,7 @@ Address Resolution Protocol의 약자로, 논리 주소(IP)를 물리 주소(MAC
 
 ## ARP 패킷 구조
 
-![image|600](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/f0a05b2a7ee026f8081b704a419b2de5.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/f0a05b2a7ee026f8081b704a419b2de5.png" alt="image" width="600" />
 
 ### ARP 패킷 필드
 
@@ -100,7 +101,7 @@ Address Resolution Protocol의 약자로, 논리 주소(IP)를 물리 주소(MAC
 
 ## ARP 동작 과정
 
-![image|600](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/e14d769862d0f91877b05b38e4068ac8.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/e14d769862d0f91877b05b38e4068ac8.png" alt="image" width="600" />
 
 
 ### 기본 ARP 프로세스
@@ -251,7 +252,7 @@ MAC: 01:00:5E:xx:xx:xx (IEEE 표준)
 
 ### Proxy ARP 개념
 
-![image|600](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/6c6029bf6218057c0ad16fd1af8d936e.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/6c6029bf6218057c0ad16fd1af8d936e.png" alt="image" width="600" />
 
 **라우터가 다른 서브넷의 호스트를 대신해 ARP 응답하는 기술**
 

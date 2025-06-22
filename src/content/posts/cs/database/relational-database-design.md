@@ -6,6 +6,7 @@ tags: ["Database", "DBMS", "SQL", "Normalization"]
 category: "CS/Database"
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/e2a04e26dbb1fbc79e050b412dd7ddd2.png"
 draft: false
+views: 0
 ---
 # 7장. 관계 데이터베이스 설계
 
@@ -21,7 +22,7 @@ draft: false
 
 ### 나쁜 설계의 문제점
 
-![image|550](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/e2a04e26dbb1fbc79e050b412dd7ddd2.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/e2a04e26dbb1fbc79e050b412dd7ddd2.png" alt="image" width="550" />
 
 #### 정보 중복 (Information Redundancy)
 
@@ -96,7 +97,7 @@ draft: false
 
 #### 암스트롱 공리 (Armstrong's Axioms)
 
-![image|550](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/09e65e47518dfeffa0f86ace8e246418.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/09e65e47518dfeffa0f86ace8e246418.png" alt="image" width="550" />
 
 반사 규칙 (Reflexivity)
 
@@ -145,7 +146,7 @@ draft: false
 
 ## 7.3 정규화
 
-![image|550](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/79ab03ccd3db39c8011ea5b43714a55b.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/79ab03ccd3db39c8011ea5b43714a55b.png" alt="image" width="550" />
 
 ### 제1정규형 (First Normal Form, 1NF)
 

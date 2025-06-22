@@ -6,6 +6,7 @@ tags: ["JavaScript", "PatternMatching", "Set", "TemporalAPI"]
 category: "Languages/JavaScript"
 thumbnail: "https://miro.medium.com/v2/resize:fit:1400/1*J6tqpXBB9FkZeW8peS5HWg.png"
 draft: false
+views: 0
 ---
 ![](https://miro.medium.com/v2/resize:fit:1400/1*J6tqpXBB9FkZeW8peS5HWg.png)
 새로운 ECMAScript 버전, ES15(ECMAScript 2024)가 드디어 등장했다.

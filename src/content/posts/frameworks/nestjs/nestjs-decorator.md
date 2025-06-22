@@ -3,9 +3,10 @@ title: "[NestJS] 데코레이터(Decorator)"
 slug: "nestjs-decorator"
 date: 2024-12-15
 tags: ["NestJS", "Decorator", "Pipe"]
-category: "Backend/NestJS"
+category: "Frameworks/NestJS"
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/e48e6fd88f6339a761df1c6155770ce4.png"
 draft: false
+views: 0
 ---
 ![image](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/e48e6fd88f6339a761df1c6155770ce4.png)
 NestJS는 데코레이터를 활용하여 라우트, 파라미터, 메타데이터 등을 선언적으로 정의할 수 있는 기능을 제공한다. 데코레이터가 무엇인지, 그리고 실제 프로젝트에서 유용하게 사용할 수 있는 커스텀 데코레이터(Custom Decorator)를 만드는 과정을 소개한다.

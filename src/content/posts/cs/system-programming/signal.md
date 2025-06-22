@@ -6,6 +6,7 @@ tags: ["SystemProgramming", "Signal"]
 category: "CS/System Programming"
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/1137e3df0641323d033dbccac7528b49.png"
 draft: false
+views: 0
 ---
 ## 시그널(Signal) 기본 개념
 
@@ -38,7 +39,7 @@ draft: false
 
 시그널 처리는 프로세스의 실행 상태와 밀접한 관련이 있다.
 
-![프로세스 상태 다이어그램|450](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/1137e3df0641323d033dbccac7528b49.png) 
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/1137e3df0641323d033dbccac7528b49.png" alt="프로세스 상태 다이어그램" width="450" /> 
 *프로세스 상태 전환 다이어그램*
 
 ## 시그널 처리 방법

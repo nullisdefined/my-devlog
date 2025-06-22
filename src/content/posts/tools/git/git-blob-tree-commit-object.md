@@ -6,6 +6,7 @@ tags: ["Git", "Blob", "Tree", "Commit"]
 category: "Tools/Git"
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com//images/1fc970460a95ea5faf0cef3764835021.png"
 draft: false
+views: 0
 ---
 ![image](https://nullisdefined.s3.ap-northeast-2.amazonaws.com//images/1fc970460a95ea5faf0cef3764835021.png)
 

@@ -6,6 +6,7 @@ tags: ["프로그래머스"]
 category: "Problem Solving"
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/336450698cb0b43a1a7133eae93730cd.png"
 draft: true
+views: 0
 ---
 ![image](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/336450698cb0b43a1a7133eae93730cd.png)
 https://school.programmers.co.kr/learn/courses/30/lessons/12924

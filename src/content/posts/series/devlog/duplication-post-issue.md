@@ -2,10 +2,11 @@
 title: "중복 포스트 문제"
 slug: "duplication-post-issue"
 date: 2024-11-05
-tags: []
+tags: ["Devlog"]
 category: "Series/devlog"
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/969b1081b4857711adbc2a75bc3fc45f.png"
 draft: false
+views: 0
 ---
 다음은 태그 기반 포스트 필터링 기능을 구현하면서 겪은 문제와 해결 과정을 정리한 내용이다.
 
@@ -50,5 +51,5 @@ const uniquePosts = new Map<string, Post>();
 ## 마무리
 단순히 코드를 작성하는 것뿐만 아니라 다양한 엣지 케이스를 고려하는 것이 중요하다는 것을 다시 한 번 깨달았다.
 
----
-이 프로젝트의 모든 소스 코드는 [GitHub](https://github.com/nullisdefined/next-devlog)에 공개되어 있습니다. 코드 품질 개선이나 새로운 기능 제안에 대한 피드백은 언제나 환영합니다.
+
+이 프로젝트의 모든 소스 코드는 [GitHub](https://github.com/nullisdefined/mydevlog)에 공개되어 있습니다. 코드 품질 개선이나 새로운 기능 제안에 대한 피드백은 언제나 환영합니다.

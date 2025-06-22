@@ -6,6 +6,7 @@ tags: ["NetworkProgramming", "NetworkLayer"]
 category: "CS/Network Programming"
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/03f1fe0025f0c683af3be56ae2e689d6.png"
 draft: false
+views: 0
 ---
 ## 기본 개념 정리
 
@@ -66,7 +67,7 @@ draft: false
 
 ### ISP 계층 구조
 
-![ISP 계층 구조|500](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/03f1fe0025f0c683af3be56ae2e689d6.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/03f1fe0025f0c683af3be56ae2e689d6.png" alt="ISP 계층 구조" width="500" />
 
 **1. Backbone ISP**
 
@@ -90,7 +91,7 @@ draft: false
 
 ## 캡슐화(Encapsulation)
 
-![image|550](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/db2680c5ed2fa132bbaff22fe854cc8e.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/db2680c5ed2fa132bbaff22fe854cc8e.png" alt="image" width="550" />
 
 ### 캡슐화란?
 
@@ -238,7 +239,7 @@ Physical Layer:       01101010110101... (bits)
 
 ### 이더넷 프레임 구조
 
-![Ethernet 프레임 구조|550](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/e5e3a37cc7438eb30fd722e31ac84a50.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/e5e3a37cc7438eb30fd722e31ac84a50.png" alt="Ethernet 프레임 구조" width="550" />
 
 **각 필드 설명**:
 
@@ -331,7 +332,7 @@ CSMA/CD은 Carrier Sense Multiple Access with Collision Detection의 약자로, 
 
 ### CSMA/CD 동작 과정
 
-![CSMA/CD 동작 과정|600](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/30e33331fba9b023531d899d4b4c5fad.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/30e33331fba9b023531d899d4b4c5fad.png" alt="CSMA/CD 동작 과정" width="600" />
 *CSMA/CA 흐름 다이어그램*
 
 ### 최소 프레임 길이와의 관계
@@ -372,7 +373,7 @@ CSMA/CD은 Carrier Sense Multiple Access with Collision Detection의 약자로, 
 - B와 C는 A와 각각 통신 가능하지만, B와 C는 서로를 인식하지 못함
 - 동시에 A에게 전송 시 충돌(collision) 발생
 
-![image|600](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/2ee33cb7e62bdc65a28a857db7185aca.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/2ee33cb7e62bdc65a28a857db7185aca.png" alt="image" width="600" />
 
 ### 해결 방법: CSMA/CA (Collision Avoidance)
 
@@ -382,14 +383,14 @@ CSMA/CD은 Carrier Sense Multiple Access with Collision Detection의 약자로, 
 2. **A → B, C**: CTS(Clear To Send) 프레임 전송, 다른 지국들에게 통신을 알림
 3. **A가 CTS를 보내면**: 모든 노드가 B의 전송을 기다려야 함 → 충돌 방지
 
-![CSMA/CA|500](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/53835e25fc19409ce83b48de37cf3021.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/53835e25fc19409ce83b48de37cf3021.png" alt="CSMA/CA" width="500" />
 
 
 ## 브리지(Bridge, L2 Switch)와 라우터(Router)
 
 ### 브리지 (Bridge, L2 Switch)
 
-![bridge|500](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/1ac2aa5bb07c445ab84d251e43c6de8a.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/1ac2aa5bb07c445ab84d251e43c6de8a.png" alt="bridge" width="500" />
 
 **동작 계층**: 물리 계층 + 데이터링크 계층
 

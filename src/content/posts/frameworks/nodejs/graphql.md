@@ -3,9 +3,10 @@ title: "GraphQL이란?"
 slug: "graphql"
 date: 2024-11-30
 tags: ["NodeJS", "GraphQL"]
-category: "Backend/NodeJS"
+category: "Frameworks/NodeJS"
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/35467ed7b1bf2f0acd84f17735f7f7b7.png"
 draft: false
+views: 0
 ---
 ![image](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/35467ed7b1bf2f0acd84f17735f7f7b7.png)
 

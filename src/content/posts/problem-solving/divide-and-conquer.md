@@ -6,6 +6,7 @@ tags: ["JavaScript"]
 category: "Problem Solving"
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com//images/fef061c6a4c61eaa9b2a6f5577c8f03e.png"
 draft: true
+views: 0
 ---
 ![image](https://nullisdefined.s3.ap-northeast-2.amazonaws.com//images/fef061c6a4c61eaa9b2a6f5577c8f03e.png)
 

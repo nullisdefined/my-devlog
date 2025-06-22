@@ -5,6 +5,7 @@ date: 2025-01-04
 tags: ["Linux"]
 thumbnail: "https://miro.medium.com/v2/resize:fit:1400/0*Fd7dB4lB9685WfhS"
 draft: false
+views: 0
 ---
 ![](https://miro.medium.com/v2/resize:fit:1400/0*Fd7dB4lB9685WfhS)
 *Photo by [Gabriel Heinzer](https://unsplash.com/@6heinz3r?utm_source=medium&utm_medium=referral) on [Unsplash](https://unsplash.com/?utm_source=medium&utm_medium=referral)*

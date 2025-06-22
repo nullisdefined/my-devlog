@@ -6,6 +6,7 @@ tags: ["SystemProgramming", "Linking", "Symbol", "Relocation"]
 category: "CS/System Programming"
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/cd8f49041a06f62afbe73e5c63f56411.png"
 draft: false
+views: 0
 ---
 C 프로그램이 실행 파일로 변환되는 과정에서 가장 중요한 단계 중 하나가 바로 링킹(Linking)이다.
 
@@ -148,7 +149,7 @@ C 프로그램이 실행 파일이 되기까지의 전체 과정을 살펴보자
 
 ## 재배치(Relocation)
 
-![image|500](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/cd8f49041a06f62afbe73e5c63f56411.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/cd8f49041a06f62afbe73e5c63f56411.png" alt="image" width="500" />
 
 재배치는 링커의 두 번째 주요 작업이다.
 

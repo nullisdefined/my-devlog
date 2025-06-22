@@ -6,6 +6,7 @@ tags: ["TypeScript"]
 category: "Languages/TypeScript"
 thumbnail: "https://miro.medium.com/v2/resize:fit:1400/0*T2UsMjTeeStZEsB5.jpeg"
 draft: false
+views: 0
 ---
 ![](https://miro.medium.com/v2/resize:fit:1400/0*T2UsMjTeeStZEsB5.jpeg)
 TypeScript와 JavaScript는 지난 몇 년간 꾸준히 발전해왔다. 그동안 우리가 당연하게 써왔던 방식들 중 일부는 이제 낡은 방식이 되었고, 어떤 것들은 처음부터 좋은 방법이 아니었을 수도 있다. 다음은 우리가 버려야 할 10가지 좋지 않은 습관들이다.

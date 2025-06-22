@@ -5,6 +5,7 @@ date: 2024-12-21
 tags: ["Github", "SSH", "Cygwin"]
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/52ee5a5d97fb23f80377457b239c5807.png"
 draft: false
+views: 0
 ---
 Git Bash를 사용하다가 좀 더 다양한 Linux 도구들을 사용하고 싶어서 Cygwin을 사용하게 되었다. 새로운 Cygwin 터미널 환경에서 git push를 하려는데 인증 오류가 발생했다. 
 ```shell

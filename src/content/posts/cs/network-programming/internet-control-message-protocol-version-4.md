@@ -6,6 +6,7 @@ tags: ["NetworkProgramming", "NetworkLayer", "IP", "ICMP"]
 category: "CS/Network Programming"
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/4d5790e1a34970ee68809eaad18fe825.png"
 draft: false
+views: 0
 ---
 ## ICMP 개념과 필요성
 

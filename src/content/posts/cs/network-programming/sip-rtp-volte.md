@@ -6,8 +6,9 @@ tags: ["NetworkProgramming", "NetworkLayer", "SIP", "RTP", "VoLTE"]
 category: "CS/Network Programming"
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/bdfa59aee34a5e0e6383a0155caa3116.png"
 draft: false
+views: 0
 ---
-![image|500](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/bdfa59aee34a5e0e6383a0155caa3116.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/bdfa59aee34a5e0e6383a0155caa3116.png" alt="image" width="500" />
 
 ## VoLTE
 
@@ -29,7 +30,7 @@ VoLTE(Voice over LTE)는 4G LTE 네트워크를 통해 음성 통화를 IP 패�
 
 ### IMS (IP Multimedia Subsystem) 구조
 
-![image|500](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/6231e7cf6ca1c7db4f6ec940285b83ab.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/6231e7cf6ca1c7db4f6ec940285b83ab.png" alt="image" width="500" />
 *출처 :https://letitkang.tistory.com/entry/%ED%86%B5%EC%8B%A0-IMS-IP-Multimedia-Subsystem-%EB%9E%80
 
 ### 주요 구성 요소
@@ -68,7 +69,7 @@ class VoLTEAnalyzer:
 
 VoLTE 패킷은 다음과 같은 터널링 구조를 가진다.
 
-![image|600](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/d44fd8e3252cec20d63e63b1cf24798c.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/d44fd8e3252cec20d63e63b1cf24798c.png" alt="image" width="600" />
 
 ## SIP 프로토콜 분석
 

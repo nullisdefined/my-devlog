@@ -2,10 +2,11 @@
 title: "슬러그 변동 문제"
 slug: "changing-slug"
 date: 2024-12-21
-tags: ["Giscus", "SEO"]
+tags: ["Giscus", "SEO", "Devlog"]
 category: "Series/devlog"
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/fee8bf8654f93bd1b965cf1f534bc746.png"
 draft: false
+views: 0
 ---
 Giscus 댓글 기능을 사용하고 있었는데 예상치 못한 문제가 발생했다. ![image](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/fee8bf8654f93bd1b965cf1f534bc746.png) *Github Discussions에 남아있는 이전 댓글들* ![image](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/c5cda5064d97abd69aca0f80e91f2f3b.png) *변경된 URL로 인한 404 오류* 
 
@@ -64,5 +65,4 @@ private createSlug(title: string): string {
 ## 마무리
 slug가 지정된 경우 그 값을 우선적으로 사용하고, 그렇지 않은 경우 기존 방식을 따르게 된다. 지금 이미 작성된 글들의 URL은 유지하면서, 앞으로는 안정적인 URL 관리가 가능해졌다.
 
----
-이 프로젝트의 모든 소스 코드는 [GitHub](https://github.com/nullisdefined/next-devlog)에 공개되어 있습니다. 코드 품질 개선이나 새로운 기능 제안에 대한 피드백은 언제나 환영합니다.
+이 프로젝트의 모든 소스 코드는 [GitHub](https://github.com/nullisdefined/mydevlog)에 공개되어 있습니다. 코드 품질 개선이나 새로운 기능 제안에 대한 피드백은 언제나 환영합니다.

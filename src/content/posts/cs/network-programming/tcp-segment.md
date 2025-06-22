@@ -6,6 +6,7 @@ tags: ["NetworkProgramming", "TransportLayer", "TCP", "Segment"]
 category: "CS/Network Programming"
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/f63d135824a3ff49ee19c7003db53c86.png"
 draft: false
+views: 0
 ---
 다음은 TCP 헤더의 각 필드와 세그먼트 구조, 그리고 TCP state table에 대해 정리한 내용입니다.
 
@@ -19,11 +20,11 @@ TCP에서 전송되는 데이터 단위를 세그먼트(Segment)라고 한다. �
 - **패킷**: 네트워크 계층(IP)에서의 데이터 단위
 - **프레임**: 데이터링크 계층에서의 데이터 단위
 
-![image|600](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/f63d135824a3ff49ee19c7003db53c86.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/f63d135824a3ff49ee19c7003db53c86.png" alt="image" width="600" />
 
 ## TCP 헤더 구조
 
-  ![image|600](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/995c388c03d0929e0f9a832d42eff7fc.png)
+  <img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/995c388c03d0929e0f9a832d42eff7fc.png" alt="image" width="600" />
 
 TCP 헤더는 **최소 20바이트**의 고정 부분과 **최대 40바이트**의 옵션 부분으로 구성된다.
 

@@ -6,10 +6,11 @@ tags: ["SystemProgramming", "Unix", "Bash"]
 category: "CS/System Programming"
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/83e901e30d4faabcdc33d1cd5902a036.png"
 draft: false
+views: 0
 ---
 ## UNIX Shell
 
-![image|500](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/83e901e30d4faabcdc33d1cd5902a036.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/83e901e30d4faabcdc33d1cd5902a036.png" alt="image" width="500" />
 
 ### Shell이란?
 

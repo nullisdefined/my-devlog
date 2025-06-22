@@ -2,10 +2,11 @@
 title: "이미지 다운로드 및 클립보드 복사 기능 구현하기"
 slug: "image-download-and-copy-clipboard"
 date: 2024-10-31
-tags: ["토이프로젝트", "React", "TypeScript", "TailwindCSS"]
+tags: ["React", "TypeScript", "TailwindCSS", "ToyProject"]
 category: "Series/thumbs-up"
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/e4d9c6192e594bafdd13406bff5c0257.png"
 draft: false
+views: 0
 ---
 썸네일 제너레이터 도구를 완성하면서 결과물을 즉시 활용할 수 있는 기능이 있으면 좋겠다고 생각했다.
 그래서 이미지 다운로드와 클립보드 복사 기능을 추가해 사용자가 손쉽게 썸네일을 저장하거나 붙여넣을 수 있도록 구현했다.

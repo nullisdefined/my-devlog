@@ -6,6 +6,7 @@ tags: ["SystemProgramming", "Kernel", "Interrupt", "SystemCall"]
 category: "CS/System Programming"
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/0c8f5c46825f2671a6b00c8eda6fd0a9.png"
 draft: false
+views: 0
 ---
 시스템 프로그래밍 과목을 학습하다보면 자연스럽게 운영체제 개념들을 접하게 된다. 다음은 시스템 프로그래밍의 기초가 되는 운영체제의 커널과 CPU 모드 개념에 대해 정리한 내용이다.
 
@@ -17,7 +18,7 @@ draft: false
 
 커널도 결국 프로그램이다. 컴퓨터가 부팅될 때 메모리에 로드되어 컴퓨터가 종료될 때까지 상주한다.
 
-![image|500](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/0c8f5c46825f2671a6b00c8eda6fd0a9.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/0c8f5c46825f2671a6b00c8eda6fd0a9.png" alt="image" width="500" />
 *운영체제와 커널의 관계*
 
 ### 커널이 존재하는 이유
@@ -35,7 +36,7 @@ draft: false
 
 모든 프로세스는 다음과 같은 가상 메모리 구조를 가진다.
 
-![image|500](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/665652d6e3b6a91b84b2eff75087cb28.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/665652d6e3b6a91b84b2eff75087cb28.png" alt="image" width="500" />
 *가상 메모리 구조*
 
 크게최상단의 커널 공간과 그 하위의 사용자 공간으로 분류할 수 있다.
@@ -69,7 +70,7 @@ draft: false
 
 ### 리눅스 시스템 아키텍처
 
-![image|500](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/9f19835b502947defee26b8a731ee523.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/9f19835b502947defee26b8a731ee523.png" alt="image" width="500" />
 *GNU/Linux 운영체제 시스템 아키텍처*
 
 - **User Applications**: 사용자가 실행하는 프로그램들
@@ -125,7 +126,7 @@ FILE *file = fopen("input.txt", "r");  // 시스템 콜 호출
 - **프로그램 인터럽트 (Program Check)**: 0으로 나누기, 오버플로우
 - **SVC (SuperVisor Call)**: 시스템 콜 호출
 
-![image|400](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/04b0879eea45f4809b1063976b66ed2f.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/04b0879eea45f4809b1063976b66ed2f.png" alt="image" width="400" />
 
 
 ### 예시

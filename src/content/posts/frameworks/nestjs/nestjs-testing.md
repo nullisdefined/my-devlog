@@ -3,9 +3,10 @@ title: "[NestJS] 테스트(Test)"
 slug: "nestjs-testing"
 date: 2024-12-16
 tags: ["NestJS", "Jest", "E2E", "UnitTest"]
-category: "Backend/NestJS"
+category: "Frameworks/NestJS"
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/e48e6fd88f6339a761df1c6155770ce4.png"
 draft: true
+views: 0
 ---
 ![image](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/e48e6fd88f6339a761df1c6155770ce4.png)
 
