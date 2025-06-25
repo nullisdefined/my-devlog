@@ -962,7 +962,8 @@ pre[data-title] {
   margin-left: 0;
   margin-right: auto;
   display: block;
-  transition: filter 0.3s ease;
+  transition: filter 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: zoom-in;
 }
 
 /* width 속성이 있는 이미지는 해당 크기를 우선 사용 */

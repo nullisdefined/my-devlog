@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { Quote } from "lucide-react";
+import { ImageModal } from "./image-modal";
 
 interface PostContentProps {
   content: string;
@@ -126,21 +127,84 @@ function addQuoteIcons() {
 }
 
 export function PostContent({ content }: PostContentProps) {
+  const [modalImage, setModalImage] = useState<{
+    src: string;
+    alt: string;
+  } | null>(null);
+
+  // 이미지 클릭 핸들러를 useCallback으로 메모이제이션
+  const handleImageClick = useCallback((src: string, alt: string) => {
+    setModalImage({ src, alt });
+  }, []);
+
+  // 이벤트 위임을 사용한 이미지 클릭 처리
   useEffect(() => {
-    // 복사 버튼 기능, 이미지 캡션 정렬, Quote 아이콘 설정
+    const postContentElement = document.querySelector(".post-content");
+    if (!postContentElement) return;
+
+    const handleClick = (e: Event) => {
+      const target = e.target as HTMLElement;
+
+      // 클릭된 요소가 이미지이고 prose 안에 있는지 확인
+      if (target.tagName === "IMG" && target.closest(".prose")) {
+        const img = target as HTMLImageElement;
+        handleImageClick(img.src, img.alt || "이미지");
+      }
+    };
+
+    // 이벤트 위임으로 클릭 처리
+    postContentElement.addEventListener("click", handleClick);
+
+    // 이미지 스타일 적용
+    const images = document.querySelectorAll(".prose img");
+    images.forEach((img) => {
+      const imageElement = img as HTMLImageElement;
+
+      // 스타일 적용
+      imageElement.style.cursor = "zoom-in";
+      imageElement.style.transition =
+        "transform 0.2s ease, box-shadow 0.2s ease";
+
+      // 호버 효과
+      const handleMouseEnter = () => {
+        imageElement.style.transform = "scale(1.02)";
+        imageElement.style.boxShadow = "0 8px 25px rgba(0, 0, 0, 0.15)";
+      };
+
+      const handleMouseLeave = () => {
+        imageElement.style.transform = "scale(1)";
+        imageElement.style.boxShadow = "0 1px 3px rgba(0, 0, 0, 0.1)";
+      };
+
+      imageElement.addEventListener("mouseenter", handleMouseEnter);
+      imageElement.addEventListener("mouseleave", handleMouseLeave);
+    });
+
+    // 다른 기능들 초기화
     const timer = setTimeout(() => {
       setupCopyButtons();
       alignImageCaptions();
       addQuoteIcons();
     }, 100);
 
-    return () => clearTimeout(timer);
-  }, [content]);
+    return () => {
+      postContentElement.removeEventListener("click", handleClick);
+      clearTimeout(timer);
+    };
+  }, [content, handleImageClick]);
 
   return (
-    <div
-      dangerouslySetInnerHTML={{ __html: content }}
-      className="post-content"
-    />
+    <>
+      <div
+        dangerouslySetInnerHTML={{ __html: content }}
+        className="post-content"
+      />
+      <ImageModal
+        src={modalImage?.src || ""}
+        alt={modalImage?.alt || ""}
+        isOpen={!!modalImage}
+        onClose={() => setModalImage(null)}
+      />
+    </>
   );
 }
