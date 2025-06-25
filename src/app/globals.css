@@ -1003,7 +1003,7 @@ pre[data-title] {
 
 /* 첫 번째 이미지는 더 작게 */
 .prose p:first-of-type img:first-child {
-  max-width: 45%;
+  max-width: 50%;
 }
 
 /* 다크모드에서 이미지 어둡게 처리 */
