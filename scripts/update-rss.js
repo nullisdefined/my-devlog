@@ -5,11 +5,11 @@ const path = require("path");
 const SITE_URL = "https://nullisdefined.site";
 const RSS_ENDPOINTS = [
   "/feed.xml",
-  "/feed/category/javascript",
-  "/feed/category/typescript",
-  "/feed/category/nodejs",
-  "/feed/tags/NextJS",
-  "/feed/tags/SEO",
+  "/feed/category/languages",
+  "/feed/category/frameworks",
+  "/feed/category/backend",
+  "/feed/tags/JavaScript",
+  "/feed/tags/TypeScript",
   "/feed/series/devlog",
 ];
 

@@ -234,7 +234,7 @@ AWS는 1 + 2번 조합을 사용한다.
     - 관리자 권한 IAM 사용자 생성 후 전환
 - **최소 권한 원칙**
     - 필요한 최소한의 권한만 부여
-    - 와일드카드(*) 사용 최소화
+    - 와일드카드(\*) 사용 최소화
 - **그룹 활용**
     - 개별 사용자보다 그룹 단위 권한 관리
     - 직무별 그룹 구성 (개발자, 보안, 관리자 등)
@@ -245,4 +245,4 @@ AWS는 1 + 2번 조합을 사용한다.
     - 사용하지 않는 자격 증명 제거
     - 마지막 액세스 정보 활용
 
-> 이 글은 AWS Skill Builder의 [AWS Technical Essentials](https://skillbuilder.aws/learn/K8C2FNZM6X/aws-technical-essentials-/T158S72U18) 강의를 토대로 공부한 내용을 정리한 것입니다.
+> 이 글은 AWS Skill Builder의 [Introduction to AWS Lambda (한국어)](https://skillbuilder.aws/learn/G3BEYRFNPS/introduction-to-aws-lambda-/KEJ32EC1BT) 강의를 토대로 공부한 내용을 정리한 것입니다.
