@@ -1,9 +1,9 @@
 ---
-title: "배경 커스터마이징 기능 구현하기"
-slug: "customizing-background"
+title: "[Thumbs Up] 배경 커스터마이징 기능 구현하기"
+slug: "thumbs-up-customizing-background"
 date: 2024-10-30
 tags: ["React", "TypeScript", "TailwindCSS", "ToyProject"]
-category: "Series/thumbs-up"
+category: "Series/Toy-Project"
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/c80c482a1207d43b83b93c6cb8a2558b.png"
 draft: false
 views: 0

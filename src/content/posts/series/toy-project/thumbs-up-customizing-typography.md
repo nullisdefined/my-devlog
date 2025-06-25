@@ -1,9 +1,9 @@
 ---
-title: "텍스트 커스터마이징 기능 구현하기"
-slug: "customizing-typography"
+title: "[Thumbs Up] 텍스트 커스터마이징 기능 구현하기"
+slug: "thumbs-up-customizing-typography"
 date: 2024-10-30
 tags: ["React", "TypeScript", "TailwindCSS", "ToyProject"]
-category: "Series/thumbs-up"
+category: "Series/Toy-Project"
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/a32305c4997a041b5d69663a3a99fe2c.png"
 draft: false
 views: 0
