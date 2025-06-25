@@ -150,11 +150,11 @@ export const seriesCategories: readonly CategoryItem[] = [
           "Next.js와 다양한 기술을 활용해 블로그를 구축하고 발전시켜 나가는 과정을 기록합니다.",
       },
       {
-        name: "Thumbs Up",
-        path: "/devlog/series/thumbs-up",
+        name: "Toy Project",
+        path: "/devlog/series/toy-project",
         icon: Layout,
         description:
-          "썸네일 제작 도구 Thumbs Up을 개발하면서 경험한 기능 구현과 개선 과정을 공유합니다.",
+          "개발 공부를 위한 작은 프로젝트를 진행하면서 경험한 기능 구현과 개선 과정을 공유합니다.",
       },
       {
         name: "Git Clone",

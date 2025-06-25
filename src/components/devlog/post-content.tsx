@@ -137,7 +137,62 @@ export function PostContent({ content }: PostContentProps) {
     setModalImage({ src, alt });
   }, []);
 
-  // 이벤트 위임을 사용한 이미지 클릭 처리
+  // 이미지 스타일과 호버 효과를 적용하는 함수
+  const applyImageStyles = useCallback(() => {
+    const images = document.querySelectorAll(".prose img");
+
+    images.forEach((img) => {
+      const imageElement = img as HTMLImageElement;
+
+      // 이미 스타일이 적용되었는지 확인
+      if (imageElement.hasAttribute("data-styled")) return;
+
+      // 스타일 적용
+      imageElement.style.cursor = "zoom-in";
+      imageElement.style.transition =
+        "transform 0.2s ease, box-shadow 0.2s ease";
+
+      // 호버 효과 함수들
+      const handleMouseEnter = () => {
+        imageElement.style.transform = "scale(1.02)";
+        imageElement.style.boxShadow = "0 8px 25px rgba(0, 0, 0, 0.15)";
+      };
+
+      const handleMouseLeave = () => {
+        imageElement.style.transform = "scale(1)";
+        imageElement.style.boxShadow = "0 1px 3px rgba(0, 0, 0, 0.1)";
+      };
+
+      // 이벤트 리스너 등록
+      imageElement.addEventListener("mouseenter", handleMouseEnter);
+      imageElement.addEventListener("mouseleave", handleMouseLeave);
+
+      // 스타일 적용 완료 표시
+      imageElement.setAttribute("data-styled", "true");
+
+      // cleanup 함수를 이미지 요소에 저장
+      (imageElement as any).__hoverCleanup = () => {
+        imageElement.removeEventListener("mouseenter", handleMouseEnter);
+        imageElement.removeEventListener("mouseleave", handleMouseLeave);
+      };
+    });
+  }, []);
+
+  // 초기 콘텐츠 로드시에만 실행되는 useEffect (content 변경시에만)
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setupCopyButtons();
+      alignImageCaptions();
+      // addQuoteIcons(); // 마무리 부분 Quote 아이콘 제거
+      applyImageStyles();
+    }, 100);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [content, applyImageStyles]);
+
+  // 이벤트 위임을 위한 별도 useEffect (모달 상태 변경에 영향받지 않음)
   useEffect(() => {
     const postContentElement = document.querySelector(".post-content");
     if (!postContentElement) return;
@@ -155,43 +210,23 @@ export function PostContent({ content }: PostContentProps) {
     // 이벤트 위임으로 클릭 처리
     postContentElement.addEventListener("click", handleClick);
 
-    // 이미지 스타일 적용
-    const images = document.querySelectorAll(".prose img");
-    images.forEach((img) => {
-      const imageElement = img as HTMLImageElement;
-
-      // 스타일 적용
-      imageElement.style.cursor = "zoom-in";
-      imageElement.style.transition =
-        "transform 0.2s ease, box-shadow 0.2s ease";
-
-      // 호버 효과
-      const handleMouseEnter = () => {
-        imageElement.style.transform = "scale(1.02)";
-        imageElement.style.boxShadow = "0 8px 25px rgba(0, 0, 0, 0.15)";
-      };
-
-      const handleMouseLeave = () => {
-        imageElement.style.transform = "scale(1)";
-        imageElement.style.boxShadow = "0 1px 3px rgba(0, 0, 0, 0.1)";
-      };
-
-      imageElement.addEventListener("mouseenter", handleMouseEnter);
-      imageElement.addEventListener("mouseleave", handleMouseLeave);
-    });
-
-    // 다른 기능들 초기화
-    const timer = setTimeout(() => {
-      setupCopyButtons();
-      alignImageCaptions();
-      addQuoteIcons();
-    }, 100);
-
     return () => {
       postContentElement.removeEventListener("click", handleClick);
-      clearTimeout(timer);
     };
-  }, [content, handleImageClick]);
+  }, [handleImageClick]);
+
+  // 모달이 닫힐 때 이미지 스타일을 다시 적용하는 useEffect
+  useEffect(() => {
+    if (!modalImage) {
+      // 모달이 닫혔을 때 약간의 지연 후 스타일 재적용
+      const timer = setTimeout(() => {
+        applyImageStyles();
+        alignImageCaptions();
+      }, 50);
+
+      return () => clearTimeout(timer);
+    }
+  }, [modalImage, applyImageStyles]);
 
   return (
     <>

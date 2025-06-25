@@ -1068,7 +1068,8 @@ pre[data-title] {
   @apply italic text-foreground/90;
 }
 
-/* 마무리 문구 스타일 */
+/* 마무리 문구 스타일 - 비활성화됨 */
+/*
 .prose h2:has(+ hr + p) + hr + p {
   @apply mt-8 text-sm text-muted-foreground italic;
   border-left: 3px solid hsl(var(--muted));
@@ -1078,24 +1079,22 @@ pre[data-title] {
 .dark .prose h2:has(+ hr + p) + hr + p {
   border-left-color: hsl(var(--muted));
 }
+*/
 
-/* 글 마무리 섹션 스타일 - 에메랄드 그린 테마 */
-/* 특정 마무리 문구를 포함한 문단에만 적용 */
-/* 1. GitHub 프로젝트 마무리 문구 */
+/* 글 마무리 섹션 스타일 - 비활성화됨 */
+/*
 .prose p:last-child:has([href*="github.com"]),
 .prose p:last-child:has(a[href*="github"]),
 .post-content p:last-child:has([href*="github.com"]),
 .post-content p:last-child:has(a[href*="github"]),
 .prose > div:last-child p:last-child:has([href*="github.com"]),
 .prose > div:last-child p:last-child:has(a[href*="github"]),
-/* 2. 강의/공부 마무리 문구 */
 .prose p:last-child:has([href*="udemy.com"]),
 .prose p:last-child:has(a[href*="udemy"]),
 .post-content p:last-child:has([href*="udemy.com"]),
 .post-content p:last-child:has(a[href*="udemy"]),
 .prose > div:last-child p:last-child:has([href*="udemy.com"]),
 .prose > div:last-child p:last-child:has(a[href*="udemy"]),
-/* 3. 기타 참고 자료 링크가 있는 마무리 문구 */
 .prose p:last-child:has([href*="plainenglish.io"]),
 .prose p:last-child:has(a[href*="plainenglish"]),
 .post-content p:last-child:has([href*="plainenglish.io"]),
@@ -1109,11 +1108,11 @@ pre[data-title] {
     135deg,
     #ecfdf5 0%,
     #d1fae5 100%
-  ); /* emerald gradient */
+  );
   border-radius: 0.5rem;
   font-size: 0.95rem;
   line-height: 1.7;
-  color: #065f46; /* emerald-800 */
+  color: #065f46;
   box-shadow: 0 1px 3px rgba(16, 185, 129, 0.2);
   border: 1px solid rgba(16, 185, 129, 0.1);
 }
@@ -1140,11 +1139,12 @@ pre[data-title] {
     135deg,
     #022c22 0%,
     #064e3b 100%
-  ); /* dark emerald gradient */
-  color: #a7f3d0; /* emerald-200 */
+  );
+  color: #a7f3d0;
   box-shadow: 0 1px 3px rgba(52, 211, 153, 0.3);
   border: 1px solid rgba(52, 211, 153, 0.2);
 }
+*/
 
 /* Quote 아이콘은 JavaScript로 동적 생성됨 */
 
@@ -1177,7 +1177,8 @@ pre[data-title] {
   color: inherit;
 }
 
-/* 마무리 섹션 링크 스타일 - 에메랄드 그린 테마 */
+/* 마무리 섹션 링크 스타일 - 비활성화됨 */
+/*
 .prose p:last-child:has([href*="github.com"]) a,
 .prose p:last-child:has(a[href*="github"]) a,
 .post-content p:last-child:has([href*="github.com"]) a,
@@ -1196,7 +1197,7 @@ pre[data-title] {
 .post-content p:last-child:has(a[href*="plainenglish"]) a,
 .prose > div:last-child p:last-child:has([href*="plainenglish.io"]) a,
 .prose > div:last-child p:last-child:has(a[href*="plainenglish"]) a {
-  color: #059669 !important; /* 라이트 모드: 에메랄드-600 */
+  color: #059669 !important;
   font-weight: 600 !important;
   text-decoration: underline !important;
   text-underline-offset: 2px !important;
@@ -1230,7 +1231,7 @@ pre[data-title] {
   > div:last-child
   p:last-child:has(a[href*="plainenglish"])
   a:hover {
-  color: #34d399 !important; /* 다크 모드: 에메랄드-400 */
+  color: #34d399 !important;
 }
 
 .prose p:last-child:has([href*="github.com"]) a:hover,
@@ -1251,7 +1252,7 @@ pre[data-title] {
 .post-content p:last-child:has(a[href*="plainenglish"]) a:hover,
 .prose > div:last-child p:last-child:has([href*="plainenglish.io"]) a:hover,
 .prose > div:last-child p:last-child:has(a[href*="plainenglish"]) a:hover {
-  color: #047857 !important; /* 에메랄드-700 */
+  color: #047857 !important;
   background: rgba(16, 185, 129, 0.1) !important;
   border-radius: 0.25rem !important;
 }
@@ -1282,6 +1283,7 @@ pre[data-title] {
   > div:last-child
   p:last-child:has(a[href*="plainenglish"])
   a:hover {
-  color: #6ee7b7 !important; /* 에메랄드-300 */
+  color: #6ee7b7 !important;
   background: rgba(52, 211, 153, 0.1) !important;
 }
+*/
