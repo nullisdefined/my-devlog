@@ -4,11 +4,11 @@ slug: "korean-nickname-random-generator"
 date: 2025-06-26
 tags: ["ToyProject", "JavaScript", "TypeScript", "NPM"]
 category: "Series/Toy-Project"
-thumbnail: "https://github-production-user-asset-6210df.s3.amazonaws.com/164657817/458864883-f02d97b3-fb3d-400c-bcdf-6911a0581229.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAVCODYLSA53PQK4ZA%2F20250625%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20250625T140034Z&X-Amz-Expires=300&X-Amz-Signature=bd9d35808b4727c654118128d26d21d710f40d38b205264fd81f6fe66e2707b0&X-Amz-SignedHeaders=host"
+thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/ae7669a4c1477dcb6cd8ec739fe7b7eb.png"
 draft: false
 views: 0
 ---
-![starving orange logo](https://github-production-user-asset-6210df.s3.amazonaws.com/164657817/458864883-f02d97b3-fb3d-400c-bcdf-6911a0581229.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAVCODYLSA53PQK4ZA%2F20250625%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20250625T140034Z&X-Amz-Expires=300&X-Amz-Signature=bd9d35808b4727c654118128d26d21d710f40d38b205264fd81f6fe66e2707b0&X-Amz-SignedHeaders=host)
+![image](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/ae7669a4c1477dcb6cd8ec739fe7b7eb.png)
 
 백엔드 개발을 하다보면 기본값(default value)을 설정해야 하는 경우가 자주 발생한다. 닉네임의 경우 특히 DB 스키마에서 닉네임 컬럼에 `unique`와 `not null` 제약조건이 걸려있다면 더욱 고민하게 된다.
 
