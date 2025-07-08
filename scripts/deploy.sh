@@ -51,10 +51,35 @@ if [ -n "$(git status --porcelain)" ]; then
 	echo -e "${GREEN}Updating RSS feeds and clearing cache...${NC}"
 	node scripts/update-rss.js
 
-	# Google과 Bing에 sitemap 알림
+	# 사이트맵 재생성 (SEO 최적화)
+	echo -e "${GREEN}Regenerating optimized sitemap...${NC}"
+	npx next-sitemap
+
+	# 사이트맵 통계 출력
+	SITEMAP_SIZE=$(wc -c <public/sitemap-0.xml 2>/dev/null || echo "0")
+	URL_COUNT=$(grep -c "<url>" public/sitemap-0.xml 2>/dev/null || echo "0")
+	echo -e "${GREEN}📊 사이트맵 통계: ${URL_COUNT}개 URL, ${SITEMAP_SIZE} bytes${NC}"
+
+	# Google과 Bing에 sitemap 알림 (SEO 최적화)
 	echo -e "${GREEN}Notifying search engines about sitemap update...${NC}"
-	curl -X GET "http://www.google.com/ping?sitemap=https://nullisdefined.site/sitemap.xml"
-	curl -X GET "http://www.bing.com/ping?sitemap=https://nullisdefined.site/sitemap.xml"
+
+	# Google Search Console 알림
+	echo -e "${GREEN}  📍 Google Search Console...${NC}"
+	GOOGLE_RESPONSE=$(curl -s -w "%{http_code}" -X GET "https://www.google.com/ping?sitemap=https://nullisdefined.site/sitemap.xml")
+	if [[ "$GOOGLE_RESPONSE" == *"200" ]]; then
+		echo -e "${GREEN}  ✅ Google 알림 성공${NC}"
+	else
+		echo -e "${YELLOW}  ⚠️ Google 알림 응답: $GOOGLE_RESPONSE${NC}"
+	fi
+
+	# Bing Webmaster Tools 알림
+	echo -e "${GREEN}  📍 Bing Webmaster Tools...${NC}"
+	BING_RESPONSE=$(curl -s -w "%{http_code}" -X GET "https://www.bing.com/ping?sitemap=https://nullisdefined.site/sitemap.xml")
+	if [[ "$BING_RESPONSE" == *"200" ]]; then
+		echo -e "${GREEN}  ✅ Bing 알림 성공${NC}"
+	else
+		echo -e "${YELLOW}  ⚠️ Bing 알림 응답: $BING_RESPONSE${NC}"
+	fi
 
 	echo -e "${GREEN}Deployment completed successfully!${NC}"
 else
