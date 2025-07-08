@@ -2,215 +2,354 @@
 title: "SQL1"
 slug: "sql1"
 date: 2025-04-21
-tags: ["Database", "DBMS", "SQL", "Oracle"]
+tags: ["Database", "DBMS", "SQL"]
 category: "CS/Database"
-thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/f43c80d23e5108e341f51d9ca9dd9e39.png"
+thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/1748b43f0a1ae437b388415e734aabea.png"
 draft: false
 views: 0
 ---
-# 4장. 오라클 실습 1
+# 3장. SQL1 (기본 SQL)
 
 ## 학습 목표
 
-- 오라클 DBMS 서버 설치와 환경 구성을 이해한다
-- 개발 도구의 종류와 사용법을 학습한다
-- 사용자 생성과 권한 관리 방법을 익힌다
-- 첫 번째 데이터베이스와 테이블 생성을 실습한다
-- 오라클의 특징적인 기능들을 파악한다
+- 데이터베이스 언어의 종류와 특징을 이해한다
+- DDL을 이용한 테이블 생성과 수정 방법을 학습한다
+- DML을 이용한 데이터 조작 방법을 익힌다
+- SELECT 문의 기본 구조를 파악한다
+- WHERE절, FROM절을 활용한 질의 작성법을 학습한다
 
-## 4.1 설치
+## 3.1 데이터베이스 언어
 
-### 오라클 DBMS 서버
+### 데이터베이스 언어
 
-- DBMS 시스템은 대규모 소프트웨어이다
-- 오라클 데이터베이스 시스템의 버전명인 i, g, c는 각각 internet, grid, cloud를 의미한다
+- 데이터베이스 시스템은 사용자와의 의사소통을 위하여 데이터베이스 언어 제공
+- 사용자는 데이터베이스 언어를 이용하여 사용자의 요구사항을 데이터베이스 시스템에 표현
+- 데이터베이스 언어를 기능적 관점에서 표현방식에 관련하여 분류
 
-### 개발 도구
+### 기능적 관점: DDL, DML, DCL로 구분
 
-#### SQL\*Plus: a basic command-line interface
+#### DDL (Data Definition Language)
 
-- 기본적인 명령줄 인터페이스
+- 데이터베이스 언어의 기능 중 데이터베이스 스키마에 대한 조작을 담당하는 명령
+- 스키마 생성, 삭제, 변경 등을 담당
+- 데이터베이스 시스템은 스키마에 대한 정보를 데이터 사전에 저장/관리하므로, DDL 실행결과는 데이터 사전에 반영
+- DDL은 스키마에 관련되는 도메인, 데이터 무결성 조건 등을 표현할 수 있는 기능을 제공
 
-#### Oracle SQL Developer
+#### DML (Data Manipulation Language)
 
-- GUI 환경을 제공하는 무료 개발 도구
-- 데이터베이스 객체 탐색, SQL 문 실행, 스크립트 실행, PL/SQL 편집 및 디버깅 등이 가능
+- 데이터베이스 인스턴스를 조작하는 언어
+- 인스턴스의 생성, 조회, 삭제, 변경 등의 기능을 사용자에게 제공
+- 사용자는 DML을 이용하여 질의를 생성하여 데이터베이스 시스템에 전달/검색함. DML을 질의어라고도 함
 
-#### Oracle Application Express (APEX)
+#### DCL (Data Control Language)
 
-- 가장 널리 사용되는 데이터베이스 응용 프로그램 개발 도구
+- 데이터베이스 시스템의 데이터에 대한 인증/접근, 트랜잭션 시작/종료, 시간/지속, 세션 시작/종료, 회복 및 복구 기능, 데이터 접근 보안 및 권한, 사용자 제한 관리 등
 
-#### Oracle Forms, Oracle Reports, Oracle JDeveloper
+### 질의처리, 비절차적 언어
 
-- DBMS 설치 후 컴파일하여 사용하려면 설치 시 제공되는 도구가 필요하다
-- SQL\*Plus와 Oracle SQL Developer는 SQL 실습에 적합하며, SQL Developer는 GUI 환경으로 사용이 쉽다
-- APEX는 데이터베이스 기반의 응용 개발을 지원하는 도구이다
+- 질의 처리기
+- 우리가 작성한 SQL문을 DB가 이해할 수 있는 저수준 연산으로 변환하는 역할
 
-### 설치 및 DBA 계정
+### 저장 관리자
 
-- 오라클의 대표적인 DBA 계정은 system과 sys 두 가지가 있으며, 설치 중에 이들의 비밀번호를 설정해야 한다
-- system 계정은 일반적인 DBA 작업을 수행할 수 있다
-- sys 계정은 데이터 사전과 관련된 고급 작업을 수행할 수 있으며, 시스템 운영 권한이 있다
-- 일반적인 작업은 system 계정을 사용한다
+- 데이터가 저장되는 실제 하드디스크에서 데이터를 읽고 쓰고 관리하는 일을 담당
 
-### DBA로 사용자 생성하기
+### 관계형 데이터베이스 언어
 
-<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/f43c80d23e5108e341f51d9ca9dd9e39.png" alt="image" width="550" />
+- 관계형 데이터베이스 언어는 이론적으로 개발되어 있지만 실제 시스템은 구현되지 않았으며, 대부분은 상업적 관계형 데이터베이스 시스템에 구현되지 않았다
+- 세 가지 언어는 질의 표현력 면에서 세 언어 간의 표현 능력의 정도가 동일하여 이론적으로 동등함
+- 상용 시스템 또는 시제품 시스템에 구현되어 있는 언어는 SQL, QUEL, Query by Example, LDL 등이 있다
 
+### SQL 개요
 
-```sql
-Connect the server as DBA ('sys' account) and do following:
+- 관계형 데이터베이스 모델을 위한 데이터베이스 언어
+- SQL은 기능적으로는 DDL, DML, DCL을 모두 포함하는 언어
 
-Create user C##hodori identified by tooshytotell 
-default TABLESPACE users
-temporary TABLESPACE temp;
+### SQL 역사
 
-Grant connect, resource to C##hodori;
-```
+- 1967년: 최초 개발 시작
+- 1968년: 발전 과정
 
-- DBA 권한을 가진 계정으로 접속한 후 새로운 사용자를 생성하고 필요한 권한을 부여한다
+### 표준화 단계
+
+- 1968년: 표준화 작업 시작
+
+## 3.2 DDL SQL
+
+### DDL SQL
+
+- SQL 언어의 DDL 부문을 이용하여 관계 테이블 생성하는데 사용하는 기능을 제공
+- 관계 스키마
+- 속성의 도메인
+- 무결성 제약
+- 관계에 연관되는 인덱스
+- 관계 자료을 위한 디스크 상의 물리적 구조
+- 관계에 연관되는 보안 및 권한 부여/취소
+
+### SQL 명령은 대소문자 구분이 없다
+
+- SQL 명령은 대소문자 구별이 없으며, 문자열 내에서는 대소문자를 구분한다
+- 세미콜론(;)으로 문장 종료
+
+### SQL 도메인 타입
+
+#### 표준 SQL2와 오라클에 있는 데이터 타입
+
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/1748b43f0a1ae437b388415e734aabea.png" alt="image" width="550" />
+
+- char(n): Fixed-length character string with length n
     
-## 4.2 첫 DB 만들기
-
-### 테이블 만들기
-
-```sql
-Create table firstTable (
-    id          char(13) primary key,
-    name        varchar(30),
-    height      numeric(4,1));
-
-Insert into firstTable values ('11', 'Hong Gildong', 165.3);
-Insert into firstTable values ('22', 'Lee Chulsoo', 175.4);
-Insert into firstTable values ('33', 'Kim Younghee', 167.5);
-```
-
-- SQL 문장은 대소문자를 구별하여 작성해야 한다. 단, 한글 문자에 대해서는 대소문자 구분이 적용되지 않는다
-- 작성한 SQL 문장은 .sql 확장자를 가진 ASCII 파일로 저장해두면 재사용이 가능하다
-
-### 외래키와 데이터 입력
-
-```sql
-Create table temp1 (
-    deptName    char(10) primary key,
-    address     char(20));
-
-Create table temp2 (
-    name        char(10) primary key,
-    dept        char(10),
-    constraint c1 foreign key (dept) references temp1);
-```
-
-- 먼저 temp1 테이블에 데이터를 삽입한 후 temp2 테이블에 데이터를 삽입할 수 있다
-- 또는 외래키 제약을 나중에 추가하거나 임시로 비활성화할 수 있다
-
-```sql
-Alter table temp2 add constraint c1 foreign key (dept) references temp1;
-Alter table temp2 disable constraint c1;
-```
-
-### 외래키와 데이터 입력 예제 1
-
-
-```sql
-R = (A, B, C, D)    S = (B, D, E)
-r × s = {t | t ∈ r and t ∈ s}
-
-myCourseCID  title    deptName   credit   myPrereq cID  prereqCID
-BIO-301      Genetics Biology    4        BIO-301      BIO-101
-CS-301       DB       CS         4        CS-301       CS-101
-```
-
-- 자연 조인은 조인 조건을 명시하지 않아도, 두 테이블에서 이름이 동일한 속성을 기준으로 조인이 수행된다
-- 동일한 속성 값을 가진 튜플들만 결합된다
-
-### 자연 조인 예제 2
-
-```sql
-Retrieve professor names who teach in the Fall semester of 2020 together with the course titles that the professors teach
-
-myCourse ← DeptName=title, title ∩ deptName(Course)(course)
-Πname,title(σsemester="Fall" ∧ year = 2020(professor) ⋈ teaches ⋈ myCourse)
-```
-
-- 2020년 가을 학기에 강의한 교수 이름과 해당 교과목 제목을 검색하는 예시
-- teaches 관계에서 조건을 먼저 필터링한 후 조인을 수행한다
-
-## 4.3 Oracle SQLs
-
-### 데이터 사전
-
-- 데이터 사전은 데이터베이스에 대한 메타데이터(테이블, 속성, 인덱스 등)를 관리한다
-- 사용자는 데이터 사전을 통해 시스템 정보를 확인할 수 있다
-- 오라클은 데이터 사전을 SGA의 dictionary cache에 보관하여 빠른 접근을 제공한다
-- 데이터 사전은 DBA가 소유하며, 일반 사용자는 SELECT 문으로만 접근 가능하다
-- 시스템 성능 정보를 담은 동적 성능 테이블은 V$ 접두사로 제공되며, 일반 사용자도 접근 가능하다
-
-#### View prefixes
-
-| prefix | scope                          |
-| ------ | ------------------------------ |
-| USER   | 사용자의 스키마에 있는 객체 정보             |
-| ALL    | 사용자가 접근 가능한 모든 객체 정보           |
-| DBA    | 모든 사용자의 객체 정보를 포함 (DBA만 접근 가능) |
-```sql
-Select * from user_objects;
-Select * from user_tables;
-Select * from user_sequences;
-Select * from user_indexes;
-Select * from user_views;
-Select * from user_constraints;
-
-describe user_objects;
-```
-
-- 접두사(user, all, dba)에 따라 다른 범위의 객체 정보를 확인할 수 있다
-- describe 명령은 테이블 또는 뷰의 스키마 정보를 확인하는 데 사용한다
-
-### 시퀀스
-
-```sql
-Create sequence sequ1 start with 10 increment by 10;
-Alter sequence sequ1 maxvalue 10000;
-
-Select sequ1.nextval, sequ1.currval from dual;
-
-Create table dept1 (
-    deptno number(4) primary key,
-    dname varchar2(30));
-
-Insert into dept1 values(sequ1.nextval, 'Software');
-Insert into dept1 values(sequ1.nextval, 'Hardware');
-
-Drop sequence sequ1;
-```
-
-- 시퀀스는 여러 사용자가 동시에 유일한 숫자를 생성할 수 있도록 해주는 객체이다
-- 시퀀스는 테이블과 직접 연결되지는 않으며, nextval을 통해 값을 생성한다
-- 생성된 시퀀스 값은 트랜잭션의 성공 여부와 관계없이 유일성이 유지된다
-
-### 데이터 타입
-
-- 오라클의 varchar2는 최대 4000바이트까지 저장 가능하다
-- 사용자가 varchar로 정의하더라도 오라클은 내부적으로 varchar2로 처리한다
+- varchar(n): Variable-length character string with maximum length n
     
-### 오라클에서의 널 값과 공스트링
+- int: Integer
+    
+- smallint: Small integer
+    
+- numeric(p,d): Fixed point number with precision of p digits, with d digits to the right of decimal point
+    
+- real, double precision: Floating point and double-precision floating point numbers
+    
+- float(n): Floating point number with precision of at least n digits
+    
+- 표준 SQL2와 오라클에 있는 데이터 타입들
+    
+- 문자열, 가변길이 문자열, 정수, 작은 정수, 고정소수점, 실수
+    
+- 정수 및 작은 정수는 특정 범위의 값만 가질 수 있는 정수에 해당한다 (e.g. varchar 대신 varchar2, Numeric(p,d) 대신 decimal(p,d) 또는 number(p,d))
+    
+- numeric타입은 숫자형 전체 자릿수를 지정하여 데이터형 정밀도 및 범위를 설정. p는 유효숫자 개수이고, d는 소수점 이하 자릿수(e.g. numeric(5,2) ⇒ xxx.xx)
+    
+- 상용 데이터베이스 시스템은 자체적으로 새로운 데이터 타입 제공
+- 각각 (e.g. varchar 대신 varchar2 타입 사용, Numeric(p,d) 대신 decimal(p,d) 또는 number(p,d))
+    
+### 테이블 생성
+
+- create table 문장은 새로운 테이블을 정의하여 생성
+
+#### 테이블 생성 예제
 
 ```sql
-Create table myTable (
-    ID      number,
-    name    varchar2(100));
+Create table professor (
+    pID         char(5),
+    name        varchar(20) not null,
+    deptName    varchar(20),
+    salary      numeric(8,2));
 
-Insert into myTable(ID, name) values (100, null);
-Insert into myTable(ID, name) values (200, '');
-
-Select count(*) from myTable where name='';    -- 결과: 0
-Select count(*) from myTable where name is null; -- 결과: 2
+Insert into professor values ('10', 'Lee', 'CS', 7500);
+Insert into professor values ('11', 'Choi', 'CS', 7000);
 ```
 
-- 오라클에서는 공스트링(’’)도 NULL로 간주한다
-- 따라서 name='' 조건으로는 결과가 나오지 않으며, name IS NULL 조건을 사용해야 한다
+- 두 번째 속성은 널 값을 허용하지 않는 not null 무결성 제약을 가지고 있음
+- insert 문장은 professor 테이블에 튜플을 추가하는 명령
 
-## **마무리**
+### 무결성 제약 (Integrity Constraints)
+
+대표적인 무결성 제약에는 다음과 같은 것들이 있다.
+
+- not null: 속성에 NULL 값이 저장되지 않도록 제한함
+- primary key: 테이블에서 각 튜플을 고유하게 식별하는 키로, NOT NULL과 UNIQUE 제약을 동시에 가짐
+- foreign key: 다른 테이블의 기본키를 참조하여 참조 무결성을 유지
+
+예를 들어, pID를 기본키로 지정하고, deptName 속성이 department 테이블을 참조하도록 하려면 다음과 같이 외래키 제약을 정의한다.
+
+```sql
+CONSTRAINT myFirstForeignKey FOREIGN KEY (deptName) REFERENCES department;
+```
+
+#### 무결성 제약 생성 및 삭제
+
+무결성 제약은 테이블 생성 시 지정할 수 있을 뿐 아니라, 이후 ALTER 문을 사용해 추가하거나 DROP 문으로 제거할 수도 있다.
+이는 student, teaches 등 다른 테이블에도 동일하게 적용된다.
+
+#### 값의 범위 제한
+
+예를 들어 student 테이블에서 gender 속성이 'F' 또는 'M' 값만 가질 수 있도록 제한하려면, CHECK 제약을 사용한다.
+
+```sql
+gender CHAR(1) CHECK (gender IN ('F', 'M'))
+```
+
+참고로 외래키는 다른 테이블의 기본키나 유일키만 참조할 수 있다. 예를 들어 다음과 같은 외래키는 허용되지 않는다.
+
+```sql
+-- 올바르지 않은 예시
+FOREIGN KEY (deptName) REFERENCES professor(pID)
+```
+
+이는 professor(pID)가 deptName과 직접적인 관계를 갖지 않기 때문이다.
+
+## 3.3 DML SQL
+
+### DML(Data Manipulation Language) SQL
+
+- SQL 언어에서 DML 기능을 하는 주요 명령어는 다음 4가지
+	1. SELECT
+	2. INSERT
+	3. DELETE
+	4. UPDATE
+- 이 중 SELECT 문이 가장 복잡한 기능을 수행한다
+
+### 데이터 입력(insert)
+
+데이터베이스 테이블에 새로운 데이터를 추가하는 연산이다
+
+```sql
+Insert into course values ('437', 'Advanced Databases', 'CS', 4);
+```
+
+- NULL을 명시하면 해당 속성에는 **값이 없는 상태**로 저장된다
+- NULL은 SQL에서 **특별한 의미를 가지는 값**
+- INSERT는 **SELECT-FROM-WHERE 절**과 함께 사용하여 다른 테이블에서 데이터를 가져와 삽입할 수도 있다
+
+```sql
+Insert into professor select * from professor_2;
+```
+
+위 문장은 professor_2 테이블의 모든 데이터를 professor 테이블로 복사하는 문장이다.
+즉, 테이블 간 테이블 복사가 가능하다.
+
+### 데이터 삭제(delete)
+
+```sql
+Delete from professor; -- to delete all professor tuples
+Delete from professor where deptName='EE';
+-- to delete all EE professors from the professor table
+```
+
+- DELETE 명령어는 테이블의 튜플(행)을 삭제하는 기능
+- 주의할 점은, DELETE는 데이터만 삭제하며 테이블 자체는 유지된다
+- 테이블 구조 자체를 삭제하려면 DROP 명령어를 사용해야 한다
+    
+WHERE 절을 통해 삭제 조건을 명확히 지정하지 않으면, 전체 행이 삭제될 수 있으므로 주의해야 한다.
+
+### 데이터 갱신(update)
+
+```sql
+-- Increase salaries of professors whose salary is over 7000 by 3%, and all others receive a 5% raise
+
+Update professor
+    set salary = salary*1.03
+    where salary > 7000;
+Update professor
+    set salary = salary*1.05
+    where salary <= 7000;
+```
+
+- 위 예제는 **급여가 7000 이상인 교수에게는 3%, 이하인 교수에게는 5% 인상**을 적용한 예시
+- 하지만, UPDATE 문의 순서에 따라 앞서 갱신된 값에 영향을 줄 수 있으므로 주의가 필요하다
+	→ 이를 해결하기 위해 CASE 문을 활용한 단일 갱신 문으로도 작성할 수 있다
+
+```sql
+Update professor
+set salary = case
+    when salary <= 7000 then salary*1.05
+    else salary*1.03
+end;
+```
+
+## 3.4 Select SQL 문장
+
+### SELECT 기본 구조
+
+SELECT 문장은 총 **6개의 절**로 구성될 수 있으며, 실행 순서에 유의해야 한다.
+  
+> **실행 순서**:
+> FROM → WHERE → GROUP BY → HAVING → SELECT → ORDER BY
+
+```sql
+SELECT title, name
+FROM professor, teaches, course
+WHERE teaches.cID = course.cID
+  AND teaches.pID = professor.pID
+  AND course.deptName = 'CS';
+```
+
+- FROM 절: 필요한 **테이블들을 나열**하고, 카티시안 곱(Cartesian Product)을 수행
+- WHERE 절: 조인 조건 및 선택 조건을 적용
+- GROUP BY 절: 그룹별로 데이터를 묶음
+- HAVING 절: 그룹에 조건 적용
+- SELECT 절: 최종 출력할 속성 선택
+- ORDER BY 절: 결과 정렬
+
+    ### WHERE 절
+
+- 특정 조건을 만족하는 튜플만 필터링한다
+
+```sql
+SELECT name, cID
+FROM professor, teaches
+WHERE professor.pID = teaches.pID;
+```
+
+- 논리 연산자: AND, OR, NOT 사용 가능
+- SQL에서 조건식은 관계대수의 선택연산(σ)에 대응된다
+
+### JOIN
+
+- 여러 테이블 간 관계를 기반으로 데이터를 결합한다
+
+```sql
+SELECT title, name
+FROM professor, teaches, course
+WHERE teaches.cID = course.cID
+  AND teaches.pID = professor.pID;
+```
+
+- professor.pID = teaches.pID: 동등 조인(equi-join)
+- SQL에서는 WHERE 절에서 조인 조건을 명시하거나, JOIN ... ON 구문을 사용할 수 있다
+- > 또는 < 와 같은 조건을 활용하면 Theta-Join 가능
+
+### AS
+
+```sql
+SELECT sID, name AS myName, deptName
+FROM student;
+```
+
+- AS 키워드를 이용해 출력 컬럼명 또는 테이블 이름을 재정의할 수 있다
+- AS는 생략 가능하지만, 공백 없이 정확히 명시해야 오류를 피할 수 있다
+
+### 문자열 연산
+
+```sql
+SELECT name
+FROM professor
+WHERE name LIKE '%da%';
+```
+
+- LIKE 연산자를 사용해 문자열 패턴 매칭 가능
+	- %: 임의 길이의 문자열
+	- \_: 한 글자
+- 문자열 연결, 대소문자 변환, 부분 문자열 추출 등 다양한 내장 함수도 지원한다
+
+### ORDER BY
+
+```sql
+SELECT name, deptName
+FROM professor
+ORDER BY deptName DESC, name;
+```
+
+- 결과 튜플을 지정한 컬럼 기준으로 정렬
+- DESC로 내림차순, 기본은 오름차순(ASC)
+- 다중 기준 정렬 가능 (e.g. 학과 기준으로 내림차순, 이름 기준으로 오름차순)
+
+### WHERE 절의 추가 연산자
+
+- BETWEEN, IN, EXISTS 등 다양한 연산자를 사용할 수 있다
+- 튜플 비교도 가능하며 서브쿼리와 함께 응용할 수 있다
+
+### 중복 제거와 집합 연산
+
+- SQL은 중복 튜플을 허용한다
+- SELECT DISTINCT로 중복을 제거할 수 있다
+- 집합 연산
+	- UNION: 합집합
+	- INTERSECT: 교집합
+	- EXCEPT 또는 MINUS: 차집합
+
+집합 연산을 사용하려면 SELECT 절의 컬럼 수와 타입이 같아야 한다
+
+## 마무리
 
 > 이 글은 이상호 교수님의 [데이터베이스 I 이론 및 실제 교재](https://product.kyobobook.co.kr/detail/S000001918597)를 토대로 공부한 내용을 정리한 것입니다.
