@@ -163,6 +163,10 @@ export default async function PostPage({
   const toc = extractTableOfContents(content);
   const description = getPostExcerpt(post);
 
+  // 관련 포스트를 위한 전체 포스트 목록 가져오기
+  const { getAllPosts } = await import("@/lib/posts");
+  const allPosts = await getAllPosts();
+
   const canonicalPath = `https://nullisdefined.site/devlog/posts/${params.slug.join(
     "/"
   )}`;
@@ -254,7 +258,7 @@ export default async function PostPage({
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
-      <PostView post={post} content={content} toc={toc} />
+      <PostView post={post} content={content} toc={toc} allPosts={allPosts} />
     </>
   );
 }
