@@ -1,5 +1,8 @@
 /* eslint-disable @typescript-eslint/no-require-imports */
 const { getPostList, getSeriesPostList } = require("./scripts/posts-data");
+const fs = require("fs");
+const path = require("path");
+const matter = require("gray-matter");
 
 function formatDate(date) {
   const defaultDate = new Date().toISOString().split("T")[0];
@@ -26,13 +29,130 @@ module.exports = {
 
   // 추가 경로 및 우선순위 설정
   additionalPaths: async (config) => {
-    return [
+    const paths = [];
+
+    // 메인 devlog 페이지 추가
+    paths.push(
       await config.transform(config, "/devlog", {
         priority: 1.0,
         changefreq: "daily",
         lastmod: new Date().toISOString(),
-      }),
-    ];
+      })
+    );
+
+    // 모든 개별 포스트 추가
+    try {
+      const posts = getPostList();
+      for (const post of posts) {
+        const postUrl = `/devlog/posts/${post.urlCategory}/${post.slug}`;
+        paths.push(
+          await config.transform(config, postUrl, {
+            priority: 0.9,
+            changefreq: "monthly",
+            lastmod: formatDate(post.date),
+          })
+        );
+      }
+    } catch (error) {
+      console.warn("포스트 목록을 가져오는데 실패했습니다:", error);
+    }
+
+    // 시리즈 포스트 추가
+    try {
+      const seriesPosts = getSeriesPostList();
+      for (const post of seriesPosts) {
+        const postUrl = `/devlog/posts/${post.urlCategory}/${post.slug}`;
+        paths.push(
+          await config.transform(config, postUrl, {
+            priority: 0.9,
+            changefreq: "monthly",
+            lastmod: formatDate(post.date),
+          })
+        );
+      }
+    } catch (error) {
+      console.warn("시리즈 포스트 목록을 가져오는데 실패했습니다:", error);
+    }
+
+    // 카테고리 페이지 추가
+    try {
+      const allPosts = [...getPostList(), ...getSeriesPostList()];
+      const categories = new Set();
+
+      allPosts.forEach((post) => {
+        if (post.urlCategory) {
+          categories.add(post.urlCategory);
+        }
+      });
+
+      for (const category of categories) {
+        const categoryUrl = `/devlog/categories/${category}`;
+        paths.push(
+          await config.transform(config, categoryUrl, {
+            priority: 0.8,
+            changefreq: "weekly",
+            lastmod: new Date().toISOString(),
+          })
+        );
+      }
+    } catch (error) {
+      console.warn("카테고리 목록을 가져오는데 실패했습니다:", error);
+    }
+
+    // 태그 페이지 추가
+    try {
+      const postsPath = path.join(process.cwd(), "src/content/posts");
+      const allPosts = [];
+
+      const processDirectory = (dirPath, categoryPath = []) => {
+        if (!fs.existsSync(dirPath)) return;
+
+        const files = fs.readdirSync(dirPath);
+        for (const file of files) {
+          const fullPath = path.join(dirPath, file);
+          const stat = fs.statSync(fullPath);
+
+          if (stat.isDirectory()) {
+            processDirectory(fullPath, [...categoryPath, file.toLowerCase()]);
+            continue;
+          }
+
+          if (!file.endsWith(".md")) continue;
+
+          const fileContent = fs.readFileSync(fullPath, "utf-8");
+          const { data } = matter(fileContent);
+
+          if (data.draft) continue;
+          if (data.tags) {
+            allPosts.push({ tags: data.tags });
+          }
+        }
+      };
+
+      processDirectory(postsPath);
+
+      const tags = new Set();
+      allPosts.forEach((post) => {
+        if (post.tags) {
+          post.tags.forEach((tag) => tags.add(tag.toLowerCase()));
+        }
+      });
+
+      for (const tag of tags) {
+        const tagUrl = `/devlog/tags/${encodeURIComponent(tag)}`;
+        paths.push(
+          await config.transform(config, tagUrl, {
+            priority: 0.6,
+            changefreq: "weekly",
+            lastmod: new Date().toISOString(),
+          })
+        );
+      }
+    } catch (error) {
+      console.warn("태그 목록을 가져오는데 실패했습니다:", error);
+    }
+
+    return paths;
   },
 
   transform: async (config, path) => {
