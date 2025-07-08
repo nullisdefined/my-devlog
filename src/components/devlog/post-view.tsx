@@ -7,12 +7,15 @@ import { Calendar, Tag as TagIcon } from "lucide-react";
 import { cn } from "@/lib/class-name-utils";
 import { DynamicBanner } from "./dynamic-banner";
 import { TocInitializer } from "./toc-initializer";
+import { RelatedPosts } from "./related-posts";
+import { Breadcrumb } from "./breadcrumb";
 import Link from "next/link";
 
 interface PostViewProps {
   post: Post;
   content: string;
   toc: TableOfContentsItem[];
+  allPosts: Post[];
 }
 
 // 포스트 상세 페이지용 태그 컴포넌트
@@ -35,11 +38,26 @@ function Tag({ tag, className }: { tag: string; className?: string }) {
   );
 }
 
-export function PostView({ post, content, toc }: PostViewProps) {
+export function PostView({ post, content, toc, allPosts }: PostViewProps) {
   // URL에서 공백을 하이픈으로 변환하는 함수
   const normalizeUrlPath = (path: string) => {
     return path.toLowerCase().replace(/\s+/g, "-");
   };
+
+  // 브레드크럼 아이템 생성
+  const breadcrumbItems = [
+    {
+      title: post.category || "기타",
+      href: post.category?.toLowerCase().startsWith("series/")
+        ? `/devlog/${normalizeUrlPath(post.urlCategory || post.category || "")}`
+        : `/devlog/categories/${normalizeUrlPath(
+            post.urlCategory || post.category || ""
+          )}`,
+    },
+    {
+      title: post.title,
+    },
+  ];
 
   return (
     <>
@@ -50,6 +68,9 @@ export function PostView({ post, content, toc }: PostViewProps) {
       {post.thumbnail && <DynamicBanner thumbnail={post.thumbnail} />}
 
       <article className="max-w-4xl mx-auto text-left px-4 sm:px-6">
+        {/* 브레드크럼 내비게이션 */}
+        <Breadcrumb items={breadcrumbItems} />
+
         {/* 타이틀 헤더 - 배너 밖에 위치, 간격 조정 */}
         <header className="mb-6 sm:mb-8 pb-4 sm:pb-6 border-b border-border/20">
           <div className="space-y-3 sm:space-y-4">
@@ -103,6 +124,9 @@ export function PostView({ post, content, toc }: PostViewProps) {
         <div className="prose prose-base dark:prose-invert max-w-none">
           <PostContent content={content} />
         </div>
+
+        {/* 관련 포스트 */}
+        <RelatedPosts currentPost={post} allPosts={allPosts} />
 
         {/* 댓글 */}
         <Comments />
