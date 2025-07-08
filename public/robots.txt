@@ -2,7 +2,6 @@
 User-agent: *
 Allow: /
 Allow: /devlog
-Allow: /devlog/
 Allow: /devlog/posts/
 Allow: /devlog/categories/
 Allow: /devlog/series/
@@ -14,7 +13,6 @@ Disallow: /api/
 User-agent: Googlebot
 Allow: /
 Allow: /devlog
-Allow: /devlog/
 Allow: /devlog/posts/
 Allow: /devlog/categories/
 Allow: /devlog/series/
@@ -27,7 +25,6 @@ Crawl-delay: 1
 User-agent: Bingbot
 Allow: /
 Allow: /devlog
-Allow: /devlog/
 Allow: /devlog/posts/
 Allow: /devlog/categories/
 Allow: /devlog/series/
