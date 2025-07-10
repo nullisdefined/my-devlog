@@ -3,7 +3,7 @@ title: "@nodeflipnest-env-config 라이브러리"
 slug: "nodeflipnest-env-config"
 date: 2025-01-06
 tags: ["NestJS"]
-category: "Backend/NestJS"
+category: "Frameworks/NestJS"
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com//images/fd06b3636284b65c415f42976d345343.png"
 draft: false
 ---

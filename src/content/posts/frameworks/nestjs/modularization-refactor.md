@@ -3,7 +3,7 @@ title: "코드 리팩토링(모듈화)"
 slug: "modularization-refactor"
 date: 2024-12-29
 tags: ["TypeScript", "NestJS", "Decorator", "DI"]
-category: "Backend/NestJS"
+category: "Frameworks/NestJS"
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com//images/3bb31a31921899f34eef88d27f2ceeb2.png"
 draft: false
 ---

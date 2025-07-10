@@ -105,7 +105,7 @@ export const categories: readonly CategoryItem[] = [
       },
       {
         name: "SpringBoot",
-        path: "/devlog/categories/frameworks/spring-boot",
+        path: "/devlog/categories/frameworks/springboot",
         icon: SiSpring,
       },
     ],
