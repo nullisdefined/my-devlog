@@ -18,6 +18,16 @@
 <!-- BLOG:START --><table>
 <tr>
 <td align="center">📌</td>
+<td><strong><a href="https://nullisdefined.site/devlog/posts/cloud/aws/designing-landing-zone-architectures-with-aws-control-tower">Designing Landing Zone Architectures with AWS Control Tower</a></strong></td>
+</tr>
+</table><table>
+<tr>
+<td align="center">📌</td>
+<td><strong><a href="https://nullisdefined.site/devlog/posts/cloud/aws/introduction-to-database-migration">Introduction to Database Migration</a></strong></td>
+</tr>
+</table><table>
+<tr>
+<td align="center">📌</td>
 <td><strong><a href="https://nullisdefined.site/devlog/posts/cloud/aws/aws-lambda-destinations">AWS Lambda — Destinations</a></strong></td>
 </tr>
 </table><table>
@@ -29,16 +39,6 @@
 <tr>
 <td align="center">📌</td>
 <td><strong><a href="https://nullisdefined.site/devlog/posts/cloud/aws/aws-lambda-invocation-methods">AWS Lambda — 호출 방식 정리</a></strong></td>
-</tr>
-</table><table>
-<tr>
-<td align="center">📌</td>
-<td><strong><a href="https://nullisdefined.site/devlog/posts/series/toy-project/korean-nickname-random-generator">[Starving Orange] 한글 닉네임 자동 생성 라이브러리</a></strong></td>
-</tr>
-</table><table>
-<tr>
-<td align="center">📌</td>
-<td><strong><a href="https://nullisdefined.site/devlog/posts/cloud/aws/introduction-to-aws-lambda">Introduction to AWS Lambda</a></strong></td>
 </tr>
 </table><!-- BLOG:END -->
 
