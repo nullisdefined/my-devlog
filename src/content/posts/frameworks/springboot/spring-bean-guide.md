@@ -1413,7 +1413,7 @@ public class LifecycleAwareBean implements BeanNameAware, BeanFactoryAware {
 }
 ```
 
-## 마무리
+## 마치며
 
 Spring Bean은 단순한 객체 관리 도구가 아니라 애플리케이션 아키텍처의 기반이다. 올바른 Bean 설계와 관리는 코드의 품질, 성능, 유지보수성에 직접적인 영향을 미친다.
 

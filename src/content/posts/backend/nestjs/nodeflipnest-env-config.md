@@ -3,9 +3,10 @@ title: "@nodeflipnest-env-config 라이브러리"
 slug: "nodeflipnest-env-config"
 date: 2025-01-06
 tags: ["NestJS"]
-category: "Frameworks/NestJS"
+category: "Backend/NestJS"
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com//images/fd06b3636284b65c415f42976d345343.png"
 draft: false
+views: 0
 ---
 NestJS 프로젝트에서 환경변수를 관리하는 방법은 여러 가지가 있다. 기본적으로 제공되는 `@nestjs/config`를 사용하거나, dotenv를 직접 사용하는 방법 등이 있다. 우연히 알게된 `@nodeflip/nest-env-config` 패키지를 적용해보며 느낀 점을 공유하고자 한다.
 

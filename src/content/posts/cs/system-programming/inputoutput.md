@@ -517,7 +517,7 @@ while ((ferror(fp) && fread(&c, 1, 1, fp)) == 1) {
 // 버퍼링으로 시스템 콜 최소화 → 빠름
 ```
 
-## 마무리
+## 마치며
 
 마지막으로 Low Level과 High Level I/O의 특징을 정리하면
 

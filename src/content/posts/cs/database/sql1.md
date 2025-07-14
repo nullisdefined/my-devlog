@@ -211,6 +211,6 @@ Select count(*) from myTable where name is null; -- 결과: 2
 - 오라클에서는 공스트링(’’)도 NULL로 간주한다
 - 따라서 name='' 조건으로는 결과가 나오지 않으며, name IS NULL 조건을 사용해야 한다
 
-## **마무리**
+## 마치며
 
 > 이 글은 이상호 교수님의 [데이터베이스 I 이론 및 실제 교재](https://product.kyobobook.co.kr/detail/S000001918597)를 토대로 공부한 내용을 정리한 것입니다.

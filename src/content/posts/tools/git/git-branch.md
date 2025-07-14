@@ -75,6 +75,6 @@ Branch 전환 후 HEAD 포인터의 내용을 확인해보면 다음과 같다.
 
 ![image](https://nullisdefined.s3.ap-northeast-2.amazonaws.com//images/dc10b1b898f20cd872ffea11b8c3b637.png)
 
-## 마무리
+## 마치며
 
 Git의 Branch는 단순히 포인터다. Branch의 생성과 전환은 실제로는 포인터를 조작하는 것에 불과하지만, Branch 덕분에 독립적인 작업 공간을 효율적으로 관리할 수가 있다.

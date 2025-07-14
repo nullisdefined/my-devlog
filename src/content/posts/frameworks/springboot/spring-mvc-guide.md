@@ -921,7 +921,7 @@ public class UserApiController {
 }
 ```
 
-## 마무리
+## 마치며
 
 Spring MVC는 웹 애플리케이션 개발을 위한 강력하고 유연한 프레임워크다. DispatcherServlet을 중심으로 한 체계적인 아키텍처와 다양한 기능들을 통해 확장 가능하고 유지보수하기 쉬운 웹 애플리케이션을 개발할 수 있다.
 

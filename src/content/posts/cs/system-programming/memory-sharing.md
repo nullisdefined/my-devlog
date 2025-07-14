@@ -566,7 +566,7 @@ int fd = shm_open("/test", O_CREAT | O_RDWR, 0000);  // 권한 없음
 int fd = shm_open("/test", O_CREAT | O_RDWR, 0600);  // 소유자만 읽기/쓰기
 ```
 
-## 마무리
+## 마치며
 
 공유 메모리는 프로세스 간 통신에서 가장 빠른 방법이지만, 그만큼 복잡한 동기화 문제를 수반한다.
 

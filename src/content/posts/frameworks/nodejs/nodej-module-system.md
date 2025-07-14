@@ -118,7 +118,7 @@ const server = http.createServer(routes.handler);
     - Node.js가 제공하는 특별한 객체
     - 직접 재할당은 불가능 (`exports = {...}` 사용 불가)
 
-## 마무리
+## 마치며
 Node.js의 모듈 시스템을 활용하면 코드를 논리적인 단위로 분리하고, 재사용성을 높이며, 유지보수가 용이한 애플리케이션을 구축할 수 있다.
 
 ---

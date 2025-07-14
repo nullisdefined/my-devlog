@@ -62,7 +62,7 @@ private createSlug(title: string): string {
 }
 ```
 
-## 마무리
+## 마치며
 slug가 지정된 경우 그 값을 우선적으로 사용하고, 그렇지 않은 경우 기존 방식을 따르게 된다. 지금 이미 작성된 글들의 URL은 유지하면서, 앞으로는 안정적인 URL 관리가 가능해졌다.
 
 이 프로젝트의 모든 소스 코드는 [GitHub](https://github.com/nullisdefined/mydevlog)에 공개되어 있습니다. 코드 품질 개선이나 새로운 기능 제안에 대한 피드백은 언제나 환영합니다.

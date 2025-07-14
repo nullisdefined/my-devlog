@@ -146,6 +146,6 @@ git config core.checkstat minimal
 
 ![image](https://nullisdefined.s3.ap-northeast-2.amazonaws.com//images/1149d1672f02fcf42d1898be3c3badbf.png)
 
-## 마무리
+## 마치며
 
 Staging Area는 변경사항을 체계적으로 관리하고, 깔끔한 커밋 히스토리를 만드는데 도움을 준다. 내부적으로는 `.git/index` 파일을 통해 효율적으로 구현되어 있으며, 다양한 Git 명령어를 통해 유연하게 활용할 수 있다. Staging Area를 잘 활용하면 더 효율적이고 유지보수하기 좋은 버전 관리가 가능하다.

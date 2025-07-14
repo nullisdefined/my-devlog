@@ -155,7 +155,7 @@ Vercel이나 CI/CD 과정에서 자동으로 `npm run build` 이후 `postbuild`�
 ![image](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/2755a10b307891c9d6c7bf933863d2aa.png)
 *데이터를 처리하는데 시간이 조금 걸리는 듯하다*
 
-## 마무리
+## 마치며
 
 이번 작업을 통해 사이트맵과 SEO를 효과적으로 관리하는 방법을 익힐 수 있었다. next-sitemap 라이브러리를 활용해 정적 페이지와 동적 경로를 손쉽게 사이트맵에 포함시킬 수 있었고, 빌드된 JS 파일만 접근 가능한 구조라는 점을 알게 되면서, 이를 해결하기 위해 별도의 스크립트를 작성한 경험도 값진 배움이 되었다.
 

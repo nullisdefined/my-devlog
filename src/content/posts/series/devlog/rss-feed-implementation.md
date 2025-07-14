@@ -550,7 +550,7 @@ export async function measureRSSGeneration<T>(
 }
 ```
 
-## 마무리
+## 마치며
 
 RSS는 오래된 기술이지만 여전히 콘텐츠 배포에 매우 유용한 도구다. Next.js의 Route Handler를 활용하면 동적이고 효율적인 RSS 피드를 쉽게 구현할 수 있었다.
 

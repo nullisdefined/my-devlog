@@ -178,5 +178,5 @@ export function IsUniqueEmail(validationOptions?: ValidationOptions) {
 }
 ```
 
-## 마무리
+## 마치며
 ValidationPipe는 NestJS 애플리케이션에서 데이터 유효성 검사를 효과적으로 처리할 수 있게 해주는 강력한 도구다. DTO와 함께 사용하면 타입 안정성을 확보하고 비즈니스 로직에 잘못된 데이터가 전달되는 것을 방지할 수 있다. class-validator를 사용하여 재사용 가능한 방식으로 유효성 검사 규칙을 정의하여 코드의 유지보수성과 가독성을 높일 수 있다.

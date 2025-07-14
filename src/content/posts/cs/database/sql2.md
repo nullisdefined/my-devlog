@@ -187,6 +187,6 @@ SELECT * FROM student WHERE grade = NULL;      -- 항상 false
 SELECT * FROM student WHERE grade IS NULL;     -- 올바른 비교
 ```
 
-## 마무리
+## 마치며
 
 > 이 글은 이상호 교수님의 [데이터베이스 I 이론 및 실제 교재](https://product.kyobobook.co.kr/detail/S000001918597)를 토대로 공부한 내용을 정리한 것입니다.

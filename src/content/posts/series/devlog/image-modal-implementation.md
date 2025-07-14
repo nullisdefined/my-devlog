@@ -273,7 +273,7 @@ useEffect(() => {
 
 **해결**: useEffect를 기능별로 분리하고 모달 닫히면 스타일을 재적용
 
-## 마무리
+## 마치며
 
 ![image](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/47b3c193b9c1e92ea79db558ca0d5c98.gif)*구현된 이미지 모달*
 
