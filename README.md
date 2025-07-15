@@ -18,27 +18,27 @@
 <!-- BLOG:START --><table>
 <tr>
 <td align="center">📌</td>
-<td><strong><a href="https://nullisdefined.site/devlog/posts/cloud/aws/designing-landing-zone-architectures-with-aws-control-tower">Designing Landing Zone Architectures with AWS Control Tower</a></strong></td>
+<td><strong><a href="https://nullisdefined.site/devlog/posts/cloud/aws/getting-started-with-amazon-ecr">Getting Started with Amazon ECR</a></strong></td>
 </tr>
 </table><table>
 <tr>
 <td align="center">📌</td>
-<td><strong><a href="https://nullisdefined.site/devlog/posts/cloud/aws/introduction-to-database-migration">Introduction to Database Migration</a></strong></td>
+<td><strong><a href="https://nullisdefined.site/devlog/posts/cloud/aws/getting-started-with-amazon-ecs">Getting Started with Amazon ECS</a></strong></td>
 </tr>
 </table><table>
 <tr>
 <td align="center">📌</td>
-<td><strong><a href="https://nullisdefined.site/devlog/posts/cloud/aws/aws-lambda-destinations">AWS Lambda — Destinations</a></strong></td>
+<td><strong><a href="https://nullisdefined.site/devlog/posts/cloud/aws/working-with-amazon-elastic-container-service">Working with Amazon Elastic Container Service</a></strong></td>
 </tr>
 </table><table>
 <tr>
 <td align="center">📌</td>
-<td><strong><a href="https://nullisdefined.site/devlog/posts/cloud/aws/event-object-vs-context-object">AWS Lambda — 이벤트 객체와 컨텍스트 객체</a></strong></td>
+<td><strong><a href="https://nullisdefined.site/devlog/posts/backend/nestjs/nestjs-query-parameter-boolean-transformation-issue">[NestJS] Query Parameter Boolean 변환에서 발생한 이슈</a></strong></td>
 </tr>
 </table><table>
 <tr>
 <td align="center">📌</td>
-<td><strong><a href="https://nullisdefined.site/devlog/posts/cloud/aws/aws-lambda-invocation-methods">AWS Lambda — 호출 방식 정리</a></strong></td>
+<td><strong><a href="https://nullisdefined.site/devlog/posts/cloud/aws/developing-on-aws">Developing on AWS</a></strong></td>
 </tr>
 </table><!-- BLOG:END -->
 
