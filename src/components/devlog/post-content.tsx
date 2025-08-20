@@ -417,7 +417,8 @@ export function PostContent({ content }: PostContentProps) {
       // 기본적으로 다이어그램 보기로 설정
       if (shouldShowAsDiagram) {
         const mermaidCodeBlocks = document.querySelectorAll('[data-language="mermaid"]');
-        for (const block of mermaidCodeBlocks) {
+        const blocks = Array.from(mermaidCodeBlocks);
+        for (const block of blocks) {
           const code = block.querySelector('code');
           const mermaidCode = code?.textContent || '';
           if (mermaidCode) {
@@ -453,7 +454,8 @@ export function PostContent({ content }: PostContentProps) {
               const mermaidContainers = document.querySelectorAll('.mermaid-container');
               
               // 기존 다이어그램 컨테이너들을 다시 렌더링
-              for (const container of mermaidContainers) {
+              const containers = Array.from(mermaidContainers);
+              for (const container of containers) {
                 const mermaidCode = container.getAttribute('data-mermaid-code');
                 if (mermaidCode) {
                   await convertToMermaidDiagram(container as HTMLElement, mermaidCode);
@@ -461,7 +463,8 @@ export function PostContent({ content }: PostContentProps) {
               }
               
               // 코드 블록들도 다이어그램으로 변환
-              for (const block of mermaidCodeBlocks) {
+              const blocks = Array.from(mermaidCodeBlocks);
+              for (const block of blocks) {
                 const code = block.querySelector('code');
                 const mermaidCode = code?.textContent || '';
                 if (mermaidCode) {
@@ -540,7 +543,8 @@ export function PostContent({ content }: PostContentProps) {
         if (shouldShowAsDiagram) {
           // 다이어그램 상태여야 하는 경우
           const mermaidCodeBlocks = document.querySelectorAll('[data-language="mermaid"]');
-          for (const block of mermaidCodeBlocks) {
+          const blocks = Array.from(mermaidCodeBlocks);
+          for (const block of blocks) {
             const code = block.querySelector('code');
             const mermaidCode = code?.textContent || '';
             if (mermaidCode) {
