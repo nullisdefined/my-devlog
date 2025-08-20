@@ -111,6 +111,11 @@ export const languageConfigs: Record<string, LanguageConfig> = {
     color: "#FF69B4",
     aliases: ["gql"],
   },
+  mermaid: {
+    icon: "MER",
+    borderColor: "border-[#FF3670]",
+    color: "#FF3670",
+  },
   plaintext: {
     icon: "TXT",
     borderColor: "border-gray-400",

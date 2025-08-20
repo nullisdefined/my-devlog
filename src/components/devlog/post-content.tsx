@@ -77,54 +77,7 @@ function alignImageCaptions() {
   });
 }
 
-// Quote 아이콘 추가 기능
-function addQuoteIcons() {
-  const lastParagraphs = document.querySelectorAll(
-    ".prose p:last-child, .post-content p:last-child, .prose > div:last-child p:last-child"
-  );
 
-  lastParagraphs.forEach((paragraph) => {
-    const p = paragraph as HTMLElement;
-
-    // 이미 아이콘이 추가되었는지 확인
-    if (p.querySelector(".quote-icon")) return;
-
-    // Quote 아이콘 생성
-    const iconContainer = document.createElement("div");
-    iconContainer.className = "quote-icon";
-    iconContainer.innerHTML = `
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"/>
-        <path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 1 0 1 1 1z"/>
-      </svg>
-    `;
-
-    // 스타일 적용 - 에메랄드 그린 테마
-    iconContainer.style.cssText = `
-      position: absolute;
-      top: 1rem;
-      left: 0.75rem;
-      background: #059669;
-      color: white;
-      width: 1.5rem;
-      height: 1.5rem;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 2px 4px rgba(16, 185, 129, 0.3);
-      z-index: 1;
-    `;
-
-    // 다크모드 확인
-    if (document.documentElement.classList.contains("dark")) {
-      iconContainer.style.background = "#34d399";
-      iconContainer.style.boxShadow = "0 2px 4px rgba(52, 211, 153, 0.3)";
-    }
-
-    p.appendChild(iconContainer);
-  });
-}
 
 export function PostContent({ content }: PostContentProps) {
   const [modalImage, setModalImage] = useState<{
@@ -177,6 +130,149 @@ export function PostContent({ content }: PostContentProps) {
       };
     });
   }, []);
+
+  // Mermaid 차트 렌더링 함수
+  const renderMermaidDiagrams = useCallback(async () => {
+    // 기존 mermaid 컨테이너들을 찾아서 원래 코드 블록으로 복원
+    const existingContainers = document.querySelectorAll(".mermaid-container");
+    existingContainers.forEach((container) => {
+      const mermaidCode = container.getAttribute("data-mermaid-code");
+      if (mermaidCode) {
+        const pre = document.createElement("pre");
+        pre.setAttribute("data-language", "mermaid");
+        const code = document.createElement("code");
+        code.className = "language-mermaid";
+        code.textContent = mermaidCode;
+        pre.appendChild(code);
+        container.parentNode?.replaceChild(pre, container);
+      }
+    });
+
+    const mermaidBlocks = document.querySelectorAll(
+      'pre[data-language="mermaid"] code, pre code.language-mermaid'
+    );
+
+    if (mermaidBlocks.length === 0) return;
+
+    try {
+      const mermaid = (await import("mermaid")).default;
+
+      // 다크모드 감지
+      const isDarkMode = document.documentElement.classList.contains("dark");
+      // console.log('Current theme mode:', isDarkMode ? 'dark' : 'light');
+
+      // Mermaid 초기화
+      mermaid.initialize({
+        startOnLoad: false,
+        theme: isDarkMode ? "dark" : "default",
+        securityLevel: "loose",
+        fontFamily: "inherit",
+        fontSize: 14,
+        themeVariables: isDarkMode
+          ? {
+              background: "#1f2937",
+              primaryColor: "#3b82f6",
+              primaryTextColor: "#f9fafb",
+              primaryBorderColor: "#6b7280",
+              lineColor: "#9ca3af",
+              sectionBkgColor: "#374151",
+              altSectionBkgColor: "#4b5563",
+              gridColor: "#6b7280",
+              secondaryColor: "#10b981",
+              tertiaryColor: "#f59e0b",
+            }
+          : {
+              background: "#ffffff",
+              primaryColor: "#3b82f6",
+              primaryTextColor: "#1f2937",
+              primaryBorderColor: "#e5e7eb",
+              lineColor: "#6b7280",
+              sectionBkgColor: "#f9fafb",
+              altSectionBkgColor: "#f3f4f6",
+              gridColor: "#e5e7eb",
+              secondaryColor: "#10b981",
+              tertiaryColor: "#f59e0b",
+            },
+      });
+
+      for (let index = 0; index < mermaidBlocks.length; index++) {
+        const block = mermaidBlocks[index];
+        const code = block as HTMLElement;
+        const mermaidCode = code.textContent || "";
+        const id = `mermaid-diagram-${index}-${Date.now()}`;
+
+        console.log(
+          "Found mermaid block:",
+          mermaidCode.substring(0, 50) + "..."
+        );
+
+        // 기존 pre 요소를 div로 교체
+        const pre = code.parentElement;
+        if (pre && pre.parentNode) {
+          const container = document.createElement("div");
+          container.className =
+            "mermaid-container my-6 flex justify-center overflow-x-auto";
+          container.style.minHeight = "200px";
+          container.setAttribute("data-mermaid-code", mermaidCode); // 원본 코드 저장
+
+          try {
+            // Mermaid 다이어그램 렌더링
+            const { svg } = await mermaid.render(id, mermaidCode);
+            container.innerHTML = svg;
+            console.log(`Successfully rendered diagram ${index}`);
+          } catch (error) {
+            console.error("Mermaid rendering error:", error);
+            container.innerHTML = `<pre style="color: red; background: #fef2f2; padding: 1rem; border-radius: 0.5rem; border-left: 4px solid #ef4444;">Mermaid 렌더링 오류: ${error}</pre>`;
+          }
+
+          pre.parentNode.replaceChild(container, pre);
+        }
+      }
+
+      console.log("Processed", mermaidBlocks.length, "mermaid diagrams");
+    } catch (error) {
+      console.error("Failed to load mermaid:", error);
+    }
+  }, []);
+
+  // Mermaid 차트 처리를 위한 useEffect
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      renderMermaidDiagrams();
+    }, 100);
+
+    return () => clearTimeout(timer);
+  }, [content, renderMermaidDiagrams]);
+
+  // 다크모드 변경 감지 및 Mermaid 다이어그램 재렌더링
+  useEffect(() => {
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (
+          mutation.type === "attributes" &&
+          mutation.attributeName === "class" &&
+          mutation.target === document.documentElement
+        ) {
+          console.log(
+            "Theme change detected, current classes:",
+            document.documentElement.className
+          );
+          // 다크모드가 변경되었을 때 Mermaid 다이어그램을 다시 렌더링
+          setTimeout(() => {
+            console.log("Re-rendering mermaid diagrams for theme change");
+            renderMermaidDiagrams();
+          }, 200);
+        }
+      });
+    });
+
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["class"],
+    });
+
+    return () => observer.disconnect();
+  }, [renderMermaidDiagrams]);
 
   // 초기 콘텐츠 로드시에만 실행되는 useEffect (content 변경시에만)
   useEffect(() => {

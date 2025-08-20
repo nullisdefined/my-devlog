@@ -202,6 +202,44 @@ export async function markdownToHtml(content: string): Promise<string> {
             }
 
             const normalizedLang = normalizeLanguage(language);
+            
+            // Mermaid 다이어그램인 경우 특별 처리
+            if (normalizedLang === "mermaid") {
+              // mermaid 클래스 추가
+              if (!node.properties) {
+                node.properties = {};
+              }
+              
+              const existingClasses = Array.isArray(node.properties.className) 
+                ? node.properties.className 
+                : [];
+              
+              node.properties = {
+                ...node.properties,
+                "data-language": "mermaid",
+                className: [
+                  ...existingClasses,
+                  "mermaid-diagram",
+                  "my-6"
+                ],
+              };
+              
+              // 코드 요소에도 mermaid 클래스 추가
+              if (!codeEl.properties) {
+                codeEl.properties = {};
+              }
+              const existingCodeClasses = Array.isArray(codeEl.properties.className) 
+                ? codeEl.properties.className 
+                : [];
+              
+              codeEl.properties.className = [
+                ...existingCodeClasses,
+                "language-mermaid"
+              ];
+              
+              return; // mermaid는 일반 코드 블록 처리를 건너뛰기
+            }
+
             const config = languageConfigs[normalizedLang];
             const copyButton = createCopyButton();
 
@@ -238,6 +276,48 @@ export async function markdownToHtml(content: string): Promise<string> {
   return result.toString();
 }
 
+// HTML 엔티티를 디코딩하는 함수
+function decodeHtmlEntities(text: string): string {
+  // 서버 사이드에서도 작동하도록 수동 디코딩
+  const entities: Record<string, string> = {
+    '&amp;': '&',
+    '&lt;': '<',
+    '&gt;': '>',
+    '&quot;': '"',
+    '&#x27;': "'",
+    '&#x2F;': '/',
+    '&#x60;': '`',
+    '&#x3D;': '=',
+    '&nbsp;': ' ',
+  };
+  
+  // 먼저 숫자형 HTML 엔티티 처리 (&#x26;, &#38; 등)
+  let decoded = text.replace(/&#x([0-9a-fA-F]+);/g, (match, hex) => {
+    try {
+      const code = parseInt(hex, 16);
+      return String.fromCharCode(code);
+    } catch {
+      return match; // 변환 실패시 원본 반환
+    }
+  });
+  
+  decoded = decoded.replace(/&#(\d+);/g, (match, decimal) => {
+    try {
+      const code = parseInt(decimal, 10);
+      return String.fromCharCode(code);
+    } catch {
+      return match; // 변환 실패시 원본 반환
+    }
+  });
+  
+  // 명명된 엔티티 처리
+  Object.entries(entities).forEach(([entity, char]) => {
+    decoded = decoded.replace(new RegExp(entity.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g'), char);
+  });
+  
+  return decoded;
+}
+
 export function extractTableOfContents(html: string): TableOfContentsItem[] {
   const headings =
     html.match(/<h([2-4])[^>]*id="([^"]+)"[^>]*>(.*?)<\/h[2-4]>/g) || [];
@@ -249,9 +329,12 @@ export function extractTableOfContents(html: string): TableOfContentsItem[] {
 
     const level = levelMatch ? parseInt(levelMatch[1]) : 2;
     const id = idMatch ? idMatch[1] : "";
-    const title = titleMatch
+    const rawTitle = titleMatch
       ? titleMatch[1].replace(/<[^>]*>/g, "").trim()
       : "";
+    
+    // HTML 엔티티 디코딩
+    const title = decodeHtmlEntities(rawTitle);
 
     return { level, id, title };
   });
