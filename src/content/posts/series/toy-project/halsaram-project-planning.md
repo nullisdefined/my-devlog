@@ -369,11 +369,6 @@ graph TD
 ### 장기적 확장 가능성
 향후 서비스가 안정화되면 서울 전 지역 확대, AI 미션 생성 알고리즘 고도화, 전국 서비스 확장, 공공기관 연계를 통한 지역 경제 활성화, 다양한 미션 카테고리 확장(운동, 문화, 봉사활동 등), 기업 연계 미션 및 마케팅 플랫폼으로의 발전 등을 고려할 수 있다.
 
-## 프로젝트 일정
-
-- **2024.07.28**: 프로젝트 주제 발표
-- **2024.08.18**: 프로젝트 최종 발표
-
 ## 관련 링크
 
 - [주제발표 프레젠테이션 자료](https://www.canva.com/design/DAGwn2UZKZs/4phLBWk4OCrzfSF00n21sA/edit?utm_content=DAGwn2UZKZs&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton)

@@ -496,7 +496,7 @@ pre[data-title] {
 
 /* 복사 버튼 스타일 */
 .copy-button {
-  @apply absolute top-2 right-4 p-1.5 rounded-md;
+  @apply absolute top-2 right-2 p-2 rounded-lg;
   @apply opacity-0 group-hover:opacity-100;
   /* 라이트모드: 깔끔한 버튼 */
   @apply bg-slate-200 hover:bg-slate-400 text-slate-700;
@@ -504,8 +504,8 @@ pre[data-title] {
   @apply dark:bg-slate-700 dark:hover:bg-slate-500 dark:text-slate-300;
   @apply transition-all duration-200;
   z-index: 10;
-  width: auto !important;
-  height: auto !important;
+  width: 40px !important;
+  height: 40px !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
