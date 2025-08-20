@@ -1,5 +1,5 @@
 ---
-title: "[Guestbook] 서버리스 아키텍처로 구현한 방명록 애플리케이션"
+title: "[Guestboots] 서버리스 아키텍처로 구현한 방명록 애플리케이션"
 slug: "guestbook-serverless-architecture"
 date: 2025-06-25
 tags: ["AWS", "Serverless", "Lambda", "APIGateway", "DynamoDB", "CloudWatch", "ToyProject"]

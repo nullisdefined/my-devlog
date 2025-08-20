@@ -521,8 +521,6 @@ export default function Home() {
         { name: "Express", icon: <SiExpress className="h-4 w-4" /> },
         { name: "NestJS", icon: <SiNestjs className="h-4 w-4" /> },
         { name: "TypeORM", icon: <SiTypeorm className="h-4 w-4" /> },
-        { name: "Spring Boot", icon: <SiSpringboot className="h-4 w-4" /> },
-        { name: "JPA", icon: <SiSpring className="h-4 w-4" /> },
       ],
     },
     {
