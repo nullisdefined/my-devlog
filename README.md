@@ -18,6 +18,11 @@
 <!-- BLOG:START --><table>
 <tr>
 <td align="center">📌</td>
+<td><strong><a href="https://nullisdefined.site/devlog/posts/series/toy-project/halsaram-project-planning">[할사람] 프로젝트 기획</a></strong></td>
+</tr>
+</table><table>
+<tr>
+<td align="center">📌</td>
 <td><strong><a href="https://nullisdefined.site/devlog/posts/cloud/aws/getting-started-with-amazon-ecr">Getting Started with Amazon ECR</a></strong></td>
 </tr>
 </table><table>
@@ -34,11 +39,6 @@
 <tr>
 <td align="center">📌</td>
 <td><strong><a href="https://nullisdefined.site/devlog/posts/backend/nestjs/nestjs-query-parameter-boolean-transformation-issue">[NestJS] Query Parameter Boolean 변환에서 발생한 이슈</a></strong></td>
-</tr>
-</table><table>
-<tr>
-<td align="center">📌</td>
-<td><strong><a href="https://nullisdefined.site/devlog/posts/cloud/aws/developing-on-aws">Developing on AWS</a></strong></td>
 </tr>
 </table><!-- BLOG:END -->
 
