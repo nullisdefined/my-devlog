@@ -89,6 +89,90 @@ function remarkHighlight() {
   };
 }
 
+// GitHub-style alerts (admonitions) 플러그인
+function remarkAdmonitions() {
+  return (tree: any) => {
+    visit(tree, "blockquote", (node, index, parent) => {
+      // blockquote의 첫 번째 paragraph를 확인
+      const firstParagraph = node.children?.[0];
+      if (!firstParagraph || firstParagraph.type !== "paragraph") return;
+      
+      // 첫 번째 텍스트 노드 확인
+      const firstChild = firstParagraph.children?.[0];
+      if (!firstChild || firstChild.type !== "text") return;
+      
+      // GitHub-style alert 문법 매칭
+      const alertMatch = firstChild.value.match(/^\[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION|HINT)\]\s*/i);
+      if (!alertMatch) return;
+      
+      const alertType = alertMatch[1].toUpperCase();
+      
+      // 알림 타입 텍스트 제거
+      firstChild.value = firstChild.value.replace(alertMatch[0], "");
+      
+      // 텍스트가 비어있으면 노드 제거
+      if (!firstChild.value.trim() && firstParagraph.children.length === 1) {
+        firstParagraph.children = [];
+      }
+      
+      // blockquote에 데이터 속성 추가
+      node.data = {
+        ...node.data,
+        hName: "div",
+        hProperties: {
+          className: ["markdown-alert", `markdown-alert-${alertType.toLowerCase()}`],
+          "data-alert": alertType.toLowerCase()
+        }
+      };
+      
+      // 아이콘과 제목을 위한 헤더 추가
+      const alertHeader = {
+        type: "paragraph",
+        data: {
+          hName: "div",
+          hProperties: {
+            className: ["markdown-alert-header"]
+          }
+        },
+        children: [
+          {
+            type: "text",
+            value: getAlertTitle(alertType)
+          }
+        ]
+      };
+      
+      // 콘텐츠를 위한 래퍼
+      const alertContent = {
+        type: "paragraph",
+        data: {
+          hName: "div",
+          hProperties: {
+            className: ["markdown-alert-content"]
+          }
+        },
+        children: node.children
+      };
+      
+      // blockquote의 children을 재구성
+      node.children = [alertHeader, alertContent];
+    });
+  };
+}
+
+// 알림 타입에 따른 제목 반환
+function getAlertTitle(type: string): string {
+  const titles: Record<string, string> = {
+    NOTE: "📝 Note",
+    TIP: "💡 Tip",
+    IMPORTANT: "❗ Important",
+    WARNING: "⚠️ Warning",
+    CAUTION: "🔴 Caution",
+    HINT: "💡 Hint"
+  };
+  return titles[type] || type;
+}
+
 function createCopyButton(): Element {
   return {
     type: "element",
@@ -220,6 +304,7 @@ export async function markdownToHtml(content: string): Promise<string> {
     .use(remarkParse)
     .use(remarkGfm)
     .use(remarkHighlight)
+    .use(remarkAdmonitions)
     .use(remarkRehype, {
       allowDangerousHtml: true,
     })

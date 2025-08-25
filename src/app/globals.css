@@ -244,6 +244,84 @@ pre[data-title] {
   background-repeat: no-repeat;
 }
 
+/* GitHub-style alerts (admonitions) */
+.markdown-alert {
+  @apply my-6 rounded-lg border-l-4 p-4;
+  position: relative;
+}
+
+.markdown-alert-header {
+  @apply font-semibold mb-2 flex items-center gap-2;
+}
+
+.markdown-alert-content {
+  @apply text-sm;
+}
+
+.markdown-alert-content > * {
+  @apply my-2;
+}
+
+.markdown-alert-content > *:first-child {
+  @apply mt-0;
+}
+
+.markdown-alert-content > *:last-child {
+  @apply mb-0;
+}
+
+/* Note alert */
+.markdown-alert-note {
+  @apply bg-blue-50 border-blue-500 text-blue-900;
+  @apply dark:bg-blue-950/30 dark:border-blue-500 dark:text-blue-100;
+}
+
+.markdown-alert-note .markdown-alert-header {
+  @apply text-blue-700 dark:text-blue-300;
+}
+
+/* Tip/Hint alert */
+.markdown-alert-tip,
+.markdown-alert-hint {
+  @apply bg-green-50 border-green-500 text-green-900;
+  @apply dark:bg-green-950/30 dark:border-green-500 dark:text-green-100;
+}
+
+.markdown-alert-tip .markdown-alert-header,
+.markdown-alert-hint .markdown-alert-header {
+  @apply text-green-700 dark:text-green-300;
+}
+
+/* Important alert */
+.markdown-alert-important {
+  @apply bg-purple-50 border-purple-500 text-purple-900;
+  @apply dark:bg-purple-950/30 dark:border-purple-500 dark:text-purple-100;
+}
+
+.markdown-alert-important .markdown-alert-header {
+  @apply text-purple-700 dark:text-purple-300;
+}
+
+/* Warning alert */
+.markdown-alert-warning {
+  @apply bg-yellow-50 border-yellow-500 text-yellow-900;
+  @apply dark:bg-yellow-950/30 dark:border-yellow-500 dark:text-yellow-100;
+}
+
+.markdown-alert-warning .markdown-alert-header {
+  @apply text-yellow-700 dark:text-yellow-300;
+}
+
+/* Caution alert */
+.markdown-alert-caution {
+  @apply bg-red-50 border-red-500 text-red-900;
+  @apply dark:bg-red-950/30 dark:border-red-500 dark:text-red-100;
+}
+
+.markdown-alert-caution .markdown-alert-header {
+  @apply text-red-700 dark:text-red-300;
+}
+
 /* 코드 하이라이팅에서 변수명 강조 비활성화 */
 .prose pre code .highlighted-chars,
 .prose pre code mark[data-highlighted-chars] {
