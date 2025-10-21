@@ -21,18 +21,18 @@ export async function GET() {
     const feeds = {
       main: {
         title: "개발새발 - 전체 피드",
-        url: "https://nullisdefined.site/feed.xml",
+        url: "https://nullisdefined.my/feed.xml",
         description: "모든 블로그 포스트",
       },
       categories: Array.from(categories).map((category) => ({
         title: `개발새발 - ${category} 카테고리`,
-        url: `https://nullisdefined.site/feed/${encodeURIComponent(category)}`,
+        url: `https://nullisdefined.my/feed/${encodeURIComponent(category)}`,
         description: `${category} 관련 글들`,
         postCount: posts.filter((post) => post.category === category).length,
       })),
       tags: Array.from(tags).map((tag) => ({
         title: `개발새발 - ${tag} 태그`,
-        url: `https://nullisdefined.site/feed/tags/${encodeURIComponent(tag)}`,
+        url: `https://nullisdefined.my/feed/tags/${encodeURIComponent(tag)}`,
         description: `${tag} 태그가 포함된 글들`,
         postCount: posts.filter((post) => post.tags?.includes(tag)).length,
       })),

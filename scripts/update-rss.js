@@ -2,7 +2,7 @@ const https = require("https");
 const fs = require("fs");
 const path = require("path");
 
-const SITE_URL = "https://nullisdefined.site";
+const SITE_URL = "https://nullisdefined.my";
 const RSS_ENDPOINTS = [
   "/feed.xml",
   "/feed/category/languages",

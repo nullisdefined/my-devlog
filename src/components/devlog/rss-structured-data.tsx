@@ -11,7 +11,7 @@ export function RSSStructuredData({
   feedType = "main",
   identifier,
 }: RSSStructuredDataProps) {
-  const baseUrl = "https://nullisdefined.site";
+  const baseUrl = "https://nullisdefined.my";
 
   const structuredData = {
     "@context": "https://schema.org",

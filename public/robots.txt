@@ -34,14 +34,14 @@ Disallow: /api/
 Crawl-delay: 1
 
 # Host declaration
-Host: https://nullisdefined.site
+Host: https://nullisdefined.my
 
 # Sitemaps
-Sitemap: https://nullisdefined.site/sitemap.xml
-Sitemap: https://nullisdefined.site/sitemap-0.xml
+Sitemap: https://nullisdefined.my/sitemap.xml
+Sitemap: https://nullisdefined.my/sitemap-0.xml
 
 # RSS Feeds (for better SEO discovery)
-Sitemap: https://nullisdefined.site/feed.xml
+Sitemap: https://nullisdefined.my/feed.xml
 
 # RSS Feed discovery for crawlers
 Allow: /feed.xml

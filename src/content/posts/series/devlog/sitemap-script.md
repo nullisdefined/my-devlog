@@ -20,10 +20,10 @@ User-agent: *
 Allow: /
 
 # Host
-Host: https://nullisdefined.site
+Host: https://nullisdefined.my
 
 # Sitemaps
-Sitemap: https://nullisdefined.site/sitemap.xml
+Sitemap: https://nullisdefined.my/sitemap.xml
 
 ```
 ## next-sitemap 적용하기
@@ -37,7 +37,7 @@ npm install next-sitemap --save-dev
 ```js title:next-sitemap.config.js
 /** @type {import('next-sitemap').IConfig} */
 module.exports = {
-  siteUrl: "https://nullisdefined.site",
+  siteUrl: "https://nullisdefined.my",
   generateRobotsTxt: true, // robots.txt 자동 생성
 };
 
@@ -110,7 +110,7 @@ module.exports = {
 const { getPostList, getSeriesPostList } = require("./scripts/posts-data");
 
 module.exports = {
-  siteUrl: "https://nullisdefined.site",
+  siteUrl: "https://nullisdefined.my",
   generateRobotsTxt: true,
   exclude: ["/devlog/admin/*"],
   sitemapSize: 5000,

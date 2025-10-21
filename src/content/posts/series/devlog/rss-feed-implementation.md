@@ -34,7 +34,7 @@ import { NextResponse } from "next/server";
 
 export async function GET() {
   const posts = await getAllPosts();
-  const siteUrl = "https://nullisdefined.site";
+  const siteUrl = "https://nullisdefined.my";
   const feedUrl = `${siteUrl}/feed.xml`;
 
   const rss = `<?xml version="1.0" encoding="UTF-8"?>
@@ -108,7 +108,7 @@ export function markdownToHtml(markdown: string): string {
   // 이미지 경로를 절대 경로로 변환
   return html.replace(
     /src="(?!https?:\/\/)([^"]*?)"/g,
-    'src="https://nullisdefined.site$1"'
+    'src="https://nullisdefined.my$1"'
   );
 }
 
@@ -123,7 +123,7 @@ export function extractImages(content: string): string[] {
     if (imageSrc.startsWith("http")) {
       images.push(imageSrc);
     } else {
-      images.push(`https://nullisdefined.site${imageSrc}`);
+      images.push(`https://nullisdefined.my${imageSrc}`);
     }
   }
   
@@ -139,8 +139,8 @@ export function generateCategoryFeed(category: string, posts: Post[]): RSS {
   const feed = new RSS({
     title: `nullisdefined - ${category} 카테고리`,
     description: `${category} 관련 글들`,
-    site_url: "https://nullisdefined.site",
-    feed_url: `https://nullisdefined.site/feed/category/${category.toLowerCase()}.xml`,
+    site_url: "https://nullisdefined.my",
+    feed_url: `https://nullisdefined.my/feed/category/${category.toLowerCase()}.xml`,
     language: "ko",
     pubDate: new Date().toUTCString(),
     ttl: 60,
@@ -150,8 +150,8 @@ export function generateCategoryFeed(category: string, posts: Post[]): RSS {
     feed.item({
       title: post.title,
       description: post.excerpt || post.title,
-      url: `https://nullisdefined.site/devlog/posts/${post.urlCategory}/${post.slug}`,
-      guid: `https://nullisdefined.site/devlog/posts/${post.urlCategory}/${post.slug}`,
+      url: `https://nullisdefined.my/devlog/posts/${post.urlCategory}/${post.slug}`,
+      guid: `https://nullisdefined.my/devlog/posts/${post.urlCategory}/${post.slug}`,
       categories: [post.category, ...post.tags],
       date: new Date(post.date),
       author: "nullisdefined",
@@ -170,8 +170,8 @@ export function generateTagFeed(tag: string, posts: Post[]): RSS {
   const feed = new RSS({
     title: `nullisdefined - ${tag} 태그`,
     description: `${tag} 태그가 포함된 글들`,
-    site_url: "https://nullisdefined.site",
-    feed_url: `https://nullisdefined.site/feed/tags/${encodeURIComponent(tag)}.xml`,
+    site_url: "https://nullisdefined.my",
+    feed_url: `https://nullisdefined.my/feed/tags/${encodeURIComponent(tag)}.xml`,
     language: "ko",
     pubDate: new Date().toUTCString(),
     ttl: 60,
@@ -181,8 +181,8 @@ export function generateTagFeed(tag: string, posts: Post[]): RSS {
     feed.item({
       title: post.title,
       description: post.excerpt || post.title,
-      url: `https://nullisdefined.site/devlog/posts/${post.urlCategory}/${post.slug}`,
-      guid: `https://nullisdefined.site/devlog/posts/${post.urlCategory}/${post.slug}`,
+      url: `https://nullisdefined.my/devlog/posts/${post.urlCategory}/${post.slug}`,
+      guid: `https://nullisdefined.my/devlog/posts/${post.urlCategory}/${post.slug}`,
       categories: [post.category, ...post.tags],
       date: new Date(post.date),
       author: "nullisdefined",

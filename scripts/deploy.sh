@@ -65,7 +65,7 @@ if [ -n "$(git status --porcelain)" ]; then
 
 	# Google Search Console 알림
 	echo -e "${GREEN}  📍 Google Search Console...${NC}"
-	GOOGLE_RESPONSE=$(curl -s -w "%{http_code}" -X GET "https://www.google.com/ping?sitemap=https://nullisdefined.site/sitemap.xml")
+	GOOGLE_RESPONSE=$(curl -s -w "%{http_code}" -X GET "https://www.google.com/ping?sitemap=https://nullisdefined.my/sitemap.xml")
 	if [[ "$GOOGLE_RESPONSE" == *"200" ]]; then
 		echo -e "${GREEN}  ✅ Google 알림 성공${NC}"
 	else
@@ -74,7 +74,7 @@ if [ -n "$(git status --porcelain)" ]; then
 
 	# Bing Webmaster Tools 알림
 	echo -e "${GREEN}  📍 Bing Webmaster Tools...${NC}"
-	BING_RESPONSE=$(curl -s -w "%{http_code}" -X GET "https://www.bing.com/ping?sitemap=https://nullisdefined.site/sitemap.xml")
+	BING_RESPONSE=$(curl -s -w "%{http_code}" -X GET "https://www.bing.com/ping?sitemap=https://nullisdefined.my/sitemap.xml")
 	if [[ "$BING_RESPONSE" == *"200" ]]; then
 		echo -e "${GREEN}  ✅ Bing 알림 성공${NC}"
 	else

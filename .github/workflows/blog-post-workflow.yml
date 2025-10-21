@@ -20,7 +20,7 @@ jobs:
         uses: gautamkrishnar/blog-post-workflow@v1
         with:
           comment_tag_name: "BLOG"
-          feed_list: "https://nullisdefined.site/feed.xml"
+          feed_list: "https://nullisdefined.my/feed.xml"
           max_post_count: 5
           template: |
             <table>

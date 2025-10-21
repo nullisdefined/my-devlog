@@ -61,7 +61,7 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://nullisdefined.site"),
+  metadataBase: new URL("https://nullisdefined.my"),
   title: {
     default: "Jaewoo Kim | Portfolio",
     template: "%s",
@@ -94,7 +94,7 @@ export const metadata: Metadata = {
     "Software Engineer",
   ],
   authors: [
-    { name: "Jaewoo Kim (nullisdefined)", url: "https://nullisdefined.site" },
+    { name: "Jaewoo Kim (nullisdefined)", url: "https://nullisdefined.my" },
   ],
   creator: "Jaewoo Kim",
   publisher: "Jaewoo Kim",
@@ -114,7 +114,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "ko_KR",
-    url: "https://nullisdefined.site",
+    url: "https://nullisdefined.my",
     siteName: "Jaewoo Kim Portfolio",
     title: "Jaewoo Kim | Portfolio",
     description:
@@ -147,11 +147,11 @@ export const metadata: Metadata = {
     },
   },
   alternates: {
-    canonical: "https://nullisdefined.site",
+    canonical: "https://nullisdefined.my",
     types: {
       "application/rss+xml": [
         {
-          url: "https://nullisdefined.site/feed.xml",
+          url: "https://nullisdefined.my/feed.xml",
           title: "개발새발 RSS Feed",
         },
       ],
@@ -170,13 +170,13 @@ export default function RootLayout({
     name: "Jaewoo Kim's Portfolio",
     description:
       "풀스택 개발자 김재우의 포트폴리오입니다. Node.js, NestJS, TypeScript를 활용한 웹 애플리케이션 개발 경험과 프로젝트를 소개합니다.",
-    url: "https://nullisdefined.site",
+    url: "https://nullisdefined.my",
     author: {
       "@type": "Person",
       name: "Jaewoo Kim",
       alternateName: ["김재우", "nullisdefined"],
       jobTitle: "풀스택 개발자",
-      url: "https://nullisdefined.site",
+      url: "https://nullisdefined.my",
       knowsAbout: [
         "Node.js",
         "NestJS",
@@ -202,7 +202,7 @@ export default function RootLayout({
     },
     potentialAction: {
       "@type": "SearchAction",
-      target: "https://nullisdefined.site/devlog?q={search_term_string}",
+      target: "https://nullisdefined.my/devlog?q={search_term_string}",
       "query-input": "required name=search_term_string",
     },
   };

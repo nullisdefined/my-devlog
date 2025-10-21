@@ -54,7 +54,7 @@ export async function generateMetadata({ params }: PostPageProps) {
     };
   }
 
-  const canonicalPath = `https://nullisdefined.site/devlog/posts/${params.slug.join(
+  const canonicalPath = `https://nullisdefined.my/devlog/posts/${params.slug.join(
     "/"
   )}`;
 
@@ -64,7 +64,7 @@ export async function generateMetadata({ params }: PostPageProps) {
     title: `${post.title} | 개발새발`,
     description: description,
     keywords: post.tags,
-    authors: [{ name: "nullisdefined", url: "https://nullisdefined.site" }],
+    authors: [{ name: "nullisdefined", url: "https://nullisdefined.my" }],
     creator: "nullisdefined",
     publisher: "nullisdefined",
     category: post.category || "Technology",
@@ -94,7 +94,7 @@ export async function generateMetadata({ params }: PostPageProps) {
             {
               url: post.thumbnail.startsWith("http")
                 ? post.thumbnail
-                : `https://nullisdefined.site${post.thumbnail}`,
+                : `https://nullisdefined.my${post.thumbnail}`,
               width: 1200,
               height: 630,
               alt: post.title,
@@ -102,7 +102,7 @@ export async function generateMetadata({ params }: PostPageProps) {
           ]
         : [
             {
-              url: "https://nullisdefined.site/favicon.ico",
+              url: "https://nullisdefined.my/favicon.ico",
               width: 800,
               height: 600,
               alt: post.title,
@@ -119,9 +119,9 @@ export async function generateMetadata({ params }: PostPageProps) {
         ? [
             post.thumbnail.startsWith("http")
               ? post.thumbnail
-              : `https://nullisdefined.site${post.thumbnail}`,
+              : `https://nullisdefined.my${post.thumbnail}`,
           ]
-        : ["https://nullisdefined.site/favicon.ico"],
+        : ["https://nullisdefined.my/favicon.ico"],
     },
     robots: {
       index: true,
@@ -167,7 +167,7 @@ export default async function PostPage({
   const { getAllPosts } = await import("@/lib/posts");
   const allPosts = await getAllPosts();
 
-  const canonicalPath = `https://nullisdefined.site/devlog/posts/${params.slug.join(
+  const canonicalPath = `https://nullisdefined.my/devlog/posts/${params.slug.join(
     "/"
   )}`;
 
@@ -184,20 +184,20 @@ export default async function PostPage({
     image: post.thumbnail
       ? post.thumbnail.startsWith("http")
         ? post.thumbnail
-        : `https://nullisdefined.site${post.thumbnail}`
-      : "https://nullisdefined.site/favicon.ico",
+        : `https://nullisdefined.my${post.thumbnail}`
+      : "https://nullisdefined.my/favicon.ico",
     author: {
       "@type": "Person",
       name: "nullisdefined",
-      url: "https://nullisdefined.site",
+      url: "https://nullisdefined.my",
     },
     publisher: {
       "@type": "Organization",
       name: "개발새발",
-      url: "https://nullisdefined.site",
+      url: "https://nullisdefined.my",
       logo: {
         "@type": "ImageObject",
-        url: "https://nullisdefined.site/favicon.ico",
+        url: "https://nullisdefined.my/favicon.ico",
         width: 60,
         height: 60,
       },
@@ -225,19 +225,19 @@ export default async function PostPage({
         "@type": "ListItem",
         position: 1,
         name: "홈",
-        item: "https://nullisdefined.site",
+        item: "https://nullisdefined.my",
       },
       {
         "@type": "ListItem",
         position: 2,
         name: "개발새발",
-        item: "https://nullisdefined.site/devlog",
+        item: "https://nullisdefined.my/devlog",
       },
       {
         "@type": "ListItem",
         position: 3,
         name: post.category,
-        item: `https://nullisdefined.site/devlog/categories/${category}`,
+        item: `https://nullisdefined.my/devlog/categories/${category}`,
       },
       {
         "@type": "ListItem",

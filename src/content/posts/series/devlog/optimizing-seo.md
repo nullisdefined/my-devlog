@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     follow: true,
   },
   alternates: {
-    canonical: 'https://nullisdefined.site'
+    canonical: 'https://nullisdefined.my'
   }
 };
 ```
@@ -83,7 +83,7 @@ function formatDate(date) {
 }
 
 module.exports = {
-  siteUrl: "https://nullisdefined.site",
+  siteUrl: "https://nullisdefined.my",
   generateRobotsTxt: true,
   exclude: ["/devlog/admin/*"],
   sitemapSize: 5000,
@@ -132,7 +132,7 @@ if [ -n "$(git status --porcelain)" ]; then
     npm run build
     
     echo -e "${GREEN}Notifying Google about sitemap update...${NC}"
-    curl -X GET "http://www.google.com/ping?sitemap=https://nullisdefined.site/sitemap.xml"
+    curl -X GET "http://www.google.com/ping?sitemap=https://nullisdefined.my/sitemap.xml"
     
     echo -e "${GREEN}Deployment completed successfully!${NC}"
 else

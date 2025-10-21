@@ -1,7 +1,7 @@
 // Google Search Console에 사이트맵 업데이트 알림
 export async function notifyGoogleSitemap() {
   try {
-    const sitemapUrl = "https://nullisdefined.site/sitemap.xml";
+    const sitemapUrl = "https://nullisdefined.my/sitemap.xml";
     const pingUrl = `https://www.google.com/ping?sitemap=${encodeURIComponent(
       sitemapUrl
     )}`;
@@ -29,7 +29,7 @@ export async function notifyGoogleSitemap() {
 // Bing Search Engine에 사이트맵 알림
 export async function notifyBingSitemap() {
   try {
-    const sitemapUrl = "https://nullisdefined.site/sitemap.xml";
+    const sitemapUrl = "https://nullisdefined.my/sitemap.xml";
     const pingUrl = `https://www.bing.com/ping?sitemap=${encodeURIComponent(
       sitemapUrl
     )}`;

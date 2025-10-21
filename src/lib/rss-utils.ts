@@ -14,7 +14,7 @@ export function markdownToHtml(markdown: string): string {
   // 이미지 경로를 절대 경로로 변환
   return html.replace(
     /src="(?!https?:\/\/)([^"]*?)"/g,
-    'src="https://nullisdefined.site$1"'
+    'src="https://nullisdefined.my$1"'
   );
 }
 
@@ -40,7 +40,7 @@ export function extractImages(content: string): string[] {
     if (imageSrc.startsWith("http")) {
       images.push(imageSrc);
     } else {
-      images.push(`https://nullisdefined.site${imageSrc}`);
+      images.push(`https://nullisdefined.my${imageSrc}`);
     }
   }
 
@@ -56,14 +56,14 @@ export function createBaseRSSConfig(
   return {
     title,
     description,
-    site_url: "https://nullisdefined.site",
+    site_url: "https://nullisdefined.my",
     feed_url: feedUrl,
     language: "ko-KR",
     generator: "Next.js RSS Utils v1.0",
     webMaster: "nullisdefined@gmail.com (nullisdefined)",
     managingEditor: "nullisdefined@gmail.com (nullisdefined)",
-    image_url: "https://nullisdefined.site/favicon.ico",
-    docs: "https://nullisdefined.site/devlog",
+    image_url: "https://nullisdefined.my/favicon.ico",
+    docs: "https://nullisdefined.my/devlog",
     copyright: `Copyright ${new Date().getFullYear()} nullisdefined`,
     categories: [
       "Technology",
@@ -97,7 +97,7 @@ export function createBaseRSSConfig(
 
 // 포스트를 RSS 아이템으로 변환
 export function postToRSSItem(post: Post): RSS.ItemOptions {
-  const postUrl = `https://nullisdefined.site/devlog/posts/${post.urlCategory}/${post.slug}`;
+  const postUrl = `https://nullisdefined.my/devlog/posts/${post.urlCategory}/${post.slug}`;
   const htmlContent = markdownToHtml(post.content);
   const description = post.excerpt || extractTextFromHtml(htmlContent);
   const images = extractImages(post.content);
@@ -153,7 +153,7 @@ export function generateCategoryFeed(category: string, posts: Post[]): RSS {
     createBaseRSSConfig(
       `개발새발 - ${category} 카테고리`,
       `${category} 관련 글들을 모아놓은 RSS 피드입니다.`,
-      `https://nullisdefined.site/feed/${category.toLowerCase()}.xml`
+      `https://nullisdefined.my/feed/${category.toLowerCase()}.xml`
     )
   );
 
@@ -173,7 +173,7 @@ export function generateTagFeed(tag: string, posts: Post[]): RSS {
     createBaseRSSConfig(
       `개발새발 - ${tag} 태그`,
       `${tag} 태그가 포함된 글들을 모아놓은 RSS 피드입니다.`,
-      `https://nullisdefined.site/feed/tags/${encodeURIComponent(tag)}.xml`
+      `https://nullisdefined.my/feed/tags/${encodeURIComponent(tag)}.xml`
     )
   );
 
@@ -195,7 +195,7 @@ export function generateSeriesFeed(series: string, posts: Post[]): RSS {
     createBaseRSSConfig(
       `개발새발 - ${series} 시리즈`,
       `${series} 시리즈의 글들을 모아놓은 RSS 피드입니다.`,
-      `https://nullisdefined.site/feed/series/${encodeURIComponent(series)}.xml`
+      `https://nullisdefined.my/feed/series/${encodeURIComponent(series)}.xml`
     )
   );
 
@@ -212,7 +212,7 @@ export function generateMainFeed(posts: Post[]): RSS {
     createBaseRSSConfig(
       "개발새발",
       "소프트웨어 개발에 대한 인사이트와 경험을 공유하는 개인 블로그",
-      "https://nullisdefined.site/feed.xml"
+      "https://nullisdefined.my/feed.xml"
     )
   );
 

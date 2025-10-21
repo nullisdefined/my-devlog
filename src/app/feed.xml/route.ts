@@ -19,7 +19,7 @@ export async function GET() {
         "X-Feed-Type": "main",
         "X-Generated-At": new Date().toISOString(),
         "X-Robots-Tag": "index, follow",
-        Link: '<https://nullisdefined.site/devlog>; rel="alternate"; type="text/html"',
+        Link: '<https://nullisdefined.my/devlog>; rel="alternate"; type="text/html"',
         "Last-Modified": new Date().toUTCString(),
         ETag: `"${Date.now()}"`,
         Vary: "Accept-Encoding",

@@ -36,7 +36,7 @@ export const metadata: Metadata = {
     "Cloud",
     "AWS",
   ],
-  authors: [{ name: "nullisdefined", url: "https://nullisdefined.site" }],
+  authors: [{ name: "nullisdefined", url: "https://nullisdefined.my" }],
   creator: "nullisdefined",
   publisher: "nullisdefined",
   category: "Technology",
@@ -66,13 +66,13 @@ export const metadata: Metadata = {
     title: "개발새발 | 소프트웨어 개발 블로그",
     description:
       "소프트웨어 개발에 대한 인사이트와 경험을 공유하는 개인 블로그입니다. JavaScript, TypeScript, Node.js, NestJS 등 웹 개발 기술을 다룹니다.",
-    url: "https://nullisdefined.site/devlog",
+    url: "https://nullisdefined.my/devlog",
     siteName: "개발새발",
     locale: "ko_KR",
     type: "website",
     images: [
       {
-        url: "https://nullisdefined.site/favicon.ico",
+        url: "https://nullisdefined.my/favicon.ico",
         width: 800,
         height: 600,
         alt: "개발새발 로고",
@@ -84,28 +84,28 @@ export const metadata: Metadata = {
     title: "개발새발 | 소프트웨어 개발 블로그",
     description:
       "소프트웨어 개발에 대한 인사이트와 경험을 공유하는 개인 블로그",
-    images: ["https://nullisdefined.site/favicon.ico"],
+    images: ["https://nullisdefined.my/favicon.ico"],
     creator: "@nullisdefined",
     site: "@nullisdefined",
   },
   alternates: {
-    canonical: "https://nullisdefined.site/devlog",
+    canonical: "https://nullisdefined.my/devlog",
     types: {
       "application/rss+xml": [
         {
-          url: "https://nullisdefined.site/feed.xml",
+          url: "https://nullisdefined.my/feed.xml",
           title: "개발새발 - 전체 RSS Feed",
         },
         {
-          url: "https://nullisdefined.site/feed/category/javascript",
+          url: "https://nullisdefined.my/feed/category/javascript",
           title: "개발새발 - JavaScript 카테고리 RSS",
         },
         {
-          url: "https://nullisdefined.site/feed/category/typescript",
+          url: "https://nullisdefined.my/feed/category/typescript",
           title: "개발새발 - TypeScript 카테고리 RSS",
         },
         {
-          url: "https://nullisdefined.site/feed/series/devlog",
+          url: "https://nullisdefined.my/feed/series/devlog",
           title: "개발새발 - Devlog 시리즈 RSS",
         },
       ],
@@ -131,11 +131,11 @@ export default async function Layout({
     name: "개발새발",
     description:
       "소프트웨어 개발에 대한 인사이트와 경험을 공유하는 개인 블로그",
-    url: "https://nullisdefined.site/devlog",
+    url: "https://nullisdefined.my/devlog",
     author: {
       "@type": "Person",
       name: "nullisdefined",
-      url: "https://nullisdefined.site",
+      url: "https://nullisdefined.my",
     },
     publisher: {
       "@type": "Person",
@@ -145,7 +145,7 @@ export default async function Layout({
     blogPost: posts.slice(0, 10).map((post) => ({
       "@type": "BlogPosting",
       headline: post.title,
-      url: `https://nullisdefined.site/devlog/posts/${post.urlCategory}/${post.slug}`,
+      url: `https://nullisdefined.my/devlog/posts/${post.urlCategory}/${post.slug}`,
       datePublished: post.date,
       author: {
         "@type": "Person",

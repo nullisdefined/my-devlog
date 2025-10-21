@@ -25,7 +25,7 @@ export function Breadcrumb({ items }: BreadcrumbProps) {
       "@type": "ListItem",
       position: index + 1,
       name: item.title,
-      item: item.href ? `https://nullisdefined.site${item.href}` : undefined,
+      item: item.href ? `https://nullisdefined.my${item.href}` : undefined,
     })),
   };
 

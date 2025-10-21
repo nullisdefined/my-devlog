@@ -1,7 +1,7 @@
 ## URLs
-- **Portfolio**: [https://nullisdefined.site](https://nullisdefined.site)
-- **Blog**: [https://nullisdefined.site/devlog](https://nullisdefined.site/devlog)
-- **RSS Feed**: [https://nullisdefined.site/feed.xml](https://nullisdefined.site/feed.xml)
+- **Portfolio**: [https://nullisdefined.my](https://nullisdefined.my)
+- **Blog**: [https://nullisdefined.my/devlog](https://nullisdefined.my/devlog)
+- **RSS Feed**: [https://nullisdefined.my/feed.xml](https://nullisdefined.my/feed.xml)
 
 ## Used Stack
 
@@ -18,27 +18,27 @@
 <!-- BLOG:START --><table>
 <tr>
 <td align="center">📌</td>
-<td><strong><a href="https://nullisdefined.site/devlog/posts/frameworks/nestjs/nestjs-exception-filters">[NestJS] Exception Filters</a></strong></td>
+<td><strong><a href="https://nullisdefined.my/devlog/posts/frameworks/nestjs/nestjs-exception-filters">[NestJS] Exception Filters</a></strong></td>
 </tr>
 </table><table>
 <tr>
 <td align="center">📌</td>
-<td><strong><a href="https://nullisdefined.site/devlog/posts/frameworks/nestjs/nestjs-middleware">[NestJS] Middleware</a></strong></td>
+<td><strong><a href="https://nullisdefined.my/devlog/posts/frameworks/nestjs/nestjs-middleware">[NestJS] Middleware</a></strong></td>
 </tr>
 </table><table>
 <tr>
 <td align="center">📌</td>
-<td><strong><a href="https://nullisdefined.site/devlog/posts/frameworks/nestjs/nestjs-modules">[NestJS] Modules</a></strong></td>
+<td><strong><a href="https://nullisdefined.my/devlog/posts/frameworks/nestjs/nestjs-modules">[NestJS] Modules</a></strong></td>
 </tr>
 </table><table>
 <tr>
 <td align="center">📌</td>
-<td><strong><a href="https://nullisdefined.site/devlog/posts/frameworks/nestjs/nestjs-providers">[NestJS] Providers</a></strong></td>
+<td><strong><a href="https://nullisdefined.my/devlog/posts/frameworks/nestjs/nestjs-providers">[NestJS] Providers</a></strong></td>
 </tr>
 </table><table>
 <tr>
 <td align="center">📌</td>
-<td><strong><a href="https://nullisdefined.site/devlog/posts/frameworks/nestjs/nestjs-controllers">[NestJS] Controllers</a></strong></td>
+<td><strong><a href="https://nullisdefined.my/devlog/posts/frameworks/nestjs/nestjs-controllers">[NestJS] Controllers</a></strong></td>
 </tr>
 </table><!-- BLOG:END -->
 
@@ -47,7 +47,7 @@
 ---
 
 <p align="center">
-  <a href="https://nullisdefined.site/devlog">
+  <a href="https://nullisdefined.my/devlog">
     <img src="https://img.shields.io/badge/Read%20More%20Posts-Dev%20Blog-ff6b6b?style=for-the-badge&logo=rss&logoColor=white" alt="More Posts"/>
   </a>
 </p>

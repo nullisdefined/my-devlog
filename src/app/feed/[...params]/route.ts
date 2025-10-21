@@ -78,7 +78,7 @@ export async function GET(request: NextRequest, { params }: Props) {
         "X-Feed-Type": type,
         "X-Feed-Identifier": identifier,
         "X-Robots-Tag": "index, follow",
-        Link: `<https://nullisdefined.site/devlog/${type}/${identifier}>; rel="alternate"; type="text/html"`,
+        Link: `<https://nullisdefined.my/devlog/${type}/${identifier}>; rel="alternate"; type="text/html"`,
         "Last-Modified": new Date().toUTCString(),
         ETag: `"${type}-${identifier}-${Date.now()}"`,
         Vary: "Accept-Encoding",
