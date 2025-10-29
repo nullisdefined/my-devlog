@@ -26,6 +26,19 @@ module.exports = {
   changefreq: "weekly",
   priority: 0.7,
   sitemapSize: 5000,
+  // 검색 엔진 색인 대상에서 제외할 경로들 (관리자/내부 API 등)
+  exclude: [
+    "/admin",
+    "/admin/*",
+    "/admin/**",
+    "/api/*",
+    "/api/**",
+    "/feed",
+    "/feed/*",
+    "/feed/**",
+    "/feed.xml",
+    "/podcast.xml",
+  ],
 
   // 추가 경로 및 우선순위 설정
   additionalPaths: async (config) => {
@@ -37,7 +50,7 @@ module.exports = {
         priority: 1.0,
         changefreq: "daily",
         lastmod: new Date().toISOString(),
-      })
+      }),
     );
 
     // 모든 개별 포스트 추가
@@ -50,7 +63,7 @@ module.exports = {
             priority: 0.9,
             changefreq: "monthly",
             lastmod: formatDate(post.date),
-          })
+          }),
         );
       }
     } catch (error) {
@@ -67,7 +80,7 @@ module.exports = {
             priority: 0.9,
             changefreq: "monthly",
             lastmod: formatDate(post.date),
-          })
+          }),
         );
       }
     } catch (error) {
@@ -92,7 +105,7 @@ module.exports = {
             priority: 0.8,
             changefreq: "weekly",
             lastmod: new Date().toISOString(),
-          })
+          }),
         );
       }
     } catch (error) {
@@ -145,7 +158,7 @@ module.exports = {
             priority: 0.6,
             changefreq: "weekly",
             lastmod: new Date().toISOString(),
-          })
+          }),
         );
       }
     } catch (error) {
