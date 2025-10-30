@@ -687,7 +687,7 @@ export default function Home() {
 
   const prevProject = () => {
     setCurrentProjectIndex(
-      (prev) => (prev - 1 + projects.length) % projects.length
+      (prev) => (prev - 1 + projects.length) % projects.length,
     );
   };
 
@@ -780,8 +780,8 @@ dark:bg-black dark:bg-gradient-to-br dark:from-black dark:via-gray-900 dark:to-b
                 target="_blank"
                 rel="noopener noreferrer"
                 className="
-inline-flex items-center justify-center px-5 sm:px-6 py-2.5 sm:py-3 
-bg-gray-800 text-white font-semibold rounded-full 
+inline-flex items-center justify-center px-5 sm:px-6 py-2.5 sm:py-3
+bg-gray-800 text-white font-semibold rounded-full
 hover:bg-gray-900 hover:scale-105 hover:shadow-lg
 transition-all duration-300 transform text-xs sm:text-sm
 
@@ -812,7 +812,7 @@ dark:hover:bg-gray-700 dark:hover:scale-105 dark:hover:shadow-lg
               <div className="relative inline-block">
                 <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black tracking-tighter leading-none">
                   <span
-                    className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent 
+                    className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent
                                  drop-shadow-lg relative
                                  dark:from-blue-400 dark:via-purple-400 dark:to-pink-400 dark:opacity-80 px-1"
                   >
@@ -822,7 +822,7 @@ dark:hover:bg-gray-700 dark:hover:scale-105 dark:hover:shadow-lg
                 {/* 배경 텍스트 효과 */}
                 <div className="absolute inset-0 -z-10">
                   <span
-                    className="text-2xl sm:text-3xl lg:text-4xl font-black tracking-tighter leading-none 
+                    className="text-2xl sm:text-3xl lg:text-4xl font-black tracking-tighter leading-none
                                  text-gray-100 dark:text-gray-700 opacity-50 blur-sm"
                   >
                     PROJECTS
@@ -830,7 +830,7 @@ dark:hover:bg-gray-700 dark:hover:scale-105 dark:hover:shadow-lg
                 </div>
                 {/* 언더라인 효과 */}
                 <div
-                  className="absolute -bottom-1.5 left-1/2 transform -translate-x-1/2 w-20 sm:w-24 lg:w-36 h-0.5 
+                  className="absolute -bottom-1.5 left-1/2 transform -translate-x-1/2 w-20 sm:w-24 lg:w-36 h-0.5
                                 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full
                                 dark:from-blue-400 dark:to-purple-400 dark:opacity-70"
                 ></div>
@@ -942,7 +942,7 @@ dark:hover:bg-gray-700 dark:hover:scale-105 dark:hover:shadow-lg
               <div className="relative inline-block">
                 <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black tracking-tighter leading-none">
                   <span
-                    className="bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 bg-clip-text text-transparent 
+                    className="bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 bg-clip-text text-transparent
                                drop-shadow-lg relative
                                dark:from-emerald-400 dark:via-teal-400 dark:to-cyan-400 dark:opacity-80"
                   >
@@ -952,7 +952,7 @@ dark:hover:bg-gray-700 dark:hover:scale-105 dark:hover:shadow-lg
                 {/* 배경 텍스트 효과 */}
                 <div className="absolute inset-0 -z-10">
                   <span
-                    className="text-2xl sm:text-3xl lg:text-4xl font-black tracking-tighter leading-none 
+                    className="text-2xl sm:text-3xl lg:text-4xl font-black tracking-tighter leading-none
                                text-gray-100 dark:text-gray-700 opacity-50 blur-sm"
                   >
                     EXPERIENCE
@@ -960,7 +960,7 @@ dark:hover:bg-gray-700 dark:hover:scale-105 dark:hover:shadow-lg
                 </div>
                 {/* 언더라인 효과 */}
                 <div
-                  className="absolute -bottom-1.5 left-1/2 transform -translate-x-1/2 w-24 sm:w-32 lg:w-44 h-0.5 
+                  className="absolute -bottom-1.5 left-1/2 transform -translate-x-1/2 w-24 sm:w-32 lg:w-44 h-0.5
                               bg-gradient-to-r from-emerald-600 to-cyan-600 rounded-full
                               dark:from-emerald-400 dark:to-cyan-400 dark:opacity-70"
                 ></div>
@@ -1059,6 +1059,14 @@ dark:hover:bg-gray-700 dark:hover:scale-105 dark:hover:shadow-lg
                       한국데이터산업진흥원
                     </div>
                   </li>
+                  <li>
+                    <div className="font-semibold text-sm">
+                      AWS Certified Solutions Architect - Associate (SAA-C03)
+                    </div>
+                    <div className="text-xs sm:text-sm text-muted-foreground">
+                      Amazon Web Services
+                    </div>
+                  </li>
                 </ul>
               </div>
             </div>
@@ -1072,7 +1080,7 @@ dark:hover:bg-gray-700 dark:hover:scale-105 dark:hover:shadow-lg
               <div className="relative inline-block px-4">
                 <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black tracking-tighter leading-none">
                   <span
-                    className="bg-gradient-to-r from-gray-900 via-slate-700 to-zinc-900 bg-clip-text text-transparent 
+                    className="bg-gradient-to-r from-gray-900 via-slate-700 to-zinc-900 bg-clip-text text-transparent
                                  drop-shadow-lg relative
                                  dark:from-gray-300 dark:via-slate-400 dark:to-gray-300 px-1"
                   >
@@ -1082,7 +1090,7 @@ dark:hover:bg-gray-700 dark:hover:scale-105 dark:hover:shadow-lg
                 {/* 배경 텍스트 효과 */}
                 <div className="absolute inset-0 -z-10">
                   <span
-                    className="text-2xl sm:text-3xl lg:text-4xl font-black tracking-tighter leading-none 
+                    className="text-2xl sm:text-3xl lg:text-4xl font-black tracking-tighter leading-none
                                  text-gray-200 dark:text-gray-700 opacity-50 blur-sm"
                   >
                     SKILLS
@@ -1090,7 +1098,7 @@ dark:hover:bg-gray-700 dark:hover:scale-105 dark:hover:shadow-lg
                 </div>
                 {/* 언더라인 효과 */}
                 <div
-                  className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-20 sm:w-24 lg:w-32 h-1 
+                  className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-20 sm:w-24 lg:w-32 h-1
                                 bg-gradient-to-r from-slate-800 via-gray-700 to-zinc-800 rounded-full
                                 dark:from-gray-500 dark:via-slate-400 dark:to-gray-500"
                 ></div>
