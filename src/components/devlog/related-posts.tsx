@@ -34,7 +34,7 @@ export function RelatedPosts({
     const currentTitleWords = currentPost.title.toLowerCase().split(" ");
     const postTitleWords = post.title.toLowerCase().split(" ");
     const commonWords = currentTitleWords.filter(
-      (word) => postTitleWords.includes(word) && word.length > 2
+      (word) => postTitleWords.includes(word) && word.length > 2,
     );
     score += commonWords.length;
 

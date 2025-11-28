@@ -134,6 +134,18 @@ export const categories: readonly CategoryItem[] = [
       },
     ],
   },
+  {
+    name: "Etc",
+    path: "/devlog/categories/etc",
+    icon: LayoutGrid,
+    subcategories: [
+      {
+        name: "Uncategorized",
+        path: "/devlog/categories/etc/uncategorized",
+        icon: LayoutGrid,
+      },
+    ],
+  },
 ] as const;
 
 export const seriesCategories: readonly CategoryItem[] = [
@@ -186,4 +198,6 @@ export type Category =
   | "AWS"
   | "Tools"
   | "Git"
+  | "Etc"
+  | "Uncategorized"
   | "Series";

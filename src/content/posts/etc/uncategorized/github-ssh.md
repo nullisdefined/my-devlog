@@ -3,6 +3,7 @@ title: "Github SSH 인증"
 slug: "github-ssh"
 date: 2024-12-21
 tags: ["Github", "SSH", "Cygwin"]
+category: "Etc/Uncategorized"
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/52ee5a5d97fb23f80377457b239c5807.png"
 draft: false
 views: 0
