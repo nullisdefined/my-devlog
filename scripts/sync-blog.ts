@@ -30,7 +30,7 @@ class BlogSync {
     // 경로 정규화
     this.obsidianDir = path.resolve(this.normalizePath(config.obsidianDir));
     this.nextContentDir = path.resolve(
-      this.normalizePath(config.nextContentDir)
+      this.normalizePath(config.nextContentDir),
     );
     this.processedFiles = new Set();
     this.existingNextPosts = new Map();
@@ -56,7 +56,7 @@ class BlogSync {
     }
     if (!fs.existsSync(this.nextContentDir)) {
       throw new Error(
-        `Next.js content directory not found: ${this.nextContentDir}`
+        `Next.js content directory not found: ${this.nextContentDir}`,
       );
     }
 
@@ -114,7 +114,7 @@ class BlogSync {
       // 삭제된 파일이 #devlog 태그를 가진 파일인지 확인
       const nextFilePath = Array.from(this.existingNextPosts.entries()).find(
         ([_, existingPath]) =>
-          existingPath.includes(path.basename(filePath, ".md"))
+          existingPath.includes(path.basename(filePath, ".md")),
       );
 
       if (nextFilePath) {
@@ -207,12 +207,12 @@ class BlogSync {
           categoryPath = path.join(
             "posts",
             parentCategory.toLowerCase(),
-            childCategory.toLowerCase().replace(/\./g, "").replace(/\s+/g, "-")
+            childCategory.toLowerCase().replace(/\./g, "").replace(/\s+/g, "-"),
           );
         } else {
           categoryPath = path.join(
             "posts",
-            frontMatter.category.toLowerCase().replace(/\s+/g, "-")
+            frontMatter.category.toLowerCase().replace(/\s+/g, "-"),
           );
         }
       }
@@ -229,7 +229,7 @@ class BlogSync {
         const existingSlug = Array.from(this.existingNextPosts.entries()).find(
           ([_, existingPath]) =>
             existingPath ===
-            path.join(postsDir, `${this.createSlug(frontMatter.title)}.md`)
+            path.join(postsDir, `${this.createSlug(frontMatter.title)}.md`),
         )?.[0];
 
         slug = existingSlug || this.createSlug(frontMatter.title);
@@ -286,7 +286,7 @@ class BlogSync {
       console.log(
         `Processed: ${destPath}${
           existingViews > 0 ? ` (Views preserved: ${existingViews})` : ""
-        }`
+        }`,
       );
 
       // 처리된 파일 추적
@@ -314,18 +314,28 @@ class BlogSync {
       let imageWidth = "";
       let processedAltText = altText || "";
 
-      // 1. 위키링크에서 크기 정보 추출 (![[image.png|400]])
+      // 1. 위키링크에서 크기 정보 추출 (![[image.png|left|400]] 또는 ![[image.png|400]])
       if (wikiLink && wikiLink.includes("|")) {
-        const parts = wikiLink.split("|");
-        imagePath = parts[0].trim();
-        imageWidth = parts[1].trim();
+        const parts = wikiLink.split("|").map((p) => p.trim());
+        imagePath = parts[0];
+
+        // left, right, center 등의 정렬 옵션을 제거하고 숫자만 추출
+        const sizePart = parts.slice(1).find((p) => /^\d+$/.test(p));
+        if (sizePart) {
+          imageWidth = sizePart;
+        }
       }
 
-      // 2. 표준 마크다운 alt text에서 크기 정보 추출 (![image|400](url))
+      // 2. 표준 마크다운 alt text에서 크기 정보 추출 (![image|left|400](url) 또는 ![image|400](url))
       if (altText && altText.includes("|")) {
-        const parts = altText.split("|");
-        processedAltText = parts[0].trim();
-        imageWidth = parts[1].trim();
+        const parts = altText.split("|").map((p) => p.trim());
+        processedAltText = parts[0];
+
+        // left, right, center 등의 정렬 옵션을 제거하고 숫자만 추출
+        const sizePart = parts.slice(1).find((p) => /^\d+$/.test(p));
+        if (sizePart) {
+          imageWidth = sizePart;
+        }
       }
 
       // 이미지 URL 처리 (https 이미지의 경우 firstImageUrl 설정)
@@ -341,14 +351,14 @@ class BlogSync {
         // 크기가 지정된 경우 HTML img 태그로 변환
         updatedContent = updatedContent.replace(
           fullMatch,
-          `<img src="${imagePath}" alt="${finalAltText}" width="${imageWidth}" />`
+          `<img src="${imagePath}" alt="${finalAltText}" width="${imageWidth}" />`,
         );
       } else {
         // 크기가 없는 경우 표준 마크다운으로 변환
         if (wikiLink) {
           updatedContent = updatedContent.replace(
             fullMatch,
-            `![${finalAltText}](${imagePath})`
+            `![${finalAltText}](${imagePath})`,
           );
         }
       }
