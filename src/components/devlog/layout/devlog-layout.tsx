@@ -58,11 +58,14 @@ export function DevlogLayout({
               "xl:hidden fixed inset-y-0 left-0 z-40 w-72 bg-background",
               "transform transition-transform duration-300 ease-out",
               "border-r border-border/40",
-              isSidebarOpen ? "translate-x-0" : "-translate-x-full"
+              isSidebarOpen ? "translate-x-0" : "-translate-x-full",
             )}
           >
             <div className="h-full pt-16 pb-4 overflow-y-auto scrollbar-thin pr-2">
-              <DevlogSidebar posts={posts} />
+              <DevlogSidebar
+                posts={posts}
+                onLinkClick={() => setIsSidebarOpen(false)}
+              />{" "}
             </div>
           </aside>
 
@@ -77,11 +80,11 @@ export function DevlogLayout({
 
           {/* 메인 콘텐츠 영역 */}
           <div className={cn("xl:ml-[288px]", toc && "xl:mr-[280px]")}>
-            <main className="min-h-[calc(100vh-4rem)] py-6 pt-[40px] sm:pt-[76px] px-4">
+            <main className="min-h-[calc(100vh-4rem)] py-6 pt-[76px] px-4">
               <div
                 className={cn(
                   "w-full mx-auto",
-                  isListPage ? "max-w-5xl" : "max-w-4xl"
+                  isListPage ? "max-w-5xl" : "max-w-4xl",
                 )}
               >
                 {children}

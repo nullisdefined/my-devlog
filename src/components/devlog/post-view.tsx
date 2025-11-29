@@ -29,7 +29,7 @@ function Tag({ tag, className }: { tag: string; className?: string }) {
         "bg-secondary text-secondary-foreground",
         "hover:bg-secondary/80 transition-colors",
         "text-sm font-medium cursor-pointer",
-        className
+        className,
       )}
     >
       <TagIcon className="w-3.5 h-3.5" />
@@ -51,7 +51,7 @@ export function PostView({ post, content, toc, allPosts }: PostViewProps) {
       href: post.category?.toLowerCase().startsWith("series/")
         ? `/devlog/${normalizeUrlPath(post.urlCategory || post.category || "")}`
         : `/devlog/categories/${normalizeUrlPath(
-            post.urlCategory || post.category || ""
+            post.urlCategory || post.category || "",
           )}`,
     },
     {
@@ -67,7 +67,7 @@ export function PostView({ post, content, toc, allPosts }: PostViewProps) {
       {/* 동적 그라디언트 배너 */}
       {post.thumbnail && <DynamicBanner thumbnail={post.thumbnail} />}
 
-      <article className="max-w-4xl mx-auto text-left px-4 sm:px-6">
+      <article className="max-w-4xl mx-auto text-left px-4 sm:px-6 overflow-x-hidden">
         {/* 브레드크럼 내비게이션 */}
         <Breadcrumb items={breadcrumbItems} />
 
@@ -81,10 +81,10 @@ export function PostView({ post, content, toc, allPosts }: PostViewProps) {
                   href={
                     post.category.toLowerCase().startsWith("series/")
                       ? `/devlog/${normalizeUrlPath(
-                          post.urlCategory || post.category || ""
+                          post.urlCategory || post.category || "",
                         )}`
                       : `/devlog/categories/${normalizeUrlPath(
-                          post.urlCategory || post.category || ""
+                          post.urlCategory || post.category || "",
                         )}`
                   }
                   className="text-xs font-medium text-muted-foreground uppercase tracking-wider bg-secondary px-3 py-1.5 rounded-full border hover:bg-secondary/80 transition-colors cursor-pointer"

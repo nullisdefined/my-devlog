@@ -96,64 +96,69 @@ function remarkAdmonitions() {
       // blockquote의 첫 번째 paragraph를 확인
       const firstParagraph = node.children?.[0];
       if (!firstParagraph || firstParagraph.type !== "paragraph") return;
-      
+
       // 첫 번째 텍스트 노드 확인
       const firstChild = firstParagraph.children?.[0];
       if (!firstChild || firstChild.type !== "text") return;
-      
+
       // GitHub-style alert 문법 매칭
-      const alertMatch = firstChild.value.match(/^\[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION|HINT)\]\s*/i);
+      const alertMatch = firstChild.value.match(
+        /^\[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION|HINT)\]\s*/i,
+      );
       if (!alertMatch) return;
-      
+
       const alertType = alertMatch[1].toUpperCase();
-      
+
       // 알림 타입 텍스트 제거
       firstChild.value = firstChild.value.replace(alertMatch[0], "");
-      
+
       // 텍스트가 비어있으면 노드 제거
       if (!firstChild.value.trim() && firstParagraph.children.length === 1) {
         firstParagraph.children = [];
       }
-      
+
       // blockquote에 데이터 속성 추가
       node.data = {
         ...node.data,
         hName: "div",
         hProperties: {
-          className: ["markdown-alert", `markdown-alert-${alertType.toLowerCase()}`],
-          "data-alert": alertType.toLowerCase()
-        }
+          className: [
+            "markdown-alert",
+            `markdown-alert-${alertType.toLowerCase()}`,
+          ],
+          "data-alert": alertType.toLowerCase(),
+        },
       };
-      
+
       // 아이콘과 제목을 위한 헤더 추가
       const alertHeader = {
         type: "paragraph",
         data: {
           hName: "div",
           hProperties: {
-            className: ["markdown-alert-header"]
-          }
+            className: ["markdown-alert-header"],
+          },
         },
         children: [
           {
             type: "text",
-            value: getAlertTitle(alertType)
-          }
-        ]
+            value: getAlertTitle(alertType),
+          },
+        ],
       };
-      
+
       // 콘텐츠를 위한 래퍼
       const alertContent = {
         type: "paragraph",
         data: {
           hName: "div",
           hProperties: {
-            className: ["markdown-alert-content"]
-          }
+            className: ["markdown-alert-content"],
+          },
         },
-        children: node.children
+        children: node.children,
       };
-      
+
       // blockquote의 children을 재구성
       node.children = [alertHeader, alertContent];
     });
@@ -168,7 +173,7 @@ function getAlertTitle(type: string): string {
     IMPORTANT: "❗ Important",
     WARNING: "⚠️ Warning",
     CAUTION: "🔴 Caution",
-    HINT: "💡 Hint"
+    HINT: "💡 Hint",
   };
   return titles[type] || type;
 }
@@ -343,6 +348,50 @@ export async function markdownToHtml(content: string): Promise<string> {
     .use(rehypeSlug)
     .use(() => (tree) => {
       visit(tree, "element", (node: Element) => {
+        // 이미지 태그 처리 - 모바일에서 오버플로우 방지
+        if (node.tagName === "img") {
+          if (!node.properties) {
+            node.properties = {};
+          }
+
+          // width 속성이 있다면 인라인 스타일로 변환
+          const width = node.properties.width;
+          const height = node.properties.height;
+
+          // HTML 속성 제거 (CSS로 처리)
+          delete node.properties.width;
+          delete node.properties.height;
+
+          // 기존 스타일 유지하면서 max-width 추가
+          let styleRules = [];
+
+          // 기존 스타일이 있다면 추가
+          const existingStyle =
+            typeof node.properties.style === "string"
+              ? node.properties.style
+              : "";
+
+          if (existingStyle) {
+            styleRules.push(existingStyle);
+          }
+
+          // width가 지정되어 있다면 우선 적용하되, max-width: 100%로 반응형 처리
+          if (width) {
+            styleRules.push(`width: ${width}px`);
+          }
+
+          // 항상 max-width: 100%로 모바일 대응
+          styleRules.push("max-width: 100%");
+          styleRules.push("height: auto");
+
+          node.properties.style = styleRules.join("; ");
+
+          // loading="lazy" 추가
+          if (!node.properties.loading) {
+            node.properties.loading = "lazy";
+          }
+        }
+
         if (node.tagName === "pre") {
           const codeEl = node.children[0] as Element;
           if (codeEl?.tagName === "code") {
@@ -363,25 +412,25 @@ export async function markdownToHtml(content: string): Promise<string> {
             }
 
             const normalizedLang = normalizeLanguage(language);
-            
+
             // Mermaid 다이어그램인 경우 특별 처리
             if (normalizedLang === "mermaid") {
               // 복사 버튼과 토글 버튼 추가
               const copyButton = createCopyButton();
               const toggleButton = createToggleDiagramButton();
-              
+
               node.children.push(copyButton);
               node.children.push(toggleButton);
-              
+
               // mermaid 클래스 추가
               if (!node.properties) {
                 node.properties = {};
               }
-              
-              const existingClasses = Array.isArray(node.properties.className) 
-                ? node.properties.className 
+
+              const existingClasses = Array.isArray(node.properties.className)
+                ? node.properties.className
                 : [];
-              
+
               node.properties = {
                 ...node.properties,
                 "data-language": "mermaid",
@@ -394,23 +443,25 @@ export async function markdownToHtml(content: string): Promise<string> {
                   "border-l-4",
                   "border-l-blue-500",
                   "my-6",
-                  "mermaid-diagram"
+                  "mermaid-diagram",
                 ],
               };
-              
+
               // 코드 요소에도 mermaid 클래스 추가
               if (!codeEl.properties) {
                 codeEl.properties = {};
               }
-              const existingCodeClasses = Array.isArray(codeEl.properties.className) 
-                ? codeEl.properties.className 
+              const existingCodeClasses = Array.isArray(
+                codeEl.properties.className,
+              )
+                ? codeEl.properties.className
                 : [];
-              
+
               codeEl.properties.className = [
                 ...existingCodeClasses,
-                "language-mermaid"
+                "language-mermaid",
               ];
-              
+
               return; // mermaid는 일반 코드 블록 처리를 건너뛰기
             }
 
@@ -454,17 +505,17 @@ export async function markdownToHtml(content: string): Promise<string> {
 function decodeHtmlEntities(text: string): string {
   // 서버 사이드에서도 작동하도록 수동 디코딩
   const entities: Record<string, string> = {
-    '&amp;': '&',
-    '&lt;': '<',
-    '&gt;': '>',
-    '&quot;': '"',
-    '&#x27;': "'",
-    '&#x2F;': '/',
-    '&#x60;': '`',
-    '&#x3D;': '=',
-    '&nbsp;': ' ',
+    "&amp;": "&",
+    "&lt;": "<",
+    "&gt;": ">",
+    "&quot;": '"',
+    "&#x27;": "'",
+    "&#x2F;": "/",
+    "&#x60;": "`",
+    "&#x3D;": "=",
+    "&nbsp;": " ",
   };
-  
+
   // 먼저 숫자형 HTML 엔티티 처리 (&#x26;, &#38; 등)
   let decoded = text.replace(/&#x([0-9a-fA-F]+);/g, (match, hex) => {
     try {
@@ -474,7 +525,7 @@ function decodeHtmlEntities(text: string): string {
       return match; // 변환 실패시 원본 반환
     }
   });
-  
+
   decoded = decoded.replace(/&#(\d+);/g, (match, decimal) => {
     try {
       const code = parseInt(decimal, 10);
@@ -483,12 +534,15 @@ function decodeHtmlEntities(text: string): string {
       return match; // 변환 실패시 원본 반환
     }
   });
-  
+
   // 명명된 엔티티 처리
   Object.entries(entities).forEach(([entity, char]) => {
-    decoded = decoded.replace(new RegExp(entity.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g'), char);
+    decoded = decoded.replace(
+      new RegExp(entity.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "g"),
+      char,
+    );
   });
-  
+
   return decoded;
 }
 
@@ -506,7 +560,7 @@ export function extractTableOfContents(html: string): TableOfContentsItem[] {
     const rawTitle = titleMatch
       ? titleMatch[1].replace(/<[^>]*>/g, "").trim()
       : "";
-    
+
     // HTML 엔티티 디코딩
     const title = decodeHtmlEntities(rawTitle);
 

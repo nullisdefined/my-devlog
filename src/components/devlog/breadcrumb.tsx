@@ -37,24 +37,28 @@ export function Breadcrumb({ items }: BreadcrumbProps) {
       />
       <nav
         aria-label="Breadcrumb"
-        className="flex items-center space-x-1 text-sm text-muted-foreground mb-4"
+        className="flex items-center space-x-1 text-sm text-muted-foreground mb-4 overflow-x-auto scrollbar-thin pb-2"
       >
-        <ol className="flex items-center space-x-1">
+        <ol className="flex items-center space-x-1 flex-nowrap min-w-min">
           {allItems.map((item, index) => (
-            <li key={index} className="flex items-center">
+            <li key={index} className="flex items-center flex-shrink-0">
               {index > 0 && (
-                <ChevronRight className="w-4 h-4 mx-1 text-muted-foreground/60" />
+                <ChevronRight className="w-4 h-4 mx-1 text-muted-foreground/60 flex-shrink-0" />
               )}
               {item.href ? (
                 <Link
                   href={item.href}
-                  className="hover:text-foreground transition-colors flex items-center"
+                  className="hover:text-foreground transition-colors flex items-center whitespace-nowrap"
                 >
-                  {index === 0 && <Home className="w-4 h-4 mr-1" />}
-                  {item.title}
+                  {index === 0 && (
+                    <Home className="w-4 h-4 mr-1 flex-shrink-0" />
+                  )}
+                  <span className="truncate max-w-[150px] md:max-w-none">
+                    {item.title}
+                  </span>
                 </Link>
               ) : (
-                <span className="text-foreground font-medium">
+                <span className="text-foreground font-medium whitespace-nowrap truncate max-w-[200px] md:max-w-none">
                   {item.title}
                 </span>
               )}

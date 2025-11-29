@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { X } from "lucide-react";
 
 interface DiagramModalProps {
   content: string;
@@ -36,10 +37,10 @@ export function DiagramModal({ content, isOpen, onClose }: DiagramModalProps) {
 
     try {
       const mermaid = (await import("mermaid")).default;
-      
+
       // 다크모드 감지
       const isDarkMode = document.documentElement.classList.contains("dark");
-      
+
       // Mermaid 초기화
       mermaid.initialize({
         startOnLoad: false,
@@ -79,7 +80,9 @@ export function DiagramModal({ content, isOpen, onClose }: DiagramModalProps) {
       setDiagramSvg(svg);
     } catch (error) {
       console.error("Diagram rendering error:", error);
-      setDiagramSvg(`<div style="color: red; padding: 2rem; text-align: center;">다이어그램 렌더링 오류: ${error}</div>`);
+      setDiagramSvg(
+        `<div style="color: red; padding: 2rem; text-align: center;">다이어그램 렌더링 오류: ${error}</div>`,
+      );
     }
   };
 
@@ -102,15 +105,19 @@ export function DiagramModal({ content, isOpen, onClose }: DiagramModalProps) {
 
     const handleMouseDown = (e: MouseEvent) => {
       if (!isOpen) return;
-      if (e.target !== e.currentTarget && !(e.target as Element).closest('.diagram-draggable')) return;
-      
+      if (
+        e.target !== e.currentTarget &&
+        !(e.target as Element).closest(".diagram-draggable")
+      )
+        return;
+
       setIsDragging(true);
       setDragStart({ x: e.clientX - position.x, y: e.clientY - position.y });
     };
 
     const handleMouseMove = (e: MouseEvent) => {
       if (!isOpen || !isDragging) return;
-      
+
       e.preventDefault();
       setPosition({
         x: e.clientX - dragStart.x,
@@ -150,13 +157,22 @@ export function DiagramModal({ content, isOpen, onClose }: DiagramModalProps) {
         }
       }}
     >
-      {/* 줌 레벨 표시 */}
-      <div className="absolute top-4 left-4 z-10 pointer-events-none">
-        <div className="px-3 py-1 bg-white/10 rounded-lg text-white text-sm font-medium">
+      {/* 상단 컨트롤 바 */}
+      <div className="absolute top-0 left-0 right-0 z-10 flex items-center justify-between p-4">
+        {/* 줌 레벨 표시 */}
+        <div className="px-3 py-1 bg-white/10 rounded-lg text-white text-sm font-medium pointer-events-none">
           {Math.round(scale * 100)}%
         </div>
-      </div>
 
+        {/* 닫기 버튼 */}
+        <button
+          onClick={onClose}
+          className="p-2 bg-white/10 hover:bg-white/20 rounded-lg text-white transition-colors"
+          aria-label="모달 닫기"
+        >
+          <X className="w-6 h-6" />
+        </button>
+      </div>
 
       {/* 다이어그램 컨테이너 */}
       <div
@@ -167,16 +183,16 @@ export function DiagramModal({ content, isOpen, onClose }: DiagramModalProps) {
           }
         }}
       >
-        <div 
+        <div
           className="flex items-center justify-center w-full h-full"
-          style={{ overflow: scale > 1 ? 'visible' : 'hidden' }}
+          style={{ overflow: scale > 1 ? "visible" : "hidden" }}
         >
           <div
-            className={`diagram-draggable transition-transform duration-200 ease-out select-none bg-white/5 rounded-lg p-4 ${isDragging ? 'cursor-grabbing' : 'cursor-grab'}`}
+            className={`diagram-draggable transition-transform duration-200 ease-out select-none bg-white/5 rounded-lg p-4 ${isDragging ? "cursor-grabbing" : "cursor-grab"}`}
             style={{
               transform: `translate(${position.x}px, ${position.y}px) scale(${scale})`,
-              maxWidth: scale <= 1 ? '90vw' : 'none',
-              maxHeight: scale <= 1 ? '90vh' : 'none',
+              maxWidth: scale <= 1 ? "90vw" : "none",
+              maxHeight: scale <= 1 ? "90vh" : "none",
             }}
             onClick={(e) => {
               e.stopPropagation();
@@ -184,7 +200,10 @@ export function DiagramModal({ content, isOpen, onClose }: DiagramModalProps) {
             onMouseDown={(e) => {
               if (scale > 1) {
                 setIsDragging(true);
-                setDragStart({ x: e.clientX - position.x, y: e.clientY - position.y });
+                setDragStart({
+                  x: e.clientX - position.x,
+                  y: e.clientY - position.y,
+                });
               }
             }}
             dangerouslySetInnerHTML={{ __html: diagramSvg }}

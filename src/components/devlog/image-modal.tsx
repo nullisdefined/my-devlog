@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { X } from "lucide-react";
 
 interface ImageModalProps {
   src: string;
@@ -65,11 +66,21 @@ export function ImageModal({ src, alt, isOpen, onClose }: ImageModalProps) {
         }
       }}
     >
-      {/* 줌 레벨 표시 */}
-      <div className="absolute top-4 left-4 z-10 pointer-events-none">
-        <div className="px-3 py-1 bg-white/10 rounded-lg text-white text-sm font-medium">
+      {/* 상단 컨트롤 바 */}
+      <div className="absolute top-0 left-0 right-0 z-10 flex items-center justify-between p-4">
+        {/* 줌 레벨 표시 */}
+        <div className="px-3 py-1 bg-white/10 rounded-lg text-white text-sm font-medium pointer-events-none">
           {Math.round(scale * 100)}%
         </div>
+
+        {/* 닫기 버튼 */}
+        <button
+          onClick={onClose}
+          className="p-2 bg-white/10 hover:bg-white/20 rounded-lg text-white transition-colors"
+          aria-label="모달 닫기"
+        >
+          <X className="w-6 h-6" />
+        </button>
       </div>
 
       {/* 이미지 컨테이너 - 완전한 중앙 배치 */}

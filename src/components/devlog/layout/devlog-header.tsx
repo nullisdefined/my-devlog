@@ -55,7 +55,7 @@ export function DevlogHeader({ posts }: DevlogHeaderProps) {
           {/* 왼쪽 로고 */}
           <Link
             href="/devlog"
-            className="flex items-center relative z-[61] px-0 -ml-2"
+            className="flex items-center relative z-[61] px-0 -ml-4"
           >
             <Image
               src="/ssu.gif"

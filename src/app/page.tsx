@@ -9,6 +9,7 @@ import {
   ChevronLeft,
   ChevronRight,
   X,
+  Trophy,
 } from "lucide-react";
 import {
   SiNodedotjs,
@@ -967,7 +968,7 @@ dark:hover:bg-gray-700 dark:hover:scale-105 dark:hover:shadow-lg
               </div>
             </div>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-              {/* Education 카드 */}
+              {/* Experience 카드 */}
               <div className="bg-card rounded-lg shadow-md p-3 sm:p-4">
                 <h3 className="text-base sm:text-lg font-bold mb-3 flex items-center">
                   <svg
@@ -977,16 +978,22 @@ dark:hover:bg-gray-700 dark:hover:scale-105 dark:hover:shadow-lg
                     viewBox="0 0 24 24"
                     stroke="currentColor"
                   >
-                    <path d="M12 14l9-5-9-5-9 5 9 5z" />
-                    <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998a12.078 12.078 0 01.665-6.479L12 14z" />
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                    />
                   </svg>
-                  Education
+                  Experience
                 </h3>
                 <ul className="space-y-3 pl-3 pb-3">
                   <li>
-                    <div className="font-semibold text-sm">숭실대학교</div>
+                    <div className="font-semibold text-sm">
+                      소프트웨어학부 재학
+                    </div>
                     <div className="text-muted-foreground text-xs sm:text-sm">
-                      소프트웨어학부
+                      숭실대학교
                     </div>
                     <div className="text-xs text-muted-foreground">
                       2022.03 ~ 2027.03
@@ -994,11 +1001,11 @@ dark:hover:bg-gray-700 dark:hover:scale-105 dark:hover:shadow-lg
                   </li>
                   <li>
                     <div className="font-semibold text-sm">
-                      그렙(프로그래머스)
+                      타입스크립트로 함께하는 웹 풀 사이클 개발(React, Node.js)
+                      3기 수료
                     </div>
                     <div className="text-muted-foreground text-xs sm:text-sm">
-                      타입스크립트로 함께하는 웹 풀 사이클 개발(React, Node.js)
-                      3기
+                      그렙(프로그래머스)
                     </div>
                     <div className="text-xs text-muted-foreground">
                       2024.04 ~ 2024.10
@@ -1006,13 +1013,24 @@ dark:hover:bg-gray-700 dark:hover:scale-105 dark:hover:shadow-lg
                   </li>
                   <li>
                     <div className="font-semibold text-sm">
-                      한국소프트웨어산업협회
+                      [NIPA-AWS] Developer 부트캠프 2기 수료
                     </div>
                     <div className="text-muted-foreground text-xs sm:text-sm">
-                      [NIPA-AWS] Developer 부트캠프 2기
+                      한국소프트웨어산업협회
                     </div>
                     <div className="text-xs text-muted-foreground">
                       2025.06 ~ 2025.08
+                    </div>
+                  </li>
+                  <li>
+                    <div className="font-semibold text-sm">
+                      2025 SW 인재 페스티벌 숭실대학교 부스 운영
+                    </div>
+                    <div className="text-muted-foreground text-xs sm:text-sm">
+                      소프트웨어중심대학협의회
+                    </div>
+                    <div className="text-xs text-muted-foreground">
+                      2025.11.28 ~ 11.29
                     </div>
                   </li>
                 </ul>
@@ -1066,6 +1084,85 @@ dark:hover:bg-gray-700 dark:hover:scale-105 dark:hover:shadow-lg
                     <div className="text-xs sm:text-sm text-muted-foreground">
                       Amazon Web Services
                     </div>
+                  </li>
+                </ul>
+              </div>
+
+              {/* Awards 카드 */}
+              <div className="bg-card rounded-lg shadow-md p-3 sm:p-4 lg:col-span-2">
+                <h3 className="text-base sm:text-lg font-bold mb-3 flex items-center">
+                  <Trophy className="h-4 w-4 sm:h-5 sm:w-5 mr-1.5" />
+                  Awards
+                </h3>
+                <ul className="space-y-3 pl-3 pb-3">
+                  <li>
+                    <div className="font-semibold text-sm flex items-center justify-between">
+                      <span>
+                        NIPA-AWS Developer 부트캠프 2기 최종 프로젝트 대상
+                      </span>
+                      <Link
+                        href="/award-nipa-aws-bootcamp-2025.pdf"
+                        target="_blank"
+                        className="ml-2 text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 transition-colors flex-shrink-0"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="h-4 w-4"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                          />
+                        </svg>
+                      </Link>
+                    </div>
+                    <div className="text-xs sm:text-sm text-muted-foreground">
+                      한국소프트웨어산업협회
+                    </div>
+                    <div className="text-xs text-muted-foreground">2025.08</div>
+                  </li>
+                  <li>
+                    <div className="font-semibold text-sm flex items-center justify-between">
+                      <span>숭실대학교 소프트웨어 공모전 총장상</span>
+                      <Link
+                        href="/award-ssu-sw-contest-2025.pdf"
+                        target="_blank"
+                        className="ml-2 text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 transition-colors flex-shrink-0"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="h-4 w-4"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                          />
+                        </svg>
+                      </Link>
+                    </div>
+                    <div className="text-xs sm:text-sm text-muted-foreground">
+                      숭실대학교 소프트웨어학부
+                    </div>
+                    <div className="text-xs text-muted-foreground">2025.08</div>
+                  </li>
+                  <li>
+                    <div className="font-semibold text-sm">
+                      숭실대학교 IT 프로젝트 공모전 프로리그 우수상
+                    </div>
+                    <div className="text-xs sm:text-sm text-muted-foreground">
+                      숭실대학교 미디어경영학과
+                    </div>
+                    <div className="text-xs text-muted-foreground">2025.11</div>
                   </li>
                 </ul>
               </div>

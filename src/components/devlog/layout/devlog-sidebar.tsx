@@ -23,20 +23,21 @@ import {
 
 interface DevlogSidebarProps {
   posts: Post[];
+  onLinkClick?: () => void;
 }
 
-export function DevlogSidebar({ posts }: DevlogSidebarProps) {
+export function DevlogSidebar({ posts, onLinkClick }: DevlogSidebarProps) {
   const [expandedCategories, setExpandedCategories] = useState<string[]>([]);
 
   const handleCategoryClick = (
     category: CategoryItem,
-    event: React.MouseEvent
+    event: React.MouseEvent,
   ) => {
     event.preventDefault();
     setExpandedCategories((prev) =>
       prev.includes(category.path)
         ? prev.filter((path) => path !== category.path)
-        : [...prev, category.path]
+        : [...prev, category.path],
     );
   };
 
@@ -74,7 +75,7 @@ export function DevlogSidebar({ posts }: DevlogSidebarProps) {
               ) {
                 counts.set(
                   subcategory.path,
-                  (counts.get(subcategory.path) || 0) + 1
+                  (counts.get(subcategory.path) || 0) + 1,
                 );
               }
             });
@@ -125,7 +126,7 @@ export function DevlogSidebar({ posts }: DevlogSidebarProps) {
       <div className="space-y-3 px-1 min-h-full">
         {/* Profile Section */}
         <div className="flex flex-col items-center space-y-2 py-0 pb-2 relative z-10">
-          <Link href="/">
+          <Link href="/" onClick={onLinkClick}>
             <Avatar className="h-28 w-28 border-2 border-primary/20 hover:border-primary/40 transition-colors relative z-10">
               <AvatarImage
                 src="https://avatars.githubusercontent.com/u/164657817?v=4"
@@ -146,10 +147,11 @@ export function DevlogSidebar({ posts }: DevlogSidebarProps) {
         <div>
           <Link
             href="/devlog"
+            onClick={onLinkClick}
             className={cn(
               "flex items-center justify-between w-full px-2 py-2 rounded-md",
               "hover:bg-accent hover:text-accent-foreground",
-              "transition-colors cursor-pointer group"
+              "transition-colors cursor-pointer group",
             )}
           >
             <div className="flex items-center gap-2">
@@ -191,7 +193,7 @@ export function DevlogSidebar({ posts }: DevlogSidebarProps) {
                         className={cn(
                           "flex items-center justify-between w-full px-2 py-1 rounded-md",
                           "hover:bg-accent hover:text-accent-foreground",
-                          "transition-colors cursor-pointer font-medium text-foreground"
+                          "transition-colors cursor-pointer font-medium text-foreground",
                         )}
                       >
                         <div className="flex items-center">
@@ -199,7 +201,7 @@ export function DevlogSidebar({ posts }: DevlogSidebarProps) {
                             className={cn(
                               "h-3 w-3 transition-transform mr-2 text-muted-foreground group-hover:text-foreground",
                               expandedCategories.includes(category.path) &&
-                                "rotate-90"
+                                "rotate-90",
                             )}
                           />
                           <category.icon className="w-3 h-3 mr-2 text-muted-foreground group-hover:text-foreground transition-colors" />
@@ -220,10 +222,11 @@ export function DevlogSidebar({ posts }: DevlogSidebarProps) {
                   ) : (
                     <Link
                       href={category.path}
+                      onClick={onLinkClick}
                       className={cn(
                         "flex items-center justify-between w-full px-2 py-1 rounded-md",
                         "hover:bg-accent hover:text-accent-foreground",
-                        "transition-colors cursor-pointer group"
+                        "transition-colors cursor-pointer group",
                       )}
                     >
                       <div className="flex items-center">
@@ -256,10 +259,11 @@ export function DevlogSidebar({ posts }: DevlogSidebarProps) {
                             <Link
                               key={subcategory.path}
                               href={subcategory.path}
+                              onClick={onLinkClick}
                               className={cn(
                                 "flex items-center justify-between px-2 py-1 rounded-md",
                                 "hover:bg-accent hover:text-accent-foreground",
-                                "transition-colors text-xs relative group"
+                                "transition-colors text-xs relative group",
                               )}
                             >
                               <div className="flex items-center">
@@ -306,6 +310,7 @@ export function DevlogSidebar({ posts }: DevlogSidebarProps) {
                 <Link
                   key={series.path}
                   href={series.path}
+                  onClick={onLinkClick}
                   className="group block px-2 py-1.5 rounded-md hover:bg-accent/50 transition-colors"
                 >
                   <div className="flex items-center justify-between min-w-0">
@@ -338,13 +343,12 @@ export function DevlogSidebar({ posts }: DevlogSidebarProps) {
           {tagCounts.length > 0 ? (
             <div className="flex flex-wrap gap-1.5 px-2 items-center">
               {tagCounts.map(({ name, count }) => (
-                <Link
+<Link
                   key={name}
                   href={`/devlog/tags/${encodeURIComponent(
                     name.toLowerCase()
                   )}`}
-                  className="group"
-                >
+                  onClick={onLinkClick}
                   <Tag
                     name={`${name} (${count})`}
                     className="group-hover:bg-accent text-foreground text-xs"

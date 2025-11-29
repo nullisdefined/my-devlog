@@ -12,7 +12,7 @@ function extractColorsAndCreateGradient(imageSrc: string): Promise<string> {
     // 브라우저 환경이 아닌 경우 기본값 반환
     if (typeof window === "undefined") {
       resolve(
-        "linear-gradient(135deg, #059669 0%, #10b981 35%, #34d399 70%, #6ee7b7 100%)"
+        "linear-gradient(135deg, #059669 0%, #10b981 35%, #34d399 70%, #6ee7b7 100%)",
       );
       return;
     }
@@ -51,7 +51,7 @@ function extractColorsAndCreateGradient(imageSrc: string): Promise<string> {
         } else {
           // console.log("모든 프록시 시도 실패 - 기본 그라디언트 사용");
           resolve(
-            "linear-gradient(135deg, #059669 0%, #10b981 35%, #34d399 70%, #6ee7b7 100%)"
+            "linear-gradient(135deg, #059669 0%, #10b981 35%, #34d399 70%, #6ee7b7 100%)",
           );
         }
       };
@@ -74,7 +74,7 @@ function extractColorsAndCreateGradient(imageSrc: string): Promise<string> {
           const targetSize = 80; // 더 작게 설정
           const scale = Math.min(
             targetSize / img.width,
-            targetSize / img.height
+            targetSize / img.height,
           );
           canvas.width = Math.max(40, Math.floor(img.width * scale));
           canvas.height = Math.max(40, Math.floor(img.height * scale));
@@ -163,7 +163,7 @@ function extractColorsAndCreateGradient(imageSrc: string): Promise<string> {
           const hsl = rgbToHsl(
             dominantColor[0],
             dominantColor[1],
-            dominantColor[2]
+            dominantColor[2],
           );
           // console.log("HSL 값:", hsl);
 
@@ -172,10 +172,10 @@ function extractColorsAndCreateGradient(imageSrc: string): Promise<string> {
           // console.log("생성된 팔레트:", palette);
 
           // 그라디언트 생성
-          const gradient = `linear-gradient(135deg, 
-            rgb(${palette.color1.join(",")}) 0%, 
-            rgb(${palette.color2.join(",")}) 35%, 
-            rgb(${palette.color3.join(",")}) 70%, 
+          const gradient = `linear-gradient(135deg,
+            rgb(${palette.color1.join(",")}) 0%,
+            rgb(${palette.color2.join(",")}) 35%,
+            rgb(${palette.color3.join(",")}) 70%,
             rgb(${palette.color4.join(",")}) 100%)`;
 
           // console.log("생성된 그라디언트:", gradient);
@@ -219,7 +219,7 @@ function generateImprovedPalette(hsl: [number, number, number]) {
     color1: hslToRgb(
       h,
       baseSaturation * 0.9,
-      Math.min(0.8, baseLightness * 1.3)
+      Math.min(0.8, baseLightness * 1.3),
     ), // 가장 밝은 색
     color2: hslToRgb(h, baseSaturation, baseLightness), // 기본 색
     color3: hslToRgb(h, baseSaturation * 1.1, baseLightness * 0.8), // 조금 더 진한 색
@@ -364,9 +364,10 @@ export function DynamicBanner({ thumbnail }: DynamicBannerProps) {
     <div className="relative w-screen h-[24vh] min-h-[180px] max-h-[280px] sm:h-[28vh] sm:min-h-[220px] sm:max-h-[320px] -mx-4 -mt-[40px] sm:-mt-[0px] mb-8 left-1/2 right-1/2 -ml-[50vw] overflow-hidden">
       {/* 메인 배경 레이어 */}
       <div
-        className="absolute inset-0 transition-all duration-[2000ms] ease-out"
+        className="absolute inset-0 transition-all ease-out"
         style={{
           background: gradientStyle,
+          transitionDuration: "2000ms",
           opacity: gradientStyle === "transparent" ? 0 : 1,
         }}
       />
