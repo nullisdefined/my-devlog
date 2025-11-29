@@ -10,6 +10,7 @@ import { TocInitializer } from "./toc-initializer";
 import { RelatedPosts } from "./related-posts";
 import { Breadcrumb } from "./breadcrumb";
 import Link from "next/link";
+import { PostViews } from "./post-views";
 
 interface PostViewProps {
   post: Post;
@@ -107,6 +108,9 @@ export function PostView({ post, content, toc, allPosts }: PostViewProps) {
                   {format(new Date(post.date), "yyyy년 MM월 dd일")}
                 </time>
               </div>
+              {post.category && (
+                <PostViews category={post.category} slug={post.slug} />
+              )}
             </div>
           </div>
         </header>
