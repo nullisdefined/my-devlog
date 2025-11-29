@@ -45,6 +45,15 @@ import {
   SiGithubpages,
   SiVite,
   SiGooglecloud,
+  SiSwift,
+  SiAwslambda,
+  SiNginx,
+  SiJsonwebtokens,
+  SiStyledcomponents,
+  SiSocketdotio,
+  SiAmazonec2,
+  SiAmazons3,
+  SiAmazonsqs,
 } from "react-icons/si";
 import Image from "next/image";
 
@@ -129,129 +138,86 @@ const ImageModal = ({
 // ProjectCard 컴포넌트
 const ProjectCard = ({
   project,
-  isActive,
   onImageClick,
 }: {
   project: any;
-  isActive: boolean;
   onImageClick: (src: string, alt: string) => void;
 }) => {
-  const handleImageClick = (e: React.MouseEvent) => {
-    console.log("Image clicked!", { isActive, image: project.image }); // 디버깅용
-    if (isActive) {
-      e.stopPropagation();
-      e.preventDefault();
-      onImageClick(project.image, project.title);
-    }
+  const handleImageClick = () => {
+    onImageClick(project.image, project.title);
   };
 
   return (
-    <div
-      className={`bg-card rounded-lg shadow-md hover:shadow-xl transition-all duration-500 h-[700px] lg:h-[740px] w-full max-w-sm lg:max-w-md flex flex-col ${
-        isActive ? "shadow-xl" : ""
-      }`}
-    >
+    <div className="bg-card rounded-lg shadow-md hover:shadow-xl transition-all duration-300 flex flex-col h-full">
       {project.image && (
-        <div className="relative w-full h-32 lg:h-36 bg-gray-50 dark:bg-gray-900 flex items-center justify-center overflow-hidden flex-shrink-0 rounded-t-lg">
+        <div className="relative w-full bg-gray-50 dark:bg-gray-900 flex items-center justify-center overflow-hidden flex-shrink-0 rounded-t-lg">
           <div
-            className={`relative w-full h-full ${
-              isActive ? "cursor-pointer" : "cursor-default"
-            }`}
+            className="relative w-full cursor-pointer"
             onClick={handleImageClick}
           >
             <Image
               src={project.image}
               alt={project.title}
-              fill
-              className="object-contain transition-transform duration-500 hover:scale-105"
-              sizes="(max-width: 1200px) 100vw, 33vw"
+              width={800}
+              height={600}
+              className="w-full h-auto object-contain transition-transform duration-300 hover:scale-105"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             />
           </div>
-          {!isActive && (
-            <div className="absolute inset-0 bg-black/20 transition-opacity duration-300" />
-          )}
 
-          {/* 확대 힌트 아이콘 - 활성 카드에서만 표시 */}
-          {isActive && (
-            <div className="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300 bg-black/20 pointer-events-none">
-              <div className="bg-white/90 rounded-full p-2">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-5 w-5 text-gray-800"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"
-                  />
-                </svg>
-              </div>
+          {/* 확대 힌트 아이콘 */}
+          <div className="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300 bg-black/20 pointer-events-none">
+            <div className="bg-white/90 rounded-full p-2">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-5 w-5 text-gray-800"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"
+                />
+              </svg>
             </div>
-          )}
+          </div>
         </div>
       )}
-      <div className={`p-3 lg:p-4 flex-1 flex flex-col`}>
+      <div className="p-4 flex-1 flex flex-col">
         {/* 프로젝트 제목 및 설명 */}
-        <div className="space-y-1.5 lg:space-y-2">
-          <div className="space-y-0.5">
-            <h3
-              className={`font-bold ${
-                isActive ? "text-base lg:text-lg" : "text-sm lg:text-base"
-              }`}
-            >
-              {project.title}
-            </h3>
-            <p
-              className={`text-xs lg:text-sm text-blue-600 dark:text-blue-400 font-medium`}
-            >
+        <div className="space-y-2">
+          <div className="space-y-1">
+            <h3 className="font-bold text-base lg:text-lg">{project.title}</h3>
+            <p className="text-sm text-muted-foreground font-medium">
               {project.period}
             </p>
           </div>
-          <p className={`text-xs text-muted-foreground leading-relaxed`}>
+          <p className="text-sm text-muted-foreground leading-relaxed">
             {project.description}
           </p>
         </div>
 
         {/* 주요 기능 */}
-        <div className="space-y-1.5 lg:space-y-2 mt-3 lg:mt-4">
-          <h4
-            className={`font-semibold ${
-              isActive ? "text-xs lg:text-sm" : "text-xs"
-            }`}
-          >
-            주요 기능:
-          </h4>
-          <ul
-            className={`list-disc list-inside space-y-0.5 text-muted-foreground ${
-              isActive ? "text-xs" : "text-xs"
-            } leading-relaxed`}
-          >
+        {/*<div className="space-y-2 mt-4">
+          <h4 className="font-semibold text-sm">주요 기능:</h4>
+          <ul className="list-disc list-inside space-y-1 text-muted-foreground text-sm leading-relaxed">
             {project.features.map((feature: string, idx: number) => (
               <li key={idx}>{feature}</li>
             ))}
           </ul>
-        </div>
+        </div>*/}
 
         {/* 기술 스택 */}
-        <div className="space-y-1.5 lg:space-y-2 mt-2 lg:mt-3">
-          <h4
-            className={`font-semibold ${
-              isActive ? "text-xs lg:text-sm" : "text-xs"
-            }`}
-          >
-            기술 스택:
-          </h4>
-          <div className="flex flex-wrap gap-1 lg:gap-1.5">
+        <div className="space-y-2 mt-3">
+          <h4 className="font-semibold text-sm">기술 스택:</h4>
+          <div className="flex flex-wrap gap-1.5">
             {project.tech.map((tech: any, idx: number) => (
               <div
                 key={idx}
-                className={`flex items-center space-x-0.5 text-muted-foreground hover:text-foreground transition-colors bg-muted/50 px-1.5 py-0.5 rounded ${
-                  isActive ? "text-xs" : "text-xs"
-                }`}
+                className="flex items-center space-x-1 text-muted-foreground hover:text-foreground transition-colors bg-muted/50 px-2 py-1 rounded text-xs"
               >
                 <span className="text-xs">{tech.icon}</span>
                 <span>{tech.name}</span>
@@ -261,19 +227,28 @@ const ProjectCard = ({
         </div>
 
         {/* 레포지토리 버튼 */}
-        <div className="mt-auto pt-3 lg:pt-4">
-          <Button
-            variant={isActive ? "outline" : "ghost"}
-            className={`w-full ${isActive ? "text-xs" : "text-xs"}`}
-            asChild
-          >
+        <div className="mt-auto pt-4 space-y-2">
+          {project.pdf && (
+            <Button variant="secondary" className="w-full text-sm" asChild>
+              <Link
+                href={project.pdf}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-center"
+              >
+                <FileText className="mr-2 h-4 w-4" />
+                Presentation
+              </Link>
+            </Button>
+          )}
+          <Button variant="outline" className="w-full text-sm" asChild>
             <Link
               href={project.link}
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center justify-center"
             >
-              <SiGithub className="mr-1.5 h-3 w-3" />
+              <SiGithub className="mr-2 h-4 w-4" />
               Repository
             </Link>
           </Button>
@@ -285,9 +260,6 @@ const ProjectCard = ({
 
 export default function Home() {
   const [mounted, setMounted] = useState(false);
-  const [currentProjectIndex, setCurrentProjectIndex] = useState(0);
-  const [currentSection, setCurrentSection] = useState("");
-  const [isScrolling, setIsScrolling] = useState(false);
   const [modalImage, setModalImage] = useState<{
     isOpen: boolean;
     src: string;
@@ -300,7 +272,6 @@ export default function Home() {
 
   const heroRef = useRef<HTMLElement>(null);
   const projectsRef = useRef<HTMLElement>(null);
-  const scrollTimeoutRef = useRef<NodeJS.Timeout>();
 
   // 컴포넌트 마운트 확인
   useEffect(() => {
@@ -309,7 +280,6 @@ export default function Home() {
 
   // 이미지 모달 열기
   const openImageModal = (src: string, alt: string) => {
-    console.log("Opening modal with:", { src, alt }); // 디버깅용
     setModalImage({ isOpen: true, src, alt });
   };
 
@@ -317,160 +287,6 @@ export default function Home() {
   const closeImageModal = () => {
     setModalImage({ isOpen: false, src: "", alt: "" });
   };
-
-  // 현재 섹션이 히어로인지 확인하는 함수
-  const isInHeroSection = () => {
-    if (!heroRef.current) return false;
-    const heroRect = heroRef.current.getBoundingClientRect();
-    return heroRect.top <= 100 && heroRect.bottom > 100;
-  };
-
-  // 프로젝트 섹션으로 스크롤
-  const scrollToProjects = () => {
-    if (projectsRef.current && !isScrolling) {
-      setIsScrolling(true);
-      projectsRef.current.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-      });
-
-      setTimeout(() => {
-        setIsScrolling(false);
-      }, 1000);
-    }
-  };
-
-  // 히어로 섹션으로 스크롤
-  const scrollToHero = () => {
-    if (heroRef.current && !isScrolling) {
-      setIsScrolling(true);
-      heroRef.current.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-      });
-
-      setTimeout(() => {
-        setIsScrolling(false);
-      }, 1000);
-    }
-  };
-
-  // 히어로 섹션에서의 스크롤 이벤트 핸들러
-  useEffect(() => {
-    const handleWheel = (e: WheelEvent) => {
-      if (isScrolling || modalImage.isOpen) return;
-
-      const currentScrollY = window.scrollY;
-      const windowHeight = window.innerHeight;
-      const inHero = isInHeroSection();
-
-      // 히어로 섹션에서 아래로 스크롤할 때만 트리거
-      if (inHero && e.deltaY > 0) {
-        e.preventDefault();
-
-        if (scrollTimeoutRef.current) {
-          clearTimeout(scrollTimeoutRef.current);
-        }
-
-        scrollTimeoutRef.current = setTimeout(() => {
-          scrollToProjects();
-        }, 50);
-      }
-      // 프로젝트 섹션 상단 부근에서 위로 스크롤할 때 히어로로 이동
-      else if (!inHero && e.deltaY < 0) {
-        // 프로젝트 섹션의 상단 200px 이내에서 위로 스크롤할 때
-        const projectsElement = projectsRef.current;
-        if (projectsElement) {
-          const projectsRect = projectsElement.getBoundingClientRect();
-          const isNearProjectsTop =
-            projectsRect.top >= -200 && projectsRect.top <= 200;
-
-          if (isNearProjectsTop) {
-            e.preventDefault();
-
-            if (scrollTimeoutRef.current) {
-              clearTimeout(scrollTimeoutRef.current);
-            }
-
-            scrollTimeoutRef.current = setTimeout(() => {
-              scrollToHero();
-            }, 50);
-          }
-        }
-      }
-    };
-
-    window.addEventListener("wheel", handleWheel, { passive: false });
-
-    return () => {
-      window.removeEventListener("wheel", handleWheel);
-      if (scrollTimeoutRef.current) {
-        clearTimeout(scrollTimeoutRef.current);
-      }
-    };
-  }, [isScrolling, modalImage.isOpen]);
-
-  // 키보드 네비게이션 (프로젝트 변경용)
-  useEffect(() => {
-    const handleKeyPress = (e: KeyboardEvent) => {
-      if (modalImage.isOpen) return;
-
-      if (e.key === "ArrowLeft") {
-        prevProject();
-      } else if (e.key === "ArrowRight") {
-        nextProject();
-      }
-    };
-
-    window.addEventListener("keydown", handleKeyPress);
-    return () => window.removeEventListener("keydown", handleKeyPress);
-  }, [modalImage.isOpen]);
-
-  // 터치 이벤트 (히어로 섹션에서만)
-  useEffect(() => {
-    let startY = 0;
-    let endY = 0;
-
-    const handleTouchStart = (e: TouchEvent) => {
-      startY = e.touches[0].clientY;
-    };
-
-    const handleTouchEnd = (e: TouchEvent) => {
-      if (isScrolling || modalImage.isOpen) return;
-
-      endY = e.changedTouches[0].clientY;
-      const deltaY = startY - endY;
-      const inHero = isInHeroSection();
-
-      if (Math.abs(deltaY) > 50) {
-        // 최소 스와이프 거리
-        if (inHero && deltaY > 0) {
-          // 히어로에서 아래로 스와이프
-          scrollToProjects();
-        } else if (!inHero && deltaY < 0) {
-          // 프로젝트 섹션 상단 부근에서 위로 스와이프
-          const projectsElement = projectsRef.current;
-          if (projectsElement) {
-            const projectsRect = projectsElement.getBoundingClientRect();
-            const isNearProjectsTop =
-              projectsRect.top >= -200 && projectsRect.top <= 200;
-
-            if (isNearProjectsTop) {
-              scrollToHero();
-            }
-          }
-        }
-      }
-    };
-
-    window.addEventListener("touchstart", handleTouchStart, { passive: true });
-    window.addEventListener("touchend", handleTouchEnd, { passive: true });
-
-    return () => {
-      window.removeEventListener("touchstart", handleTouchStart);
-      window.removeEventListener("touchend", handleTouchEnd);
-    };
-  }, [isScrolling, modalImage.isOpen]);
 
   const skills = [
     {
@@ -522,28 +338,7 @@ export default function Home() {
         { name: "Express", icon: <SiExpress className="h-4 w-4" /> },
         { name: "NestJS", icon: <SiNestjs className="h-4 w-4" /> },
         { name: "TypeORM", icon: <SiTypeorm className="h-4 w-4" /> },
-      ],
-    },
-    {
-      category: "Database",
-      techs: [
-        { name: "MariaDB", icon: <SiMariadb className="h-4 w-4" /> },
-        { name: "MySQL", icon: <SiMysql className="h-4 w-4" /> },
         { name: "PostgreSQL", icon: <SiPostgresql className="h-4 w-4" /> },
-        { name: "Oracle", icon: <SiOracle className="h-4 w-4" /> },
-      ],
-    },
-    {
-      category: "DevOps",
-      techs: [
-        { name: "GitHub", icon: <SiGithub className="h-4 w-4" /> },
-        { name: "Docker", icon: <SiDocker className="h-4 w-4" /> },
-        { name: "AWS", icon: <SiAmazon className="h-4 w-4" /> },
-        {
-          name: "GitHub Actions",
-          icon: <SiGithubactions className="h-4 w-4" />,
-        },
-        { name: "Jenkins", icon: <SiJenkins className="h-4 w-4" /> },
       ],
     },
     {
@@ -551,6 +346,7 @@ export default function Home() {
       techs: [
         { name: "VSCode", icon: <SiVisualstudiocode className="h-4 w-4" /> },
         { name: "Git", icon: <SiGit className="h-4 w-4" /> },
+        { name: "GitHub", icon: <SiGithub className="h-4 w-4" /> },
         { name: "Notion", icon: <SiNotion className="h-4 w-4" /> },
         { name: "Slack", icon: <SiSlack className="h-4 w-4" /> },
         { name: "Swagger", icon: <SiSwagger className="h-4 w-4" /> },
@@ -561,136 +357,203 @@ export default function Home() {
 
   const projects = [
     {
-      title: "핫식스 팀 블로그",
-      period: "24.06 ~ 24.07",
-      description:
-        "팀 단위의 특별한 협업 공간을 제공하는 웹 서비스입니다. 팀원이 작성한 게시글을 쉽게 공유하고 관리할 수 있습니다.",
-      features: [
-        "팀 단위의 게시글 관리",
-        "사용자 인증 및 권한 관리",
-        "풍부한 에디터 기능",
-        "댓글 및 좋아요 기능",
-        "이메일 인증을 통한 비밀번호 변경",
-        "공개/비공개 게시글 설정",
-      ],
-      tech: [
-        { name: "Node.js", icon: <SiNodedotjs className="h-4 w-4" /> },
-        { name: "TypeScript", icon: <SiTypescript className="h-4 w-4" /> },
-        { name: "NestJS", icon: <SiNestjs className="h-4 w-4" /> },
-        { name: "MySQL", icon: <SiMysql className="h-4 w-4" /> },
-        { name: "GCP", icon: <SiGooglecloud className="h-4 w-4" /> },
-      ],
-      link: "https://github.com/nullisdefined/hotsix-teamblog",
-      image:
-        "https://storage.googleapis.com/hotsix-bucket/%EB%A9%94%EC%9D%B8%ED%8E%98%EC%9D%B4%EC%A7%80.gif",
-    },
-    {
-      title: "Travel Manager",
-      period: "24.08",
-      description:
-        "여행 일정과 경비를 효율적으로 관리할 수 있는 서비스입니다. 각 여행지별 일정을 등록하고 경비를 실시간으로 관리할 수 있습니다.",
-      features: [
-        "여행별 일정 관리",
-        "실시간 경비 추적",
-        "활동별 상세 기록",
-        "여행지별 통화 자동 변환",
-        "일정 순서 관리",
-        "경비 카테고리 관리",
-      ],
-      tech: [
-        { name: "Node.js", icon: <SiNodedotjs className="h-4 w-4" /> },
-        { name: "TypeScript", icon: <SiTypescript className="h-4 w-4" /> },
-        { name: "NestJS", icon: <SiNestjs className="h-4 w-4" /> },
-        { name: "MySQL", icon: <SiMysql className="h-4 w-4" /> },
-      ],
-      link: "https://github.com/Programmers-3th-Team-Kim/travel-manager",
-      image: "https://storage.googleapis.com/hotsix-bucket/travelmanager.png",
-    },
-
-    {
       title: "나날모아",
       period: "24.08 ~ 25.02",
+      role: "백엔드",
       description:
         "시니어와 가족 사용자를 대상으로 하는 AI 기반 자동 일정 관리 서비스입니다. 음성 인식, OCR, NLP를 활용하여 편리한 일정 등록을 지원합니다.",
       features: [
-        "음성 인식을 통한 자동 일정 등록",
-        "이미지 인식(OCR)을 통한 일정 추출",
-        "시니어 케어 공유 서비스",
-        "카테고리별 일정 관리",
-        "가족/간병인과의 일정 공유",
-        "자연어 처리를 통한 일정 분석",
+        "Hot reload, 전역 파이프, 로거, Swagger 등을 포함한 NestJS + TypeORM 백엔드 부트스트랩",
+        "일정·회원·공유 모듈 CRUD와 JWT 기반 권한 체계를 설계해 일정 공유 흐름 일원화",
+        "QueryRunner → `typeorm-transactional` 래퍼로 트랜잭션을 공통화하여 멀티 모듈 ACID 보장",
+        "RDS 기반 스키마 설계 및 TypeORM 마이그레이션으로 일정/공유/권한 관계 정규화",
+        "EC2 + Docker Compose + GitHub Actions 배포 파이프라인으로 서버/Swagger 페이지 자동 배포",
       ],
       tech: [
-        { name: "TypeScript", icon: <SiTypescript className="h-4 w-4" /> },
         { name: "NestJS", icon: <SiNestjs className="h-4 w-4" /> },
-        { name: "Node.js", icon: <SiNodedotjs className="h-4 w-4" /> },
-        { name: "AWS", icon: <SiAmazon className="h-4 w-4" /> },
+        { name: "TypeScript", icon: <SiTypescript className="h-4 w-4" /> },
+        { name: "TypeORM", icon: <SiTypeorm className="h-4 w-4" /> },
         { name: "PostgreSQL", icon: <SiPostgresql className="h-4 w-4" /> },
+        { name: "EC2", icon: <SiAmazonec2 className="h-4 w-4" /> },
+        { name: "Nginx", icon: <SiNginx className="h-4 w-4" /> },
+        { name: "JWT", icon: <SiJsonwebtokens className="h-4 w-4" /> },
+        {
+          name: "OAuth2",
+          icon: (
+            <div className="h-4 w-4 flex items-center justify-center text-[10px] font-semibold">
+              OA
+            </div>
+          ),
+        },
       ],
       link: "https://github.com/nanalmoa/nanalmoa",
       image:
         "https://storage.googleapis.com/hotsix-bucket/%EB%82%98%EB%82%A0%EB%AA%A8%EC%95%84.png",
+      pdf: "/nanalmoa.pdf",
     },
     {
-      title: "Thumbs Up",
-      period: "25.03",
+      title: "할 사람?",
+      period: "25.06 ~ 25.08",
+      role: "풀스택",
       description:
-        "직관적이고 간편한 썸네일 제작 도구입니다. 다양한 레이아웃과 배경 옵션을 제공하여 누구나 쉽게 썸네일 이미지를 만들 수 있습니다. 실시간 미리보기 기능으로 즉시 결과를 확인하고 수정할 수 있어 효율적인 디자인 작업이 가능합니다.",
+        "지역 기반 번개모임 커뮤니티 서비스입니다. AI가 생성한 미션을 수행하며 포인트를 획득하고, 같은 지역 사람들과 오프라인 모임을 가질 수 있습니다.",
       features: [
-        "다양한 레이아웃 템플릿 제공",
-        "그라데이션, 단색, 이미지 배경 지원",
-        "실시간 텍스트 편집 및 미리보기",
-        "폰트 선택 및 텍스트 스타일링",
-        "색상 팔레트 및 랜덤 셔플 기능",
-        "썸네일 클립보드 복사 또는 다운로드",
+        "Passport-kakao/naver/google 전략과 HTTP-Only 쿠키로 카카오·네이버·구글 소셜 로그인 UX 통합",
+        "DynamoDB 미션/인증 데이터를 Aurora PostgreSQL로 마이그레이션하며 4개 핵심 테이블 정규화",
+        "NestJS Scheduler와 cron 잡으로 모집→활동→정산까지 모임 상태 전환과 패널티 자동화",
+        "Socket.IO 게이트웨이로 채팅방/메시지/읽음 이벤트를 설계하고 React 채팅 뷰와 연동",
+        "Service Worker + VAPID 키로 웹 푸시 구독/전송 파이프라인을 구축, 오프라인 사용자만 타겟팅",
+        "React에서 S3 Presigned URL 업로드·미션 상세 API·주간 뷰 UI를 연결해 풀스택 플로우 완성",
       ],
       tech: [
-        { name: "React", icon: <SiReact className="h-4 w-4" /> },
-        { name: "TypeScript", icon: <SiTypescript className="h-4 w-4" /> },
-        { name: "Vite", icon: <SiVite className="h-4 w-4" /> },
-        { name: "Tailwind CSS", icon: <SiTailwindcss className="h-4 w-4" /> },
-        { name: "Github Pages", icon: <SiGithubpages className="h-4 w-4" /> },
-      ],
-      link: "https://github.com/nullisdefined/thumbs-up",
-      image:
-        "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/3047408d471022f63f3ce761cda03b9a.gif",
-    },
-    {
-      title: "오운완 (오늘운동완료)",
-      period: "25.04 ~ 25.06",
-      description:
-        "운동 습관 형성과 커뮤니티 기반 동기부여를 위한 웹 기반 운동 인증 플랫폼입니다. 사용자들이 운동 인증 사진을 실시간으로 촬영하여 공유하고, 그룹 단위의 경쟁과 협업을 통해 자연스럽게 운동 습관을 형성할 수 있도록 지원합니다.",
-      features: [
-        "실시간 사진 촬영을 통한 운동 인증",
-        "그룹 기반 경쟁 및 랭킹 시스템",
-        "통계 대시보드",
-        "스트릭(연속 출석) 기록 관리",
-        "피드 상호작용 (좋아요, 댓글)",
-        "인증글 공개 범위 제어 (전체/그룹 공개)",
-        "시간대별 운동 패턴 분석",
-      ],
-      tech: [
-        { name: "Node.js", icon: <SiNodedotjs className="h-4 w-4" /> },
-        { name: "TypeScript", icon: <SiTypescript className="h-4 w-4" /> },
         { name: "NestJS", icon: <SiNestjs className="h-4 w-4" /> },
-        { name: "AWS", icon: <SiAmazon className="h-4 w-4" /> },
+        { name: "TypeScript", icon: <SiTypescript className="h-4 w-4" /> },
+        { name: "TypeORM", icon: <SiTypeorm className="h-4 w-4" /> },
         { name: "PostgreSQL", icon: <SiPostgresql className="h-4 w-4" /> },
+        { name: "JWT", icon: <SiJsonwebtokens className="h-4 w-4" /> },
+        {
+          name: "OAuth2",
+          icon: (
+            <div className="h-4 w-4 flex items-center justify-center text-[10px] font-semibold">
+              OA
+            </div>
+          ),
+        },
+        { name: "React", icon: <SiReact className="h-4 w-4" /> },
+        {
+          name: "Styled Components",
+          icon: <SiStyledcomponents className="h-4 w-4" />,
+        },
+        {
+          name: "Zustand",
+          icon: (
+            <Image
+              src="https://zustand-demo.pmnd.rs/logo512.png"
+              alt="Zustand"
+              width={16}
+              height={16}
+              className="h-4 w-4"
+            />
+          ),
+        },
+        {
+          name: "JSQR",
+          icon: (
+            <div className="h-4 w-4 flex items-center justify-center text-[10px] font-semibold">
+              QR
+            </div>
+          ),
+        },
+        { name: "Socket.IO", icon: <SiSocketdotio className="h-4 w-4" /> },
       ],
-      link: "https://github.com/SSU-LED",
+      link: "https://github.com/NIPA-AWS-Developer-2nd",
       image:
-        "https://github.com/user-attachments/assets/db1dc04e-f2ae-419d-ad01-7e210f68b904",
+        "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/24275eb6388f806c391d867e58a79cb5.png",
+      pdf: "/halsaram.pdf",
+    },
+    {
+      title: "한땀한땀",
+      period: "25.03 ~ 25.09",
+      role: "백엔드",
+      description:
+        "개인의 다양한 목표 달성과 꾸준한 습관 형성을 돕는 AI 기반 소셜 챌린지 플랫폼입니다. HealthKit을 연동한 AppleWatch 자동 인증과 AI 이미지 분석을 통해 신뢰도 높은 챌린지 환경을 제공합니다.",
+      features: [
+        "Terraform 모듈로 VPC·ALB·ECR·ECS on EC2·RDS·CloudFront까지 IaC로 관리",
+        "VPC Endpoint만 활용하는 프라이빗 네트워크와 ACM/Route53 기반 HTTPS 경로 구축",
+        "SQS → Lambda 워커로 사진 인증 비동기 처리 후 관리자 모더레이션 큐에 적재",
+        "Socket.IO 채팅 API 명세와 인증 플로우를 설계해 앱-서버 간 계약을 명확히 문서화",
+        "CloudWatch 사용자/정책 발급 및 Agent 구성으로 로그·메트릭 수집 체계를 마련",
+        "챗봇 알림·운영 메시지 시나리오를 정의해 인증 경험을 실시간화",
+      ],
+      tech: [
+        { name: "NestJS", icon: <SiNestjs className="h-4 w-4" /> },
+        { name: "TypeScript", icon: <SiTypescript className="h-4 w-4" /> },
+        { name: "TypeORM", icon: <SiTypeorm className="h-4 w-4" /> },
+        { name: "PostgreSQL", icon: <SiPostgresql className="h-4 w-4" /> },
+        { name: "Socket.IO", icon: <SiSocketdotio className="h-4 w-4" /> },
+        { name: "JWT", icon: <SiJsonwebtokens className="h-4 w-4" /> },
+        {
+          name: "OAuth2",
+          icon: (
+            <div className="h-4 w-4 flex items-center justify-center text-[10px] font-semibold">
+              OA
+            </div>
+          ),
+        },
+        { name: "Docker", icon: <SiDocker className="h-4 w-4" /> },
+        {
+          name: "ECR",
+          icon: (
+            <div className="h-4 w-4 flex items-center justify-center text-[10px] font-semibold">
+              ECR
+            </div>
+          ),
+        },
+        {
+          name: "ECS",
+          icon: (
+            <div className="h-4 w-4 flex items-center justify-center text-[10px] font-semibold">
+              ECS
+            </div>
+          ),
+        },
+        { name: "S3", icon: <SiAmazons3 className="h-4 w-4" /> },
+        {
+          name: "CloudFront",
+          icon: (
+            <div className="h-4 w-4 flex items-center justify-center text-[10px] font-semibold">
+              CF
+            </div>
+          ),
+        },
+        { name: "Lambda", icon: <SiAwslambda className="h-4 w-4" /> },
+        { name: "SQS", icon: <SiAmazonsqs className="h-4 w-4" /> },
+        {
+          name: "Bedrock",
+          icon: (
+            <div className="h-4 w-4 flex items-center justify-center text-[10px] font-semibold">
+              BR
+            </div>
+          ),
+        },
+      ],
+      link: "https://github.com/SOAPFT/soapft_backend",
+      image:
+        "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/bf10d5f4f6dd3bc64cedf9b0dff5fd73.png",
+      pdf: "/soapft.pdf",
+    },
+    {
+      title: "한모아",
+      period: "25.09 ~ 25.12",
+      role: "백엔드",
+      description:
+        "영어 화자의 음색과 운율을 보존한 자연스러운 한국어 더빙 음성을 생성하는 AI 더빙 서비스입니다. STT-TTS 및 S2ST 융합형 교차 언어 음성 합성 기술을 활용하여, 화자 분리, 음성 인식, 번역, TTS, 자막 생성까지 전 과정을 자동화합니다.",
+      features: [
+        "Project–VideoAsset–DubJob–Segment로 이어지는 TypeORM ERD 및 관계 옵션 구성",
+        "Presigned URL 발급부터 업로드 완료 체크·DubJob 자동 생성까지의 영상 처리 자동화",
+        "NestJS Devtools로 모듈 의존성과 라우팅 구조 시각화·디버깅",
+      ],
+      tech: [
+        { name: "NestJS", icon: <SiNestjs className="h-4 w-4" /> },
+        { name: "TypeScript", icon: <SiTypescript className="h-4 w-4" /> },
+        { name: "PostgreSQL", icon: <SiPostgresql className="h-4 w-4" /> },
+        { name: "JWT", icon: <SiJsonwebtokens className="h-4 w-4" /> },
+        {
+          name: "OAuth2",
+          icon: (
+            <div className="h-4 w-4 flex items-center justify-center text-[10px] font-semibold">
+              OA
+            </div>
+          ),
+        },
+        { name: "SQS", icon: <SiAmazonsqs className="h-4 w-4" /> },
+        { name: "S3", icon: <SiAmazons3 className="h-4 w-4" /> },
+      ],
+      link: "https://github.com/ssu-capstone-team-4/hanmoa-backend",
+      image:
+        "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/6d07cf3fdd5e2da20d4745ab23eb8ada.png",
     },
   ];
-
-  const nextProject = () => {
-    setCurrentProjectIndex((prev) => (prev + 1) % projects.length);
-  };
-
-  const prevProject = () => {
-    setCurrentProjectIndex(
-      (prev) => (prev - 1 + projects.length) % projects.length,
-    );
-  };
 
   // 마운트되지 않은 경우 빈 화면 반환 (테마 깜빡임 방지)
   if (!mounted) {
@@ -802,7 +665,7 @@ dark:hover:bg-gray-700 dark:hover:scale-105 dark:hover:shadow-lg
           </div>
         </section>
 
-        {/* 프로젝트 섹션 */}
+        {/* 프로젝트 섹션 - 그리드 형태 */}
         <section
           ref={projectsRef}
           id="projects"
@@ -838,97 +701,15 @@ dark:hover:bg-gray-700 dark:hover:scale-105 dark:hover:shadow-lg
               </div>
             </div>
 
-            {/* 캐러셀 컨테이너 */}
-            <div className="relative max-w-6xl mx-auto overflow-hidden">
-              {/* 데스크톱용 3카드 캐러셀 (lg 이상) */}
-              <div className="hidden lg:flex items-center justify-center gap-4 lg:gap-6">
-                {/* 이전 프로젝트 카드 (왼쪽) */}
-                <div
-                  className="w-72 lg:w-80 flex-shrink-0 transform scale-75 lg:scale-80 opacity-60 hover:opacity-80 transition-all duration-500 cursor-pointer"
-                  onClick={prevProject}
-                >
-                  <ProjectCard
-                    project={
-                      projects[
-                        (currentProjectIndex - 1 + projects.length) %
-                          projects.length
-                      ]
-                    }
-                    isActive={false}
-                    onImageClick={() => {}} // 빈 함수로 비활성화
-                  />
-                </div>
-
-                {/* 현재 프로젝트 카드 (중앙) */}
-                <div className="w-72 lg:w-[22rem] flex-shrink-0 transform scale-100 z-10 shadow-xl">
-                  <ProjectCard
-                    project={projects[currentProjectIndex]}
-                    isActive={true}
-                    onImageClick={openImageModal}
-                  />
-                </div>
-
-                {/* 다음 프로젝트 카드 (오른쪽) */}
-                <div
-                  className="w-72 lg:w-80 flex-shrink-0 transform scale-75 lg:scale-80 opacity-60 hover:opacity-80 transition-all duration-500 cursor-pointer"
-                  onClick={nextProject}
-                >
-                  <ProjectCard
-                    project={
-                      projects[(currentProjectIndex + 1) % projects.length]
-                    }
-                    isActive={false}
-                    onImageClick={() => {}} // 빈 함수로 비활성화
-                  />
-                </div>
-              </div>
-
-              {/* 모바일/태블릿용 단일 카드 + 버튼 네비게이션 (lg 미만) */}
-              <div className="lg:hidden relative flex justify-center">
-                {/* 현재 프로젝트 카드 */}
-                <div className="w-full max-w-md mx-auto px-16">
-                  <ProjectCard
-                    project={projects[currentProjectIndex]}
-                    isActive={true}
-                    onImageClick={openImageModal}
-                  />
-                </div>
-
-                {/* 좌측 네비게이션 버튼 */}
-                <Button
-                  variant="outline"
-                  size="icon"
-                  className="absolute left-1 top-1/2 -translate-y-1/2 h-10 w-10 rounded-full bg-white/95 dark:bg-gray-900/95 backdrop-blur-sm shadow-lg hover:bg-white dark:hover:bg-gray-800 border-2 border-gray-300 dark:border-gray-600 z-20 transition-all duration-200 hover:scale-110"
-                  onClick={prevProject}
-                >
-                  <ChevronLeft className="h-5 w-5 text-gray-800 dark:text-gray-100" />
-                </Button>
-
-                {/* 우측 네비게이션 버튼 */}
-                <Button
-                  variant="outline"
-                  size="icon"
-                  className="absolute right-1 top-1/2 -translate-y-1/2 h-10 w-10 rounded-full bg-white/95 dark:bg-gray-900/95 backdrop-blur-sm shadow-lg hover:bg-white dark:hover:bg-gray-800 border-2 border-gray-300 dark:border-gray-600 z-20 transition-all duration-200 hover:scale-110"
-                  onClick={nextProject}
-                >
-                  <ChevronRight className="h-5 w-5 text-gray-800 dark:text-gray-100" />
-                </Button>
-              </div>
-
-              {/* 네비게이션 인디케이터 */}
-              <div className="flex justify-center mt-8 space-x-2 mb-1">
-                {projects.map((_, index) => (
-                  <button
-                    key={index}
-                    onClick={() => setCurrentProjectIndex(index)}
-                    className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
-                      index === currentProjectIndex
-                        ? "bg-blue-500 scale-125 shadow-md"
-                        : "bg-gray-300 dark:bg-gray-600 hover:bg-gray-400 dark:hover:bg-gray-500 hover:scale-110"
-                    }`}
-                  />
-                ))}
-              </div>
+            {/* 프로젝트 카드 그리드 */}
+            <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {projects.map((project, index) => (
+                <ProjectCard
+                  key={index}
+                  project={project}
+                  onImageClick={openImageModal}
+                />
+              ))}
             </div>
           </div>
         </section>
@@ -1097,37 +878,6 @@ dark:hover:bg-gray-700 dark:hover:scale-105 dark:hover:shadow-lg
                 <ul className="space-y-3 pl-3 pb-3">
                   <li>
                     <div className="font-semibold text-sm flex items-center justify-between">
-                      <span>
-                        NIPA-AWS Developer 부트캠프 2기 최종 프로젝트 대상
-                      </span>
-                      <Link
-                        href="/award-nipa-aws-bootcamp-2025.pdf"
-                        target="_blank"
-                        className="ml-2 text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 transition-colors flex-shrink-0"
-                      >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          className="h-4 w-4"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-                          />
-                        </svg>
-                      </Link>
-                    </div>
-                    <div className="text-xs sm:text-sm text-muted-foreground">
-                      한국소프트웨어산업협회
-                    </div>
-                    <div className="text-xs text-muted-foreground">2025.08</div>
-                  </li>
-                  <li>
-                    <div className="font-semibold text-sm flex items-center justify-between">
                       <span>숭실대학교 소프트웨어 공모전 총장상</span>
                       <Link
                         href="/award-ssu-sw-contest-2025.pdf"
@@ -1136,7 +886,7 @@ dark:hover:bg-gray-700 dark:hover:scale-105 dark:hover:shadow-lg
                       >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
-                          className="h-4 w-4"
+                          className="h-5 w-5"
                           fill="none"
                           viewBox="0 0 24 24"
                           stroke="currentColor"
@@ -1152,6 +902,37 @@ dark:hover:bg-gray-700 dark:hover:scale-105 dark:hover:shadow-lg
                     </div>
                     <div className="text-xs sm:text-sm text-muted-foreground">
                       숭실대학교 소프트웨어학부
+                    </div>
+                    <div className="text-xs text-muted-foreground">2025.08</div>
+                  </li>
+                  <li>
+                    <div className="font-semibold text-sm flex items-center justify-between">
+                      <span>
+                        NIPA-AWS Developer 부트캠프 2기 최종 프로젝트 대상
+                      </span>
+                      <Link
+                        href="/award-nipa-aws-bootcamp-2025.pdf"
+                        target="_blank"
+                        className="ml-2 text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 transition-colors flex-shrink-0"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="h-5 w-5"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                          />
+                        </svg>
+                      </Link>
+                    </div>
+                    <div className="text-xs sm:text-sm text-muted-foreground">
+                      한국소프트웨어산업협회
                     </div>
                     <div className="text-xs text-muted-foreground">2025.08</div>
                   </li>
@@ -1172,8 +953,8 @@ dark:hover:bg-gray-700 dark:hover:scale-105 dark:hover:shadow-lg
 
         {/* Skills 섹션 */}
         <section className="py-24 bg-gradient-to-b from-muted/50 to-background">
-          <div className="container mx-auto px-8 lg:px-12">
-            <div className="text-center mb-16">
+          <div className="container mx-auto px-4 sm:px-8 lg:px-12">
+            <div className="text-center mb-16 flex justify-center">
               <div className="relative inline-block px-4">
                 <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black tracking-tighter leading-none">
                   <span
@@ -1202,16 +983,16 @@ dark:hover:bg-gray-700 dark:hover:scale-105 dark:hover:shadow-lg
               </div>
             </div>
             <div className="flex justify-center">
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4 max-w-7xl w-full">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl w-full justify-items-center">
                 {skills.map((skill) => (
                   <div
                     key={skill.category}
-                    className="p-4 sm:p-6 bg-card rounded-lg shadow-lg"
+                    className="p-4 sm:p-5 bg-card rounded-lg shadow-lg h-full w-full max-w-sm"
                   >
-                    <h3 className="font-bold mb-4 text-base sm:text-lg text-center">
+                    <h3 className="font-bold mb-3 text-base sm:text-lg">
                       {skill.category}
                     </h3>
-                    <ul className="space-y-3">
+                    <ul className="space-y-2.5 pl-4">
                       {skill.techs.map((tech) => (
                         <li
                           key={tech.name}

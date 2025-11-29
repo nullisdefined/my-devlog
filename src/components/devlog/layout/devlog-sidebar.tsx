@@ -343,12 +343,13 @@ export function DevlogSidebar({ posts, onLinkClick }: DevlogSidebarProps) {
           {tagCounts.length > 0 ? (
             <div className="flex flex-wrap gap-1.5 px-2 items-center">
               {tagCounts.map(({ name, count }) => (
-<Link
+                <Link
                   key={name}
                   href={`/devlog/tags/${encodeURIComponent(
-                    name.toLowerCase()
+                    name.toLowerCase(),
                   )}`}
                   onClick={onLinkClick}
+                >
                   <Tag
                     name={`${name} (${count})`}
                     className="group-hover:bg-accent text-foreground text-xs"
