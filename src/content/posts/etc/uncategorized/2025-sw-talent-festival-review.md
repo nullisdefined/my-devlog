@@ -11,7 +11,7 @@ views: 0
 ## Hello, AI World!
 지난 11월 27일(목)부터 28(금), 이틀간 서울드래곤시티 컨벤션타워 3층 한라홀에서 진행된 2025 SW 인재 페스티벌에 다녀왔다.
 
-교내에서 SW 관련 행사는 여러 번 참여해봤지만, 이렇게 전국 규모로 진행되는 행사는 처음이라 행사장으로 향하면서 긴장이 되었다.
+교내에서 SW 관련 행사는 여러 번 참여해봤지만, 이렇게 전국 규모로 진행되는 행사는 처음이다.
 
 <img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/8932a9b6c8d2e9f7d83e0aa8c5f856c1.png" alt="image" width="500" />*입구에 설치된 전광판*
 
