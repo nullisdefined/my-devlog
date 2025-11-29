@@ -147,6 +147,15 @@ const ProjectCard = ({
     onImageClick(project.image, project.title);
   };
 
+  const roleColorMap: { [key: string]: string } = {
+    Backend: "bg-pink-100 text-pink-800 dark:bg-pink-900/50 dark:text-pink-300",
+    FullStack:
+      "bg-amber-100 text-amber-800 dark:bg-amber-900/50 dark:text-amber-300",
+  };
+  const roleColor =
+    roleColorMap[project.role as keyof typeof roleColorMap] ||
+    "bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-200";
+
   return (
     <div className="bg-card rounded-lg shadow-md hover:shadow-xl transition-all duration-300 flex flex-col h-full">
       {project.image && (
@@ -190,7 +199,18 @@ const ProjectCard = ({
         {/* 프로젝트 제목 및 설명 */}
         <div className="space-y-2">
           <div className="space-y-1">
-            <h3 className="font-bold text-base lg:text-lg">{project.title}</h3>
+            <div className="flex items-center gap-2">
+              <h3 className="font-bold text-base lg:text-lg">
+                {project.title}
+              </h3>
+              {project.role && (
+                <span
+                  className={`text-xs font-semibold px-2 py-1 rounded-md ${roleColor}`}
+                >
+                  {project.role}
+                </span>
+              )}
+            </div>
             <p className="text-sm text-muted-foreground font-medium">
               {project.period}
             </p>
@@ -359,7 +379,7 @@ export default function Home() {
     {
       title: "나날모아",
       period: "24.08 ~ 25.02",
-      role: "백엔드",
+      role: "Backend",
       description:
         "시니어와 가족 사용자를 대상으로 하는 AI 기반 자동 일정 관리 서비스입니다. 음성 인식, OCR, NLP를 활용하여 편리한 일정 등록을 지원합니다.",
       features: [
@@ -394,7 +414,7 @@ export default function Home() {
     {
       title: "할 사람?",
       period: "25.06 ~ 25.08",
-      role: "풀스택",
+      role: "FullStack",
       description:
         "지역 기반 번개모임 커뮤니티 서비스입니다. AI가 생성한 미션을 수행하며 포인트를 획득하고, 같은 지역 사람들과 오프라인 모임을 가질 수 있습니다.",
       features: [
@@ -454,7 +474,7 @@ export default function Home() {
     {
       title: "한땀한땀",
       period: "25.03 ~ 25.09",
-      role: "백엔드",
+      role: "Backend",
       description:
         "개인의 다양한 목표 달성과 꾸준한 습관 형성을 돕는 AI 기반 소셜 챌린지 플랫폼입니다. HealthKit을 연동한 AppleWatch 자동 인증과 AI 이미지 분석을 통해 신뢰도 높은 챌린지 환경을 제공합니다.",
       features: [
@@ -525,7 +545,7 @@ export default function Home() {
     {
       title: "한모아",
       period: "25.09 ~ 25.12",
-      role: "백엔드",
+      role: "Backend",
       description:
         "영어 화자의 음색과 운율을 보존한 자연스러운 한국어 더빙 음성을 생성하는 AI 더빙 서비스입니다. STT-TTS 및 S2ST 융합형 교차 언어 음성 합성 기술을 활용하여, 화자 분리, 음성 인식, 번역, TTS, 자막 생성까지 전 과정을 자동화합니다.",
       features: [
@@ -657,11 +677,11 @@ dark:hover:bg-gray-700 dark:hover:scale-105 dark:hover:shadow-lg
                 GITHUB
               </Link>
             </div>
+          </div>
 
-            {/* 스크롤 인디케이터 */}
-            <div className="absolute bottom-3 sm:bottom-3 lg:bottom-3 left-1/2 transform -translate-x-1/2 animate-bounce">
-              <ArrowDown className="h-4 w-4 sm:h-5 sm:w-5 text-gray-500 dark:text-gray-400" />
-            </div>
+          {/* 스크롤 인디케이터 */}
+          <div className="absolute bottom-10 sm:bottom-10 lg:bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce z-30">
+            <ArrowDown className="h-4 w-4 sm:h-5 sm:w-5 text-gray-500 dark:text-gray-400" />
           </div>
         </section>
 

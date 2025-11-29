@@ -12,51 +12,55 @@ export const getCachedRSSFeed = unstable_cache(
   {
     revalidate: 3600, // 1시간마다 재생성
     tags: ["posts"],
-  }
+  },
 );
 
 // 카테고리별 RSS 캐싱
-export const getCachedCategoryFeed = unstable_cache(
-  async (category: string) => {
-    const posts = await getAllPosts();
-    return posts.filter(
-      (post) => post.category?.toLowerCase() === category.toLowerCase()
-    );
-  },
-  ["rss-feed-category"],
-  {
-    revalidate: 3600,
-    tags: ["posts", "categories"],
-  }
-);
+export const getCachedCategoryFeed = (category: string) =>
+  unstable_cache(
+    async () => {
+      const posts = await getAllPosts();
+      return posts.filter(
+        (post) => post.category?.toLowerCase() === category.toLowerCase(),
+      );
+    },
+    ["rss-feed-category", category],
+    {
+      revalidate: 3600,
+      tags: ["posts", "categories"],
+    },
+  )();
 
 // 태그별 RSS 캐싱
-export const getCachedTagFeed = unstable_cache(
-  async (tag: string) => {
-    const posts = await getAllPosts();
-    return posts.filter((post) => post.tags?.includes(tag));
-  },
-  ["rss-feed-tag"],
-  {
-    revalidate: 3600,
-    tags: ["posts", "tags"],
-  }
-);
+export const getCachedTagFeed = (tag: string) =>
+  unstable_cache(
+    async () => {
+      const posts = await getAllPosts();
+      return posts.filter((post) => post.tags?.includes(tag));
+    },
+    ["rss-feed-tag", tag],
+    {
+      revalidate: 3600,
+      tags: ["posts", "tags"],
+    },
+  )();
 
 // 시리즈별 RSS 캐싱
-export const getCachedSeriesFeed = unstable_cache(
-  async (series: string) => {
-    const posts = await getAllPosts();
-    return posts.filter(
-      (post) => post.category?.includes(series) || post.tags?.includes(series)
-    );
-  },
-  ["rss-feed-series"],
-  {
-    revalidate: 3600,
-    tags: ["posts", "series"],
-  }
-);
+export const getCachedSeriesFeed = (series: string) =>
+  unstable_cache(
+    async () => {
+      const posts = await getAllPosts();
+      return posts.filter(
+        (post) =>
+          post.category?.includes(series) || post.tags?.includes(series),
+      );
+    },
+    ["rss-feed-series", series],
+    {
+      revalidate: 3600,
+      tags: ["posts", "series"],
+    },
+  )();
 
 // 포스트 업데이트 시 캐시 무효화
 export async function invalidateRSSCache() {
@@ -145,7 +149,7 @@ export const cacheStatsTracker = new CacheStatsTracker();
 export async function getCachedData<T>(
   key: string,
   fetcher: () => Promise<T>,
-  options?: { revalidate?: number }
+  options?: { revalidate?: number },
 ): Promise<T> {
   try {
     const data = await fetcher();
