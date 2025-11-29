@@ -27,7 +27,7 @@ views: 0
 
 두 경우 모두 파이프는 컨트롤러 라우트 핸들러가 처리하는 인수에서 작동합니다. Nest는 메서드가 호출되기 직전에 파이프를 개입시키며, 파이프는 메서드로 향하는 인수를 받아 이를 작동시킵니다. 모든 변환 또는 검증 작업은 이 시점에 수행되며, 그 후 라우트 핸들러가 (잠재적으로) 변환된 인수와 함께 호출됩니다.
 
-<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/a0913d9c2d854e0ba6e1af7b6e2448d6.png" alt="image" width="left" />
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/a0913d9c2d854e0ba6e1af7b6e2448d6.png" alt="image" width="700" />
 
 Nest는 즉시 사용할 수 있는 여러 내장 파이프를 제공합니다. 커스텀 파이프도 빌드할 수 있습니다. 이 장에서는 내장 파이프를 소개하고 라우트 핸들러에 바인딩하는 방법을 보여드리겠습니다. 그런 다음 처음부터 빌드하는 방법을 보여주기 위해 여러 커스텀 파이프를 살펴보겠습니다.
 

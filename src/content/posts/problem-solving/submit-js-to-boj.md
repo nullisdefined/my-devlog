@@ -123,7 +123,7 @@ rl.on("line", function (line) {
 ```
 
 ### 주의사항
-fs 모듈을 사용해 문제플 풀 경우 특정문제에서 런타임 에러가 발생하는 경우가 발생할 수 있다. 그때는 fs 모듈에서 readline으로 변경하면 된다.
+fs 모듈을 사용해 문제를 풀 경우 특정문제에서 런타임 에러가 발생하는 경우가 발생할 수 있다. 그때는 fs 모듈에서 readline으로 변경하면 된다.
 ![image](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/379c5c061408e96818c9a7af1328d8ae.png)
 
 정리하자면

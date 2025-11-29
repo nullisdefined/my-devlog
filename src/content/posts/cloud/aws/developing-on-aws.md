@@ -452,7 +452,7 @@ DLQ(Dead Letter Queue):
 
 <img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/1d7ed7fd9f38fe967bdae86b275818c5.png" alt="image" width="700" />
 
-> [Lambda Destinations](https://nullisdefined.my/devlog/posts/cloud/aws/aws-lambda-destinations) 참고
+> [Lambda Destinations](https://nullisdefined.site/devlog/posts/cloud/aws/aws-lambda-destinations) 참고
 
 ### Lambda Runtime Life Cycle
 

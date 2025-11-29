@@ -3,8 +3,8 @@ title: "5 Linux Command Tricks That Will Change Your Life as a Programmer"
 slug: "5-linux-command-tricks-that-will-chang-your-life-as-a-programmer"
 date: 2025-01-04
 tags: ["Linux"]
-thumbnail: "https://miro.medium.com/v2/resize:fit:1400/0*Fd7dB4lB9685WfhS"
 category: "Etc/Uncategorized"
+thumbnail: "https://miro.medium.com/v2/resize:fit:1400/0*Fd7dB4lB9685WfhS"
 draft: false
 views: 0
 ---

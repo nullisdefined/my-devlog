@@ -149,7 +149,7 @@ export class FilesController {
 @Controller('auth')
 export class AuthController {
   @Get('login')
-  @Redirect('https://nullisdefined.my/devlog', 301)
+  @Redirect('https://nullisdefined.site/devlog', 301)
   handleLogin() {
   }
 
@@ -157,7 +157,7 @@ export class AuthController {
   @Redirect()
   dynamicRedirect() {
     return {
-      url: 'https://nullisdefined.my/devlog',
+      url: 'https://nullisdefined.site/devlog',
       statusCode: 302
     };
   }

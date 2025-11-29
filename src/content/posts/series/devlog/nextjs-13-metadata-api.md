@@ -43,8 +43,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   const title = `${post.title} | nullisdefined`;
   const description = post.description || post.content.slice(0, 160) + "...";
-  const url = `https://nullisdefined.my/devlog/posts/${slug}`;
-  const imageUrl = post.thumbnail || "https://nullisdefined.my/og-image.png";
+  const url = `https://nullisdefined.site/devlog/posts/${slug}`;
+  const imageUrl = post.thumbnail || "https://nullisdefined.site/og-image.png";
 
   return {
     title,
@@ -124,7 +124,7 @@ import { getAllPosts } from "@/lib/posts";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const posts = await getAllPosts();
-  const baseUrl = "https://nullisdefined.my";
+  const baseUrl = "https://nullisdefined.site";
 
   // 정적 페이지들
   const staticPages = [
@@ -200,7 +200,7 @@ function formatDate(date) {
 }
 
 module.exports = {
-  siteUrl: "https://nullisdefined.my",
+  siteUrl: "https://nullisdefined.site",
   generateRobotsTxt: true,
   exclude: ["/devlog/admin/*"],
   sitemapSize: 5000,
@@ -245,7 +245,7 @@ export default function StructuredData({ post }: StructuredDataProps) {
     author: {
       "@type": "Person",
       name: "Jaewoo Kim",
-      url: "https://nullisdefined.my",
+      url: "https://nullisdefined.site",
       sameAs: [
         "https://github.com/nullisdefined",
         "https://linkedin.com/in/your-profile"
@@ -256,12 +256,12 @@ export default function StructuredData({ post }: StructuredDataProps) {
       name: "nullisdefined",
       logo: {
         "@type": "ImageObject",
-        url: "https://nullisdefined.my/logo.png"
+        url: "https://nullisdefined.site/logo.png"
       }
     },
     mainEntityOfPage: {
       "@type": "WebPage",
-      "@id": `https://nullisdefined.my/devlog/posts/${post.slug}`
+      "@id": `https://nullisdefined.site/devlog/posts/${post.slug}`
     },
     keywords: post.tags.join(", "),
     articleSection: post.category,
@@ -410,7 +410,7 @@ if [ -n "$(git status --porcelain)" ]; then
     npm run build
     
     echo -e "${GREEN}Notifying Google about sitemap update...${NC}"
-    curl -X GET "http://www.google.com/ping?sitemap=https://nullisdefined.my/sitemap.xml"
+    curl -X GET "http://www.google.com/ping?sitemap=https://nullisdefined.site/sitemap.xml"
     
     echo -e "${GREEN}Deployment completed successfully!${NC}"
 else
