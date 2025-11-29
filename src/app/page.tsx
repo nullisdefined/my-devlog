@@ -802,11 +802,10 @@ dark:hover:bg-gray-700 dark:hover:scale-105 dark:hover:shadow-lg
                   </li>
                   <li>
                     <div className="font-semibold text-sm">
-                      타입스크립트로 함께하는 웹 풀 사이클 개발(React, Node.js)
-                      3기 수료
+                      프로그래머스 데브코스 웹 풀스택 3기 수료
                     </div>
                     <div className="text-muted-foreground text-xs sm:text-sm">
-                      그렙(프로그래머스)
+                      그렙
                     </div>
                     <div className="text-xs text-muted-foreground">
                       2024.04 ~ 2024.10
@@ -814,7 +813,7 @@ dark:hover:bg-gray-700 dark:hover:scale-105 dark:hover:shadow-lg
                   </li>
                   <li>
                     <div className="font-semibold text-sm">
-                      [NIPA-AWS] Developer 부트캠프 2기 수료
+                      NIPA-AWS Developer 부트캠프 2기 수료
                     </div>
                     <div className="text-muted-foreground text-xs sm:text-sm">
                       한국소프트웨어산업협회
@@ -896,6 +895,35 @@ dark:hover:bg-gray-700 dark:hover:scale-105 dark:hover:shadow-lg
                   Awards
                 </h3>
                 <ul className="space-y-3 pl-3 pb-3">
+                  <li>
+                    <div className="font-semibold text-sm flex items-center justify-between">
+                      <span>창의적공학설계 전시회 최우수상</span>
+                      <Link
+                        href="/award-creative-engineering-design-2022.pdf"
+                        target="_blank"
+                        className="ml-2 text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 transition-colors flex-shrink-0"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="h-5 w-5"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                          />
+                        </svg>
+                      </Link>
+                    </div>
+                    <div className="text-xs sm:text-sm text-muted-foreground">
+                      숭실대학교 소프트웨어학부
+                    </div>
+                    <div className="text-xs text-muted-foreground">2022.12</div>
+                  </li>
                   <li>
                     <div className="font-semibold text-sm flex items-center justify-between">
                       <span>숭실대학교 소프트웨어 공모전 총장상</span>
