@@ -2,15 +2,7 @@
 "use client";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import {
-  Mail,
-  FileText,
-  ArrowDown,
-  ChevronLeft,
-  ChevronRight,
-  X,
-  Trophy,
-} from "lucide-react";
+import { FileText, ArrowDown, X, Trophy } from "lucide-react";
 import {
   SiNodedotjs,
   SiExpress,
@@ -31,21 +23,10 @@ import {
   SiCplusplus,
   SiVisualstudiocode,
   SiSlack,
-  SiTrello,
   SiSwagger,
   SiNotion,
-  SiOracle,
-  SiSpringboot,
   SiConfluence,
-  SiJira,
-  SiJenkins,
-  SiGithubactions,
   SiTypeorm,
-  SiSpring,
-  SiGithubpages,
-  SiVite,
-  SiGooglecloud,
-  SiSwift,
   SiAwslambda,
   SiNginx,
   SiJsonwebtokens,
@@ -54,6 +35,10 @@ import {
   SiAmazonec2,
   SiAmazons3,
   SiAmazonsqs,
+  SiUpstash,
+  SiVercel,
+  SiPusher,
+  SiMarkdown,
 } from "react-icons/si";
 import Image from "next/image";
 
@@ -156,6 +141,36 @@ const ProjectCard = ({
     roleColorMap[project.role as keyof typeof roleColorMap] ||
     "bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-200";
 
+  // 기간 계산 함수
+  const calculateDuration = (period: string, title: string) => {
+    // 개발새발은 기간 표시 안함
+    if (title === "개발새발") return "";
+
+    const match = period.match(
+      /(\d{2,4})\.(\d{2})\s*~\s*(\d{2,4})?\.?(\d{2})?/,
+    );
+    if (!match) return "";
+
+    const startYear =
+      match[1].length === 2 ? parseInt("20" + match[1]) : parseInt(match[1]);
+    const startMonth = parseInt(match[2]);
+
+    let endYear, endMonth;
+    if (match[3]) {
+      endYear =
+        match[3].length === 2 ? parseInt("20" + match[3]) : parseInt(match[3]);
+      endMonth = parseInt(match[4]);
+    } else {
+      // 진행중인 프로젝트
+      const now = new Date();
+      endYear = now.getFullYear();
+      endMonth = now.getMonth() + 1;
+    }
+
+    const months = (endYear - startYear) * 12 + (endMonth - startMonth) + 1;
+    return ` (${months} months)`;
+  };
+
   return (
     <div className="bg-card rounded-lg shadow-md hover:shadow-xl transition-all duration-300 flex flex-col h-full">
       {project.image && (
@@ -213,6 +228,7 @@ const ProjectCard = ({
             </div>
             <p className="text-sm text-muted-foreground font-medium">
               {project.period}
+              {calculateDuration(project.period, project.title)}
             </p>
           </div>
           <p className="text-sm text-muted-foreground leading-relaxed">
@@ -232,7 +248,7 @@ const ProjectCard = ({
 
         {/* 기술 스택 */}
         <div className="space-y-2 mt-3">
-          <h4 className="font-semibold text-sm">기술 스택:</h4>
+          <h4 className="font-semibold text-sm">Tech Stack:</h4>
           <div className="flex flex-wrap gap-1.5">
             {project.tech.map((tech: any, idx: number) => (
               <div
@@ -257,7 +273,7 @@ const ProjectCard = ({
                 className="flex items-center justify-center"
               >
                 <FileText className="mr-2 h-4 w-4" />
-                Presentation
+                Document
               </Link>
             </Button>
           )}
@@ -326,6 +342,10 @@ export default function Home() {
         { name: "Next.js", icon: <SiNextdotjs className="h-4 w-4" /> },
         { name: "Tailwind CSS", icon: <SiTailwindcss className="h-4 w-4" /> },
         {
+          name: "Styled Components",
+          icon: <SiStyledcomponents className="h-4 w-4" />,
+        },
+        {
           name: "Emotion CSS",
           icon: (
             <Image
@@ -358,6 +378,8 @@ export default function Home() {
         { name: "Express", icon: <SiExpress className="h-4 w-4" /> },
         { name: "NestJS", icon: <SiNestjs className="h-4 w-4" /> },
         { name: "TypeORM", icon: <SiTypeorm className="h-4 w-4" /> },
+        { name: "MySQL", icon: <SiMysql className="h-4 w-4" /> },
+        { name: "MariaDB", icon: <SiMariadb className="h-4 w-4" /> },
         { name: "PostgreSQL", icon: <SiPostgresql className="h-4 w-4" /> },
       ],
     },
@@ -394,15 +416,15 @@ export default function Home() {
         { name: "TypeScript", icon: <SiTypescript className="h-4 w-4" /> },
         { name: "TypeORM", icon: <SiTypeorm className="h-4 w-4" /> },
         { name: "PostgreSQL", icon: <SiPostgresql className="h-4 w-4" /> },
-        { name: "EC2", icon: <SiAmazonec2 className="h-4 w-4" /> },
+        { name: "Amazon EC2", icon: <SiAmazonec2 className="h-4 w-4" /> },
         { name: "Nginx", icon: <SiNginx className="h-4 w-4" /> },
         { name: "JWT", icon: <SiJsonwebtokens className="h-4 w-4" /> },
         {
           name: "OAuth2",
           icon: (
-            <div className="h-4 w-4 flex items-center justify-center text-[10px] font-semibold">
-              OA
-            </div>
+            <svg className="h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z" />
+            </svg>
           ),
         },
       ],
@@ -410,6 +432,116 @@ export default function Home() {
       image:
         "https://storage.googleapis.com/hotsix-bucket/%EB%82%98%EB%82%A0%EB%AA%A8%EC%95%84.png",
       pdf: "/nanalmoa.pdf",
+    },
+    {
+      title: "개발새발",
+      period: "2024.10 ~ Date.now()",
+      role: "FullStack",
+      description:
+        "Next.js 기반의 개인 개발 블로그입니다. 기술 학습 내용과 프로젝트 경험을 기록하고 공유하는 플랫폼으로, 마크다운 기반의 정적 사이트 생성과 동적 기능을 결합하여 운영 중입니다.",
+      tech: [
+        { name: "Next.js", icon: <SiNextdotjs className="h-4 w-4" /> },
+        { name: "TypeScript", icon: <SiTypescript className="h-4 w-4" /> },
+        { name: "React", icon: <SiReact className="h-4 w-4" /> },
+        { name: "Tailwind CSS", icon: <SiTailwindcss className="h-4 w-4" /> },
+        { name: "MDX", icon: <SiMarkdown className="h-4 w-4" /> },
+        {
+          name: "Zustand",
+          icon: (
+            <Image
+              src="https://zustand-demo.pmnd.rs/logo512.png"
+              alt="Zustand"
+              width={16}
+              height={16}
+              className="h-4 w-4"
+            />
+          ),
+        },
+        {
+          name: "Rehype",
+          icon: (
+            <svg className="h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5z" />
+            </svg>
+          ),
+        },
+        {
+          name: "Remark",
+          icon: (
+            <svg className="h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z" />
+            </svg>
+          ),
+        },
+        {
+          name: "Giscus",
+          icon: (
+            <svg className="h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z" />
+            </svg>
+          ),
+        },
+        { name: "Upstash Redis", icon: <SiUpstash className="h-4 w-4" /> },
+        { name: "Pusher", icon: <SiPusher className="h-4 w-4" /> },
+        { name: "NextAuth", icon: <SiJsonwebtokens className="h-4 w-4" /> },
+        {
+          name: "OAuth2",
+          icon: (
+            <svg className="h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z" />
+            </svg>
+          ),
+        },
+        { name: "Vercel", icon: <SiVercel className="h-4 w-4" /> },
+      ],
+      link: "https://github.com/nullisdefined/my-devlog",
+      image:
+        "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/2256b96dc790d6bf2d8b4c444852f5c9.png",
+      pdf: "https://www.nullisdefined.my/devlog/series/devlog",
+    },
+    {
+      title: "한땀한땀",
+      period: "25.03 ~ 25.09",
+      role: "Backend",
+      description:
+        "개인의 다양한 목표 달성과 꾸준한 습관 형성을 돕는 AI 기반 소셜 챌린지 플랫폼입니다. HealthKit을 연동한 Apple Watch 자동 인증과 실시간 AI 이미지 분석을 통해 신뢰도 높은 챌린지 환경을 제공합니다.",
+      features: [
+        "Terraform 모듈로 VPC·ALB·ECR·ECS on EC2·RDS·CloudFront까지 IaC로 관리",
+        "VPC Endpoint만 활용하는 프라이빗 네트워크와 ACM/Route53 기반 HTTPS 경로 구축",
+        "SQS → Lambda 워커로 사진 인증 비동기 처리 후 관리자 모더레이션 큐에 적재",
+        "Socket.IO 채팅 API 명세와 인증 플로우를 설계해 앱-서버 간 계약을 명확히 문서화",
+        "CloudWatch 사용자/정책 발급 및 Agent 구성으로 로그·메트릭 수집 체계를 마련",
+        "챗봇 알림·운영 메시지 시나리오를 정의해 인증 경험을 실시간화",
+      ],
+      tech: [
+        { name: "NestJS", icon: <SiNestjs className="h-4 w-4" /> },
+        { name: "TypeScript", icon: <SiTypescript className="h-4 w-4" /> },
+        { name: "TypeORM", icon: <SiTypeorm className="h-4 w-4" /> },
+        { name: "PostgreSQL", icon: <SiPostgresql className="h-4 w-4" /> },
+        { name: "Socket.IO", icon: <SiSocketdotio className="h-4 w-4" /> },
+        { name: "JWT", icon: <SiJsonwebtokens className="h-4 w-4" /> },
+        {
+          name: "OAuth2",
+          icon: (
+            <svg className="h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z" />
+            </svg>
+          ),
+        },
+
+        { name: "Docker", icon: <SiDocker className="h-4 w-4" /> },
+        { name: "Amazon ECR", icon: <SiAmazon className="h-4 w-4" /> },
+        { name: "Amazon ECS", icon: <SiAmazon className="h-4 w-4" /> },
+        { name: "Amazon S3", icon: <SiAmazons3 className="h-4 w-4" /> },
+        { name: "Amazon CloudFront", icon: <SiAmazon className="h-4 w-4" /> },
+        { name: "AWS Lambda", icon: <SiAwslambda className="h-4 w-4" /> },
+        { name: "Amazon SQS", icon: <SiAmazonsqs className="h-4 w-4" /> },
+        { name: "Amazon Bedrock", icon: <SiAmazon className="h-4 w-4" /> },
+      ],
+      link: "https://github.com/SOAPFT/soapft_backend",
+      image:
+        "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/bf10d5f4f6dd3bc64cedf9b0dff5fd73.png",
+      pdf: "/soapft.pdf",
     },
     {
       title: "할 사람?",
@@ -434,11 +566,12 @@ export default function Home() {
         {
           name: "OAuth2",
           icon: (
-            <div className="h-4 w-4 flex items-center justify-center text-[10px] font-semibold">
-              OA
-            </div>
+            <svg className="h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z" />
+            </svg>
           ),
         },
+
         { name: "React", icon: <SiReact className="h-4 w-4" /> },
         {
           name: "Styled Components",
@@ -456,91 +589,13 @@ export default function Home() {
             />
           ),
         },
-        {
-          name: "JSQR",
-          icon: (
-            <div className="h-4 w-4 flex items-center justify-center text-[10px] font-semibold">
-              QR
-            </div>
-          ),
-        },
+
         { name: "Socket.IO", icon: <SiSocketdotio className="h-4 w-4" /> },
       ],
       link: "https://github.com/NIPA-AWS-Developer-2nd",
       image:
         "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/24275eb6388f806c391d867e58a79cb5.png",
       pdf: "/halsaram.pdf",
-    },
-    {
-      title: "한땀한땀",
-      period: "25.03 ~ 25.09",
-      role: "Backend",
-      description:
-        "개인의 다양한 목표 달성과 꾸준한 습관 형성을 돕는 AI 기반 소셜 챌린지 플랫폼입니다. HealthKit을 연동한 AppleWatch 자동 인증과 AI 이미지 분석을 통해 신뢰도 높은 챌린지 환경을 제공합니다.",
-      features: [
-        "Terraform 모듈로 VPC·ALB·ECR·ECS on EC2·RDS·CloudFront까지 IaC로 관리",
-        "VPC Endpoint만 활용하는 프라이빗 네트워크와 ACM/Route53 기반 HTTPS 경로 구축",
-        "SQS → Lambda 워커로 사진 인증 비동기 처리 후 관리자 모더레이션 큐에 적재",
-        "Socket.IO 채팅 API 명세와 인증 플로우를 설계해 앱-서버 간 계약을 명확히 문서화",
-        "CloudWatch 사용자/정책 발급 및 Agent 구성으로 로그·메트릭 수집 체계를 마련",
-        "챗봇 알림·운영 메시지 시나리오를 정의해 인증 경험을 실시간화",
-      ],
-      tech: [
-        { name: "NestJS", icon: <SiNestjs className="h-4 w-4" /> },
-        { name: "TypeScript", icon: <SiTypescript className="h-4 w-4" /> },
-        { name: "TypeORM", icon: <SiTypeorm className="h-4 w-4" /> },
-        { name: "PostgreSQL", icon: <SiPostgresql className="h-4 w-4" /> },
-        { name: "Socket.IO", icon: <SiSocketdotio className="h-4 w-4" /> },
-        { name: "JWT", icon: <SiJsonwebtokens className="h-4 w-4" /> },
-        {
-          name: "OAuth2",
-          icon: (
-            <div className="h-4 w-4 flex items-center justify-center text-[10px] font-semibold">
-              OA
-            </div>
-          ),
-        },
-        { name: "Docker", icon: <SiDocker className="h-4 w-4" /> },
-        {
-          name: "ECR",
-          icon: (
-            <div className="h-4 w-4 flex items-center justify-center text-[10px] font-semibold">
-              ECR
-            </div>
-          ),
-        },
-        {
-          name: "ECS",
-          icon: (
-            <div className="h-4 w-4 flex items-center justify-center text-[10px] font-semibold">
-              ECS
-            </div>
-          ),
-        },
-        { name: "S3", icon: <SiAmazons3 className="h-4 w-4" /> },
-        {
-          name: "CloudFront",
-          icon: (
-            <div className="h-4 w-4 flex items-center justify-center text-[10px] font-semibold">
-              CF
-            </div>
-          ),
-        },
-        { name: "Lambda", icon: <SiAwslambda className="h-4 w-4" /> },
-        { name: "SQS", icon: <SiAmazonsqs className="h-4 w-4" /> },
-        {
-          name: "Bedrock",
-          icon: (
-            <div className="h-4 w-4 flex items-center justify-center text-[10px] font-semibold">
-              BR
-            </div>
-          ),
-        },
-      ],
-      link: "https://github.com/SOAPFT/soapft_backend",
-      image:
-        "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/bf10d5f4f6dd3bc64cedf9b0dff5fd73.png",
-      pdf: "/soapft.pdf",
     },
     {
       title: "한모아",
@@ -561,13 +616,14 @@ export default function Home() {
         {
           name: "OAuth2",
           icon: (
-            <div className="h-4 w-4 flex items-center justify-center text-[10px] font-semibold">
-              OA
-            </div>
+            <svg className="h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z" />
+            </svg>
           ),
         },
-        { name: "SQS", icon: <SiAmazonsqs className="h-4 w-4" /> },
-        { name: "S3", icon: <SiAmazons3 className="h-4 w-4" /> },
+
+        { name: "Amazon SQS", icon: <SiAmazonsqs className="h-4 w-4" /> },
+        { name: "Amazon S3", icon: <SiAmazons3 className="h-4 w-4" /> },
       ],
       link: "https://github.com/ssu-capstone-team-4/hanmoa-backend",
       image:
@@ -897,7 +953,7 @@ dark:hover:bg-gray-700 dark:hover:scale-105 dark:hover:shadow-lg
                 <ul className="space-y-3 pl-3 pb-3">
                   <li>
                     <div className="font-semibold text-sm flex items-center justify-between">
-                      <span>창의적공학설계 전시회 최우수상</span>
+                      <span>숭실대학교 창의적공학설계 전시회 최우수상</span>
                       <Link
                         href="/award-creative-engineering-design-2022.pdf"
                         target="_blank"
