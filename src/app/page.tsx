@@ -287,7 +287,7 @@ const ProjectDetailModal = ({
                 <h3 className="text-m font-semibold text-muted-foreground mb-2">
                   프로젝트 기간
                 </h3>
-                <p className="text-base">
+                <p className="text-sm">
                   {project.period}
                   {calculateDuration(project.period, project.title) > 0 &&
                     ` (${calculateDuration(project.period, project.title)}개월)`}
@@ -299,7 +299,7 @@ const ProjectDetailModal = ({
                     역할
                   </h3>
                   <span
-                    className={`inline-block text-base font-semibold px-3 py-1.5 rounded-md ${
+                    className={`inline-block text-sm font-semibold px-3 py-1.5 rounded-md ${
                       project.role === "Backend"
                         ? "bg-pink-100 text-pink-800 dark:bg-pink-900/50 dark:text-pink-300"
                         : project.role === "FullStack"
@@ -315,9 +315,7 @@ const ProjectDetailModal = ({
                 <h3 className="text-m font-semibold text-muted-foreground mb-2">
                   프로젝트 설명
                 </h3>
-                <p className="text-base leading-relaxed">
-                  {project.description}
-                </p>
+                <p className="text-sm leading-relaxed">{project.description}</p>
               </div>
               {project.features && project.features.length > 0 && (
                 <div>
@@ -330,7 +328,7 @@ const ProjectDetailModal = ({
                         <span className="text-blue-600 dark:text-blue-400 flex-shrink-0">
                           •
                         </span>
-                        <span className="text-base leading-relaxed">
+                        <span className="text-sm leading-relaxed">
                           {feature}
                         </span>
                       </li>
@@ -1161,7 +1159,7 @@ export default function Home() {
           title: "비동기 이미지 처리 시스템 구현",
           description: "SQS와 Lambda를 활용한 AI 기반 이미지 인증 파이프라인",
           details: [
-            "AWS Bedrock Claude 3.5 Haiku 모델을 활용한 이미지 관련성 분석",
+            "Anthropic Claude 3.5 Sonnet v2(AWS Bedrock) 모델을 활용한 이미지 관련성 분석",
             "이미지 업로드 시 AI 검증 후 approve/reject/review 상태 반환",
             "S3 이벤트 트리거 기반 SQS 메시지 큐 설계",
             "Lambda 워커 함수 구현 및 Bedrock AI 연동",
