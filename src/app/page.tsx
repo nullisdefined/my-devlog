@@ -52,6 +52,42 @@ import ThemeToggle from "@/components/theme-toggle";
 import Footer from "@/components/footer";
 import { useEffect, useState, useRef } from "react";
 
+// 툴팁 컴포넌트
+const Tooltip = ({
+  children,
+  content,
+}: {
+  children: React.ReactNode;
+  content: string;
+}) => {
+  const [isVisible, setIsVisible] = useState(false);
+
+  // content가 비어있으면 툴팁 없이 children만 렌더링
+  if (!content || content.trim() === "") {
+    return <>{children}</>;
+  }
+
+  return (
+    <div className="relative inline-block">
+      <div
+        onMouseEnter={() => setIsVisible(true)}
+        onMouseLeave={() => setIsVisible(false)}
+      >
+        {children}
+      </div>
+      {isVisible && (
+        <div className="absolute z-50 bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-2 bg-gray-900 dark:bg-gray-700 text-white text-sm rounded-lg shadow-lg whitespace-normal w-64 pointer-events-none">
+          <div className="text-center leading-relaxed">{content}</div>
+          {/* 툴팁 화살표 */}
+          <div className="absolute top-full left-1/2 transform -translate-x-1/2 -mt-px">
+            <div className="border-4 border-transparent border-t-gray-900 dark:border-t-gray-700"></div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
 // 이미지 모달 컴포넌트
 const ImageModal = ({
   isOpen,
@@ -490,6 +526,8 @@ const ProjectCard = ({
   project: any;
   onCardClick: (project: any) => void;
 }) => {
+  const [isHovered, setIsHovered] = useState(false);
+
   const roleColorMap: { [key: string]: string } = {
     Backend: "bg-pink-100 text-pink-800 dark:bg-pink-900/50 dark:text-pink-300",
     FullStack:
@@ -531,8 +569,10 @@ const ProjectCard = ({
 
   return (
     <div
-      className="bg-card rounded-lg shadow-md hover:shadow-xl transition-all duration-300 flex flex-col h-full cursor-pointer"
+      className="bg-card rounded-lg shadow-md hover:shadow-xl hover:scale-[1.02] transition-all duration-300 flex flex-col h-full cursor-pointer relative group"
       onClick={() => onCardClick(project)}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
     >
       {project.image && (
         <div className="relative w-full bg-gray-50 dark:bg-gray-900 flex items-center justify-center overflow-hidden flex-shrink-0 rounded-t-lg">
@@ -542,13 +582,39 @@ const ProjectCard = ({
               alt={project.title}
               width={800}
               height={600}
-              className="w-full h-auto object-contain"
+              className={`w-full h-auto object-contain transition-all duration-300 ${isHovered ? "blur-[2px]" : ""}`}
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             />
+            {/* 호버 시 돋보기 아이콘 */}
+            <div
+              className={`absolute inset-0 bg-black/30 flex items-center justify-center transition-all duration-300 ${isHovered ? "opacity-100" : "opacity-0"}`}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className={`h-16 w-16 text-white transition-all duration-300 ${isHovered ? "scale-100 opacity-100" : "scale-75 opacity-0"}`}
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                />
+              </svg>
+            </div>
           </div>
         </div>
       )}
-      <div className="p-4 flex-1 flex flex-col">
+      <div className="p-4 flex-1 flex flex-col relative">
+        {/* 클릭 가능 힌트 텍스트 */}
+        <div
+          className={`absolute top-2 right-2 text-xs text-muted-foreground transition-opacity duration-300 ${isHovered ? "opacity-100" : "opacity-0"}`}
+        >
+          상세보기 →
+        </div>
+
         {/* 프로젝트 제목 및 설명 */}
         <div className="space-y-2">
           <div className="space-y-1">
@@ -678,23 +744,63 @@ export default function Home() {
     {
       category: "Languages",
       techs: [
-        { name: "C", icon: <SiC className="h-4 w-4" /> },
-        { name: "C++", icon: <SiCplusplus className="h-4 w-4" /> },
-        { name: "Java", icon: <FaJava className="h-4 w-4" /> },
-        { name: "CSS3", icon: <SiCss3 className="h-4 w-4" /> },
-        { name: "JavaScript", icon: <SiJavascript className="h-4 w-4" /> },
-        { name: "TypeScript", icon: <SiTypescript className="h-4 w-4" /> },
+        {
+          name: "C",
+          icon: <SiC className="h-4 w-4" />,
+          description:
+            "xv6 기반 운영체제에서 COW(copy-on-write) 기능 구현, 페이지 테이블 관리 경험이 있습니다.",
+        },
+        {
+          name: "C++",
+          icon: <SiCplusplus className="h-4 w-4" />,
+          description:
+            "교내 알고리즘 대회에 참가하여 STL을 활용하여 문제 해결 경험이 있습니다.",
+        },
+        {
+          name: "CSS3",
+          icon: <SiCss3 className="h-4 w-4" />,
+          description:
+            "반응형 디자인, Flexbox, Grid 레이아웃을 구현할 수 있습니다.",
+        },
+        {
+          name: "JavaScript",
+          icon: <SiJavascript className="h-4 w-4" />,
+          description:
+            "npm 패키지(starving-orange)를 개발하여 배포, 버전 관리·문서화·배포 프로세스를 직접 운영해 본 경험이 있습니다.",
+        },
+        {
+          name: "TypeScript",
+          icon: <SiTypescript className="h-4 w-4" />,
+          description:
+            "NestJS 프로젝트에서 타입 시스템을 활용한 DTO/Entity 자동 변환 구조 설계 경험이 있습니다.",
+        },
       ],
     },
     {
       category: "Frontend",
       techs: [
-        { name: "React", icon: <SiReact className="h-4 w-4" /> },
-        { name: "Next.js", icon: <SiNextdotjs className="h-4 w-4" /> },
-        { name: "Tailwind CSS", icon: <SiTailwindcss className="h-4 w-4" /> },
+        {
+          name: "React",
+          icon: <SiReact className="h-4 w-4" />,
+          description: "현재 개발 블로그의 메인 프레임워크로 사용 중 입니다.",
+        },
+        {
+          name: "Next.js",
+          icon: <SiNextdotjs className="h-4 w-4" />,
+          description:
+            "블로그 개발에 사용 중이며, SSG/SSR 렌더링 방식을 활용할 수 있습니다.",
+        },
+        {
+          name: "Tailwind CSS",
+          icon: <SiTailwindcss className="h-4 w-4" />,
+          description:
+            "Tailwind CSS를 활용하여 다크 모드를 구현해 본 경험이 있습니다.",
+        },
         {
           name: "Styled Components",
           icon: <SiStyledcomponents className="h-4 w-4" />,
+          description:
+            "프론트엔드 프로젝트에서 동적 스타일링 및 테마 관리 구현이 가능합니다.",
         },
         {
           name: "Emotion CSS",
@@ -707,58 +813,192 @@ export default function Home() {
               className="h-4 w-4 filter grayscale"
             />
           ),
-        },
-        {
-          name: "Zustand",
-          icon: (
-            <Image
-              src="https://zustand-demo.pmnd.rs/logo512.png"
-              alt="Zustand"
-              width={16}
-              height={16}
-              className="h-4 w-4 filter grayscale"
-            />
-          ),
+          description:
+            "카카오맵 API을 연동하고 WiFi/GPS에 기반한 위치 인증 모달 UI를 구현해 본 경험이 있습니다.",
         },
       ],
     },
     {
       category: "Backend",
       techs: [
-        { name: "Node.js", icon: <SiNodedotjs className="h-4 w-4" /> },
-        { name: "Express", icon: <SiExpress className="h-4 w-4" /> },
-        { name: "NestJS", icon: <SiNestjs className="h-4 w-4" /> },
-        { name: "TypeORM", icon: <SiTypeorm className="h-4 w-4" /> },
-        { name: "PostgreSQL", icon: <SiPostgresql className="h-4 w-4" /> },
-        { name: "Docker", icon: <SiDocker className="h-4 w-4" /> },
+        {
+          name: "Express",
+          icon: <SiExpress className="h-4 w-4" />,
+          description:
+            "라우트 구조를 설계하고, REST CRUD API를 구현할 수 있습니다.",
+        },
+        {
+          name: "NestJS",
+          icon: <SiNestjs className="h-4 w-4" />,
+          description:
+            "WebSocket Gateway 기반 실시간 처리 기능을 구현할 수 있습니다.",
+        },
+        {
+          name: "TypeORM",
+          icon: <SiTypeorm className="h-4 w-4" />,
+          description:
+            "복잡한 관계 매핑 이슈에서 cascade/orphan 문제 해결 경험이 있습니다.",
+        },
+        {
+          name: "PostgreSQL",
+          icon: <SiPostgresql className="h-4 w-4" />,
+          description: "인덱스 구조 조정 후 성능 개선 경험이 있습니다.",
+        },
+        {
+          name: "Docker",
+          icon: <SiDocker className="h-4 w-4" />,
+          description: "컨테이너 기반 ECR 배포 경험이 있습니다.",
+        },
       ],
     },
     {
       category: "Cloud",
       techs: [
-        { name: "Vercel", icon: <SiVercel className="h-4 w-4" /> },
-        { name: "Upstash", icon: <SiUpstash className="h-4 w-4" /> },
-        { name: "Terraform", icon: <SiTerraform className="h-4 w-4" /> },
-        { name: "EC2 / RDS / S3", icon: <SiAmazon className="h-4 w-4" /> },
-        { name: "ECR / ECS / Fargate", icon: <SiAmazon className="h-4 w-4" /> },
-        { name: "Lambda / CloudFront", icon: <SiAmazon className="h-4 w-4" /> },
+        {
+          name: "Vercel",
+          icon: <SiVercel className="h-4 w-4" />,
+          description:
+            "Next.js 기반 서비스를 배포, 도메인 연결, 환경 변수 보안 관리 경험이 있습니다.",
+        },
+        {
+          name: "Upstash",
+          icon: <SiUpstash className="h-4 w-4" />,
+          description:
+            "Redis 기반으로 페이지 조회수·캐싱 기능을 구현한 경험이 있습니다.",
+        },
+        {
+          name: "Terraform",
+          icon: <SiTerraform className="h-4 w-4" />,
+          description:
+            "IaC로 AWS 인프라를 모듈화하고, 재사용 가능한 구성으로 환경별 자동 배포 구조를 설계한 경험이 있습니다.",
+        },
+        {
+          name: "EC2 / RDS / S3",
+          icon: <SiAmazon className="h-4 w-4" />,
+          description:
+            "EC2, RDS, S3 기반 3-Tier 아키텍처를 설계 및 구축할 수 있습니다.",
+        },
+        {
+          name: "ECR / ECS / Fargate",
+          icon: <SiAmazon className="h-4 w-4" />,
+          description:
+            "Docker 이미지를 ECR을 통해 ECS Fargate로 배포하는 CI/CD 파이프라인 구축 경험이 있습니다.",
+        },
+        {
+          name: "Lambda / CloudFront",
+          icon: <SiAmazon className="h-4 w-4" />,
+          description:
+            "S3 Presigned URL 기반 대용량 비디오 업로드 최적화 경험이 있습니다.",
+        },
         {
           name: "SQS / Bedrock / Cognito",
           icon: <SiAmazon className="h-4 w-4" />,
+          description:
+            "SQS 기반 비동기 영상 처리 파이프라인을 구축해 본 경험이 있습니다.",
         },
       ],
     },
     {
       category: "Tools",
       techs: [
-        { name: "VSCode", icon: <SiVisualstudiocode className="h-4 w-4" /> },
-        { name: "Git", icon: <SiGit className="h-4 w-4" /> },
-        { name: "GitHub", icon: <SiGithub className="h-4 w-4" /> },
-        { name: "Notion", icon: <SiNotion className="h-4 w-4" /> },
-        { name: "Slack", icon: <SiSlack className="h-4 w-4" /> },
-        { name: "Swagger", icon: <SiSwagger className="h-4 w-4" /> },
-        { name: "Confluence", icon: <SiConfluence className="h-4 w-4" /> },
+        {
+          name: "VSCode",
+          icon: <SiVisualstudiocode className="h-4 w-4" />,
+          description: "",
+        },
+        {
+          name: "Git",
+          icon: <SiGit className="h-4 w-4" />,
+          description: "",
+        },
+        {
+          name: "GitHub",
+          icon: <SiGithub className="h-4 w-4" />,
+          description: "",
+        },
+        {
+          name: "Notion",
+          icon: <SiNotion className="h-4 w-4" />,
+          description: "",
+        },
+        {
+          name: "Slack",
+          icon: <SiSlack className="h-4 w-4" />,
+          description: "",
+        },
+        {
+          name: "Swagger",
+          icon: <SiSwagger className="h-4 w-4" />,
+          description: "",
+        },
+        {
+          name: "Confluence",
+          icon: <SiConfluence className="h-4 w-4" />,
+          description: "",
+        },
       ],
+    },
+  ];
+
+  const sideProjects = [
+    {
+      title: "Thumbs Up",
+      period: "2024.11",
+      description:
+        "타이포그래피 기반 블로그 썸네일 제작 웹 도구입니다. 현재 개발 블로그의 썸네일 제작에 사용하고 있습니다.",
+      tech: [
+        { name: "React", icon: <SiReact className="h-4 w-4" /> },
+        { name: "TypeScript", icon: <SiTypescript className="h-4 w-4" /> },
+        { name: "Tailwind CSS", icon: <SiTailwindcss className="h-4 w-4" /> },
+      ],
+      link: "https://github.com/nullisdefined/thumbs-up",
+      demo: "https://nullisdefined.github.io/thumbs-up/",
+      image:
+        "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/34a63d3606df3cec87efd6d38b65a01f.png",
+    },
+    {
+      title: "Guestboots",
+      period: "2025.06",
+      description:
+        "AWS 서버리스 아키텍처로 구현한 포스트잇 방명록 애플리케이션입니다.",
+      tech: [
+        { name: "JavaScript", icon: <SiJavascript className="h-4 w-4" /> },
+        { name: "AWS Lambda", icon: <SiAwslambda className="h-4 w-4" /> },
+        { name: "Amazon S3", icon: <SiAmazons3 className="h-4 w-4" /> },
+      ],
+      link: "https://github.com/nullisdefined/guestboots",
+      demo: "https://nullisdefined.github.io/guestboots/",
+      image:
+        "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/770266670faeaf62f5b14f0576c35928.png",
+    },
+    {
+      title: "Worlds Subscription",
+      period: "2025.06",
+      description:
+        "카카오톡 구독으로 선택한 언어와 난이도에 맞는 단어, 뜻, 발음, 예문을 정해진 시간에 받아볼 수 있는 단어 학습 서비스입니다.",
+      tech: [
+        { name: "JavaScript", icon: <SiJavascript className="h-4 w-4" /> },
+        { name: "AWS Lambda", icon: <SiAwslambda className="h-4 w-4" /> },
+        { name: "Amazon S3", icon: <SiAmazons3 className="h-4 w-4" /> },
+      ],
+      link: "https://github.com/nullisdefined/worlds-subscription",
+      demo: "https://nullisdefined.github.io/worlds-subscription/",
+      image:
+        "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/4eff5c6d09f09e11a801a135d527c58a.png",
+    },
+    {
+      title: "starving-orange",
+      period: "2025.06",
+      description:
+        "과일/채소에 형용사를 조합하여 랜덤한 한글 닉네임을 생성하는 JavaScript 라이브러리입니다.",
+      tech: [
+        { name: "TypeScript", icon: <SiTypescript className="h-4 w-4" /> },
+        { name: "Rollup", icon: <SiNodedotjs className="h-4 w-4" /> },
+      ],
+      link: "https://github.com/nullisdefined/starving-orange",
+      demo: "https://www.npmjs.com/package/starving-orange",
+      image:
+        "https://github.com/user-attachments/assets/f02d97b3-fb3d-400c-bcdf-6911a0581229",
     },
   ];
 
@@ -1750,6 +1990,144 @@ dark:hover:bg-gray-700 dark:hover:scale-105 dark:hover:shadow-lg
           </div>
         </section>
 
+        {/* Toy Projects 섹션 */}
+        <section
+          id="toy-projects"
+          className="py-20 bg-gradient-to-b from-muted/50 to-background"
+        >
+          <div className="container mx-auto px-4 lg:px-6">
+            <div className="text-center mb-12">
+              <div className="relative inline-block">
+                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black tracking-tighter leading-none">
+                  <span
+                    className="bg-gradient-to-r from-sky-600 via-cyan-600 to-teal-600 bg-clip-text text-transparent
+                                 drop-shadow-lg relative
+                                 dark:from-sky-400 dark:via-cyan-400 dark:to-teal-400 dark:opacity-80 px-1"
+                  >
+                    TOY PROJECTS
+                  </span>
+                </h2>
+                {/* 배경 텍스트 효과 */}
+                <div className="absolute inset-0 -z-10">
+                  <span
+                    className="text-2xl sm:text-3xl lg:text-4xl font-black tracking-tighter leading-none
+                                 text-gray-100 dark:text-gray-700 opacity-50 blur-sm"
+                  >
+                    TOY PROJECTS
+                  </span>
+                </div>
+                {/* 언더라인 효과 */}
+                <div
+                  className="absolute -bottom-1.5 left-1/2 transform -translate-x-1/2 w-32 sm:w-40 lg:w-52 h-0.5
+                                bg-gradient-to-r from-sky-600 to-teal-600 rounded-full
+                                dark:from-sky-400 dark:to-teal-400 dark:opacity-70"
+                ></div>
+              </div>
+            </div>
+
+            {/* 토이 프로젝트 카드 그리드 - 작은 크기 */}
+            <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {sideProjects.map((project, index) => (
+                <div
+                  key={index}
+                  className="bg-card rounded-lg shadow-md hover:shadow-xl transition-all duration-300 flex flex-col h-full"
+                >
+                  {project.image && (
+                    <div className="relative w-full bg-gray-50 dark:bg-gray-900 flex items-center justify-center overflow-hidden flex-shrink-0 rounded-t-lg">
+                      <div className="relative w-full h-48">
+                        <Image
+                          src={project.image}
+                          alt={project.title}
+                          fill
+                          className="object-cover"
+                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        />
+                      </div>
+                    </div>
+                  )}
+                  <div className="p-4 flex-1 flex flex-col">
+                    <div className="space-y-2 flex-1">
+                      <div className="space-y-1">
+                        <h3 className="font-bold text-base">{project.title}</h3>
+                        <p className="text-xs text-muted-foreground font-medium">
+                          {project.period}
+                        </p>
+                      </div>
+                      <p className="text-sm text-muted-foreground leading-relaxed">
+                        {project.description}
+                      </p>
+                    </div>
+
+                    {/* 기술 스택 */}
+                    <div className="space-y-2 mt-3">
+                      <div className="flex flex-wrap gap-1.5">
+                        {project.tech.map((tech: any, idx: number) => (
+                          <div
+                            key={idx}
+                            className="flex items-center space-x-1 text-muted-foreground hover:text-foreground transition-colors bg-muted/50 px-2 py-1 rounded text-xs"
+                          >
+                            <span className="text-xs">{tech.icon}</span>
+                            <span>{tech.name}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* 버튼 */}
+                    <div className="mt-auto pt-4 space-y-2">
+                      {project.demo && (
+                        <Button
+                          variant="default"
+                          className="w-full text-xs"
+                          asChild
+                        >
+                          <Link
+                            href={project.demo}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center justify-center"
+                          >
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              className="h-3 w-3 mr-1.5"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke="currentColor"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                              />
+                            </svg>
+                            Demo
+                          </Link>
+                        </Button>
+                      )}
+                      <Button
+                        variant="outline"
+                        className="w-full text-xs"
+                        asChild
+                      >
+                        <Link
+                          href={project.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center justify-center"
+                        >
+                          <SiGithub className="mr-1.5 h-3 w-3" />
+                          Repository
+                        </Link>
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
         {/* Experience 섹션 */}
         <section
           id="experience"
@@ -1760,9 +2138,9 @@ dark:hover:bg-gray-700 dark:hover:scale-105 dark:hover:shadow-lg
               <div className="relative inline-block">
                 <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black tracking-tighter leading-none">
                   <span
-                    className="bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 bg-clip-text text-transparent
+                    className="bg-gradient-to-r from-indigo-600 via-purple-600 to-violet-600 bg-clip-text text-transparent
                                drop-shadow-lg relative
-                               dark:from-emerald-400 dark:via-teal-400 dark:to-cyan-400 dark:opacity-80"
+                               dark:from-indigo-400 dark:via-purple-400 dark:to-violet-400 dark:opacity-80"
                   >
                     EXPERIENCE
                   </span>
@@ -1779,8 +2157,8 @@ dark:hover:bg-gray-700 dark:hover:scale-105 dark:hover:shadow-lg
                 {/* 언더라인 효과 */}
                 <div
                   className="absolute -bottom-1.5 left-1/2 transform -translate-x-1/2 w-24 sm:w-32 lg:w-44 h-0.5
-                              bg-gradient-to-r from-emerald-600 to-cyan-600 rounded-full
-                              dark:from-emerald-400 dark:to-cyan-400 dark:opacity-70"
+                              bg-gradient-to-r from-indigo-600 to-violet-600 rounded-full
+                              dark:from-indigo-400 dark:to-violet-400 dark:opacity-70"
                 ></div>
               </div>
             </div>
@@ -2194,9 +2572,9 @@ dark:hover:bg-gray-700 dark:hover:scale-105 dark:hover:shadow-lg
               <div className="relative inline-block px-4">
                 <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black tracking-tighter leading-none">
                   <span
-                    className="bg-gradient-to-r from-gray-900 via-slate-700 to-zinc-900 bg-clip-text text-transparent
+                    className="bg-gradient-to-r from-slate-700 via-gray-600 to-zinc-700 bg-clip-text text-transparent
                                  drop-shadow-lg relative
-                                 dark:from-gray-300 dark:via-slate-400 dark:to-gray-300 px-1"
+                                 dark:from-slate-400 dark:via-gray-400 dark:to-zinc-400 px-1"
                   >
                     SKILLS
                   </span>
@@ -2213,8 +2591,8 @@ dark:hover:bg-gray-700 dark:hover:scale-105 dark:hover:shadow-lg
                 {/* 언더라인 효과 */}
                 <div
                   className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-20 sm:w-24 lg:w-32 h-1
-                                bg-gradient-to-r from-slate-800 via-gray-700 to-zinc-800 rounded-full
-                                dark:from-gray-500 dark:via-slate-400 dark:to-gray-500"
+                                bg-gradient-to-r from-slate-700 to-zinc-700 rounded-full
+                                dark:from-slate-400 dark:to-zinc-400"
                 ></div>
               </div>
             </div>
@@ -2230,14 +2608,15 @@ dark:hover:bg-gray-700 dark:hover:scale-105 dark:hover:shadow-lg
                     </h3>
                     <ul className="space-y-2.5 pl-4">
                       {skill.techs.map((tech) => (
-                        <li
-                          key={tech.name}
-                          className="flex items-start space-x-2 text-muted-foreground hover:text-foreground transition-colors text-xs sm:text-sm"
-                        >
-                          <span className="flex-shrink-0 w-4 h-4 mt-0.5">
-                            {tech.icon}
-                          </span>
-                          <span>{tech.name}</span>
+                        <li key={tech.name}>
+                          <Tooltip content={tech.description}>
+                            <div className="flex items-start space-x-2 text-muted-foreground hover:text-foreground transition-colors text-xs sm:text-sm">
+                              <span className="flex-shrink-0 w-4 h-4 mt-0.5">
+                                {tech.icon}
+                              </span>
+                              <span>{tech.name}</span>
+                            </div>
+                          </Tooltip>
                         </li>
                       ))}
                     </ul>
