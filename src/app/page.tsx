@@ -39,6 +39,10 @@ import {
   SiVercel,
   SiPusher,
   SiMarkdown,
+  SiCss3,
+  SiTerraform,
+  SiAmazonrds,
+  SiAmazonecs,
 } from "react-icons/si";
 import Image from "next/image";
 
@@ -331,6 +335,7 @@ export default function Home() {
         { name: "C", icon: <SiC className="h-4 w-4" /> },
         { name: "C++", icon: <SiCplusplus className="h-4 w-4" /> },
         { name: "Java", icon: <FaJava className="h-4 w-4" /> },
+        { name: "CSS3", icon: <SiCss3 className="h-4 w-4" /> },
         { name: "JavaScript", icon: <SiJavascript className="h-4 w-4" /> },
         { name: "TypeScript", icon: <SiTypescript className="h-4 w-4" /> },
       ],
@@ -378,9 +383,23 @@ export default function Home() {
         { name: "Express", icon: <SiExpress className="h-4 w-4" /> },
         { name: "NestJS", icon: <SiNestjs className="h-4 w-4" /> },
         { name: "TypeORM", icon: <SiTypeorm className="h-4 w-4" /> },
-        { name: "MySQL", icon: <SiMysql className="h-4 w-4" /> },
-        { name: "MariaDB", icon: <SiMariadb className="h-4 w-4" /> },
         { name: "PostgreSQL", icon: <SiPostgresql className="h-4 w-4" /> },
+        { name: "Docker", icon: <SiDocker className="h-4 w-4" /> },
+      ],
+    },
+    {
+      category: "Cloud",
+      techs: [
+        { name: "Vercel", icon: <SiVercel className="h-4 w-4" /> },
+        { name: "Upstash", icon: <SiUpstash className="h-4 w-4" /> },
+        { name: "Terraform", icon: <SiTerraform className="h-4 w-4" /> },
+        { name: "EC2 / RDS / S3", icon: <SiAmazon className="h-4 w-4" /> },
+        { name: "ECR / ECS / Fargate", icon: <SiAmazon className="h-4 w-4" /> },
+        { name: "Lambda / CloudFront", icon: <SiAmazon className="h-4 w-4" /> },
+        {
+          name: "SQS / Bedrock / Cognito",
+          icon: <SiAmazon className="h-4 w-4" />,
+        },
       ],
     },
     {
@@ -431,7 +450,7 @@ export default function Home() {
       link: "https://github.com/nanalmoa/nanalmoa",
       image:
         "https://storage.googleapis.com/hotsix-bucket/%EB%82%98%EB%82%A0%EB%AA%A8%EC%95%84.png",
-      pdf: "/nanalmoa.pdf",
+      pdf: "/project_nanalmoa.pdf",
     },
     {
       title: "개발새발",
@@ -541,7 +560,7 @@ export default function Home() {
       link: "https://github.com/SOAPFT/soapft_backend",
       image:
         "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/bf10d5f4f6dd3bc64cedf9b0dff5fd73.png",
-      pdf: "/soapft.pdf",
+      pdf: "/project_soapft.pdf",
     },
     {
       title: "할 사람?",
@@ -595,7 +614,7 @@ export default function Home() {
       link: "https://github.com/NIPA-AWS-Developer-2nd",
       image:
         "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/24275eb6388f806c391d867e58a79cb5.png",
-      pdf: "/halsaram.pdf",
+      pdf: "/project_halsaram.pdf",
     },
     {
       title: "한모아",
@@ -826,7 +845,7 @@ dark:hover:bg-gray-700 dark:hover:scale-105 dark:hover:shadow-lg
             </div>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
               {/* Experience 카드 */}
-              <div className="bg-card rounded-lg shadow-md p-3 sm:p-4">
+              <div className="bg-card rounded-lg shadow-md p-3 sm:p-4 flex flex-col">
                 <h3 className="text-base sm:text-lg font-bold mb-3 flex items-center">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -844,7 +863,7 @@ dark:hover:bg-gray-700 dark:hover:scale-105 dark:hover:shadow-lg
                   </svg>
                   Experience
                 </h3>
-                <ul className="space-y-3 pl-3 pb-3">
+                <ul className="flex flex-col justify-evenly flex-1 pl-3 pb-3">
                   <li>
                     <div className="font-semibold text-sm">
                       소프트웨어학부 재학
@@ -857,8 +876,28 @@ dark:hover:bg-gray-700 dark:hover:scale-105 dark:hover:shadow-lg
                     </div>
                   </li>
                   <li>
-                    <div className="font-semibold text-sm">
-                      프로그래머스 데브코스 웹 풀스택 3기 수료
+                    <div className="font-semibold text-sm flex items-center justify-between">
+                      <span>프로그래머스 데브코스 웹 풀스택 3기 수료</span>
+                      <Link
+                        href="/experience_devcourse.pdf"
+                        target="_blank"
+                        className="ml-2 text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 transition-colors flex-shrink-0"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="h-5 w-5"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                          />
+                        </svg>
+                      </Link>
                     </div>
                     <div className="text-muted-foreground text-xs sm:text-sm">
                       그렙
@@ -868,8 +907,28 @@ dark:hover:bg-gray-700 dark:hover:scale-105 dark:hover:shadow-lg
                     </div>
                   </li>
                   <li>
-                    <div className="font-semibold text-sm">
-                      NIPA-AWS Developer 부트캠프 2기 수료
+                    <div className="font-semibold text-sm flex items-center justify-between">
+                      <span>NIPA-AWS Developer 부트캠프 2기 수료</span>
+                      <Link
+                        href="/experience_nipa.pdf"
+                        target="_blank"
+                        className="ml-2 text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 transition-colors flex-shrink-0"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="h-5 w-5"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                          />
+                        </svg>
+                      </Link>
                     </div>
                     <div className="text-muted-foreground text-xs sm:text-sm">
                       한국소프트웨어산업협회
@@ -908,9 +967,34 @@ dark:hover:bg-gray-700 dark:hover:scale-105 dark:hover:shadow-lg
                 </h3>
                 <ul className="space-y-3 pl-3 pb-3">
                   <li>
-                    <div className="font-semibold text-sm">정보처리기능사</div>
+                    <div className="font-semibold text-sm flex items-center justify-between">
+                      <span>정보처리기능사</span>
+                      <Link
+                        href="/certificate_craftsman.pdf"
+                        target="_blank"
+                        className="ml-2 text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 transition-colors flex-shrink-0"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="h-5 w-5"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                          />
+                        </svg>
+                      </Link>
+                    </div>
                     <div className="text-xs sm:text-sm text-muted-foreground">
                       한국산업인력공단
+                    </div>
+                    <div className="text-xs text-muted-foreground">
+                      2019.07.18
                     </div>
                   </li>
                   <li>
@@ -922,23 +1006,130 @@ dark:hover:bg-gray-700 dark:hover:scale-105 dark:hover:shadow-lg
                     </div>
                   </li>
                   <li>
-                    <div className="font-semibold text-sm">SQLD</div>
+                    <div className="font-semibold text-sm flex items-center justify-between">
+                      <span>SQLD</span>
+                      <Link
+                        href="/certificate_sqld.pdf"
+                        target="_blank"
+                        className="ml-2 text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 transition-colors flex-shrink-0"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="h-5 w-5"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                          />
+                        </svg>
+                      </Link>
+                    </div>
                     <div className="text-xs sm:text-sm text-muted-foreground">
                       한국데이터산업진흥원
                     </div>
-                  </li>
-                  <li>
-                    <div className="font-semibold text-sm">ADsP</div>
-                    <div className="text-xs sm:text-sm text-muted-foreground">
-                      한국데이터산업진흥원
+                    <div className="text-xs text-muted-foreground">
+                      2024.08.24
                     </div>
                   </li>
                   <li>
-                    <div className="font-semibold text-sm">
-                      AWS Certified Solutions Architect - Associate (SAA-C03)
+                    <div className="font-semibold text-sm flex items-center justify-between">
+                      <span>ADsP</span>
+                      <Link
+                        href="/certificate_adsp.pdf"
+                        target="_blank"
+                        className="ml-2 text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 transition-colors flex-shrink-0"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="h-5 w-5"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                          />
+                        </svg>
+                      </Link>
+                    </div>
+                    <div className="text-xs sm:text-sm text-muted-foreground">
+                      한국데이터산업진흥원
+                    </div>
+                    <div className="text-xs text-muted-foreground">
+                      2025.05.17
+                    </div>
+                  </li>
+                  <li>
+                    <div className="font-semibold text-sm flex items-center justify-between">
+                      <span>TOPCIT 제24회 580점</span>
+                      <Link
+                        href="/certificate_topcit.pdf"
+                        target="_blank"
+                        className="ml-2 text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 transition-colors flex-shrink-0"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="h-5 w-5"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                          />
+                        </svg>
+                      </Link>
+                    </div>
+                    <div className="text-xs sm:text-sm text-muted-foreground">
+                      정보통신기획평가원
+                    </div>
+                    <div className="text-xs text-muted-foreground">
+                      2025.11.01
+                    </div>
+                  </li>
+                  <li>
+                    <div className="font-semibold text-sm flex items-center justify-between">
+                      <span>
+                        AWS Certified Solutions Architect - Associate (SAA-C03)
+                      </span>
+                      <Link
+                        href="https://www.credly.com/earner/earned/badge/4cc479e1-3212-476b-af16-3e1af0c14633"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="ml-2 text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 transition-colors flex-shrink-0"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="h-5 w-5"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"
+                          />
+                        </svg>
+                      </Link>
                     </div>
                     <div className="text-xs sm:text-sm text-muted-foreground">
                       Amazon Web Services
+                    </div>
+                    <div className="text-xs text-muted-foreground">
+                      2025.10.30
                     </div>
                   </li>
                 </ul>
@@ -950,7 +1141,7 @@ dark:hover:bg-gray-700 dark:hover:scale-105 dark:hover:shadow-lg
                   <Trophy className="h-4 w-4 sm:h-5 sm:w-5 mr-1.5" />
                   Awards
                 </h3>
-                <ul className="space-y-3 pl-3 pb-3">
+                <ul className="space-y-4 pl-3 pb-3">
                   <li>
                     <div className="font-semibold text-sm flex items-center justify-between">
                       <span>숭실대학교 창의적공학설계 전시회 최우수상</span>
@@ -970,7 +1161,7 @@ dark:hover:bg-gray-700 dark:hover:scale-105 dark:hover:shadow-lg
                             strokeLinecap="round"
                             strokeLinejoin="round"
                             strokeWidth={2}
-                            d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
                           />
                         </svg>
                       </Link>
@@ -999,7 +1190,7 @@ dark:hover:bg-gray-700 dark:hover:scale-105 dark:hover:shadow-lg
                             strokeLinecap="round"
                             strokeLinejoin="round"
                             strokeWidth={2}
-                            d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
                           />
                         </svg>
                       </Link>
@@ -1030,7 +1221,7 @@ dark:hover:bg-gray-700 dark:hover:scale-105 dark:hover:shadow-lg
                             strokeLinecap="round"
                             strokeLinejoin="round"
                             strokeWidth={2}
-                            d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
                           />
                         </svg>
                       </Link>
@@ -1087,11 +1278,11 @@ dark:hover:bg-gray-700 dark:hover:scale-105 dark:hover:shadow-lg
               </div>
             </div>
             <div className="flex justify-center">
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl w-full justify-items-center">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 max-w-7xl w-full justify-items-center">
                 {skills.map((skill) => (
                   <div
                     key={skill.category}
-                    className="p-4 sm:p-5 bg-card rounded-lg shadow-lg h-full w-full max-w-sm"
+                    className="p-4 sm:p-5 bg-card rounded-lg shadow-lg h-full w-full max-w-sm flex flex-col"
                   >
                     <h3 className="font-bold mb-3 text-base sm:text-lg">
                       {skill.category}
@@ -1100,9 +1291,11 @@ dark:hover:bg-gray-700 dark:hover:scale-105 dark:hover:shadow-lg
                       {skill.techs.map((tech) => (
                         <li
                           key={tech.name}
-                          className="flex items-center space-x-2 text-muted-foreground hover:text-foreground transition-colors text-xs sm:text-sm"
+                          className="flex items-start space-x-2 text-muted-foreground hover:text-foreground transition-colors text-xs sm:text-sm"
                         >
-                          {tech.icon}
+                          <span className="flex-shrink-0 w-4 h-4 mt-0.5">
+                            {tech.icon}
+                          </span>
                           <span>{tech.name}</span>
                         </li>
                       ))}
