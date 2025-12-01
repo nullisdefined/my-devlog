@@ -863,7 +863,7 @@ dark:hover:bg-gray-700 dark:hover:scale-105 dark:hover:shadow-lg
                   </svg>
                   Experience
                 </h3>
-                <ul className="flex flex-col justify-evenly flex-1 pl-3 pb-3">
+                <ul className="space-y-4 pl-3 pb-3">
                   <li>
                     <div className="font-semibold text-sm">
                       소프트웨어학부 재학
