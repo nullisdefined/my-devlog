@@ -908,7 +908,7 @@ dark:hover:bg-gray-700 dark:hover:scale-105 dark:hover:shadow-lg
                   </li>
                   <li>
                     <div className="font-semibold text-sm flex items-center justify-between">
-                      <span>NIPA-AWS Developer 부트캠프 2기 수료</span>
+                      <span>NIPA AWS Developer 부트캠프 2기 수료</span>
                       <Link
                         href="/experience_nipa.pdf"
                         target="_blank"
