@@ -124,18 +124,374 @@ const ImageModal = ({
   );
 };
 
+// 프로젝트 상세 모달 컴포넌트
+const ProjectDetailModal = ({
+  isOpen,
+  onClose,
+  project,
+}: {
+  isOpen: boolean;
+  onClose: () => void;
+  project: any;
+}) => {
+  const [activeTab, setActiveTab] = useState("overview");
+  const contentRef = useRef<HTMLDivElement>(null);
+
+  // 모달이 열릴 때마다 개요 탭으로 초기화
+  useEffect(() => {
+    if (isOpen) {
+      setActiveTab("overview");
+    }
+  }, [isOpen]);
+
+  // 탭 변경 시 스크롤 위치를 최상단으로 이동
+  useEffect(() => {
+    if (contentRef.current) {
+      contentRef.current.scrollTop = 0;
+    }
+  }, [activeTab]);
+
+  // 기간 계산 함수
+  const calculateDuration = (period: string, title: string) => {
+    if (title === "개발새발") return 0;
+
+    const match = period.match(
+      /(\d{2,4})\.(\d{2})\s*~\s*(\d{2,4})?\.?(\d{2})?/,
+    );
+    if (!match) return 0;
+
+    const startYear =
+      match[1].length === 2 ? parseInt("20" + match[1]) : parseInt(match[1]);
+    const startMonth = parseInt(match[2]);
+
+    let endYear, endMonth;
+    if (match[3]) {
+      endYear =
+        match[3].length === 2 ? parseInt("20" + match[3]) : parseInt(match[3]);
+      endMonth = parseInt(match[4]);
+    } else {
+      const now = new Date();
+      endYear = now.getFullYear();
+      endMonth = now.getMonth() + 1;
+    }
+
+    const months = (endYear - startYear) * 12 + (endMonth - startMonth) + 1;
+    return months;
+  };
+
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [isOpen]);
+
+  useEffect(() => {
+    const handleEsc = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        onClose();
+      }
+    };
+
+    if (isOpen) {
+      window.addEventListener("keydown", handleEsc);
+    }
+
+    return () => {
+      window.removeEventListener("keydown", handleEsc);
+    };
+  }, [isOpen, onClose]);
+
+  if (!isOpen || !project) return null;
+
+  return (
+    <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/80 backdrop-blur-sm">
+      {/* 모달 배경 클릭시 닫기 */}
+      <div className="absolute inset-0 cursor-pointer" onClick={onClose} />
+
+      {/* 모달 컨텐츠 */}
+      <div className="relative w-full max-w-4xl max-h-[85vh] bg-card rounded-lg shadow-2xl overflow-hidden m-4 z-10">
+        {/* 헤더 */}
+        <div className="sticky top-0 bg-card border-b border-border px-6 py-4 flex items-center justify-between z-10">
+          <h2 className="text-2xl font-bold">{project.title}</h2>
+          <button
+            onClick={onClose}
+            className="p-2 rounded-full hover:bg-muted transition-colors"
+          >
+            <X className="h-5 w-5" />
+          </button>
+        </div>
+
+        {/* 탭 네비게이션 */}
+        <div className="sticky top-[65px] bg-card border-b border-border px-6 flex gap-4 z-10">
+          <button
+            onClick={() => setActiveTab("overview")}
+            className={`py-3 px-4 text-sm font-medium border-b-2 transition-colors ${
+              activeTab === "overview"
+                ? "border-blue-600 text-blue-600 dark:border-blue-400 dark:text-blue-400"
+                : "border-transparent text-muted-foreground hover:text-foreground"
+            }`}
+          >
+            개요
+          </button>
+          {project.responsibilities && project.responsibilities.length > 0 && (
+            <button
+              onClick={() => setActiveTab("responsibilities")}
+              className={`py-3 px-4 text-sm font-medium border-b-2 transition-colors ${
+                activeTab === "responsibilities"
+                  ? "border-blue-600 text-blue-600 dark:border-blue-400 dark:text-blue-400"
+                  : "border-transparent text-muted-foreground hover:text-foreground"
+              }`}
+            >
+              담당 업무
+            </button>
+          )}
+          {project.troubleshooting && project.troubleshooting.length > 0 && (
+            <button
+              onClick={() => setActiveTab("troubleshooting")}
+              className={`py-3 px-4 text-sm font-medium border-b-2 transition-colors ${
+                activeTab === "troubleshooting"
+                  ? "border-blue-600 text-blue-600 dark:border-blue-400 dark:text-blue-400"
+                  : "border-transparent text-muted-foreground hover:text-foreground"
+              }`}
+            >
+              트러블슈팅
+            </button>
+          )}
+        </div>
+
+        {/* 컨텐츠 */}
+        <div
+          ref={contentRef}
+          className="overflow-y-auto max-h-[calc(85vh-130px)] px-6 py-6"
+        >
+          {activeTab === "overview" && (
+            <div className="space-y-6">
+              {project.image && (
+                <div className="relative w-full rounded-lg overflow-hidden">
+                  <Image
+                    src={project.image}
+                    alt={project.title}
+                    width={800}
+                    height={600}
+                    className="w-full h-auto object-contain"
+                  />
+                </div>
+              )}
+              <div>
+                <h3 className="text-m font-semibold text-muted-foreground mb-2">
+                  프로젝트 기간
+                </h3>
+                <p className="text-base">
+                  {project.period}
+                  {calculateDuration(project.period, project.title) > 0 &&
+                    ` (${calculateDuration(project.period, project.title)}개월)`}
+                </p>
+              </div>
+              {project.role && (
+                <div>
+                  <h3 className="text-m font-semibold text-muted-foreground mb-2">
+                    역할
+                  </h3>
+                  <span
+                    className={`inline-block text-base font-semibold px-3 py-1.5 rounded-md ${
+                      project.role === "Backend"
+                        ? "bg-pink-100 text-pink-800 dark:bg-pink-900/50 dark:text-pink-300"
+                        : project.role === "FullStack"
+                          ? "bg-amber-100 text-amber-800 dark:bg-amber-900/50 dark:text-amber-300"
+                          : "bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-200"
+                    }`}
+                  >
+                    {project.role}
+                  </span>
+                </div>
+              )}
+              <div>
+                <h3 className="text-m font-semibold text-muted-foreground mb-2">
+                  프로젝트 설명
+                </h3>
+                <p className="text-base leading-relaxed">
+                  {project.description}
+                </p>
+              </div>
+              {project.features && project.features.length > 0 && (
+                <div>
+                  <h3 className="text-m font-semibold text-muted-foreground mb-3">
+                    주요 기능
+                  </h3>
+                  <ul className="space-y-2">
+                    {project.features.map((feature: string, idx: number) => (
+                      <li key={idx} className="flex items-center gap-2">
+                        <span className="text-blue-600 dark:text-blue-400 flex-shrink-0">
+                          •
+                        </span>
+                        <span className="text-base leading-relaxed">
+                          {feature}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+              <div>
+                <h3 className="text-m font-semibold text-muted-foreground mb-3">
+                  기술 스택
+                </h3>
+                <div className="flex flex-wrap gap-2">
+                  {project.tech.map((tech: any, idx: number) => (
+                    <div
+                      key={idx}
+                      className="flex items-center space-x-1.5 text-muted-foreground hover:text-foreground transition-colors bg-muted/50 px-3 py-2 rounded-md text-sm"
+                    >
+                      <span className="text-base">{tech.icon}</span>
+                      <span>{tech.name}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className="flex gap-3 pt-4">
+                {project.pdf && (
+                  <Button variant="secondary" className="flex-1" asChild>
+                    <Link
+                      href={project.pdf}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center justify-center"
+                    >
+                      <FileText className="mr-2 h-4 w-4" />
+                      Document
+                    </Link>
+                  </Button>
+                )}
+                <Button variant="outline" className="flex-1" asChild>
+                  <Link
+                    href={project.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-center"
+                  >
+                    <SiGithub className="mr-2 h-4 w-4" />
+                    Repository
+                  </Link>
+                </Button>
+              </div>
+            </div>
+          )}
+
+          {activeTab === "responsibilities" && project.responsibilities && (
+            <div className="space-y-6">
+              <div>
+                <h3 className="text-lg font-semibold mb-4">담당 업무</h3>
+                <div className="space-y-6">
+                  {project.responsibilities.map(
+                    (responsibility: any, idx: number) => (
+                      <div key={idx} className="space-y-3">
+                        <div className="border-l-2 border-blue-600 dark:border-blue-400 pl-4">
+                          <h4 className="text-base font-semibold mb-2">
+                            {responsibility.title}
+                          </h4>
+                          <p className="text-sm text-muted-foreground">
+                            {responsibility.description}
+                          </p>
+                        </div>
+                        {responsibility.details &&
+                          responsibility.details.length > 0 && (
+                            <ul className="space-y-2 pl-4">
+                              {responsibility.details.map(
+                                (detail: string, detailIdx: number) => (
+                                  <li
+                                    key={detailIdx}
+                                    className="flex items-center gap-2"
+                                  >
+                                    <span className="text-blue-600 dark:text-blue-400 flex-shrink-0">
+                                      •
+                                    </span>
+                                    <span className="text-sm leading-relaxed">
+                                      {detail}
+                                    </span>
+                                  </li>
+                                ),
+                              )}
+                            </ul>
+                          )}
+                      </div>
+                    ),
+                  )}
+                </div>
+              </div>
+            </div>
+          )}
+
+          {activeTab === "troubleshooting" && project.troubleshooting && (
+            <div className="space-y-6">
+              <div>
+                <h3 className="text-lg font-semibold mb-4">트러블슈팅</h3>
+                <div className="space-y-6">
+                  {project.troubleshooting.map((issue: any, idx: number) => (
+                    <div key={idx} className="bg-muted/30 rounded-lg p-4">
+                      <h4 className="text-base font-semibold mb-2 flex items-start gap-2">
+                        <span className="text-red-600 dark:text-red-400">
+                          ⚠
+                        </span>
+                        {issue.problem}
+                      </h4>
+                      <div className="space-y-3 ml-6">
+                        {issue.cause && (
+                          <div>
+                            <p className="text-xs font-semibold text-muted-foreground mb-1">
+                              원인
+                            </p>
+                            <p className="text-sm leading-relaxed">
+                              {issue.cause}
+                            </p>
+                          </div>
+                        )}
+                        {issue.solution && (
+                          <div>
+                            <p className="text-xs font-semibold text-muted-foreground mb-1">
+                              해결
+                            </p>
+                            <p className="text-sm leading-relaxed">
+                              {issue.solution}
+                            </p>
+                          </div>
+                        )}
+                        {issue.result && (
+                          <div>
+                            <p className="text-xs font-semibold text-muted-foreground mb-1">
+                              결과
+                            </p>
+                            <p className="text-sm leading-relaxed text-green-600 dark:text-green-400">
+                              {issue.result}
+                            </p>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
+
 // ProjectCard 컴포넌트
 const ProjectCard = ({
   project,
-  onImageClick,
+  onCardClick,
 }: {
   project: any;
-  onImageClick: (src: string, alt: string) => void;
+  onCardClick: (project: any) => void;
 }) => {
-  const handleImageClick = () => {
-    onImageClick(project.image, project.title);
-  };
-
   const roleColorMap: { [key: string]: string } = {
     Backend: "bg-pink-100 text-pink-800 dark:bg-pink-900/50 dark:text-pink-300",
     FullStack:
@@ -148,12 +504,12 @@ const ProjectCard = ({
   // 기간 계산 함수
   const calculateDuration = (period: string, title: string) => {
     // 개발새발은 기간 표시 안함
-    if (title === "개발새발") return "";
+    if (title === "개발새발") return 0;
 
     const match = period.match(
       /(\d{2,4})\.(\d{2})\s*~\s*(\d{2,4})?\.?(\d{2})?/,
     );
-    if (!match) return "";
+    if (!match) return 0;
 
     const startYear =
       match[1].length === 2 ? parseInt("20" + match[1]) : parseInt(match[1]);
@@ -172,45 +528,25 @@ const ProjectCard = ({
     }
 
     const months = (endYear - startYear) * 12 + (endMonth - startMonth) + 1;
-    return ` (${months} months)`;
+    return months;
   };
 
   return (
-    <div className="bg-card rounded-lg shadow-md hover:shadow-xl transition-all duration-300 flex flex-col h-full">
+    <div
+      className="bg-card rounded-lg shadow-md hover:shadow-xl transition-all duration-300 flex flex-col h-full cursor-pointer"
+      onClick={() => onCardClick(project)}
+    >
       {project.image && (
         <div className="relative w-full bg-gray-50 dark:bg-gray-900 flex items-center justify-center overflow-hidden flex-shrink-0 rounded-t-lg">
-          <div
-            className="relative w-full cursor-pointer"
-            onClick={handleImageClick}
-          >
+          <div className="relative w-full">
             <Image
               src={project.image}
               alt={project.title}
               width={800}
               height={600}
-              className="w-full h-auto object-contain transition-transform duration-300 hover:scale-105"
+              className="w-full h-auto object-contain"
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             />
-          </div>
-
-          {/* 확대 힌트 아이콘 */}
-          <div className="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300 bg-black/20 pointer-events-none">
-            <div className="bg-white/90 rounded-full p-2">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5 text-gray-800"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"
-                />
-              </svg>
-            </div>
           </div>
         </div>
       )}
@@ -232,7 +568,6 @@ const ProjectCard = ({
             </div>
             <p className="text-sm text-muted-foreground font-medium">
               {project.period}
-              {calculateDuration(project.period, project.title)}
             </p>
           </div>
           <p className="text-sm text-muted-foreground leading-relaxed">
@@ -252,7 +587,6 @@ const ProjectCard = ({
 
         {/* 기술 스택 */}
         <div className="space-y-2 mt-3">
-          <h4 className="font-semibold text-sm">Tech Stack:</h4>
           <div className="flex flex-wrap gap-1.5">
             {project.tech.map((tech: any, idx: number) => (
               <div
@@ -309,6 +643,8 @@ export default function Home() {
     src: "",
     alt: "",
   });
+  const [selectedProject, setSelectedProject] = useState<any>(null);
+  const [isProjectDetailOpen, setIsProjectDetailOpen] = useState(false);
 
   const heroRef = useRef<HTMLElement>(null);
   const projectsRef = useRef<HTMLElement>(null);
@@ -326,6 +662,18 @@ export default function Home() {
   // 이미지 모달 닫기
   const closeImageModal = () => {
     setModalImage({ isOpen: false, src: "", alt: "" });
+  };
+
+  // 프로젝트 상세 모달 열기
+  const openProjectDetail = (project: any) => {
+    setSelectedProject(project);
+    setIsProjectDetailOpen(true);
+  };
+
+  // 프로젝트 상세 모달 닫기
+  const closeProjectDetail = () => {
+    setIsProjectDetailOpen(false);
+    setSelectedProject(null);
   };
 
   const skills = [
@@ -424,11 +772,151 @@ export default function Home() {
       description:
         "시니어와 가족 사용자를 대상으로 하는 AI 기반 자동 일정 관리 서비스입니다. 음성 인식, OCR, NLP를 활용하여 편리한 일정 등록을 지원합니다.",
       features: [
-        "Hot reload, 전역 파이프, 로거, Swagger 등을 포함한 NestJS + TypeORM 백엔드 부트스트랩",
-        "일정·회원·공유 모듈 CRUD와 JWT 기반 권한 체계를 설계해 일정 공유 흐름 일원화",
-        "QueryRunner → `typeorm-transactional` 래퍼로 트랜잭션을 공통화하여 멀티 모듈 ACID 보장",
-        "RDS 기반 스키마 설계 및 TypeORM 마이그레이션으로 일정/공유/권한 관계 정규화",
-        "EC2 + Docker Compose + GitHub Actions 배포 파이프라인으로 서버/Swagger 페이지 자동 배포",
+        "음성 인식을 통한 자동 일정 등록",
+        "이미지 인식(OCR)을 통한 일정 추출",
+        "시니어 케어 공유 서비스",
+        "카테고리별 일정 관리",
+        "가족/간병인과의 일정 공유",
+        "자연어 처리를 통한 일정 분석",
+      ],
+      responsibilities: [
+        {
+          title: "백엔드 아키텍처 설계 및 NestJS 기반 서버 구축",
+          description: "NestJS와 TypeORM을 활용한 백엔드 시스템 전반 설계",
+          details: [
+            "NestJS 프로젝트 부트스트랩 및 모듈 구조 설계",
+            "전역 파이프, 로거, Swagger 자동 문서화 및 문서 배포, Hot reload 등 개발 환경 표준화",
+            "환경 변수 관리 체계 구축 및 ConfigModule 분리",
+            "@GetUserUuid 커스텀 데코레이터로 인증 사용자 정보 자동 추출",
+            "typeorm-transactional 라이브러리 기반 트랜잭션 관리 도입(@Transactional)",
+          ],
+        },
+        {
+          title: "인증 시스템 구현",
+          description: "OAuth 및 일반 로그인 통합 인증 시스템",
+          details: [
+            "카카오/네이버 OAuth 2.0 전략 구현",
+            "전화번호 기반 회원가입 및 로그인 구현",
+            "CoolSMS 연동한 인증번호 발송/검증 로직 구축",
+            "JWT 액세스 토큰(15분)-리프레시 토큰(7일) 구조 설계 및 재발급 로직 구현",
+            "User-Auth 엔티티 관계 설계 및 개인정보 수정/조회/탈퇴 기능 개발",
+            "만료 토큰 401 대응 및 리프레시 엔드포인트 보안/사용성 개선",
+          ],
+        },
+        {
+          title: "반복 일정 시스템 개발",
+          description: "매일/매주/매월/매년 반복 패턴을 지원하는 일정 관리",
+          details: [
+            "반복 일정 모델 재설계로 ScheduleInstance 제거 → 엔티티 통합",
+            "동적 인스턴스 생성 방식 도입으로 메모리 사용량 50% 절감",
+            "날짜 기반 조회 API 성능 개선 및 isRecurring 검증 로직 개선",
+            "특정 날짜/범위별 일정 조회 기능 구현",
+            "calculateDateRange 유틸 함수로 반복 일정 전개 성능 최적화",
+          ],
+        },
+        {
+          title: "AI 서비스 분리 및 리팩토링",
+          description: "GPT 로직을 AiService로 분리하여 관심사 분리",
+          details: [
+            "기존 SchedulesService에 포함된 GPT 로직을 AiService로 분리하여 관심사 분리",
+            "processWithGpt, processWithGptOCR 메서드로 AI 처리 경로 일원화",
+            "GPT 응답을 CreateScheduleDto로 변환하는 파싱 로직 개발",
+            "단일 객체/배열 응답 모두 처리할 수 있는 타입 검증 로직 구현",
+            "OCRTranscriptionService, SchedulesService에 의존성 주입 구조 정립",
+          ],
+        },
+        {
+          title: "일정 서비스 리팩토링 및 최적화",
+          description: "코드 가독성 및 유지보수성 향상",
+          details: [
+            "Swagger 문서 모듈 분리 및 스키마 관리 구조화",
+            "그룹 일정 로직 모듈화 및 공통 코드 정리",
+            "유틸 함수에 JSDoc 적용하여 문서화 체계 구축",
+            "types/ 폴더 기반 타입 정의 정리",
+            "서비스 반환 타입을 DTO로 명시하여 타입 안정성 확보",
+          ],
+        },
+        {
+          title: "데이터베이스 설계 및 시더 구현",
+          description:
+            "PostgreSQL 기반 데이터베이스 스키마 설계 및 자동화된 시딩 시스템 구축",
+          details: [
+            "User, Auth, Schedule, Category 등 핵심 엔티티 스키마 설계",
+            "User 엔티티에 phoneNumber, address 필드 추가",
+            "외래 키 제약조건 및 Cascade 전략 설정",
+            "Faker 기반 테스트 데이터 생성 스크립트 작성",
+            "db:refresh 명령어 구현으로 초기화–스키마 재생성 자동화",
+            "Schedule 테이블 인덱스 추가로 날짜 조회 성능 43% 개선",
+            "기본 카테고리/마스터 데이터 자동 시딩 로직 구축",
+          ],
+        },
+        {
+          title: "개발 환경 및 코드 품질 관리",
+          description: "린트, 워크플로우, 문서화",
+          details: [
+            "ESLint 규칙 조정 및 워닝 제거로 코드 일관성 확보",
+            "GitHub Actions 기반 CI/CD 워크플로우 구성",
+            "Swagger 문서 자동 업데이트 파이프라인 구성(deploy-swagger-docs.yml)",
+            "CORS 설정 및 패키지 전체 정리",
+            "테스트 코드 정리 및 불필요 파일 제거로 프로젝트 구조 정돈",
+          ],
+        },
+      ],
+      troubleshooting: [
+        {
+          problem: "멀티 모듈 환경에서 트랜잭션 관리 어려움",
+          cause:
+            "회원 탈퇴 기능에서 User, Auth, Schedule 등 여러 모듈의 데이터를 동시에 삭제해야 했으나, 각 서비스에 QueryRunner를 전달하는 방식으로 트랜잭션을 처리하면서 코드 복잡도와 결합도가 크게 증가했습니다.",
+          solution:
+            "typeorm-transactional 라이브러리를 도입하고 @Transactional() 데코레이터 기반으로 트랜잭션 범위를 선언적으로 관리하도록 변경했습니다. main.ts에서 initializeTransactionalContext()를 초기화하고, DataSource에 addTransactionalDataSource()를 적용하여 트랜잭션 컨텍스트를 통합 관리했습니다. 각 서비스는 트랜잭션 전파를 자동으로 처리하도록 구조를 개선했습니다.",
+          result:
+            "트랜잭션 처리 코드가 서비스 로직과 분리되면서 가독성이 크게 향상되었고, 트랜잭션 누락/중복 발생 가능성을 줄였습니다. 멀티 모듈 환경에서도 트랜잭션 전파가 일관되게 적용되어 데이터 일관성을 안정적으로 보장하게 되었습니다.",
+        },
+        {
+          problem: "GPT JSON 파싱 오류",
+          cause:
+            "GPT-4 응답이 간헐적으로 유효하지 않은 JSON 형식이거나, 배열 대신 단일 객체를 반환하는 경우가 발생해 일정 생성 파이프라인에서 파싱 오류가 잦았습니다.",
+          solution:
+            "convertGptResponseToCreateScheduleDto 내에 응답 타입 검증 로직을 추가하여, 단일 객체 응답일 경우 자동으로 배열 형태로 래핑해 일관된 구조로 처리하도록 수정했습니다. JSON 파싱 실패 시에는 예외를 캐치하고, 명확한 에러 응답과 함께 사용자에게 재시도를 안내하는 fallback 로직을 구현했습니다.",
+          result:
+            "GPT 응답 파싱 성공률이 크게 향상되어, 정상 응답 기준 약 95% 이상에서 일정 자동 생성이 문제없이 처리되었습니다. 파싱 실패 시에도 사용자에게 명확한 안내를 제공해, 장애 상황에서의 UX를 개선했습니다.",
+        },
+        {
+          problem: "반복 일정 조회 시 성능 저하",
+          cause:
+            "반복 일정의 각 인스턴스를 ScheduleInstance 엔티티로 모두 DB에 저장하는 구조를 사용하면서, 장기간(수개월~1년) 범위 조회 시 수많은 인스턴스를 로드해야 했고, 그 결과 응답 시간이 2초 이상 소요되었습니다.",
+          solution:
+            "반복 일정 모델을 재설계하여 ScheduleInstance 엔티티를 제거하고, 반복 속성을 Schedule 엔티티에 통합했습니다. calculateDateRange 유틸리티 함수로 조회 기간을 계산한 뒤, 필요한 인스턴스만 런타임에 동적으로 생성하는 방식으로 변경했습니다. 또한 쿼리에 날짜 범위 조건을 명시적으로 추가해 불필요한 데이터 로드를 줄였습니다.",
+          result:
+            "평균 응답 시간이 약 70% 단축(2초 → 약 600ms)되었고, 1년 범위 조회 역시 1초 이내로 처리 가능해졌습니다. 반복 인스턴스를 사전 저장하지 않게 되면서 메모리 사용량도 약 50% 감소했습니다.",
+        },
+        {
+          problem: "만료된 액세스 토큰의 401 에러로 인한 리프레시 실패",
+          cause:
+            "리프레시 엔드포인트에서 만료된 액세스 토큰을 request body로 전달하는 구조였는데, Guard가 먼저 Authorization 헤더를 검증하면서 401 에러를 반환해, 실제 리프레시 로직이 실행되지 않는 문제가 있었습니다.",
+          solution:
+            "리프레시 엔드포인트 설계를 수정하여, Authorization 헤더의 액세스 토큰을 직접 파싱하고 Guard를 우회해 만료된 토큰도 리프레시 대상로 처리할 수 있도록 변경했습니다. 동시에, 리프레시 토큰의 검증 로직을 강화해 보안상 문제가 없도록 방어 로직을 보완했습니다.",
+          result:
+            "만료된 액세스 토큰에 대해서도 안정적으로 리프레시 토큰을 활용해 새 토큰을 발급할 수 있게 되었고, 불필요한 재로그인 빈도가 감소했습니다. 사용자 입장에서 토큰 만료로 인한 갑작스러운 로그아웃 경험이 사라져 UX가 개선되었습니다.",
+        },
+        {
+          problem: "SMS 인증 코드 유효기간 및 상태 관리 부족",
+          cause:
+            "인증 코드를 서버 메모리의 Map에 저장하는 구조로 구현해 서버 재시작 시 데이터가 모두 유실되었고, 만료된 코드가 자동으로 정리되지 않아 관리가 어려웠습니다. 또한 인증 완료 여부를 별도로 추적하지 않아 로직이 불명확했습니다.",
+          solution:
+            "인증 코드 Map에 만료 시각과 isVerified 플래그를 함께 저장해 코드의 상태를 명확히 관리했습니다. 회원가입 시에는 전화번호 형식 검증과 인증 코드 검증을 모두 통과해야만 가입이 가능하도록 로직을 강화했습니다. (실 서비스 전환 시에는 Redis와 같은 외부 스토리지를 사용할 수 있도록 구조를 분리해 두었습니다.)",
+          result:
+            "미인증 사용자의 회원가입 시도가 로직 상 차단되도록 정돈되었고, 인증 코드 사용 흐름이 명확해져 유지보수성이 향상되었습니다. 추후 외부 스토리지로 이전하기 쉬운 구조를 마련했습니다.",
+        },
+        {
+          problem: "날짜 범위 조회 시 Full Table Scan으로 인한 성능 저하",
+          cause:
+            "개발 단계에서 스키마 변경이 빈번해 마이그레이션 대신 synchronize 옵션을 사용했는데, 이로 인해 인덱스가 자동 생성되지 않았습니다. 일정 데이터가 증가함에 따라 날짜 범위 조회 쿼리가 Full Table Scan으로 동작하며 응답 시간이 점점 증가했습니다.",
+          solution:
+            "Schedule 테이블의 startDate, endDate 컬럼에 복합 인덱스를 추가했습니다. Faker를 활용해 대량의 테스트 데이터를 생성한 뒤, 인덱스 유무에 따른 조회 성능을 비교 측정했습니다. 이후 db:refresh 명령어에 인덱스 생성 로직을 포함시켜, 스키마 초기화 시에도 인덱스가 자동 반영되도록 개선했습니다.",
+          result:
+            "날짜 범위 조회 쿼리가 Full Table Scan에서 Index Scan으로 전환되면서 응답 시간이 크게 단축되었습니다. 개발 단계에서 synchronize를 유지하더라도, 성능에 중요한 인덱스는 안정적으로 적용되는 환경을 구축할 수 있었습니다.",
+        },
       ],
       tech: [
         { name: "NestJS", icon: <SiNestjs className="h-4 w-4" /> },
@@ -454,10 +942,122 @@ export default function Home() {
     },
     {
       title: "개발새발",
-      period: "2024.10 ~ Date.now()",
+      period: "2024.10 ~",
       role: "FullStack",
       description:
         "Next.js 기반의 개인 개발 블로그입니다. 기술 학습 내용과 프로젝트 경험을 기록하고 공유하는 플랫폼으로, 마크다운 기반의 정적 사이트 생성과 동적 기능을 결합하여 운영 중입니다.",
+      responsibilities: [
+        {
+          title: "Next.js 블로그 시스템 구축",
+          description: "SSG와 ISR을 활용한 고성능·저비용 블로그 플랫폼 개발",
+          details: [
+            "App Router 기반 페이지 라우팅 및 레이아웃 설계",
+            "MDX를 활용한 마크다운 콘텐츠 렌더링 시스템 구축",
+            "Rehype 및 Remark 플러그인으로 코드 하이라이팅 및 목차 자동 생성",
+            "정적 사이트 생성(SSG)으로 빌드 타임에 블로그 포스트 프리렌더링",
+          ],
+        },
+        {
+          title: "실시간 조회수 시스템 구현",
+          description: "Upstash Redis와 Pusher를 활용한 실시간 데이터 동기화",
+          details: [
+            "Upstash Redis를 활용한 게시글 조회수 추적",
+            "Pusher를 통한 실시간 조회수 업데이트 브로드캐스팅",
+            "클라이언트 측 Pusher 구독 및 UI 자동 갱신",
+            "Redis 캐싱 전략으로 데이터베이스 부하 최소화",
+          ],
+        },
+        {
+          title: "실시간 채팅 시스템 개발",
+          description: "Pusher와 NextAuth를 활용한 관리자-사용자 채팅 기능",
+          details: [
+            "GitHub OAuth 인증 사용자를 대상으로 실시간 1:1 채팅 구현",
+            "Pusher Channels를 활용한 양방향 실시간 메시지 전송",
+            "관리자 페이지에서 채팅방 목록 및 메시지 모니터링 기능 구현",
+            "웹 푸시 알림 연동으로 새 메시지 알림 기능 추가",
+          ],
+        },
+        {
+          title: "댓글 시스템 통합",
+          description: "Giscus를 활용한 GitHub Discussions 댓글 연동",
+          details: [
+            "GitHub Discussions 기반 Giscus 댓글 시스템 설정",
+            "다크 모드 자동 전환 및 테마 연동",
+            "댓글 컴포넌트 지연 로딩으로 초기 렌더링 최적화",
+            "OAuth 인증을 통한 사용자 댓글 작성 플로우 구축",
+          ],
+        },
+        {
+          title: "인증 시스템 구현",
+          description: "NextAuth.js를 활용한 OAuth 인증 및 세션 관리",
+          details: [
+            "GitHub OAuth 2.0 인증 전략 구현",
+            "세션 기반 사용자 상태 관리 및 보호된 페이지 접근 제어",
+            "보호된 API 라우트 및 미들웨어 설정",
+            "사용자 프로필 정보 동기화 처리",
+          ],
+        },
+        {
+          title: "UI/UX 개발 및 최적화",
+          description: "Tailwind CSS 기반 반응형 디자인",
+          details: [
+            "Tailwind CSS를 활용한 모던한 UI 컴포넌트 개발",
+            "다크 모드 지원 및 테마 전환 기능 구현",
+            "Zustand를 활용한 전역 UI 상태 관리",
+            "모바일·태블릿·데스크톱 반응형 레이아웃 구성",
+            "썸네일 이미지 색상 분석 기반 동적 그라디언트 배너 생성",
+          ],
+        },
+        {
+          title: "SEO 최적화 및 배포 자동화",
+          description: "Vercel을 통한 자동 배포 및 검색 엔진 최적화",
+          details: [
+            "Vercel 플랫폼 자동 배포 및 CI/CD 파이프라인 구성",
+            "이미지 최적화 및 lazy loading 적용",
+            "동적 메타 태그 생성 및 Open Graph 메타 설정",
+            "구조화된 데이터(JSON-LD) 및 sitemap 설정",
+            "Lighthouse 성능 지표 90점 이상 유지",
+          ],
+        },
+      ],
+      troubleshooting: [
+        {
+          problem: "MDX 빌드 시 메모리 부족 에러",
+          cause:
+            "대량의 마크다운 파일을 한 번에 파싱하면서 Node.js 힙 메모리가 부족해 빌드가 중단되었습니다.",
+          solution:
+            "next.config.js에서 webpack 설정을 조정해 메모리 제한을 상향하고, MDX 플러그인 중 불필요한 부분을 제거했습니다. 또한 처리 흐름을 최적화해 과도한 파싱이 발생하지 않도록 조정했습니다.",
+          result:
+            "빌드 과정에서 메모리 에러가 발생하지 않도록 안정화했으며, 빌드 시간이 약 40% 단축되어 100개 이상의 게시글도 안정적으로 빌드 가능해졌습니다.",
+        },
+        {
+          problem: "Pusher 실시간 조회수 업데이트 지연",
+          cause:
+            "모든 조회수 변경을 즉시 브로드캐스팅하면서 Pusher API 호출이 과도하게 발생해 지연과 비용 문제가 생겼습니다.",
+          solution:
+            "조회수를 Redis에 우선 반영하고, 10초 단위 배치로 Pusher에 업데이트를 전달하는 구조로 변경했습니다.",
+          result:
+            "Pusher API 호출 수를 약 90% 줄이면서도 사용자 입장에서의 실시간성은 유지했습니다.",
+        },
+        {
+          problem: "다크 모드 전환 시 화면 깜빡임",
+          cause:
+            "테마 정보가 클라이언트 측에서만 적용되어 초기 SSR 렌더링 시 기본 테마가 잠시 노출되었습니다.",
+          solution:
+            "next-themes 라이브러리를 도입하고, 쿠키 기반으로 테마 상태를 저장했습니다. 또한 HTML head에 인라인 스크립트를 삽입해 렌더링 전에 테마를 먼저 적용하도록 했습니다.",
+          result:
+            "다크 모드 전환 시 깜빡임 현상이 제거되어, 초기 렌더링 경험이 자연스러워졌습니다.",
+        },
+        {
+          problem: "코드 블록 하이라이팅 스타일 충돌",
+          cause:
+            "rehype-highlight와 Tailwind CSS의 스타일이 충돌해 코드 블록 레이아웃이 깨지고 색상이 의도와 다르게 표시되었습니다.",
+          solution:
+            "하이라이팅 라이브러리를 Prism.js로 변경하고, Tailwind의 prose 클래스를 커스터마이징해 코드 블록 스타일을 분리·격리했습니다.",
+          result:
+            "코드 블록이 일관된 스타일로 표시되고, 다양한 언어에 대한 syntax highlighting을 안정적으로 지원하게 되었습니다.",
+        },
+      ],
       tech: [
         { name: "Next.js", icon: <SiNextdotjs className="h-4 w-4" /> },
         { name: "TypeScript", icon: <SiTypescript className="h-4 w-4" /> },
@@ -523,14 +1123,144 @@ export default function Home() {
       period: "25.03 ~ 25.09",
       role: "Backend",
       description:
-        "개인의 다양한 목표 달성과 꾸준한 습관 형성을 돕는 AI 기반 소셜 챌린지 플랫폼입니다. HealthKit을 연동한 Apple Watch 자동 인증과 실시간 AI 이미지 분석을 통해 신뢰도 높은 챌린지 환경을 제공합니다.",
+        "개인의 다양한 목표 달성과 꾸준한 습관 형성을 지원하는 AI 기반 소셜 챌린지 플랫폼입니다. HealthKit과 연동된 Apple Watch 자동 인증, 그리고 실시간 AI 이미지 분석을 통해 신뢰성과 공정성을 갖춘 챌린지 환경을 제공합니다.",
       features: [
-        "Terraform 모듈로 VPC·ALB·ECR·ECS on EC2·RDS·CloudFront까지 IaC로 관리",
-        "VPC Endpoint만 활용하는 프라이빗 네트워크와 ACM/Route53 기반 HTTPS 경로 구축",
-        "SQS → Lambda 워커로 사진 인증 비동기 처리 후 관리자 모더레이션 큐에 적재",
-        "Socket.IO 채팅 API 명세와 인증 플로우를 설계해 앱-서버 간 계약을 명확히 문서화",
-        "CloudWatch 사용자/정책 발급 및 Agent 구성으로 로그·메트릭 수집 체계를 마련",
-        "챗봇 알림·운영 메시지 시나리오를 정의해 인증 경험을 실시간화",
+        "AI 기반 이미지 인증 및 자동 검증",
+        "Apple Watch·HealthKit 연동 실시간 자동 인증",
+        "개인·그룹 단위 소셜 챌린 기능 ",
+        "실시간 채팅 및 활동 알림",
+        "관리자 모더레이션 및 신고처리 시스템",
+        "개인 목표 관리 및 습관 트래킹",
+      ],
+      responsibilities: [
+        {
+          title: "백엔드 API 개발",
+          description: "NestJS 기반 RESTful API 설계 및 구현",
+          details: [
+            "챌린지, 미션, 인증, 사용자 등 핵심 도메인 CRUD API 개발",
+            "TypeORM을 활용한 엔티티 설계 및 관계 매핑",
+            "통일된 에러 코드 체계 및 GlobalExceptionFilter 구축",
+            "CustomException과 BusinessException을 활용한 도메인별 예외 처리",
+            "DTO 유효성 검사 및 공통 응답 형식 표준화",
+            "JWT 기반 인증/인가 시스템 구현",
+            "Swagger를 활용한 API 문서 자동화",
+          ],
+        },
+        {
+          title: "인프라 아키텍처 설계 및 IaC 구축",
+          description: "Terraform을 활용한 AWS 인프라 자동화",
+          details: [
+            "VPC, Public/Private Subnet, Security Group 등 네트워크 인프라 설계",
+            "ALB, ECS on Fargate, RDS PostgreSQL, CloudFront CDN 구성",
+            "Route 53 기반 DNS 라우팅 및 Internet Gateway 설정",
+            "VPC Endpoint(S3 Gateway, CloudWatch Logs, Secrets Manager, ECR) 구성",
+            "Terraform 모듈화를 통한 재사용 가능한 인프라 코드 작성",
+          ],
+        },
+        {
+          title: "비동기 이미지 처리 시스템 구현",
+          description: "SQS와 Lambda를 활용한 AI 기반 이미지 인증 파이프라인",
+          details: [
+            "AWS Bedrock Claude 3.5 Haiku 모델을 활용한 이미지 관련성 분석",
+            "이미지 업로드 시 AI 검증 후 approve/reject/review 상태 반환",
+            "S3 이벤트 트리거 기반 SQS 메시지 큐 설계",
+            "Lambda 워커 함수 구현 및 Bedrock AI 연동",
+            "ImageVerification 엔티티 설계 및 분석 결과 저장",
+            "인증 결과를 관리자 모더레이션 큐에 적재하는 워크플로우 구성",
+            "Dead Letter Queue(DLQ) 설정으로 실패한 메시지 처리",
+          ],
+        },
+        {
+          title: "실시간 채팅 시스템 개발",
+          description: "Socket.IO 기반 실시간 채팅 및 알림 기능",
+          details: [
+            "Socket.IO 서버 구축 및 이벤트 기반 통신 설계",
+            "채팅방 생성, 메시지 전송, 읽음 처리 등 핵심 기능 구현",
+            "챌린지 생성/참여/나가기 시 채팅방 자동 동기화 로직 구현",
+            "JWT 기반 Socket 인증 미들웨어 개발",
+            "APNs(Apple Push Notification Service) 연동 및 푸시 알림 시스템 구축",
+            "챗봇 알림 및 운영 메시지 자동화",
+          ],
+        },
+        {
+          title: "테스트 및 품질 관리",
+          description: "Jest 기반 단위/통합 테스트 환경 구축",
+          details: [
+            "Controller 및 Service 레이어 단위 테스트 작성",
+            "SQLite 인메모리 DB를 활용한 통합 테스트 환경 구축",
+            "E2E 테스트 configuration 완료",
+            "테스트 커버리지 리포트 자동화",
+          ],
+        },
+        {
+          title: "모니터링 및 보안 체계 구축",
+          description:
+            "CloudWatch, CloudTrail, Secrets Manager를 활용한 관찰성 및 보안 강화",
+          details: [
+            "CloudWatch Logs를 통한 ECS Fargate 컨테이너 로그 수집",
+            "커스텀 메트릭 생성 및 대시보드 구성",
+            "CloudTrail을 활용한 API 호출 및 리소스 변경 추적",
+            "Secrets Manager를 통한 민감 정보 안전한 관리",
+            "GitHub Secrets를 활용한 APNs 인증서 보안 관리 및 배포 자동화",
+            "알람 설정을 통한 장애 감지 자동화 및 IAM 최소 권한 원칙 적용",
+          ],
+        },
+      ],
+      troubleshooting: [
+        {
+          problem: "Bedrock AI 이미지 검증 시 동시 호출 부하 발생",
+          cause:
+            "다수 사용자가 이미지 업로드 시 Bedrock API를 동기적으로 호출하여 타임아웃 및 응답 지연이 발생했습니다.",
+          solution:
+            "S3 업로드 → SQS 메시지 발행 → Lambda 워커 → Bedrock 분석 → DB 저장 구조로 전면 개편해 비동기 처리 파이프라인을 구축했습니다.",
+          result:
+            "동시 처리 성능이 크게 향상되고, 사용자는 업로드 직후 즉시 다음 작업이 가능해 UX가 개선되었습니다.",
+        },
+        {
+          problem: "CloudWatch Logs 가독성 저하",
+          cause:
+            "Winston 로그가 CloudWatch 환경에서 포맷이 깨지며 JSON 구조가 평탄화되지 않아 분석이 어려웠습니다.",
+          solution:
+            "Console Transport 포맷을 재구성하여 타임스탬프·레벨·스택 트레이스 등을 구조화된 JSON 형태로 출력하도록 개선했습니다.",
+          result:
+            "로그 검색·분석 효율성이 크게 향상되어 장애 대응 시간을 단축했습니다.",
+        },
+        {
+          problem: "ECS EC2 클러스터 운영 복잡성과 비용 증가",
+          cause:
+            "EC2 인스턴스의 클러스터 연결 불안정 및 NAT Gateway 비용 증가로 운영 부담이 커졌습니다.",
+          solution:
+            "ECS EC2 → ECS Fargate로 전환하고 NAT Gateway 제거, Bastion Host + VPC Endpoint 기반 아키텍처로 변경했습니다.",
+          result:
+            "인프라 관리 부담이 거의 제거되고 월 비용을 약 30% 절감했습니다.",
+        },
+        {
+          problem: "NestJS 모듈 간 순환 의존성",
+          cause:
+            "PostsModule과 LikesModule이 서로 import하면서 Nest DI 해석 오류가 발생했습니다.",
+          solution:
+            "forwardRef()를 적용해 순환 의존성을 지연 해석하도록 구조를 조정했습니다.",
+          result:
+            "모듈 초기화가 정상적으로 수행되고 의존성 구조가 명확해졌습니다.",
+        },
+        {
+          problem: "ECS 배포 시 다운타임 발생",
+          cause:
+            "블루-그린 또는 롤링 전략 없이 태스크를 교체하여 헬스 체크 실패 시 서비스 중단이 발생했습니다.",
+          solution:
+            "ALB 헬스 체크 설정을 최적화하고 ECS 서비스의 롤링 업데이트 정책을 적용했습니다.",
+          result:
+            "무중단 배포가 가능해졌으며 서비스 가용성이 99.9% 이상으로 유지되었습니다.",
+        },
+        {
+          problem: "Socket.IO 연결 유지 불안정",
+          cause:
+            "ALB Idle Timeout(60초)이 Socket.IO 연결 유지 시간보다 짧아 주기적으로 연결이 끊겼습니다.",
+          solution:
+            "ALB Idle Timeout을 300초로 조정하고, 클라이언트 pingInterval/pingTimeout을 재설정했습니다.",
+          result:
+            "Socket 연결 안정성이 대폭 개선되었고 재연결 빈도가 약 90% 감소했습니다.",
+        },
       ],
       tech: [
         { name: "NestJS", icon: <SiNestjs className="h-4 w-4" /> },
@@ -567,14 +1297,111 @@ export default function Home() {
       period: "25.06 ~ 25.08",
       role: "FullStack",
       description:
-        "지역 기반 번개모임 커뮤니티 서비스입니다. AI가 생성한 미션을 수행하며 포인트를 획득하고, 같은 지역 사람들과 오프라인 모임을 가질 수 있습니다.",
+        "AI 기반 미션을 통해 즉시 참여 가능한 지역 번개모임을 만들고 참여할 수 있는 오프라인 커뮤니티 서비스입니다. 사용자는 미션 수행으로 포인트와 신뢰도를 쌓으며, AI 검증·위치·시간 기반 인증을 통해 안전한 모임 환경을 제공합니다.",
       features: [
-        "Passport-kakao/naver/google 전략과 HTTP-Only 쿠키로 카카오·네이버·구글 소셜 로그인 UX 통합",
-        "DynamoDB 미션/인증 데이터를 Aurora PostgreSQL로 마이그레이션하며 4개 핵심 테이블 정규화",
-        "NestJS Scheduler와 cron 잡으로 모집→활동→정산까지 모임 상태 전환과 패널티 자동화",
-        "Socket.IO 게이트웨이로 채팅방/메시지/읽음 이벤트를 설계하고 React 채팅 뷰와 연동",
-        "Service Worker + VAPID 키로 웹 푸시 구독/전송 파이프라인을 구축, 오프라인 사용자만 타겟팅",
-        "React에서 S3 Presigned URL 업로드·미션 상세 API·주간 뷰 UI를 연결해 풀스택 플로우 완성",
+        "AI 기반 지역 특화 미션 생성 및 3중 인증 시스템(사진·위치·시간)",
+        "사용자 위치 기반 번개모임 매칭",
+        "소셜 로그인 통합(Kakao / Naver / Google)",
+        "실시간 그룹 채팅 및 푸시 알림",
+        "포인트·레벨·패널티 자동화 시스템",
+        "QR 체크인 기반 모임 출석 인증 및 자동 정산",
+      ],
+      responsibilities: [
+        {
+          title: "온보딩 및 인증 시스템 구현",
+          description:
+            "Passport.js 기반 멀티 OAuth 인증 및 안전한 온보딩 플로우 구축",
+          details: [
+            "카카오·네이버·구글 OAuth 2.0 전략 구현 및 소셜 계정 통합",
+            "전화번호 → 프로필 → 관심사/해시태그 → 지역 순의 온보딩 단계 설계",
+            "HTTP-Only 쿠키 기반 세션 관리로 XSS 공격 방어",
+            "리프레시 토큰 기반 자동 재인증 구현",
+            "마스터 데이터(레벨 · 관심사 · 해시태그 · 미션 카테고리) API 제공",
+          ],
+        },
+        {
+          title: "모임 및 미션 기능 개발",
+          description: "모임 생성부터 출석·정산까지 전체 라이프사이클 API 개발",
+          details: [
+            "모임 생성·참가·출석 체크·위치 인증 등 핵심 기능 API 구현",
+            "미션 조회 필터링 및 상세 정보 제공 API 개발",
+            "AI 미션 인증: AWS Bedrock 기반 이미지 분석 및 검증",
+            "포인트 트랜잭션 및 사용자 활동 로그 추적 시스템 구축",
+            "Scheduler 기반 상태 자동 전환 및 정산 프로세스 자동화",
+          ],
+        },
+        {
+          title: "데이터베이스 마이그레이션",
+          description: "DynamoDB → PostgreSQL 스키마 재설계 및 데이터 이전",
+          details: [
+            "NoSQL 데이터를 관계형 스키마로 재설계",
+            "미션, 인증, 사용자, 모임 등 핵심 테이블 정규화",
+            "마이그레이션 스크립트 작성 및 데이터 무결성 검증",
+            "인덱스 최적화로 쿼리 성능 개선",
+          ],
+        },
+        {
+          title: "실시간 채팅 및 웹 푸시 구현",
+          description: "Socket.IO + Service Worker 기반 실시간 커뮤니케이션",
+          details: [
+            "그룹 채팅 서버 구축 및 WebSocket 기반 메시지 동기화",
+            "메시지/읽음 상태 관리 엔티티 설계 및 이벤트 처리",
+            "VAPID 기반 웹 푸시 알림 시스템 구축",
+            "알림 템플릿 및 푸시 구독 관리 API 구현",
+          ],
+        },
+        {
+          title: "프론트엔드 개발 및 UI/UX 구현",
+          description: "React 기반 사용자 인터페이스 및 PWA 기능 구현",
+          details: [
+            "Feature-based 아키텍처(app/features/shared)로 프론트 구조 설계",
+            "온보딩 UI(4단계 구성), 프로필 수정, 관심사 선택 플로우 구현",
+            "미션 목록·상세·필터링 UI 및 QR 체크인 컴포넌트 개발",
+            "React 채팅 UI + Socket.IO 실시간 연동",
+            "Service Worker 기반 웹 푸시(PWA) 알림 구축",
+            "다크 모드, 테마 토글, 반응형 디자인 적용",
+            "S3 Presigned URL 기반 이미지 업로드 기능 구현",
+            "Zustand를 활용한 user·location·notification 전역 상태 관리",
+          ],
+        },
+      ],
+      troubleshooting: [
+        {
+          problem: "DynamoDB → PostgreSQL 마이그레이션 중 성능 저하",
+          cause:
+            "중첩된 NoSQL 구조를 관계형 DB로 평탄화하면서 JOIN이 증가하고 N+1 문제가 발생했습니다.",
+          solution:
+            "핵심 관계 필드에 인덱스를 추가하고, QueryBuilder 기반으로 조인을 최적화했으며, eager loading 사용을 최소화했습니다.",
+          result:
+            "평균 응답 시간이 약 60% 단축되었고, 복잡한 조회 쿼리도 200ms 이내로 안정적으로 처리할 수 있게 되었습니다.",
+        },
+        {
+          problem: "웹 푸시 구독 실패율 증가",
+          cause:
+            "Service Worker 등록 타이밍이 부정확하고 권한 거부 상태에 대한 예외 처리가 부족해 구독 실패율이 높게 나타났습니다.",
+          solution:
+            "Service Worker 초기화 시점을 앱 시작 단계로 이동하고, 권한 거부 시 재시도·안내 UI를 구현해 사용자의 의사에 따라 다시 구독을 시도할 수 있도록 개선했습니다.",
+          result:
+            "웹 푸시 구독 성공률이 85%에서 95% 수준으로 향상되었고, 사용자 재방문 시 자동 재구독도 정상적으로 동작하게 되었습니다.",
+        },
+        {
+          problem: "Cron 정산 작업에서 트랜잭션 타임아웃/데드락",
+          cause:
+            "대량 포인트 업데이트를 단일 트랜잭션으로 처리하면서 일부 레코드에서 데드락과 트랜잭션 타임아웃이 발생했습니다.",
+          solution:
+            "정산 대상을 청크 단위로 분할 처리하고, FOR UPDATE SKIP LOCKED와 재시도 로직을 적용해 경쟁 상황을 완화했습니다.",
+          result:
+            "정산 작업이 안정적으로 전체 처리 완료되며, 실행 시간이 약 30% 단축되었습니다.",
+        },
+        {
+          problem: "채팅방 입장 시 메시지 로딩 지연",
+          cause:
+            "채팅방 입장 시 전체 메시지를 한 번에 불러오는 구조로 인해 초기 렌더링이 과도하게 느려지는 문제가 있었습니다.",
+          solution:
+            "커서 기반 페이지네이션과 무한 스크롤을 적용하고, React Query를 통해 캐싱 및 백그라운드 리페칭을 구성했습니다.",
+          result:
+            "초기 메시지 로딩 시간이 약 70% 감소했고, 스크롤 기반으로 자연스럽게 과거 메시지를 불러올 수 있는 경험을 제공하게 되었습니다.",
+        },
       ],
       tech: [
         { name: "NestJS", icon: <SiNestjs className="h-4 w-4" /> },
@@ -623,9 +1450,116 @@ export default function Home() {
       description:
         "영어 화자의 음색과 운율을 보존한 자연스러운 한국어 더빙 음성을 생성하는 AI 더빙 서비스입니다. STT-TTS 및 S2ST 융합형 교차 언어 음성 합성 기술을 활용하여, 화자 분리, 음성 인식, 번역, TTS, 자막 생성까지 전 과정을 자동화합니다.",
       features: [
-        "Project–VideoAsset–DubJob–Segment로 이어지는 TypeORM ERD 및 관계 옵션 구성",
-        "Presigned URL 발급부터 업로드 완료 체크·DubJob 자동 생성까지의 영상 처리 자동화",
-        "NestJS Devtools로 모듈 의존성과 라우팅 구조 시각화·디버깅",
+        "AI 기반 자동 더빙 음성 생성",
+        "화자 분리 및 음성 인식",
+        "실시간 번역 및 TTS 변환",
+        "자막 자동 생성 및 동기화",
+        "영상 업로드 및 처리 자동화",
+        "프로젝트 및 더빙 작업 관리 시스템",
+      ],
+      responsibilities: [
+        {
+          title: "데이터베이스 설계 및 ERD 구성",
+          description: "TypeORM 기반 더빙 워크플로우 엔티티 설계",
+          details: [
+            "9개 핵심 엔티티 설계: User, Project, VideoAsset, DubJob, JobStep, Speaker, Segment, OutputAsset, Subtitle",
+            "더빙 파이프라인 단계별 엔티티 관계 매핑 (업로드 → STT → 화자 분리 → 번역 → TTS → 렌더링)",
+            "One-to-Many 관계 및 Cascade 옵션 설정",
+            "UNIQUE INDEX 및 외래 키 제약조건 최적화",
+            "BaseEntity 추상 클래스를 활용한 공통 필드 관리",
+          ],
+        },
+        {
+          title: "DubJob 시스템 및 Worker API 구현",
+          description: "AI 파이프라인 통신 인터페이스 및 작업 관리",
+          details: [
+            "DubJobsModule: VideoAsset 기반 DubJob 자동 생성 및 상태 관리",
+            "WorkerModule: AI Worker와의 통신을 위한 API 엔드포인트 제공",
+            "작업 클레임 및 상태 업데이트 API (대기 → 처리중 → 완료/실패)",
+            "세그먼트 메타데이터 저장 및 진행률 추적",
+            "SQS 메시지 발송을 통한 AI Worker 트리거",
+          ],
+        },
+        {
+          title: "비디오 업로드 및 처리 자동화",
+          description: "S3 Presigned URL 기반 파일 업로드 시스템",
+          details: [
+            "S3 Presigned URL 발급 API 구현",
+            "직접 업로드 엔드포인트 추가 (multipart/form-data)",
+            "파일 메타데이터 추출 (fileSize, mimeType)",
+            "업로드 완료 시 DubJob 자동 생성 및 SQS 알림 발송",
+            "S3 이벤트 기반 비동기 처리 파이프라인 구성",
+          ],
+        },
+        {
+          title: "프로젝트 도메인 모듈 구현",
+          description: "프로젝트 CRUD 및 더빙 작업 관리",
+          details: [
+            "프로젝트 생성, 조회, 수정, 삭제 API 구현",
+            "프로젝트별 VideoAsset 및 DubJob 목록 조회",
+            "페이지네이션 및 필터링 기능 추가",
+            "DTO 유효성 검사 및 Swagger 문서화",
+          ],
+        },
+        {
+          title: "인증 시스템 및 배포",
+          description: "OAuth 인증 및 AWS 인프라 구축",
+          details: [
+            "GitHub, Google OAuth 2.0 전략 구현",
+            "Passport.js 기반 인증 Guard 설정",
+            "AWS Route53 + EC2 + Nginx 배포 환경 구축",
+            "Let's Encrypt SSL/TLS 인증서 적용",
+            "GitHub Secrets를 활용한 환경 변수 관리",
+          ],
+        },
+        {
+          title: "개발 도구 및 테스트",
+          description: "NestJS Devtools 및 단위 테스트 구축",
+          details: [
+            "NestJS Devtools 설정 및 모듈 의존성 시각화",
+            "단위 테스트 환경 구성 및 테스트 코드 작성",
+            "개발 환경 Hot Reload 설정",
+            "로깅 시스템 구축 및 디버그 정보 수집",
+          ],
+        },
+      ],
+      troubleshooting: [
+        {
+          problem: "대용량 비디오 업로드 타임아웃",
+          cause:
+            "서버를 경유해 S3로 업로드하면서 전송 시간이 길어지고 요청 타임아웃이 잦았습니다.",
+          solution:
+            "S3 Presigned URL을 도입해 클라이언트 → S3 직접 업로드 방식으로 변경하고, 업로드 완료는 S3 이벤트로 감지하도록 재구성했습니다.",
+          result:
+            "타임아웃 문제가 완전히 해소되었고 서버 부하가 약 90% 감소했으며, 업로드 속도도 약 3배 향상되었습니다.",
+        },
+        {
+          problem: "Cascade 옵션 오사용으로 인한 데이터 삭제",
+          cause:
+            "Project 삭제 시 연관된 VideoAsset과 DubJob이 예상보다 넓은 범위로 삭제되었습니다.",
+          solution:
+            "Cascade 옵션을 단계별로 명확히 분리하고, onDelete: 'SET NULL' 또는 'RESTRICT'를 상황에 따라 적용했습니다. 또한 삭제 전 사전 검증 로직을 추가했습니다.",
+          result:
+            "데이터 무결성을 안정적으로 보장하게 되었고, 프로젝트 삭제 과정에서의 의도치 않은 손실을 방지할 수 있게 되었습니다.",
+        },
+        {
+          problem: "DubJob 상태 업데이트 동시성 문제",
+          cause:
+            "여러 Segment가 동시에 완료되면서 DubJob의 상태 및 완료 카운트가 서로 덮어써지는 race condition이 발생했습니다.",
+          solution:
+            "트랜잭션과 FOR UPDATE 행 잠금을 활용하여 동시성을 제어하고, Segment 완료 시 카운트 증가와 상태 변경을 원자적으로 처리하도록 수정했습니다.",
+          result:
+            "DubJob 진행률과 상태가 정확하게 유지되도록 개선되었고, race condition이 제거되었습니다.",
+        },
+        {
+          problem: "NestJS Devtools WebSocket 끊김",
+          cause:
+            "Devtools의 WebSocket 연결이 개발 환경에서 간헐적으로 끊어져 디버깅이 어려웠습니다.",
+          solution:
+            "WebSocket 자동 재연결 로직을 추가하고, Devtools 모듈을 개발 환경에서만 조건부 로딩하도록 변경했습니다.",
+          result:
+            "개발 중 안정적으로 Devtools를 사용할 수 있게 되었고, 디버깅 효율이 크게 향상되었습니다.",
+        },
       ],
       tech: [
         { name: "NestJS", icon: <SiNestjs className="h-4 w-4" /> },
@@ -665,10 +1599,17 @@ export default function Home() {
         alt={modalImage.alt}
       />
 
+      {/* 프로젝트 상세 모달 */}
+      <ProjectDetailModal
+        isOpen={isProjectDetailOpen}
+        onClose={closeProjectDetail}
+        project={selectedProject}
+      />
+
       {/* 테마 토글 버튼 */}
       <div
         className={`fixed top-6 right-6 z-50 ${
-          modalImage.isOpen ? "z-40" : "z-50"
+          modalImage.isOpen || isProjectDetailOpen ? "z-40" : "z-50"
         }`}
       >
         <div className="backdrop-blur-sm bg-black/40 dark:bg-white/40 rounded-full p-1.5 border border-white/20 dark:border-black/20 [&_button]:bg-transparent [&_button_svg]:text-white dark:[&_button_svg]:text-black [&_button:hover]:bg-white/10 dark:[&_button:hover]:bg-black/10 [&_button]:border-none [&_button:focus]:ring-0 [&_button:focus]:outline-none [&_button]:shadow-none">
@@ -700,13 +1641,15 @@ dark:bg-black dark:bg-gradient-to-br dark:from-black dark:via-gray-900 dark:to-b
             </h1>
 
             <div className="mb-4 sm:mb-6">
-              <div className="w-20 h-20 sm:w-24 sm:h-24 lg:w-28 lg:h-28 mx-auto rounded-full overflow-hidden ring-2 ring-gray-300 dark:ring-gray-700">
+              <div className="w-28 h-28 sm:w-32 sm:h-32 lg:w-40 lg:h-40 mx-auto rounded-full overflow-hidden ring-2 ring-gray-300 dark:ring-gray-700">
                 <Image
-                  src="https://storage.googleapis.com/hotsix-bucket/KakaoTalk_20241022_185833320.jpg"
+                  src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/fc3d75e331fec6298c3db51101665511.jpeg"
                   alt="Profile"
-                  width={112}
-                  height={112}
-                  className="w-full h-full object-cover"
+                  width={160}
+                  height={160}
+                  className="w-full h-full object-cover object-[center_20%] select-none pointer-events-none"
+                  onContextMenu={(e) => e.preventDefault()}
+                  draggable={false}
                 />
               </div>
             </div>
@@ -802,7 +1745,7 @@ dark:hover:bg-gray-700 dark:hover:scale-105 dark:hover:shadow-lg
                 <ProjectCard
                   key={index}
                   project={project}
-                  onImageClick={openImageModal}
+                  onCardClick={openProjectDetail}
                 />
               ))}
             </div>
@@ -1073,7 +2016,7 @@ dark:hover:bg-gray-700 dark:hover:scale-105 dark:hover:shadow-lg
                         AWS Certified Solutions Architect - Associate (SAA-C03)
                       </span>
                       <Link
-                        href="https://www.credly.com/earner/earned/badge/4cc479e1-3212-476b-af16-3e1af0c14633"
+                        href="https://www.credly.com/badges/4cc479e1-3212-476b-af16-3e1af0c14633/public_url"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="ml-2 text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 transition-colors flex-shrink-0"
