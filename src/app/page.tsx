@@ -347,6 +347,16 @@ const ProjectDetailModal = ({
                   </span>
                 </div>
               )}
+              {project.teamSize && (
+                <div>
+                  <h3 className="text-m font-semibold text-muted-foreground mb-2">
+                    팀 인원
+                  </h3>
+                  <p className="text-sm">
+                    {project.teamSize === 1 ? "개인" : `${project.teamSize}명`}
+                  </p>
+                </div>
+              )}
               <div>
                 <h3 className="text-m font-semibold text-muted-foreground mb-2">
                   프로젝트 설명
@@ -1007,6 +1017,7 @@ export default function Home() {
       title: "나날모아",
       period: "24.08 ~ 25.02",
       role: "Backend",
+      teamSize: 5,
       description:
         "시니어와 가족 사용자를 대상으로 하는 AI 기반 자동 일정 관리 서비스입니다. 음성 인식, OCR, NLP를 활용하여 편리한 일정 등록을 지원합니다.",
       features: [
@@ -1182,6 +1193,7 @@ export default function Home() {
       title: "개발새발",
       period: "2024.10 ~",
       role: "FullStack",
+      teamSize: 1,
       description:
         "Next.js 기반의 개인 개발 블로그입니다. 기술 학습 내용과 프로젝트 경험을 기록하고 공유하는 플랫폼으로, 마크다운 기반의 정적 사이트 생성과 동적 기능을 결합하여 운영 중입니다.",
       responsibilities: [
@@ -1360,6 +1372,7 @@ export default function Home() {
       title: "한땀한땀",
       period: "25.03 ~ 25.09",
       role: "Backend",
+      teamSize: 4,
       description:
         "개인의 다양한 목표 달성과 꾸준한 습관 형성을 지원하는 AI 기반 소셜 챌린지 플랫폼입니다. HealthKit과 연동된 Apple Watch 자동 인증, 그리고 실시간 AI 이미지 분석을 통해 신뢰성과 공정성을 갖춘 챌린지 환경을 제공합니다.",
       features: [
@@ -1534,6 +1547,7 @@ export default function Home() {
       title: "할 사람?",
       period: "25.06 ~ 25.08",
       role: "FullStack",
+      teamSize: 4,
       description:
         "AI 기반 미션을 통해 즉시 참여 가능한 지역 번개모임을 만들고 참여할 수 있는 오프라인 커뮤니티 서비스입니다. 사용자는 미션 수행으로 포인트와 신뢰도를 쌓으며, AI 검증·위치·시간 기반 인증을 통해 안전한 모임 환경을 제공합니다.",
       features: [
@@ -1685,6 +1699,7 @@ export default function Home() {
       title: "한모아",
       period: "25.09 ~ 25.12",
       role: "Backend",
+      teamSize: 4,
       description:
         "영어 화자의 음색과 운율을 보존한 자연스러운 한국어 더빙 음성을 생성하는 AI 더빙 서비스입니다. STT-TTS 및 S2ST 융합형 교차 언어 음성 합성 기술을 활용하여, 화자 분리, 음성 인식, 번역, TTS, 자막 생성까지 전 과정을 자동화합니다.",
       features: [
@@ -2257,8 +2272,28 @@ dark:hover:bg-gray-700 dark:hover:scale-105 dark:hover:shadow-lg
                     </div>
                   </li>
                   <li>
-                    <div className="font-semibold text-sm">
-                      2025 SW 인재 페스티벌 숭실대학교 부스 운영
+                    <div className="font-semibold text-sm flex items-center justify-between">
+                      <span>2025 SW 인재 페스티벌 숭실대학교 부스 운영</span>
+                      <Link
+                        href="/experience-sw-contest-2025.pdf"
+                        target="_blank"
+                        className="ml-2 text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 transition-colors flex-shrink-0"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="h-5 w-5"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                          />
+                        </svg>
+                      </Link>
                     </div>
                     <div className="text-muted-foreground text-xs sm:text-sm">
                       소프트웨어중심대학협의회
