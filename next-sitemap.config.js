@@ -20,7 +20,7 @@ function formatDate(date) {
 
 /** @type {import('next-sitemap').IConfig} */
 module.exports = {
-  siteUrl: process.env.SITE_URL || "https://www.nullisdefined.my",
+  siteUrl: process.env.SITE_URL || "https://nullisdefined.my",
   generateRobotsTxt: false, // robots.txt는 수동 관리
   autoLastmod: false,
   changefreq: "weekly",
