@@ -1813,6 +1813,24 @@ export default function Home() {
           result:
             "개발 중 안정적으로 Devtools를 사용할 수 있게 되었고, 디버깅 효율이 크게 향상되었습니다.",
         },
+        {
+          problem: "SQS 메시지 무한 재시도 및 큐 적체",
+          cause:
+            "AI 파이프라인에서 처리 실패한 메시지가 삭제되지 않고 VisibilityTimeout(5분) 후 계속 재시도되어 큐에 메시지가 계속 남아있었습니다. Dead Letter Queue(DLQ)가 설정되지 않아 실패한 메시지가 무한 반복되었습니다.",
+          solution:
+            "Dead Letter Queue를 생성하고 메인 큐에 RedrivePolicy를 설정했습니다. maxReceiveCount를 3으로 설정하여 3번 재시도 후 실패 시 자동으로 DLQ로 이동하도록 구성했습니다. AI 파이프라인이 작업 완료 시 delete_message()를 호출하여 메시지를 명시적으로 삭제하도록 설계했습니다.",
+          result:
+            "실패한 메시지가 DLQ로 분리되어 메인 큐가 막히지 않게 되었고, 처리 완료된 메시지는 자동 삭제되어 큐 관리가 안정화되었습니다. DLQ에서 실패 원인을 분석할 수 있게 되었습니다.",
+        },
+        {
+          problem: "프로젝트 목록에서 실제 작업 상태가 표시되지 않음",
+          cause:
+            "프로젝트 목록 조회 API에서 videoAsset만 포함하고 dubJobs를 포함하지 않아, 프론트엔드가 videoAsset.status(항상 'ready')만 확인할 수 있었습니다. 실제 작업 상태는 dubJob.status에 있었지만 relation에 포함되지 않았습니다.",
+          solution:
+            "프로젝트 목록 조회 시 relations에 'videoAsset.dubJobs'를 추가하고, QueryBuilder로 변경하여 dubJobs를 최신순으로 정렬했습니다. 이를 통해 프론트엔드가 최신 DubJob의 status를 확인할 수 있게 되었습니다.",
+          result:
+            "프론트엔드에서 실시간으로 작업 상태(pending, processing, completed, failed)를 정확하게 표시할 수 있게 되었고, 사용자가 더빙 작업 진행 상황을 명확하게 파악할 수 있게 되었습니다.",
+        },
       ],
       tech: [
         { name: "NestJS", icon: <SiNestjs className="h-4 w-4" /> },
