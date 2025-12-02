@@ -176,19 +176,7 @@ const nextConfig = {
   },
   // Generate sitemap during build
   async redirects() {
-    return [
-      {
-        source: "/:path*",
-        has: [
-          {
-            type: "host",
-            value: "www.nullisdefined.my",
-          },
-        ],
-        destination: "https://nullisdefined.my/:path*",
-        permanent: true,
-      },
-    ];
+    return [];
   },
   // SEO improvements
   poweredByHeader: false,
