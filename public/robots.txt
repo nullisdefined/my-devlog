@@ -33,6 +33,18 @@ Disallow: /admin/
 Disallow: /api/
 Crawl-delay: 1
 
+# Naver Bot specific rules
+User-agent: Yeti
+Allow: /
+Allow: /devlog
+Allow: /devlog/posts/
+Allow: /devlog/categories/
+Allow: /devlog/series/
+Allow: /devlog/tags/
+Disallow: /admin/
+Disallow: /api/
+Crawl-delay: 1
+
 # Host declaration
 Host: https://nullisdefined.my
 
