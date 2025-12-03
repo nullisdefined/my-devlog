@@ -28,38 +28,8 @@ export function PostViews({ category, slug }: PostViewsProps) {
       }
     };
 
-    const updateViews = async () => {
-      try {
-        const response = await fetch(`/api/posts/${category}/${slug}/views`);
-        const data = await response.json();
-        setViews(data.views);
-      } catch (error) {
-        // console.error("Error updating views:", error);
-      }
-    };
-
-    // 초기 조회수 추적
+    // 페이지 진입 시 조회수 추적
     trackView();
-
-    // 페이지 포커스 시에만 업데이트 (탭 전환 등)
-    const handleFocus = () => {
-      updateViews();
-    };
-
-    // 페이지 가시성 변경 시 업데이트
-    const handleVisibilityChange = () => {
-      if (!document.hidden) {
-        updateViews();
-      }
-    };
-
-    window.addEventListener("focus", handleFocus);
-    document.addEventListener("visibilitychange", handleVisibilityChange);
-
-    return () => {
-      window.removeEventListener("focus", handleFocus);
-      document.removeEventListener("visibilitychange", handleVisibilityChange);
-    };
   }, [category, slug]);
 
   if (loading) {

@@ -5,7 +5,7 @@ import { headers } from "next/headers";
 // 게시글 조회수 증가
 export async function POST(
   request: Request,
-  { params }: { params: { category: string; slug: string } }
+  { params }: { params: { category: string; slug: string } },
 ) {
   try {
     const headersList = headers();
@@ -17,13 +17,13 @@ export async function POST(
     // 게시글 조회수 키
     const postViewsKey = `post:${category}/${slug}:views`;
 
-    // 해당 IP의 게시글 방문 여부 확인 (24시간 동안 중복 카운트 방지)
+    // 해당 IP의 게시글 방문 여부 확인
     const hasVisited = await redis.exists(postIpKey);
 
     if (!hasVisited) {
       // 새로운 방문자인 경우
-      // IP 방문 기록 저장 (24시간 후 자동 삭제)
-      await redis.setex(postIpKey, 24 * 60 * 60, "1");
+      // IP 방문 기록 저장, 30분 후 자동 삭제
+      await redis.setex(postIpKey, 30 * 60, "1");
       // 조회수 증가
       await redis.incr(postViewsKey);
     }
@@ -43,7 +43,7 @@ export async function POST(
 // 게시글 조회수 조회
 export async function GET(
   request: Request,
-  { params }: { params: { category: string; slug: string } }
+  { params }: { params: { category: string; slug: string } },
 ) {
   try {
     const { category, slug } = params;
