@@ -14,7 +14,7 @@ export function markdownToHtml(markdown: string): string {
   // 이미지 경로를 절대 경로로 변환
   return html.replace(
     /src="(?!https?:\/\/)([^"]*?)"/g,
-    'src="https://nullisdefined.my$1"'
+    'src="https://nullisdefined.my$1"',
   );
 }
 
@@ -51,7 +51,7 @@ export function extractImages(content: string): string[] {
 export function createBaseRSSConfig(
   title: string,
   description: string,
-  feedUrl: string
+  feedUrl: string,
 ): RSS.FeedOptions {
   return {
     title,
@@ -79,7 +79,6 @@ export function createBaseRSSConfig(
       dc: "http://purl.org/dc/elements/1.1/",
       atom: "http://www.w3.org/2005/Atom",
       media: "http://search.yahoo.com/mrss/",
-      sy: "http://purl.org/rss/1.0/modules/syndication/",
     },
     custom_elements: [
       {
@@ -87,8 +86,6 @@ export function createBaseRSSConfig(
           _attr: { href: feedUrl, rel: "self", type: "application/rss+xml" },
         },
       },
-      { "sy:updatePeriod": "hourly" },
-      { "sy:updateFrequency": "1" },
       { lastBuildDate: new Date().toUTCString() },
       { pubDate: new Date().toUTCString() },
     ],
@@ -134,11 +131,6 @@ export function postToRSSItem(post: Post): RSS.ItemOptions {
       { "dc:creator": "nullisdefined" },
       { "dc:subject": post.category },
       ...(post.tags || []).map((tag) => ({ "dc:subject": tag })),
-      { "content:length": htmlContent.length.toString() },
-      {
-        "reading:time":
-          Math.ceil(htmlContent.split(" ").length / 200).toString() + " min",
-      },
     ],
   };
 }
@@ -146,15 +138,15 @@ export function postToRSSItem(post: Post): RSS.ItemOptions {
 // 카테고리별 RSS 피드 생성
 export function generateCategoryFeed(category: string, posts: Post[]): RSS {
   const categoryPosts = posts.filter(
-    (post) => post.category?.toLowerCase() === category.toLowerCase()
+    (post) => post.category?.toLowerCase() === category.toLowerCase(),
   );
 
   const rss = new RSS(
     createBaseRSSConfig(
       `개발새발 - ${category} 카테고리`,
       `${category} 관련 글들을 모아놓은 RSS 피드입니다.`,
-      `https://nullisdefined.my/feed/${category.toLowerCase()}.xml`
-    )
+      `https://nullisdefined.my/feed/${category.toLowerCase()}.xml`,
+    ),
   );
 
   // 최신 20개 포스트만 추가
@@ -173,8 +165,8 @@ export function generateTagFeed(tag: string, posts: Post[]): RSS {
     createBaseRSSConfig(
       `개발새발 - ${tag} 태그`,
       `${tag} 태그가 포함된 글들을 모아놓은 RSS 피드입니다.`,
-      `https://nullisdefined.my/feed/tags/${encodeURIComponent(tag)}.xml`
-    )
+      `https://nullisdefined.my/feed/tags/${encodeURIComponent(tag)}.xml`,
+    ),
   );
 
   // 최신 20개 포스트만 추가
@@ -188,15 +180,15 @@ export function generateTagFeed(tag: string, posts: Post[]): RSS {
 // 시리즈별 RSS 피드 생성
 export function generateSeriesFeed(series: string, posts: Post[]): RSS {
   const seriesPosts = posts.filter(
-    (post) => post.category?.includes(series) || post.tags?.includes(series)
+    (post) => post.category?.includes(series) || post.tags?.includes(series),
   );
 
   const rss = new RSS(
     createBaseRSSConfig(
       `개발새발 - ${series} 시리즈`,
       `${series} 시리즈의 글들을 모아놓은 RSS 피드입니다.`,
-      `https://nullisdefined.my/feed/series/${encodeURIComponent(series)}.xml`
-    )
+      `https://nullisdefined.my/feed/series/${encodeURIComponent(series)}.xml`,
+    ),
   );
 
   seriesPosts.slice(0, 20).forEach((post) => {
@@ -212,8 +204,8 @@ export function generateMainFeed(posts: Post[]): RSS {
     createBaseRSSConfig(
       "개발새발",
       "소프트웨어 개발에 대한 인사이트와 경험을 공유하는 개인 블로그",
-      "https://nullisdefined.my/feed.xml"
-    )
+      "https://nullisdefined.my/feed.xml",
+    ),
   );
 
   // 최신 20개 포스트만 추가

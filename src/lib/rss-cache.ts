@@ -2,6 +2,16 @@ import { unstable_cache } from "next/cache";
 import { getAllPosts } from "./posts";
 import { Post } from "@/types";
 
+// 카테고리 정규화 함수 (비교용)
+function normalizeCategory(category: string): string {
+  return category
+    .toLowerCase()
+    .replace(/\//g, " ") // 슬래시를 공백으로
+    .replace(/-/g, " ") // 하이픈을 공백으로
+    .replace(/\s+/g, " ") // 연속 공백을 하나로
+    .trim();
+}
+
 // RSS 피드 캐싱
 export const getCachedRSSFeed = unstable_cache(
   async () => {
@@ -20,8 +30,11 @@ export const getCachedCategoryFeed = (category: string) =>
   unstable_cache(
     async () => {
       const posts = await getAllPosts();
+      const normalizedInputCategory = normalizeCategory(category);
       return posts.filter(
-        (post) => post.category?.toLowerCase() === category.toLowerCase(),
+        (post) =>
+          post.category &&
+          normalizeCategory(post.category) === normalizedInputCategory,
       );
     },
     ["rss-feed-category", category],
