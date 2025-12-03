@@ -61,21 +61,17 @@ const Tooltip = ({
   content: string;
 }) => {
   const [isVisible, setIsVisible] = useState(false);
-
-  // content가 비어있으면 툴팁 없이 children만 렌더링
-  if (!content || content.trim() === "") {
-    return <>{children}</>;
-  }
+  const hasContent = content && content.trim() !== "";
 
   return (
     <div className="relative inline-block">
       <div
-        onMouseEnter={() => setIsVisible(true)}
-        onMouseLeave={() => setIsVisible(false)}
+        onMouseEnter={() => hasContent && setIsVisible(true)}
+        onMouseLeave={() => hasContent && setIsVisible(false)}
       >
         {children}
       </div>
-      {isVisible && (
+      {hasContent && isVisible && (
         <div className="absolute z-50 bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-2 bg-gray-900 dark:bg-gray-700 text-white text-sm rounded-lg shadow-lg whitespace-normal w-64 pointer-events-none">
           <div className="text-center leading-relaxed">{content}</div>
           {/* 툴팁 화살표 */}
