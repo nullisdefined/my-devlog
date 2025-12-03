@@ -10,19 +10,18 @@ export function Comments() {
   useEffect(() => {
     const script = document.createElement("script");
     script.src = "https://giscus.app/client.js";
-    script.setAttribute("data-repo", "nullisdefined/next-devlog");
+    script.setAttribute("data-repo", "nullisdefined/my-devlog");
     script.setAttribute("data-repo-id", "R_kgDONC5Xiw");
     script.setAttribute("data-category", "General");
     script.setAttribute("data-category-id", "DIC_kwDONC5Xi84CjmQ-");
-    script.setAttribute("data-mapping", "specific");
-    script.setAttribute("data-term", window.location.pathname);
+    script.setAttribute("data-mapping", "pathname");
     script.setAttribute("data-strict", "0");
     script.setAttribute("data-reactions-enabled", "1");
     script.setAttribute("data-emit-metadata", "0");
-    script.setAttribute("data-input-position", "top");
+    script.setAttribute("data-input-position", "bottom");
     script.setAttribute(
       "data-theme",
-      theme === "dark" ? "dark_dimmed" : "light"
+      theme === "dark" ? "dark_dimmed" : "light",
     );
     script.setAttribute("data-lang", "ko");
     script.crossOrigin = "anonymous";
