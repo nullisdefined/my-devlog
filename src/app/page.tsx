@@ -165,10 +165,12 @@ const ProjectDetailModal = ({
   isOpen,
   onClose,
   project,
+  latestPost,
 }: {
   isOpen: boolean;
   onClose: () => void;
   project: any;
+  latestPost: { title: string; url: string } | null;
 }) => {
   const [activeTab, setActiveTab] = useState("overview");
   const contentRef = useRef<HTMLDivElement>(null);
@@ -361,7 +363,21 @@ const ProjectDetailModal = ({
                 <h3 className="text-m font-semibold text-muted-foreground mb-2">
                   프로젝트 설명
                 </h3>
-                <p className="text-sm leading-relaxed">{project.description}</p>
+                <div className="text-sm leading-relaxed">
+                  <p>{project.description}</p>
+                  {project.title === "개발새발" && latestPost && (
+                    <p className="mt-2">
+                      <Link
+                        href={latestPost.url}
+                        className="text-blue-600 dark:text-blue-400 hover:underline"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        최근 글: {latestPost.title}
+                      </Link>
+                    </p>
+                  )}
+                </div>
               </div>
               {project.features && project.features.length > 0 && (
                 <div>
@@ -549,7 +565,6 @@ const ProjectCard = ({
 
   // 기간 계산 함수
   const calculateDuration = (period: string, title: string) => {
-    // 개발새발은 기간 표시 안함
     if (title === "개발새발") return 0;
 
     const match = period.match(
@@ -719,6 +734,10 @@ export default function Home() {
   });
   const [selectedProject, setSelectedProject] = useState<any>(null);
   const [isProjectDetailOpen, setIsProjectDetailOpen] = useState(false);
+  const [latestPost, setLatestPost] = useState<{
+    title: string;
+    url: string;
+  } | null>(null);
 
   const heroRef = useRef<HTMLElement>(null);
   const projectsRef = useRef<HTMLElement>(null);
@@ -727,6 +746,29 @@ export default function Home() {
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  // 최신 글 가져오기
+  useEffect(() => {
+    const fetchLatestPost = async () => {
+      try {
+        const response = await fetch("/api/posts/latest");
+        const data = await response.json();
+
+        if (data.post) {
+          setLatestPost({
+            title: data.post.title,
+            url: data.post.url,
+          });
+        }
+      } catch (error) {
+        console.error("Failed to fetch latest post:", error);
+      }
+    };
+
+    if (mounted) {
+      fetchLatestPost();
+    }
+  }, [mounted]);
 
   // 이미지 모달 열기
   const openImageModal = (src: string, alt: string) => {
@@ -1196,6 +1238,18 @@ export default function Home() {
       teamSize: 1,
       description:
         "Next.js 기반의 개인 개발 블로그입니다. 기술 학습 내용과 프로젝트 경험을 기록하고 공유하는 플랫폼으로, 마크다운 기반의 정적 사이트 생성과 동적 기능을 결합하여 운영 중입니다.",
+      features: [
+        "MDX 기반 마크다운 콘텐츠 관리 및 렌더링",
+        "카테고리, 태그, 시리즈별 포스트 분류 및 전체 글 검색",
+        "Upstash Redis 기반 실시간 조회수 추적",
+        "게스트와 관리자 간 실시간 1:1 채팅 (Pusher 연동)",
+        "Giscus 댓글 시스템 (GitHub Discussions 연동)",
+        "관련 포스트 자동 추천 및 렌더링",
+        "썸네일 색상 분석 기반 동적 그라디언트 배너",
+        "다크 모드 지원 및 반응형 디자인",
+        "RSS 피드 및 Sitemap 자동 생성",
+        "SEO 최적화 (동적 메타태그, Open Graph, JSON-LD)",
+      ],
       responsibilities: [
         {
           title: "Next.js 블로그 시스템 구축",
@@ -1875,6 +1929,7 @@ export default function Home() {
         isOpen={isProjectDetailOpen}
         onClose={closeProjectDetail}
         project={selectedProject}
+        latestPost={latestPost}
       />
 
       {/* 테마 토글 버튼 */}
