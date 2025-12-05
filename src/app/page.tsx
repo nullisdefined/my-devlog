@@ -1005,19 +1005,29 @@ export default function Home() {
         "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/34a63d3606df3cec87efd6d38b65a01f.png",
     },
     {
-      title: "Guestboots",
+      title: "CatHolic",
+      period: "2025.05",
+      description:
+        "macOS 메뉴바에서 실시간 CPU 사용량에 따라 팝캣이 움직이는 CPU 모니터링 앱입니다.",
+      tech: [{ name: "Objective-C", icon: <SiC className="h-4 w-4" /> }],
+      link: "https://github.com/C3tHolic/CatHolic",
+      demo: "https://github.com/C3tHolic/CatHolic/releases/latest",
+      image:
+        "https://github.com/user-attachments/assets/ff9f8907-2c3a-4e1f-a40f-e1d064aaa622",
+    },
+    {
+      title: "starving-orange",
       period: "2025.06",
       description:
-        "AWS 서버리스 아키텍처로 구현한 포스트잇 방명록 애플리케이션입니다.",
+        "과일/채소에 형용사를 조합하여 랜덤한 한글 닉네임을 생성하는 JavaScript 라이브러리입니다.",
       tech: [
-        { name: "JavaScript", icon: <SiJavascript className="h-4 w-4" /> },
-        { name: "AWS Lambda", icon: <SiAwslambda className="h-4 w-4" /> },
-        { name: "Amazon S3", icon: <SiAmazons3 className="h-4 w-4" /> },
+        { name: "TypeScript", icon: <SiTypescript className="h-4 w-4" /> },
+        { name: "Rollup", icon: <SiNodedotjs className="h-4 w-4" /> },
       ],
-      link: "https://github.com/nullisdefined/guestboots",
-      demo: "https://nullisdefined.github.io/guestboots/",
+      link: "https://github.com/nullisdefined/starving-orange",
+      demo: "https://www.npmjs.com/package/starving-orange",
       image:
-        "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/770266670faeaf62f5b14f0576c35928.png",
+        "https://github.com/user-attachments/assets/f02d97b3-fb3d-400c-bcdf-6911a0581229",
     },
     {
       title: "Worlds Subscription",
@@ -1035,18 +1045,19 @@ export default function Home() {
         "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/4eff5c6d09f09e11a801a135d527c58a.png",
     },
     {
-      title: "starving-orange",
+      title: "Guestboots",
       period: "2025.06",
       description:
-        "과일/채소에 형용사를 조합하여 랜덤한 한글 닉네임을 생성하는 JavaScript 라이브러리입니다.",
+        "AWS 서버리스 아키텍처로 구현한 포스트잇 방명록 애플리케이션입니다.",
       tech: [
-        { name: "TypeScript", icon: <SiTypescript className="h-4 w-4" /> },
-        { name: "Rollup", icon: <SiNodedotjs className="h-4 w-4" /> },
+        { name: "JavaScript", icon: <SiJavascript className="h-4 w-4" /> },
+        { name: "AWS Lambda", icon: <SiAwslambda className="h-4 w-4" /> },
+        { name: "Amazon S3", icon: <SiAmazons3 className="h-4 w-4" /> },
       ],
-      link: "https://github.com/nullisdefined/starving-orange",
-      demo: "https://www.npmjs.com/package/starving-orange",
+      link: "https://github.com/nullisdefined/guestboots",
+      demo: "https://nullisdefined.github.io/guestboots/",
       image:
-        "https://github.com/user-attachments/assets/f02d97b3-fb3d-400c-bcdf-6911a0581229",
+        "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/770266670faeaf62f5b14f0576c35928.png",
     },
   ];
 
@@ -1902,6 +1913,7 @@ export default function Home() {
       link: "https://github.com/ssu-capstone-team-4/hanmoa-backend",
       image:
         "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/6d07cf3fdd5e2da20d4745ab23eb8ada.png",
+      pdf: "/project_hanmoa.pdf",
     },
   ];
 
@@ -2123,8 +2135,10 @@ dark:hover:bg-gray-700 dark:hover:scale-105 dark:hover:shadow-lg
                           src={project.image}
                           alt={project.title}
                           fill
-                          className="object-cover"
+                          className="object-contain select-none pointer-events-none"
                           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                          onContextMenu={(e) => e.preventDefault()}
+                          draggable={false}
                         />
                       </div>
                     </div>
