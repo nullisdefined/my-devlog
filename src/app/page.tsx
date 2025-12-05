@@ -1758,7 +1758,7 @@ export default function Home() {
     },
     {
       title: "한모아",
-      period: "25.09 ~ 25.12",
+      period: "25.09 ~ 25.11",
       role: "Backend",
       teamSize: 4,
       description:
@@ -1896,6 +1896,7 @@ export default function Home() {
       tech: [
         { name: "NestJS", icon: <SiNestjs className="h-4 w-4" /> },
         { name: "TypeScript", icon: <SiTypescript className="h-4 w-4" /> },
+        { name: "TypeORM", icon: <SiTypeorm className="h-4 w-4" /> },
         { name: "PostgreSQL", icon: <SiPostgresql className="h-4 w-4" /> },
         { name: "JWT", icon: <SiJsonwebtokens className="h-4 w-4" /> },
         {
@@ -2526,7 +2527,7 @@ dark:hover:bg-gray-700 dark:hover:scale-105 dark:hover:shadow-lg
                             strokeLinecap="round"
                             strokeLinejoin="round"
                             strokeWidth={2}
-                            d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"
+                            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
                           />
                         </svg>
                       </Link>
