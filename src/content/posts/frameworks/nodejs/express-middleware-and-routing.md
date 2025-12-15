@@ -47,11 +47,11 @@ class Express {
 
     handle(req, res) {
         let index = 0;
-        
+
         const next = () => {
             let layer = this.middlewares[index++];
             if (!layer) return;
-            
+
             // 경로 매칭 확인
             if (req.url.startsWith(layer.path)) {
                 layer.handler(req, res, next);
@@ -59,7 +59,7 @@ class Express {
                 next();
             }
         };
-        
+
         next();
     }
 }
@@ -113,5 +113,5 @@ const handleRequest = (method, url) => {
 2. Express는 미들웨어를 배열로 관리하고, 요청 경로와 일치하는 미들웨어만 실행한다.
 3. 라우팅 시스템은 요청의 HTTP 메서드와 경로를 기준으로 핸들러를 실행하는 구조를 가진다.
 
----
-이 글은 Udemy의 [【한글자막】 NodeJS 완벽 가이드 : MVC, REST APIs, GraphQL, Deno](https://www.udemy.com/course/nodejs-mvc-rest-apis-graphql-deno/) 강의를 토대로 공부한 내용을 정리한 것입니다.
+
+> [!NOTE] 이 글은 Udemy의 [【한글자막】 NodeJS 완벽 가이드 : MVC, REST APIs, GraphQL, Deno](https://www.udemy.com/course/nodejs-mvc-rest-apis-graphql-deno/) 강의를 토대로 공부한 내용을 정리한 것입니다.

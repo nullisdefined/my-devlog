@@ -11,7 +11,6 @@ views: 0
 AWS Lambda는 AWS에서 가장 널리 쓰이는 서비스 중 하나로, 애플리케이션을 배포하고 사용하는 방법에 있어 혁신을 가져온 서비스다. 다음은 Lambda와 서버리스 아키텍처에 대해 학습한 내용을 정리한 내용이다. 실습 과정은 AWS Console을 사용하여 진행했다.
 
 ## 서버리스란?
-
 서버리스(Severless)라는 단어를 보고 서버가 없는 것이라고 생각하면 안 된다. 실제로는 다음과 같은 의미가 된다.
 
 1. **서버를 관리할 필요가 없다**: 물리적인 서버는 여전히 존재하며, 개발자가 직접 관리하지 않아도 된다
@@ -29,7 +28,6 @@ AWS Lambda는 AWS에서 가장 널리 쓰이는 서비스 중 하나로, 애플�
 5. Lambda 함수가 DynamoDB에서 데이터를 저장하고 검색
 
 ## AWS의 서버리스 서비스들
-
 AWS에서 제공하는 주요 서버리스 서비스들은 다음과 같다.
 
 - **AWS Lambda**: 함수 실행 환경
@@ -48,7 +46,6 @@ AWS에서 제공하는 주요 서버리스 서비스들은 다음과 같다.
 ## AWS Lambda
 
 ### EC2 vs Lambda
-
 ![image](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/0007568da49235d537cdd4ca320159ae.png)
 
 **EC2의 경우:**
@@ -67,7 +64,6 @@ AWS에서 제공하는 주요 서버리스 서비스들은 다음과 같다.
 - 자동 확장
 
 #### Lambda의 장점
-
 1. **저렴한 가격**: 요청 수에 따라 비용 지불
 2. **무료 사용량**: 월 100만 건 요청, 40만 GB초의 컴퓨팅 시간 제공
 3. **다양한 AWS 서비스와 통합**
@@ -76,7 +72,6 @@ AWS에서 제공하는 주요 서버리스 서비스들은 다음과 같다.
 6. **최대 10GB RAM 할당 가능**: RAM 증가 시 CPU와 네트워크 성능도 향상
 
 ### Lambda 함수 생성 방법
-
 ![image](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/74f3b15ea05f2c0a83f7a3925497e0e6.png)*Lambda 함수 생성*
 
 람다 함수 생성에는 세 가지 방법이 있다.
@@ -106,10 +101,10 @@ AWS에서 제공하는 주요 서버리스 서비스들은 다음과 같다.
 - AWS Step Functions
 
 #### CLI를 통한 동기식 호출 실습
-
 ![image](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/5467822aab7f0f5f7fbb3849e74b5da3.png)*AWS Lambda functions 조회*
 
 ```bash
+
 # Lambda 함수 목록 조회
 aws lambda list-functions
 
@@ -119,31 +114,26 @@ aws lambda invoke --function-name lambda-function --cli-binary-format raw-in-bas
 ![image](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/ab10a26194a5c705633bc041189a01c8.png)*호출 결과 - 200 응답 확인*
 
 ### 2. Application Load Balancer와 Lambda 통합
-
 ALB를 통해 Lambda 함수를 HTTP/HTTPS 엔드포인트로 노출할 수 있다.
 
 <img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/7edee92b009e95f77b175bb32edda4a5.png" alt="image" width="500" />*ALB가 Target Group에 있는 Lambda 함수를 동기식으로 호출하는 구조*
 
 #### HTTP to JSON 변환
-
 ALB에서 Lambda로 요청이 전달될 때 HTTP 요청은 JSON 문서로 변환된다.
 
 ![image](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/2f4a35af29c74c21d4852daaf0050db5.png)*HTTP 요청이 JSON으로 변환된 예시*
 
 #### JSON to HTTP 변환
-
 Lambda 함수의 응답도 JSON 형태로 작성해야 하며, ALB가 이를 다시 HTTP 응답으로 변환한다.
 
 ![image](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/a8b0dbf9a4c6f943abc3489fd19060df.png)*Lambda 응답이 HTTP로 변환되는 과정*
 
 #### 다중 헤더 값 지원
-
 <img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/aa00fb7e6c5170c936c66bc16268c78a.png" alt="image" width="400" />*다중 쿼리스트링 매개변수를 Lambda 함수로 된 배열로 변환*
 
 ALB 설정을 통해 같은 이름의 헤더나 쿼리 스트링이 여러 개 있을 때 배열 형태로 Lambda에 전달할 수 있다.
 
 #### ALB + Lambda 실습
-
 **로드밸런서 생성:**
 
 ![image](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/a22710e599c6004d6bfcb4fbd2d4feb3.png)*Application Load Balancer 선택*
@@ -164,7 +154,6 @@ ALB 설정을 통해 같은 이름의 헤더나 쿼리 스트링이 여러 개 �
 ![image](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/8b25fa79915b03b24f79550f0b57c897.png)_Lambda 함수에 ALB 트리거가 자동으로 추가돤 모습_
 
 ### 3. 비동기식 호출 (Asynchronous Invocations)
-
 ![image](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/611f12546a0313f752f73b7843948ef9.png)_비동기식 호출 흐름도_
 
 **특징:**
@@ -188,7 +177,6 @@ ALB 설정을 통해 같은 이름의 헤더나 쿼리 스트링이 여러 개 �
 - CloudFormation, Config, IoT
 
 #### 비동기식 호출 실습
-
 ```bash
 aws lambda invoke --function-name demo-lambda --invocation-type Event --cli-binary-format raw-in-base64-out --payload '{"key1": "value1"}' response.json
 ```
@@ -196,7 +184,6 @@ aws lambda invoke --function-name demo-lambda --invocation-type Event --cli-bina
 결과는 항상 StatusCode 202를 반환하며, **함수의 실제 성공/실패 여부는 CloudWatch Logs에서 확인**해야 한다.
 
 #### DLQ(Dead Letter Queue) 설정
-
 함수가 계속 실패할 경우를 대비해 DLQ를 설정할 수 있다.
 
 DLQ로 설정 가능한 서비스는 아래와 같이 두 가지가 있다.
@@ -222,7 +209,6 @@ DLQ 설정 흐름은 다음과 같다.
 ![image](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/92893dfee9655a2e2b7d50646ff5eb50.png)*CloudWatch에서 확인한 재시도 로그 - 같은 요청 ID로 3번 시도*
 
 ### 4. 이벤트 소스 매핑 (Event Source Mapping)
-
 동기식, 비동기식에 이어 Lambda가 이벤트를 처리하는 마지막 방법이 **이벤트 소스 매핑**이다. 이는 Kinesis 데이터 스트림, SQS, SQS FIFO 대기열, DynamoDB 스트림에 사용된다. 1, 2, 3번 방식과 다른 주요 차이점은 폴링 방식을 사용한다는 것이다.
 
 **특징:**
@@ -236,12 +222,11 @@ DLQ 설정 흐름은 다음과 같다.
 > 여기서 말하는 폴링(Polling)이란, 컴퓨터에서 어떤 상태나 데이터가 있는지 주기적으로 확인하는 동작을 의미한다. 즉 AWS에서의 Polling은 람다가 SQS나 Kinesis처럼 이벤트를 자동으로 전달받지 못할 때 람다가 스스로 주기적으로 해당 소스에 가서 메시지가 있는지 확인하는 것으로, 메시지가 있으면 가져와서 처리한다.
 
 #### 이벤트 소스 매핑의 두 가지 범주
-
 **1. 스트림 (Kinesis 데이터 스트림, DynamoDB 스트림)**
 
 - 각 샤드에 대한 반복자를 생성
 - 샤드 레벨에서 아이템을 순차적으로 처리
-- 읽기 시작 위치 구성 가능:
+**- 읽기 시작 위치 구성 가능**:
     - 새로운 아이템만 읽기
     - 샤드 시작 위치부터 읽기
     - 특정 타임스탬프부터 읽기
@@ -265,7 +250,7 @@ DLQ 설정 흐름은 다음과 같다.
 
 - 함수가 오류를 반환하면 성공할 때까지 또는 배치 만료까지 재처리
 - 오류가 해결될 때까지 영향받는 배치의 처리가 중단됨
-- 관리 방법:
+**- 관리 방법**:
     - 오래된 이벤트 폐기 구성
     - 재시도 횟수 제한
     - 오류 시 배치 분할 (Lambda 시간초과 문제 해결)
@@ -301,7 +286,6 @@ _표준 대기열:_
 - 처리 완료 시 Lambda가 대기열에서 아이템 삭제
 
 #### 이벤트 소스 매핑 스케일링
-
 **Kinesis 데이터 스트림 & DynamoDB 스트림:**
 
 - 각 스트림 샤드당 Lambda 호출 1번
@@ -318,11 +302,9 @@ _표준 대기열:_
 - 그룹 ID가 같은 메시지는 순서대로 처리
 - Lambda 함수는 활성 메시지 그룹 수만큼 스케일 업
 
-
 ## Lambda와 다른 서비스 통합
 
 ### CloudWatch Events/EventBridge
-
 ![image](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/6b101c16373593ea7d50afb32fcdd507.png)_EventBridge를 통한 Lambda 통합_
 
 다음 두 가지 사용 패턴이 있다.
@@ -331,7 +313,6 @@ _표준 대기열:_
 2. **이벤트 기반 실행**: AWS 서비스 상태 변화에 반응
 
 ### S3 이벤트 알림
-
 ![image](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/9d1558bed0d7776d9676baa2f6336f35.png)*S3 이벤트 알림 흐름*
 
 **S3에서 객체 생성, 삭제, 복구, 복제 등의 이벤트 발생 시 Lambda 함수를 트리거**할 수 있다. **접두어와 접미어로 필터링이 가능**하다.
@@ -349,7 +330,6 @@ S3 버킷이 새 파일 이벤트를 람다에게 보내면 람다 함수가 그
 - 동시에 같은 객체에 두 번의 쓰기가 발생하면 하나의 알림만 받을 수 있음
 
 ## 람다 가격 모델
-
 Lambda의 가격은 두 가지 요소로 결정된다.
 
 1. **호출 횟수**: 첫 100만 건 무료, 이후 100만 건당 $0.20

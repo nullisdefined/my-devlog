@@ -81,8 +81,8 @@ Tree 클래스는 다음 메서드로 구성되어 있다.
 - `save()`
 
 ### 메서드 설명
-#### 1. constructor()
 
+#### 1. constructor()
 > Tree 객체를 초기화한다.
 
 ```js
@@ -96,7 +96,6 @@ constructor() {
 객체 타입은 "tree"로 설정하며, 파일과 디렉터리 정보를 저장할 Map 객체를 생성한다. hash의 경우 null로 초기화해둔다.
 
 #### 2. addEntry(name, hash, mode)
-
 > Tree에 새로운 엔트리(파일 또는 디렉터리)를 추가한다.
 
 ```js
@@ -124,7 +123,6 @@ entries는 다음과 같은 구조를 지닌다.
 - `this.hash = null`: entries가 변경되면 hash를 무효화
 
 #### 3. serialize()
-
 > Tree 객체의 각 엔트리를 Git 형식에 맞게 포맷팅한다.
 
 ```js
@@ -159,7 +157,6 @@ serialize() {
 - `.sort(([a], [b]) => a.localeCompare(b))`: 이름 기준 정렬
 
 #### 4. calculateHash()
-
 > Tree 객체의 SHA-1 해시값을 계산한다.
 
 ```js
@@ -181,8 +178,8 @@ calculateHash() {
 
 **코드 설명**
 - `if (this.hash) return this.hash;`: 해시가 이미 계산된 경우 그대로 반환한다.
-#### 5. save()
 
+#### 5. save()
 > Tree 객체를 파일 시스템에 저장한다.
 
 ```js
@@ -212,5 +209,5 @@ async save(repoPath) {
 3. 디렉터리 생성
 4. 직렬화된 내용을 파일로 저장
 
----
-이 프로젝트의 모든 소스 코드는 [GitHub](https://github.com/nullisdefined/git-clone)에 공개되어 있습니다. 코드 품질 개선이나 새로운 기능 제안에 대한 피드백은 언제나 환영합니다.
+
+> [!NOTE] 이 프로젝트의 모든 소스 코드는 [GitHub](https://github.com/nullisdefined/git-clone)에 공개되어 있습니다. 코드 품질 개선이나 새로운 기능 제안에 대한 피드백은 언제나 환영합니다.

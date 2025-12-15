@@ -11,7 +11,6 @@ views: 0
 ![image](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/e48e6fd88f6339a761df1c6155770ce4.png)
 
 ## 문제 상황
-
 현재 진행하고 있는 사이드 프로젝트 백엔드 애플리케이션의 알림 API 기능 구현에서 `unreadOnly=false` 쿼리 파라미터를 전달해도 미읽음 알림만 조회되는 버그가 발생했다.
 
 **예상 동작:**
@@ -25,7 +24,6 @@ views: 0
 ## 원인 분석
 
 ### 1. 코드 확인
-
 코드를 분석한 결과 DTO 코드에서 문제가 발생한다는 것을 알게되었다.
 
 ```typescript
@@ -54,10 +52,7 @@ Boolean("1")      // true
 
 JavaScript에서 빈 문자열이 아닌 모든 문자열은 truthy하기 때문에 `"false"` 문자열도 `true`로 변환된다.
 
-
-
 ### 2. 서비스 로직 확인
-
 ```typescript
 if (unreadOnly) {
   queryBuilder.andWhere('notification.isRead = :isRead', { isRead: false });
@@ -87,8 +82,8 @@ export class GetNotificationsDto {
 ```
 
 ### 2. 동작 테스트
-
 ```bash
+
 # 테스트 케이스
 curl "http://localhost:3000/notifications?unreadOnly=true"   # 미읽음 알림 조회
 curl "http://localhost:3000/notifications?unreadOnly=false"  # 모든 알림 조회
@@ -96,11 +91,9 @@ curl "http://localhost:3000/notifications"
 ```
 
 ## 다른 해결방안
-
 다른 해결책도 있어 정리해보았다.
 
 ### 방법 1: 컨트롤러에서 ParseBoolPipe 사용
-
 ```typescript
 @Get()
 getNotifications(
@@ -115,7 +108,6 @@ NestJS에서 기본으로 제공하는 파이프를 사용하는 것이다.
 문자열 `"true"`를 `true`로, `"false"`를 `false`로 자동 변환한다.
 
 ### 방법 2: 문자열 enum 방식으로 리팩토링
-
 ```typescript
 enum ReadStatus {
   ALL = 'all',
@@ -133,7 +125,6 @@ export class GetNotificationsDto {
 예를 들어, 추후 알림 상태가 읽음, 미읽음, 보관됨(archived), 삭제됨(deleted) 등으로 확장될 수도 있기 때문에, API의 상태 필터는 초기부터 enum으로 설계해두는 것이 유연할 수 있다.
 
 ## 정리
-
 1. 항상 HTTP 쿼리 파라미터는 항상 문자열임을 인지하고 적절한 변환 로직을 구현해야 한다
 2. `@Type(() => Boolean)`은 문자열 `"false"`를 올바르게 변환하지 못하며 명시적인 변환 로직이 필요하다
 3. Boolean 타입 쿼리 파라미터 처리시 `@Transform` 데코레이터를 사용하는 것이 좋다

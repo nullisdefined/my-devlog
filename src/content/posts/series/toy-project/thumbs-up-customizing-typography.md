@@ -174,16 +174,16 @@ ctx.font = `${textStyle.italic ? "italic " : ""}${
 
 let x;
 switch (textStyle.align) {
-  case "left":
+  **case "left"**:
     x = 20;
     break;
-  case "center":
+  **case "center"**:
     x = canvas.width / 2;
     break;
-  case "right":
+  **case "right"**:
     x = canvas.width - 20;
     break;
-  default:
+  **default**:
     x = canvas.width / 2;
 }
 
@@ -193,5 +193,5 @@ ctx.fillText(text, x, canvas.height / 2);
 - `ctx.font`를 통해 굵기, 이탤릭 여부, 폰트를 동적으로 설정한다.
 - `textAlign`과 `x` 위치 값을 설정해 텍스트를 정렬한다.
 
----
-이 프로젝트의 모든 소스 코드는 [GitHub](https://github.com/nullisdefined/thumbs-up)에 공개되어 있습니다. 코드 품질 개선이나 새로운 기능 제안에 대한 피드백은 언제나 환영합니다.
+
+> [!NOTE] 이 프로젝트의 모든 소스 코드는 [GitHub](https://github.com/nullisdefined/thumbs-up)에 공개되어 있습니다. 코드 품질 개선이나 새로운 기능 제안에 대한 피드백은 언제나 환영합니다.

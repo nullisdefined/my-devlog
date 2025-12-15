@@ -157,7 +157,7 @@ ChatGateway - websocket 처리
   namespace: '/chat',
 })
 export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
-  
+
   async handleConnection(client: AuthenticatedSocket) {
     try {
       // JWT 토큰 검증
@@ -214,7 +214,7 @@ REST API 엔드포인트
 @Controller('chat')
 @UseGuards(JwtAuthGuard)
 export class ChatController {
-  
+
   @Post('rooms')
   @ApiCreateChatRoom()
   async createChatRoom(
@@ -255,7 +255,7 @@ export class ChatController {
 // 사용자의 모든 채팅방에 자동 join
 private async joinUserChatRooms(client: AuthenticatedSocket) {
   const chatRooms = await this.chatService.getChatRooms(client.userUuid, {});
-  
+
   for (const room of chatRooms.rooms) {
     await client.join(room.roomUuid);
   }
@@ -375,7 +375,7 @@ const socket = io('http://localhost:7777/chat', {
 </head>
 <body>
     <h1>SOAPFT 채팅 테스트</h1>
-    
+
     <!-- 연결 설정 -->
     <div class="container">
         <h3>연결 설정</h3>
@@ -460,7 +460,7 @@ const socket = io('http://localhost:7777/chat', {
                 }
 
                 log(`WebSocket 연결 시도: ${serverUrl}/chat`);
-                
+
                 socket = io(`${serverUrl}/chat`, {
                     auth: {
                         token: jwtToken
@@ -556,16 +556,16 @@ const socket = io('http://localhost:7777/chat', {
 
         function joinRoom() {
             const roomUuid = document.getElementById('roomUuid').value.trim();
-            
+
             console.log('joinRoom 호출됨');
             console.log('socket 상태:', socket ? '연결됨' : '연결안됨');
             console.log('roomUuid:', roomUuid);
-            
+
             if (!socket) {
                 alert('먼저 WebSocket에 연결해주세요.');
                 return;
             }
-            
+
             if (!roomUuid) {
                 alert('채팅방 UUID를 입력해주세요.');
                 return;
@@ -590,7 +590,7 @@ const socket = io('http://localhost:7777/chat', {
         function sendMessage() {
             const messageInput = document.getElementById('messageInput');
             const roomUuid = document.getElementById('roomUuid').value;
-            
+
             if (!socket || !roomUuid || !messageInput.value.trim()) {
                 alert('소켓 연결, 채팅방 UUID, 메시지 내용이 필요합니다.');
                 return;
@@ -661,16 +661,16 @@ const socket = io('http://localhost:7777/chat', {
             const messages = document.getElementById('messages');
             const messageDiv = document.createElement('div');
             messageDiv.className = `message ${isMyMessage ? 'my-message' : 'other-message'}`;
-            
+
             const time = new Date(data.createdAt).toLocaleTimeString();
             const sender = data.sender ? data.sender.nickname : '나';
-            
+
             messageDiv.innerHTML = `
                 <strong>${isMyMessage ? '나' : sender}</strong>
                 <div>${data.content}</div>
                 <small>${time}</small>
             `;
-            
+
             messages.appendChild(messageDiv);
             messages.scrollTop = messages.scrollHeight;
         }
@@ -680,7 +680,7 @@ const socket = io('http://localhost:7777/chat', {
             const messageDiv = document.createElement('div');
             messageDiv.className = 'message system-message';
             messageDiv.textContent = message;
-            
+
             messages.appendChild(messageDiv);
             messages.scrollTop = messages.scrollHeight;
         }

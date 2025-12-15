@@ -73,5 +73,5 @@ const handleCopyToClipboard = async () => {
 ![image](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/e4d9c6192e594bafdd13406bff5c0257.png)
 *다운로드 버튼과 복사 버튼*
 
----
-이 프로젝트의 모든 소스 코드는 [GitHub](https://github.com/nullisdefined/thumbs-up)에 공개되어 있습니다. 코드 품질 개선이나 새로운 기능 제안에 대한 피드백은 언제나 환영합니다.
+
+> [!NOTE] 이 프로젝트의 모든 소스 코드는 [GitHub](https://github.com/nullisdefined/thumbs-up)에 공개되어 있습니다. 코드 품질 개선이나 새로운 기능 제안에 대한 피드백은 언제나 환영합니다.

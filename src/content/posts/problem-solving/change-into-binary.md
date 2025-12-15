@@ -12,21 +12,19 @@ views: 0
 1. x의 모든 0을 제거
 2. x의 길이를 c라고 하면, c를 이진수로 표현한 문자열로 바꿈
 
-예를 들어, x = "0111010"이라면:
-
+**예를 들어, x = "0111010"이라면**:
 1. x의 모든 0을 제거하면 "1111"이 됨
 2. "1111"의 길이는 4이므로, x를 "100"으로 바꿈
 
 이러한 이진 변환을 계속해서 실행했을 때, "1"이 될 때까지의 이진 변환 횟수와 제거된 0의 개수를 구해야 한다.
 
 ## 구현 코드
-
 ```js
 function solution(s) {
     let curBinary = s;
     let cnt = 0;     // 이진 변환 횟수
     let cntZero = 0; // 제거된 0의 개수
-    
+
     while(curBinary !== "1") {
         let curZero = 0;
         for(let i = 0; i < curBinary.length; ++i) {
@@ -38,7 +36,7 @@ function solution(s) {
         curBinary = (curBinary.length - curZero).toString(2);    
         cnt++;
     }
-    
+
     return [cnt, cntZero];
 }
 ```
@@ -52,7 +50,7 @@ function solution(s) {
     let curBinary = s;
     let cnt = 0;
     let cntZero = 0;
-    
+
     while(curBinary !== "1") {
         // 현재 문자열의 길이 저장
         let originalLength = curBinary.length;
@@ -60,13 +58,13 @@ function solution(s) {
         curBinary = curBinary.replaceAll("0", "");
         // 제거된 0의 개수 계산
         let curZero = originalLength - curBinary.length;
-        
+
         cntZero += curZero;
         // 남은 1의 개수를 이진수로 변환
         curBinary = curBinary.length.toString(2);
         cnt++;
     }
-    
+
     return [cnt, cntZero];
 }
 ```

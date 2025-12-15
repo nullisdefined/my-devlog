@@ -26,7 +26,6 @@ async function initRepository(repoPath) {
 Git과 동일하게 `objects` 디렉터리는 Git의 모든 객체들이 저장되는 곳이고, `refs/heads`는 브랜치 정보를 관리하는 곳이다. 그리고 `HEAD` 파일은 현재 작업 중인 브랜리를 가리킨다. 전체적으로 Git과 동일하다.
 
 ## 테스트 코드
-
 ```js title:test.js
 const { Blob } = require("./objects/blob");
 const { Tree } = require("./objects/tree");
@@ -70,7 +69,6 @@ createAndSaveObjects().catch(console.error);
 `test-repo` 디랙터리 하위에 `.pit`가 생기고 그 하위에 `objects` 등의 디렉터리가 생기게 했다.
 
 ## test-repo/.pit/objects/
-
 ![image](https://nullisdefined.s3.ap-northeast-2.amazonaws.com//images/90e9e5e2c16cb5e09c58335cb84ca52a.png)
 
 결론적으로, 잘 저장되는 모습을 볼 수 있었다. 해시값의 앞 2글자가 디렉터리명으로, 나머지 값이 파일명으로 들어가 저장된 모습이다.
@@ -88,5 +86,5 @@ createAndSaveObjects().catch(console.error);
 
 실제 GIt은 객체들을 저장할 때 zlib 압축을 사용하여 저장한다. 현재 구현에서는 이 부분이 빠져있다.
 
----
-이 프로젝트의 모든 소스 코드는 [GitHub](https://github.com/nullisdefined/git-clone)에 공개되어 있습니다. 코드 품질 개선이나 새로운 기능 제안에 대한 피드백은 언제나 환영합니다.
+
+> [!NOTE] 이 프로젝트의 모든 소스 코드는 [GitHub](https://github.com/nullisdefined/git-clone)에 공개되어 있습니다. 코드 품질 개선이나 새로운 기능 제안에 대한 피드백은 언제나 환영합니다.

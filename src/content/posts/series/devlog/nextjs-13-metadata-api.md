@@ -19,7 +19,6 @@ views: 0
 ## 기본 메타데이터 최적화
 
 ### 동적 메타데이터 생성
-
 Next.js 13의 Metadata API를 활용해 페이지별로 최적화된 메타데이터를 동적으로 생성했다.
 
 ```ts
@@ -51,7 +50,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     description,
     keywords: post.tags.join(", "),
     authors: [{ name: "Jaewoo Kim" }],
-    
+
     // Open Graph
     openGraph: {
       title,
@@ -95,7 +94,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         "max-snippet": -1,
       },
     },
-    
+
     alternates: {
       canonical: url,
     },
@@ -106,7 +105,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 이렇게 설정하면 각 포스트마다 고유한 메타데이터가 생성되어 검색 엔진이 콘텐츠를 더 잘 이해할 수 있게 된다.
 
 ### 루트 레이아웃 메타데이터
-
 전체 사이트의 기본 메타데이터도 체계적으로 정리했다.
 
 - `app/layout.tsx` 변경
@@ -114,7 +112,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 ## 사이트맵 자동화
 
 ### 동적 사이트맵 생성
-
 Next.js 13의 파일 기반 사이트맵 생성 기능을 활용했다.
 
 ```tsx
@@ -173,7 +170,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 ```
 
 ### next-sitemap을 활용한 고급 설정
-
 더 세밀하게 조정이 필요한 경우 next-sitemap 패키지를 활용했다.
 
 ```js
@@ -182,12 +178,12 @@ const postsData = require("./scripts/posts-data");
 
 function formatDate(date) {
   if (!date) return new Date().toISOString();
-  
+
   try {
     if (typeof date === 'string' && date.includes('T')) {
       return date;
     }
-    
+
     const d = new Date(date);
     if (isNaN(d.getTime())) {
       throw new Error('Invalid date');
@@ -220,11 +216,9 @@ module.exports = {
 ```
 
 ## 구조화된 데이터 구현
-
 검색 결과에서 리치 스니펫을 표시하기 위해 JSON-LD 형식의 구조화된 데이터를 추가했다.
 
 ### 블로그 포스트 구조화 데이터
-
 ```tsx
 // components/structured-data.tsx
 import { Post } from "@/types";
@@ -281,7 +275,6 @@ export default function StructuredData({ post }: StructuredDataProps) {
 ## 성능 최적화
 
 ### 이미지 최적화
-
 Next.js의 Image 컴포넌트를 활용해 이미지 로딩을 최적화했다.
 
 ```tsx
@@ -324,7 +317,6 @@ export default function OptimizedImage({
 ```
 
 ### 코드 스플리팅과 레이지 로딩
-
 무거운 컴포넌트는 dynamic import를 사용해 필요할 때만 로드되도록 했다.
 
 ```tsx
@@ -351,7 +343,6 @@ const Chart = dynamic(
 ```
 
 ### Core Web Vitals 개선
-
 웹 성능 지표를 모니터링하고 개선하였다.
 
 ```tsx
@@ -380,7 +371,6 @@ export function reportWebVitals() {
 ```
 
 ## 배포 자동화
-
 SEO 최적화와 함께 배포 프로세스도 자동화하였다. 글 작성부터 구글에 사이트맵 업데이트를 알리는 것까지 한 번의 명령으로 처리할 수 있도록 했다.
 
 ```bash
@@ -405,13 +395,13 @@ if [ -n "$(git status --porcelain)" ]; then
     git add .
     git commit -m "Update blog posts ($DATE)"
     git push
-    
+
     echo -e "${GREEN}Building site and generating sitemap...${NC}"
     npm run build
-    
+
     echo -e "${GREEN}Notifying Google about sitemap update...${NC}"
     curl -X GET "http://www.google.com/ping?sitemap=https://nullisdefined.site/sitemap.xml"
-    
+
     echo -e "${GREEN}Deployment completed successfully!${NC}"
 else
     echo -e "${YELLOW}No changes detected${NC}"

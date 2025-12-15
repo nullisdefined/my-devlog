@@ -18,7 +18,7 @@ const http = require('http');
 
 const server = http.createServer((req, res) => {
     const body = [];
-    
+
     req.on('data', (chunk) => {
         body.push(chunk);
     });
@@ -93,7 +93,7 @@ const fs = require('fs');
 const server = http.createServer((req, res) => {
     if (req.url === '/upload' && req.method === 'POST') {
         const writeStream = fs.createWriteStream('uploaded-file.txt');
-        
+
         req.pipe(writeStream);
 
         req.on('end', () => {
@@ -148,5 +148,5 @@ app.listen(3000);
 ```
 Express를 사용하면 복잡한 스트림이나 버퍼를 직접 다룰 필요 없이 미들웨어를 통해 데이터를 쉽게 처리할 수 있다. 하지만 Node.js의 기본 원리를 이해하면 로우레벨에서 최적화를 하거나 디버깅할 때 큰 도움이 된다.
 
----
-이 글은 Udemy의 [【한글자막】 NodeJS 완벽 가이드 : MVC, REST APIs, GraphQL, Deno](https://www.udemy.com/course/nodejs-mvc-rest-apis-graphql-deno/) 강의를 토대로 공부한 내용을 정리한 것입니다.
+
+> [!NOTE] 이 글은 Udemy의 [【한글자막】 NodeJS 완벽 가이드 : MVC, REST APIs, GraphQL, Deno](https://www.udemy.com/course/nodejs-mvc-rest-apis-graphql-deno/) 강의를 토대로 공부한 내용을 정리한 것입니다.

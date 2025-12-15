@@ -13,7 +13,6 @@ views: 0
 ## 커널(kernel)이란?
 
 ### 커널의 정의
-
 커널(kernel)은 운영체제의 핵심 소프트웨어로, 컴퓨터 하드웨어와 관련된 중요한 기능들을 담당한다.
 
 커널도 결국 프로그램이다. 컴퓨터가 부팅될 때 메모리에 로드되어 컴퓨터가 종료될 때까지 상주한다.
@@ -22,7 +21,6 @@ views: 0
 *운영체제와 커널의 관계*
 
 ### 커널이 존재하는 이유
-
 커널이 왜 필요할까? 두 가지 중요한 이유가 있다.
 
 1. 보안적 장점
@@ -33,7 +31,6 @@ views: 0
 	- 메모리, CPU, 파일 시스템 등을 체계적으로 관리
 
 ## 메모리 구조와 커널 공간
-
 모든 프로세스는 다음과 같은 가상 메모리 구조를 가진다.
 
 <img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/665652d6e3b6a91b84b2eff75087cb28.png" alt="image" width="500" />
@@ -50,16 +47,12 @@ views: 0
 ## 시스템 콜 인터페이스
 
 ### 시스템 콜이란?
-
 시스템 콜(System Call)은 응용 프로그램이 시스템적인 기능을 수행할 수 있게 해주는 인터페이스다.
 
 > 왜 C언어로 파일을 읽고 쓸 수 있었을까?
 > 바로 시스템 콜 덕분이다. `fopen()`, `fread()` 같은 함수들이 내부적으로 시스템 콜을 호출합니다.
 
-
-
 ### 주요 시스템 콜 함수들
-
 |분류|주요 시스템 콜|설명|
 |---|---|---|
 |**파일 관련**|`open()`, `close()`, `read()`, `write()`, `lseek()`|파일 입출력 작업|
@@ -69,7 +62,6 @@ views: 0
 |**시스템 정보**|`getuid()`, `time()`, `uname()`|시스템/사용자 정보|
 
 ### 리눅스 시스템 아키텍처
-
 <img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/9f19835b502947defee26b8a731ee523.png" alt="image" width="500" />
 *GNU/Linux 운영체제 시스템 아키텍처*
 
@@ -81,24 +73,20 @@ views: 0
 ## CPU 모드: User mode vs Kernel mode
 
 ### CPU 모드의 개념
-
 CPU는 누가 통제권을 가지고 있느냐에 따라 두 가지 모드로 나뉜다.
 
 #### 커널 모드 (Kernel Mode)
-
 - **다른 이름**: 슈퍼바이저 모드, Ring 0 모드
 - **특징**: CPU의 통제권이 커널에게 있음
 - **수행 작업**: 시스템 콜 처리, 인터럽트 처리
 - **권한**: 모든 하드웨어 자원에 접근 가능
 
 #### 사용자 모드 (User Mode)
-
 - **특징**: CPU의 통제권이 응용 프로그램에게 있음
 - **수행 작업**: 일반적인 프로그램 코드 실행
 - **권한**: 제한된 자원에만 접근 가능
 
 ### CPU 권한 링 구조
-
 ![image](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/bff07f08afd7dae35fc60e1ae4075f33.png)
 
 
@@ -107,7 +95,6 @@ CPU는 누가 통제권을 가지고 있느냐에 따라 두 가지 모드로 �
 - **Ring 3**: 응용 프로그램 (가장 낮은 권한)
 
 ### 모드 전환 과정
-
 ```c
 // 사용자 모드에서 실행
 FILE *file = fopen("input.txt", "r");  // 시스템 콜 호출
@@ -117,7 +104,6 @@ FILE *file = fopen("input.txt", "r");  // 시스템 콜 호출
 ## 인터럽트와 컨텍스트 스위칭
 
 ### 인터럽트(Interrupt)란?
-
 인터럽트는 시스템에서 발생하는 이벤트를 알리는 메커니즘이다.
 
 - **전원 이상 인터럽트 (Power Fail)**
@@ -128,9 +114,7 @@ FILE *file = fopen("input.txt", "r");  // 시스템 콜 호출
 
 <img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/04b0879eea45f4809b1063976b66ed2f.png" alt="image" width="400" />
 
-
 ### 예시
-
 실제 파일을 읽는 C 프로그램이 어떤 식으로 동작하는지 단계별로 살펴보면
 
 ```c

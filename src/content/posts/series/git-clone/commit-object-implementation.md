@@ -13,7 +13,6 @@ views: 0
 ## Commit 클래스
 
 ### 전체 코드
-
 ```js
 const crypto = require("crypto");
 const fs = require("fs").promises;
@@ -76,7 +75,6 @@ Commit 클래스는 다음 메서드로 구성되어 있다.
 ### 메서드 설명
 
 #### 1. constructor(treeHash, message, parentHash)
-
 > Commit 객체를 초기화한다.
 
 ```js
@@ -104,7 +102,6 @@ constructor(treeHash, message, parentHash = null) {
     - timezone: 시스템의 시간대 오프셋 (예: +0900)
 
 #### 2. serialize()
-
 > Commit 객체를 Git 형식의 문자열로 변환한다.
 
 ```js
@@ -126,7 +123,6 @@ serialize() {
 ![image](https://nullisdefined.s3.ap-northeast-2.amazonaws.com//images/7b54f1dc1113ba4b3ddc81231278d33b.png)
 
 #### 3. calculateHash()
-
 > Commit 객체의 SHA-1 해시값을 계산한다.
 
 ```js
@@ -145,7 +141,6 @@ calculateHash() {
 3. SHA-1 해시 계산 및 반환
 
 #### 4. save(repoPath)
-
 > Commit 객체를 파일시스템에 저장한다.
 
 ```js
@@ -177,5 +172,5 @@ async save(repoPath) {
 4. 직렬화된 내용을 파일로 저장
 5. 해시값 반환
 
----
-이 프로젝트의 모든 소스 코드는 [GitHub](https://github.com/nullisdefined/git-clone)에 공개되어 있습니다. 코드 품질 개선이나 새로운 기능 제안에 대한 피드백은 언제나 환영합니다.
+
+> [!NOTE] 이 프로젝트의 모든 소스 코드는 [GitHub](https://github.com/nullisdefined/git-clone)에 공개되어 있습니다. 코드 품질 개선이나 새로운 기능 제안에 대한 피드백은 언제나 환영합니다.

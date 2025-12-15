@@ -13,14 +13,13 @@ views: 0
 문제 링크: https://school.programmers.co.kr/learn/courses/30/lessons/49994
 
 ## 문제 설명
-
 게임 캐릭터를 4가지 명령어를 통해 움직이려 합니다. 명령어는 다음과 같습니다.
 
 - U: 위쪽으로 한 칸 가기
 - D: 아래쪽으로 한 칸 가기
 - R: 오른쪽으로 한 칸 가기
 - L: 왼쪽으로 한 칸 가기
-    
+
 캐릭터는 좌표평면의 (0, 0) 위치에서 시작합니다. 좌표평면의 경계는 왼쪽 위(-5, 5), 왼쪽 아래(-5, -5), 오른쪽 위(5, 5), 오른쪽 아래(5, -5)로 이루어져 있습니다.
 
 ![방문길이1_qpp9l3.png](https://grepp-programmers.s3.ap-northeast-2.amazonaws.com/files/production/ace0e7bc-9092-4b95-9bfb-3a55a2aa780e/%E1%84%87%E1%85%A1%E1%86%BC%E1%84%86%E1%85%AE%E1%86%AB%E1%84%80%E1%85%B5%E1%86%AF%E1%84%8B%E1%85%B51_qpp9l3.png)
@@ -54,24 +53,20 @@ views: 0
 명령어가 매개변수 dirs로 주어질 때, 게임 캐릭터가 처음 걸어본 길의 길이를 구하여 return 하는 solution 함수를 완성해 주세요.
 
 ### 제약 조건
-
 - dirs는 string형으로 주어지며, 'U', 'D', 'R', 'L' 이외에 문자는 주어지지 않습니다.
 - dirs의 길이는 500 이하의 자연수입니다.
 
 ### 입출력 예
-
 | dirs        | answer |
 | ----------- | ------ |
 | "ULURRDLLU" | 7      |
 | "LULLLLLLU" | 7      |
 
 ## 문제 분석 및 풀이
-
 중복 경로는 최종 길이에 포함하지 않는다. 이 부분은 set을 사용해 처리할 수 있다.
 그리고 음수 좌표를 포함하고 있다. 배열의 인덱스로는 사용할 수 없다.
 
 ### 답안 코드
-
 ```js
 function isValidMove(nx, ny) {
     return nx >= -5 && nx <= 5 && ny >= -5 && ny <= 5;
@@ -80,13 +75,13 @@ function isValidMove(nx, ny) {
 function solution(dirs) {
     let x = 0;
     let y = 0;
-    
+
     const visited = new Set();
-    
+
     for(const dir of dirs) {
         let nx = x;
         let ny = y;
-        
+
         if (dir === 'U') {
             ny++;
         } else if (dir === 'D') {
@@ -96,16 +91,16 @@ function solution(dirs) {
         } else if (dir === 'R') {
             nx++;
         }
-        
+
         if(!isValidMove(nx, ny)) continue;
-        
+
         visited.add(`${x}${y}${nx}${ny}`);
         visited.add(`${nx}${ny}${x}${y}`);
-        
+
         x = nx;
         y = ny;
     }
-    
+
     return visited.size / 2;
 }
 ```

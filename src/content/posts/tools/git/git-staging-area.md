@@ -13,7 +13,6 @@ views: 0
 Git은 Working Directory, Staging Area, Repository 세 가지 영역을 사용하여 파일을 관리한다. 그 중 Staging Area(Index라고도 함)는 다음 Commit에 포함될 변경사항들을 준비하는 중간 영역이다.
 
 ### 세 가지 작업 영역
-
 1. **Working Directory**
 	- 실제 작업이 이루어지는 로컬 디렉터리
 	- 파일을 생성, 수정, 삭제하는 모든 작업이 이루어지는 공간
@@ -29,7 +28,6 @@ Git은 Working Directory, Staging Area, Repository 세 가지 영역을 사용�
 ![image](https://nullisdefined.s3.ap-northeast-2.amazonaws.com//images/6f4b87d19d44200ad18949c163e825d8.png)
 
 ## 파일 상태 Life Cycle
-
 Git에서 파일은 다음 네 가지 중 하나의 상태를 가질 수 있다.
 
 1. **Untracked**
@@ -52,7 +50,6 @@ Git에서 파일은 다음 네 가지 중 하나의 상태를 가질 수 있다.
 ## Staging Area 내부 구조
 
 ### .git/index 파일
-
 Staging Area는 물리적으로 `.git/index`라는 단일 바이너리 파일로 구현되어 있다. 이 파일은 다음 Commit에 포함될 파일들의 스냅샷을 관리한다.
 
 #### 1. 파일 구조
@@ -68,7 +65,6 @@ Staging Area는 물리적으로 `.git/index`라는 단일 바이너리 파일로
 ```
 
 #### 2. Blob 객체 생성 과정
-
 예를 들어, `git add hello.txt` 명령어를 실행하면
 
 1. 파일 내용으로 Blob 객체를 생성
@@ -86,30 +82,26 @@ Staging Area는 물리적으로 `.git/index`라는 단일 바이너리 파일로
 ![image](https://nullisdefined.s3.ap-northeast-2.amazonaws.com//images/115bed5103cdac654db6cd9adb0cf775.png)
 
 ## Staging Area가 필요한 이유
-
 Commit 전에 굳이 Staging Area를 거치게 하는 이유는 다음과 같다.
 
 ### 1. 선택적 Commit을 가능하게 한다
-
 작업 중인 변경사항 중에서 원하는 부분만 선택하여 Commit 할 수 있다.
 
 예를 들어, `git add -p` 명령어를 사용하면 파일의 특정 부분만 Staging Area로 추가할 수 있다. 이를 통해 작은 단위로 변경사항을 관리하거나, 관련 없는 변경사항을 분리해 더 깔끔한 Commit을 생성할 수 있다.
 
 ```bash
+
 # 파일의 일부분만 스테이징
 git add -p <file>
 ```
 
 ### 2. 충돌 해결을 돕는다
-
 병합(Merge) 과정에서 충돌이 발생하면, Git은 충돌 상태를 Working Directory와 Staging Area에서 충돌 상태를 관리할 수 있다. 병합 후 충돌 해결된 파일을 Staging Area로 다시 올려야 Commit이 가능하다. Staging Area는 병합 시 변경 내용을 세 가지 버전(HEAD, 병합할 대상, 중간 상태)으로 나누어 관리해 충돌 해결을 체계적으로 돕는다.
 
 ### 3. 커밋 수정
-
 Commit 이후 발견된 실수를 수정할 경우 Staging Area는 유용하다. `git commit --amend`를 통해 이전 Commit에 추가적인 변경사항을 포함하거나 Commit Message를 수정할 수 있다. Staging Area에 새로 추가된 변경사항을 이전 Commit과 합쳐 불필요한 Commit 히스토리를 줄일 수 있다.
 
 ## Git이 파일 변경을 감지하는 방법
-
 Git은 두 가지 방식으로 파일이 변경됨을 감지한다.
 
 1. **타임스탬프 확인**
@@ -125,6 +117,7 @@ Git은 두 가지 방식으로 파일이 변경됨을 감지한다.
 변경 감지 방식을 설정하는 명령어는 다음과 같다.
 
 ```bash
+
 # 타임스탬프만 확인
 git config core.checkstat default
 
@@ -135,7 +128,6 @@ git config core.checkstat minimal
 콘텐츠 해시도 확인하게 되면 정확하지만, 조금 느려진다.
 
 ### Staging Area 예제
-
 예를 들어, `hello.txt`파일 내용을 수정하게 되면
 
 ![image](https://nullisdefined.s3.ap-northeast-2.amazonaws.com//images/a7b85aa0b557508501931cd153c2002c.png)
@@ -147,5 +139,4 @@ git config core.checkstat minimal
 ![image](https://nullisdefined.s3.ap-northeast-2.amazonaws.com//images/1149d1672f02fcf42d1898be3c3badbf.png)
 
 ## 마치며
-
 Staging Area는 변경사항을 체계적으로 관리하고, 깔끔한 커밋 히스토리를 만드는데 도움을 준다. 내부적으로는 `.git/index` 파일을 통해 효율적으로 구현되어 있으며, 다양한 Git 명령어를 통해 유연하게 활용할 수 있다. Staging Area를 잘 활용하면 더 효율적이고 유지보수하기 좋은 버전 관리가 가능하다.

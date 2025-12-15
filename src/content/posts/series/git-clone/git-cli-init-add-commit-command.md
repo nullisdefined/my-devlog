@@ -16,7 +16,6 @@ Git의 기본 명령어인 `init`, `add`, `commit`을 유사하게 구현한 과
 `commander.js` 라이브러리를 사용하여 커맨드와 옵션들을 정의하고 CLI(Command Line Interface)를 간단히 구현할 수 있었다.
 
 ## 초기 설정
-
 먼저, `commander.js`를 설치하고 CLI 엔트리 파일(`cli.js`)을 생성했다.
 CLI를 실행할 수 있도록 `package.json`의 bin 필드를 설정했다.
 
@@ -29,10 +28,7 @@ CLI를 실행할 수 있도록 `package.json`의 bin 필드를 설정했다.
 bin 필드는 CLI 도구의 이름을 정의한다.
 위와 같이 설정했을 때, 예를 들어 `pit init`, `pit add <files..>`와 같은 명령어를 실행할 수 있다.
 
----
-
 ## pit init
-
 `init` 명령어는 새로운 `.pit` 저장소를 초기화한다.
 디렉터리에 `.pit`라는 이름의 폴더를 생성하고, Git의 내부 구조를 흉내 내기 위해 objects 디렉터리를 추가로 만든다.
 refs 등 다른 설정 폴더 및 파일들이 있지만 지금은 기본 객체만 구현한 상태이므로 넘어갔다.
@@ -68,10 +64,7 @@ async function pitInit(repoPath) {
 ![image](https://nullisdefined.s3.ap-northeast-2.amazonaws.com//images/16855e361b9e2a6ee773a5462b04627a.png)
 *이미 .pit 디렉터리가 존재하는 경우*
 
----
-
 ## pit add
-
 `add` 명령어는 파일을 저장소에 추가한다. 기본적으로 파일의 내용을 읽어 객체(blob)로 변환한 후 저장소에 저장한다.
 
 **코드**
@@ -116,7 +109,6 @@ async function pitAdd(repoPath, filePaths) {
 또, gitignore처럼 ignore 파일에 정의된 규칙을 따르도록 구현해보았다.
 
 ### 하위 디렉터리 포함하기
-
 **코드**
 
 ```js
@@ -174,7 +166,6 @@ async function collectFiles(dirPath, fileSet) {
 ![image](https://nullisdefined.s3.ap-northeast-2.amazonaws.com//images/944eb71897652b9d07a31a1daa518616.png)
 
 ### .pitignore 규칙 적용하기
-
 `ignore` 라이브러리를 사용하여 Git의 `.gitignore`처럼 .pitignore 파일에 정의된 규칙을 따르도록 구현해보았다.
 
 **코드**
@@ -193,10 +184,7 @@ if (ig.ignores(filePath)) {
 }
 ```
 
----
-
 ## pit commit
-
 `commit` 명령어는 현재 디렉터리의 변경 사항을 커밋한다. 커밋 메시지를 옵션으로 입력받으며, 트리 객체와 커밋 객체를 생성하여 저장한다.
 
 **코드**
@@ -247,10 +235,7 @@ async function pitCommit(repoPath, message) {
 
 ![image](https://nullisdefined.s3.ap-northeast-2.amazonaws.com//images/c60d71cfd6dbe1d8db9fff8e87b16fa3.png)
 
----
-
 ## 저장소 검증하기
-
 추가적으로, 명령어는 반드시 저장소가 초기화된 디렉터리 내에서만 실행되도록 제한했다.
 
 **코드**
@@ -289,10 +274,7 @@ async function checkPitRepo(repoPath) {
 
 ![image](https://nullisdefined.s3.ap-northeast-2.amazonaws.com//images/d59f42d50f49181cc3646b158bf4a30c.png)
 
----
-
 ## NPM 배포
-
 마지막으로, NPM에 배포해보았다.
 원래는 패키지 이름을 pit으로 하려했으나, 이미 존재하는 이름이라 pit2로 변경했다.
 
@@ -316,5 +298,5 @@ NPM에 배포하는 경험도 해보고 싶었다.
 
 ![image](https://nullisdefined.s3.ap-northeast-2.amazonaws.com//images/2e993429d294d2f6719bd71e6befc97c.png)
 
----
-이 프로젝트의 모든 소스 코드는 [GitHub](https://github.com/nullisdefined/git-clone)에 공개되어 있습니다. 코드 품질 개선이나 새로운 기능 제안에 대한 피드백은 언제나 환영합니다.
+
+> [!NOTE] 이 프로젝트의 모든 소스 코드는 [GitHub](https://github.com/nullisdefined/git-clone)에 공개되어 있습니다. 코드 품질 개선이나 새로운 기능 제안에 대한 피드백은 언제나 환영합니다.

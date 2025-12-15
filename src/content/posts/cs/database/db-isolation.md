@@ -83,5 +83,5 @@ views: 0
 ## 참고 자료
 - [A beginner’s guide to ACID and database transactions](https://mbagrat.com/database/acid-atomicity-consistency-isolation-durability/)
 
----
-이 글은 Udemy의 [【한글자막】 데이터베이스 엔지니어링 ( Database Engineering ) 마스터하기!](https://www.udemy.com/course/database-engineering-korean/)강의를 토대로 공부한 내용을 정리한 것입니다.
+
+> [!NOTE] 이 글은 Udemy의 [【한글자막】 데이터베이스 엔지니어링 ( Database Engineering ) 마스터하기!](https://www.udemy.com/course/database-engineering-korean/)강의를 토대로 공부한 내용을 정리한 것입니다.

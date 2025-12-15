@@ -39,6 +39,7 @@ priority queue 등 기본으로 제공하는 라이브러리가 없는 경우 �
 가 있을 것 같다.
 
 ## 백준에서 JavaScript 사용법
+
 ### 기본 템플릿
 ```js
 const fs = require("fs");
@@ -55,6 +56,7 @@ const input = fs.readFileSync("/dev/stdin").toString().trim().split("\n");
 이런 식으로 경우에 따라 주석 처리를 하면 된다.
 
 ### 입력 패턴별 사용법
+
 #### 한 줄에 여러 값이 있는 경우
 ![image](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/63262a2dfbb201844b0aa3d334228a23.png)
 ```js
@@ -77,6 +79,7 @@ for (let i = 1; i <= n; i++) {
   const value = Number(input[i]); // 여기서 각 테스트케이스 처리
 }
 ```
+
 #### 테스트케이스 개수가 주어지고, 각 줄에 여러 값이 있는 경우
 ![image](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/9145ed688d79888312e251e60ff6de5d.png)
 ```js

@@ -26,21 +26,21 @@ function same(arr1, arr2) {
     if (arr1.length !== arr2.length) {
         return false;
     }
-    
+
     // 각 배열의 요소 빈도수를 저장할 객체
     let frequencyCounter1 = {};
     let frequencyCounter2 = {};
-    
+
     // 첫 번째 배열의 빈도수 계산
     for (let val of arr1) {
         frequencyCounter1[val] = (frequencyCounter1[val] || 0) + 1;
     }
-    
+
     // 두 번째 배열의 빈도수 계산
     for (let val of arr2) {
         frequencyCounter2[val] = (frequencyCounter2[val] || 0) + 1;
     }
-    
+
     // 각 요소의 제곱 관계 확인
     for (let key in frequencyCounter1) {
         // 제곱값이 두 번째 배열에 없으면 false
@@ -52,7 +52,7 @@ function same(arr1, arr2) {
             return false;
         }
     }
-    
+
     return true;
 }
 
@@ -70,15 +70,15 @@ function validAnagram(str1, str2) {
     if (str1.length !== str2.length) {
         return false;
     }
-    
+
     // 문자 빈도수를 저장할 객체
     const lookup = {};
-    
+
     // 첫 번째 문자열의 문자 빈도수 계산
     for (let char of str1) {
         lookup[char] = (lookup[char] || 0) + 1;
     }
-    
+
     // 두 번째 문자열과 비교
     for (let char of str2) {
         // 문자가 없거나 빈도수가 0이면 false
@@ -87,7 +87,7 @@ function validAnagram(str1, str2) {
         }
         lookup[char] -= 1;
     }
-    
+
     return true;
 }
 
@@ -100,5 +100,5 @@ console.log(validAnagram('awesome', 'awesom')); // false
 - 중첩 반복문을 사용할 경우: O(n^2)
 - 빈도수 세기 패턴 사용: O(n)
 
----
-이 글은 Udemy의 [【한글자막】 JavaScript 알고리즘 & 자료구조 마스터클래스](https://www.udemy.com/course/best-javascript-data-structures/) 강의를 토대로 공부한 내용을 정리한 것입니다.
+
+> [!NOTE] 이 글은 Udemy의 [【한글자막】 JavaScript 알고리즘 & 자료구조 마스터클래스](https://www.udemy.com/course/best-javascript-data-structures/) 강의를 토대로 공부한 내용을 정리한 것입니다.

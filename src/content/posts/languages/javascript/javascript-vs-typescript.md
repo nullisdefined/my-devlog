@@ -45,5 +45,5 @@ TypeScript는 마치 경험 많은 선배가 내 코드를 검토해 주는 것�
 ## 상황에 따라 선택하자
 정답은 없다. 중요한 건 필요와 상황에 맞는 언어를 선택하는 것이다. 하지만 앞으로의 시대를 대비하려면 TypeScript를 배우는 것이 필수처럼 느껴질 날이 올지도 모른다. 그러니 JavaScript로 시작해 TypeScript로 확장하는 방법을 추천한다.
 
----
-이 글은 Bhuwan Chettri의 [JavaScript vs. TypeScript](https://medium.com/@bhuwanchettri/javascript-vs-typescript-e1fdbe6cf4bb)를 한글로 번역한 글입니다.
+
+> [!NOTE] 이 글은 Bhuwan Chettri의 [JavaScript vs. TypeScript](https://medium.com/@bhuwanchettri/javascript-vs-typescript-e1fdbe6cf4bb)를 한글로 번역한 글입니다.

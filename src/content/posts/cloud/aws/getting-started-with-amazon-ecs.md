@@ -11,7 +11,6 @@ views: 0
 ![image](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/2be604e9718a8ed5766637a2cf6f406d.png)
 
 ## Amazon ECS란?
-
 <img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/b7bfcf202edcc1eadb843e6ded544cf6.png" alt="image" width="700" />
 
 Amazon ECS(Amazon Elastic Container Service)는 AWS에서 제공하는 완전관리형 컨테이너 오케스트레이션 서비스이다.
@@ -29,30 +28,30 @@ Amazon ECS(Amazon Elastic Container Service)는 AWS에서 제공하는 완전관
 ### 주요 기능 요약
 - Docker 컨테이너 실행 및 오케스트레이션
     → 컨테이너 앱의 실행, 중단, 배포, 확장을 자동으로 관리
-    
+
 - EC2 또는 Fargate 기반 실행 방식 선택 가능
     → 서버 직접 관리 또는 서버리스 방식 중 선택
-    
+
 - AWS 서비스와의 통합 용이
     → IAM(권한 관리), CloudWatch(모니터링), ELB(트래픽 분산) 등과 쉽게 연동 가능
 
 ## Amazon ECS 구성 요소
 <img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/124f03f8dc88d5744e38fd013a2bbe97.png" alt="image" width="600" />
 
-- **컨테이너**:
+**- **컨테이너****:
 	- 애플리케이션 코드와 라이브러리, 종속성을 함께 패키징한 실행 단위
 	- 보통 Docker 이미지를 사용하며 Amazon ECR에 저장됨
-- **클러스터**:
+**- **클러스터****:
 	- 컨테이너를 실행할 수 있는 인프라의 논리적 집합
 	- EC2 인스턴스 또는 Fargate 환경이 포함
-- **태스크 정의(Task Definition)**:
+**- **태스크 정의(Task Definition)****:
 	- 실행할 컨테이너의 이미지, CPU/메모리, 네트워크 설정 등을 포함하는 JSON 문서
 	- 다시 말해, 어떤 컨테이너를 어떤 방식으로 실행할 것인가?를 명시한 문서
-- **태스크(Task)**:
+**- **태스크(Task)****:
 	- 태스크 정의 문서를 기반으로 실행되는 실제 컨테이너 단위
 	- 여러 개의 컨테이너를 하나의 단위로 묶음
 	- k8s의 pod 개념과 유사
-- **서비스(Service)**: 
+**- **서비스(Service)****:
 	- ECS가 태스크 수를 유지하고 상태를 모니터링하며 실패한 태스크를 자동으로 재시작해주는 기능
 	- 로드 밸런서와 연결 가능
 
@@ -137,7 +136,7 @@ aws ecs create-service --service-name WebSiteService ...
 ALB DNS 주소로 접속해 Storizer 웹사이트를 열고, 입력창에 문장을 입력하여 API에서 단어를 자동으로 채워보았다. Save 클릭 시 DynamoDB에 저장됨을 확인했다.
 
 ![image](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/e4572ab46b6620ef06d876c8d352f97e.png)
-## 마치며
 
+## 마치며
 이번 Getting Started with Amazon ECS, Building and Deploying Containers Using Amazon Elastic Container Service Skill Builder를 통해 Amazon ECS 서비스에 대한 이해와, Docker 이미지 빌드 → Amazon ECR 푸시 → ECS 클러스터 서비스화라는 실제 운영 흐름을 경험할 수 있었다.
 특히, 마이크로서비스 아키텍처 기반 앱을 분리된 컨테이너로 관리하면서 ECS의 자동화된 운영 방식이 얼마나 유용한지 체감할 수 있었다.

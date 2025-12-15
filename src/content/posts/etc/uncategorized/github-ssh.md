@@ -47,8 +47,8 @@ cat ~/.ssh/id_ed25519.pub
 공개키 내용을 확인하고 출력된 내용을 Github Settings -> SSH Keys에 등록한다.
 
 ![image](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/52ee5a5d97fb23f80377457b239c5807.png)
-*GitHub에 등록된 SSH key 정보*
 
+> [!NOTE] *GitHub에 등록된 SSH key 정보*
 3. **로컬 저장소의 원격 주소를 SSH 방식으로 변경**
 ```shell
 git remote set-url origin git@github.com:nullisdefined/nullisdefined.github.io.git

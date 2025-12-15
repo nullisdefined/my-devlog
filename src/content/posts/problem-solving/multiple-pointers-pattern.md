@@ -38,10 +38,10 @@ function sumZero(arr) {
 function sumZero(arr) {
     let left = 0;                    // 왼쪽 포인터
     let right = arr.length - 1;      // 오른쪽 포인터
-    
+
     while(left < right) {
         let sum = arr[left] + arr[right];
-        
+
         if(sum === 0) {
             return [arr[left], arr[right]];
         } else if(sum > 0) {
@@ -64,7 +64,7 @@ console.log(sumZero([1,2,3]));            // undefined
 ```js
 function countUniqueValues(arr) {
     if(arr.length === 0) return 0;
-    
+
     let i = 0;
     for(let j = 1; j < arr.length; j++) {
         if(arr[i] !== arr[j]) {
@@ -81,5 +81,5 @@ console.log(countUniqueValues([]));                             // 0
 ```
 
 
----
-이 글은 Udemy의 [【한글자막】 JavaScript 알고리즘 & 자료구조 마스터클래스](https://www.udemy.com/course/best-javascript-data-structures/) 강의를 토대로 공부한 내용을 정리한 것입니다.
+
+> [!NOTE] 이 글은 Udemy의 [【한글자막】 JavaScript 알고리즘 & 자료구조 마스터클래스](https://www.udemy.com/course/best-javascript-data-structures/) 강의를 토대로 공부한 내용을 정리한 것입니다.

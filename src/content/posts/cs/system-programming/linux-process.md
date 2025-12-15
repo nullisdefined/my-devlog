@@ -11,7 +11,6 @@ views: 0
 ## 프로세스 기본 개념
 
 ### 프로세스란?
-
 프로세스(Process)는 현재 실행 중인 프로그램을 의미한다.
 디스크에 저장된 정적인 프로그램 파일이 메모리에 로드되어 실행되면서 동적인 상태가 된 것이 바로 프로세스다.
 
@@ -20,23 +19,19 @@ views: 0
 ![image](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/0cc54a08d91b1979cec6fa3915b32f18.png)
 
 ### 주요 개념들
-
 - PID(process id): 시스템에서 프로세스를 식별하는 고유 번호
 - PPID(parent process id): 부모 프로세스의 PID
 - 프로세스 그룹: 관련된 프로세스들의 집합
 - 세션: 터미널 단위로 묶인 프로세스 그룹들
 
 ### Segmentation Fault와 Core Dump
-
 Segmentation Fault는 프로세스가 접근해서는 안 되는 메모리 영역에 접근했을 때 OS가 발생시키는 오류다.
 이때 Core Dump라는 덤프 파일이 생성되어 프로세스가 죽을 때의 메모리 상태를 저장한다.
 
 ## 프로세스 메모리 구조
-
 프로세스는 메모리를 여러 세그먼트로 나누어 사용한다.
 
 ### 메모리 세그먼트 구조
-
 <img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/318778ed38e89abbb35701e426ebbef1.png" alt="image" width="500" />
 
 |세그먼트|내용|특징|
@@ -49,22 +44,21 @@ Segmentation Fault는 프로세스가 접근해서는 안 되는 메모리 영�
 |**Stack**|지역 변수, 함수 인자|함수 호출 시 할당/해제|
 
 ### 메모리 할당 예시
-
 ```c
 // Text 세그먼트
 int main() {
     // Data 세그먼트
     static int initialized = 10;
-    
+
     // BSS 세그먼트  
     static int uninitialized;
-    
+
     // Stack 세그먼트
     int local_var = 5;
-    
+
     // Heap 세그먼트
     int *ptr = malloc(sizeof(int));
-    
+
     return 0;
 }
 ```
@@ -72,7 +66,6 @@ int main() {
 ## 프로세스 상태와 라이프사이클
 
 ### 프로세스 상태 다이어그램
-
 <img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/1137e3df0641323d033dbccac7528b49.png" alt="image" width="500" />
 
 1. 실행 파일 로그 → 프로세스 생성 (sleep 상태)
@@ -81,7 +74,6 @@ int main() {
 4. 작업 완료 시 준비 상태로 전환
 
 ### 실행 시간 측정
-
 프로세스의 실행 시간은 두 가지로 구분된다.
 
 1. 시스템 실행 시간 → 커널 모드에서 커널 코드 수행 시간
@@ -90,7 +82,6 @@ int main() {
 ## 프로세스 생성 및 관리
 
 ### 프로세스 식별
-
 <img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/ecd4fa4441315b46e80eebf9c1b02732.png" alt="image" width="550" />
 
 **예시**
@@ -107,7 +98,6 @@ int main() {
 ```
 
 ### 프로세스 생성 - system()
-
 `system()`은 쉘 명령을 받아 새로운 프로세스로 실행한다.
 
 ```c
@@ -130,7 +120,6 @@ printf("Return Value: %d\n", ret);
 ```
 
 ### 프로세스 생성 - fork()
-
 `fork()`는 현재 프로세스를 복제하여 새로운 프로세스를 생성한다.
 
 **특징:**
@@ -148,31 +137,30 @@ printf("Return Value: %d\n", ret);
 
 int main() {
     pid_t pid;
-    
+
     switch(pid = fork()) {
         case -1: // fork 실패
             perror("fork");
             exit(1);
             break;
-            
+
         case 0: // 자식 프로세스
             printf("Child Process - PID: %d, PPID: %d\n", 
                    getpid(), getppid());
             break;
-            
+
         default: // 부모 프로세스
             printf("Parent Process - PID: %d, Child PID: %d\n", 
                    getpid(), pid);
             break;
     }
-    
+
     printf("End of fork\n");
     return 0;
 }
 ```
 
 ### 프로세스 종료
-
 **exit() 함수:**
 
 ```c
@@ -205,7 +193,6 @@ int main() {
 ```
 
 ### 프로세스 실행 - exec 함수군
-
 `exec` 함수들은 현재 프로세스의 메모리를 새로운 프로그램으로 교체한다.
 
 **주요 함수들:**
@@ -225,23 +212,20 @@ int main() {
 
 int main() {
     printf("Before exec function\n");
-    
+
     if (execlp("ls", "ls", "-l", (char *)NULL) == -1) {
         perror("execlp");
         exit(1);
     }
-    
+
     printf("After exec function\n"); // 실행되지 않음
     return 0;
 }
 ```
 
----
-
 ## 프로세스 동기화
 
 ### 좀비 프로세스와 고아 프로세스
-
 **좀비 프로세스:**
 
 - 자식이 종료했지만 부모가 `wait()`으로 정리하지 않은 상태
@@ -252,7 +236,6 @@ int main() {
 - 부모가 먼저 종료하여 init 프로세스가 입양한 상태
 
 ### wait() 함수
-
 ```c
 #include <sys/wait.h>
 
@@ -271,7 +254,7 @@ pid_t waitpid(pid_t pid, int *status, int options);
 int main() {
     pid_t pid;
     int status;
-    
+
     if ((pid = fork()) == 0) {
         printf("Child Process\n");
         exit(2);
@@ -279,13 +262,12 @@ int main() {
         wait(&status);
         printf("Child exited with status: %d\n", status >> 8);
     }
-    
+
     return 0;
 }
 ```
 
 ### waitpid() 옵션
-
 |옵션|설명|
 |---|---|
 |`WCONTINUED`|수행 중인 자식 프로세스 상태 리턴|
@@ -295,7 +277,6 @@ int main() {
 ## 환경 변수와 실행 환경
 
 ### 환경 변수 관리
-
 **주요 함수들:**
 
 ```c
@@ -318,16 +299,15 @@ int main() {
     if (shell != NULL) {
         printf("SHELL = %s\n", shell);
     }
-    
+
     setenv("MYVAR", "Hello World", 1);
     printf("MYVAR = %s\n", getenv("MYVAR"));
-    
+
     return 0;
 }
 ```
 
 ### 현재 작업 디렉터리
-
 ```c
 #include <unistd.h>
 
@@ -336,9 +316,7 @@ char *getcwd(char *buf, size_t size);
 ```
 
 ### 파일 디스크립터
-
-기본 파일 디스크립터:
-
+**기본 파일 디스크립터**:
 - **0**: stdin (표준 입력)
 - **1**: stdout (표준 출력)
 - **2**: stderr (표준 에러)

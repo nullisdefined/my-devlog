@@ -20,15 +20,15 @@ function solution(n) {
     for(let i=1; i<=n; ++i) {
         let currentNum = i;
         let sum = 0;
-        
+
         while(sum < n) {
             sum += currentNum;
             currentNum++;
         }
-        
+
         if(sum === n) answer++;
     }
-    
+
     return answer;
 }
 ```
@@ -48,7 +48,7 @@ function solution(n) {
         if(temp % i === 0 && temp >= 0) answer++;
         if(temp < 0) break;
     }
-    
+
     return answer
 }
 ```

@@ -121,5 +121,5 @@ const server = http.createServer(routes.handler);
 ## 마치며
 Node.js의 모듈 시스템을 활용하면 코드를 논리적인 단위로 분리하고, 재사용성을 높이며, 유지보수가 용이한 애플리케이션을 구축할 수 있다.
 
----
-이 글은 Udemy의 [【한글자막】 NodeJS 완벽 가이드 : MVC, REST APIs, GraphQL, Deno](https://www.udemy.com/course/nodejs-mvc-rest-apis-graphql-deno/) 강의를 토대로 공부한 내용을 정리한 것입니다.
+
+> [!NOTE] 이 글은 Udemy의 [【한글자막】 NodeJS 완벽 가이드 : MVC, REST APIs, GraphQL, Deno](https://www.udemy.com/course/nodejs-mvc-rest-apis-graphql-deno/) 강의를 토대로 공부한 내용을 정리한 것입니다.

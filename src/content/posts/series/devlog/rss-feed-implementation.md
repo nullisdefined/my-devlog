@@ -10,13 +10,11 @@ views: 0
 Next.js 13의 App Router를 활용해 동적 RSS 피드를 구현한 과정이다.
 
 ## RSS 구현의 필요성
-
 RSS(Really Simple Syndication)는 웹사이트의 콘텐츠를 구조화된 형식으로 제공하는 표준이다. 독자들은 RSS 리더를 통해 여러 사이트의 새 글을 한 곳에서 확인할 수 있고, 개발자에게는 콘텐츠 배포를 자동화할 수 있는 수단이 된다.
 
 ## 기본 RSS 피드 구현
 
 ### 1. 필요한 패키지 설치
-
 먼저 RSS 피드 생성을 위한 라이브러리를 설치한다.
 
 ```bash
@@ -25,7 +23,6 @@ npm install @types/rss --save-dev
 ```
 
 ### 2. Route Handler로 RSS 엔드포인트 생성
-
 Next.js 13의 Route Handler를 활용해 `/feed.xml` 경로에서 RSS 피드를 제공한다.
 
 ```ts title:lib/rss-utils.ts
@@ -91,7 +88,6 @@ export async function GET() {
 ## RSS 기능 구현
 
 ### 1. RSS 유틸리티 함수
-
 ```ts title:lib/rss-utils.ts
 import { marked } from "marked";
 import RSS from "rss";
@@ -102,9 +98,10 @@ export function markdownToHtml(markdown: string): string {
   // marked 라이브러리로 마크다운 파싱
   const html = marked(markdown, {
     breaks: true,
-    gfm: true, // GitHub Flavored Markdown
+
+> [!NOTE] gfm: true, // GitHub Flavored Markdown
   });
-  
+
   // 이미지 경로를 절대 경로로 변환
   return html.replace(
     /src="(?!https?:\/\/)([^"]*?)"/g,
@@ -117,7 +114,7 @@ export function extractImages(content: string): string[] {
   const imageRegex = /!\[([^\]]*)\]\(([^\)]*)\)/g;
   const images: string[] = [];
   let match;
-  
+
   while ((match = imageRegex.exec(content)) !== null) {
     const imageSrc = match[2];
     if (imageSrc.startsWith("http")) {
@@ -126,7 +123,7 @@ export function extractImages(content: string): string[] {
       images.push(`https://nullisdefined.site${imageSrc}`);
     }
   }
-  
+
   return images;
 }
 
@@ -194,7 +191,6 @@ export function generateTagFeed(tag: string, posts: Post[]): RSS {
 ```
 
 ### 2. 다중 RSS 피드 지원
-
 카테고리별, 태그별로 세분화된 RSS 피드를 제공한다.
 
 ```ts title:app/feed/[...params]/route.ts
@@ -214,27 +210,27 @@ export async function GET(request: NextRequest, { params }: Props) {
     let feed;
 
     switch (type) {
-      case "category":
+      **case "category"**:
         if (!identifier) {
           return new NextResponse("Category not specified", { status: 400 });
         }
         feed = generateCategoryFeed(identifier, posts);
         break;
-        
-      case "tags":
+
+      **case "tags"**:
         if (!identifier) {
           return new NextResponse("Tag not specified", { status: 400 });
         }
         const decodedTag = decodeURIComponent(identifier);
         feed = generateTagFeed(decodedTag, posts);
         break;
-        
-      default:
+
+      **default**:
         return new NextResponse("Invalid feed type", { status: 400 });
     }
 
     const xml = feed.xml({ indent: true });
-    
+
     return new NextResponse(xml, {
       headers: {
         "Content-Type": "application/rss+xml; charset=utf-8",
@@ -250,19 +246,19 @@ export async function GET(request: NextRequest, { params }: Props) {
 // 동적 라우트를 위한 설정
 export async function generateStaticParams() {
   const posts = await getAllPosts();
-  
+
   // 모든 카테고리 추출
   const categories = [...new Set(posts.map(post => post.category))];
   const categoryParams = categories.map(category => ({
     params: ["category", category.toLowerCase()]
   }));
-  
+
   // 모든 태그 추출
   const allTags = [...new Set(posts.flatMap(post => post.tags))];
   const tagParams = allTags.map(tag => ({
     params: ["tags", encodeURIComponent(tag)]
   }));
-  
+
   return [...categoryParams, ...tagParams];
 }
 ```
@@ -270,7 +266,6 @@ export async function generateStaticParams() {
 ## RSS 피드 최적화
 
 ### 1. 캐싱 전략
-
 RSS 피드는 자주 변경되지 않으므로 적절한 캐싱이 필요하다.
 
 ```ts title:lib/cache.ts
@@ -323,7 +318,7 @@ export const getCachedTagFeed = unstable_cache(
 export async function invalidateRSSCache() {
   // Next.js 14+에서 사용 가능
   // revalidateTag("posts");
-  
+
   // 또는 수동으로 캐시 클리어
   const cache = await caches.open("rss-cache");
   await cache.delete("/feed.xml");
@@ -331,7 +326,6 @@ export async function invalidateRSSCache() {
 ```
 
 ### 2. RSS 검증 및 에러 처리
-
 생성된 RSS 피드가 올바른 형식인지 검증한다.
 
 ```ts title:lib/rss-validator.ts
@@ -425,22 +419,21 @@ export async function validateRSSFeed(xmlContent: string): Promise<ValidationRes
 export async function validateRSSMiddleware(xmlContent: string) {
   if (process.env.NODE_ENV === "development") {
     const validation = await validateRSSFeed(xmlContent);
-    
+
     if (!validation.isValid) {
       console.error("RSS 검증 실패:", validation.errors);
     }
-    
+
     if (validation.warnings.length > 0) {
       console.warn("RSS 경고:", validation.warnings);
     }
   }
-  
+
   return xmlContent;
 }
 ```
 
 ### 3. RSS 피드 모니터링
-
 RSS 피드 생성 성능과 에러를 모니터링하는 시스템을 구축했다.
 
 ```ts title:lib/rss-logger.ts
@@ -486,14 +479,14 @@ export class RSSLogger {
 
   static getAverageGenerationTime() {
     if (this.metrics.length === 0) return 0;
-    
+
     const total = this.metrics.reduce((sum, m) => sum + m.generationTime, 0);
     return Math.round(total / this.metrics.length);
   }
 
   static getErrorRate() {
     if (this.metrics.length === 0) return 0;
-    
+
     const errorCount = this.metrics.filter(m => m.errors.length > 0).length;
     return (errorCount / this.metrics.length) * 100;
   }
@@ -519,39 +512,39 @@ export async function measureRSSGeneration<T>(
 ): Promise<T> {
   const startTime = Date.now();
   const errors: string[] = [];
-  
+
   try {
     const result = await generatorFn();
     const generationTime = Date.now() - startTime;
-    
+
     // 결과를 문자열로 변환하여 크기 측정
     const feedSize = new TextEncoder().encode(String(result)).length;
-    
+
     RSSLogger.logGeneration({
       generationTime,
       postCount: 0, // 실제 구현에서는 포스트 수를 전달
       feedSize,
       errors
     });
-    
+
     return result;
   } catch (error) {
     errors.push(error instanceof Error ? error.message : String(error));
-    
+
     RSSLogger.logGeneration({
       generationTime: Date.now() - startTime,
       postCount: 0,
       feedSize: 0,
       errors
     });
-    
+
     throw error;
   }
 }
 ```
 
 ## 마치며
-
 RSS는 오래된 기술이지만 여전히 콘텐츠 배포에 매우 유용한 도구다. Next.js의 Route Handler를 활용하면 동적이고 효율적인 RSS 피드를 쉽게 구현할 수 있었다.
 
-이 프로젝트의 모든 소스 코드는 [GitHub](https://github.com/nullisdefined/mydevlog)에 공개되어 있습니다. 코드 품질 개선이나 새로운 기능 제안에 대한 피드백은 언제나 환영합니다.
+
+> [!NOTE] 이 프로젝트의 모든 소스 코드는 [GitHub](https://github.com/nullisdefined/mydevlog)에 공개되어 있습니다. 코드 품질 개선이나 새로운 기능 제안에 대한 피드백은 언제나 환영합니다.

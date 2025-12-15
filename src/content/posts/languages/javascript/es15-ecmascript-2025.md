@@ -134,5 +134,5 @@ const nextMonth = date.add({ months: 1 });
 ## 마치며
 ES15 / ECMAScript 2024는 JavaScript의 강력함과 즐거움을 한 단계 더 끌어올렸다. 이번 업데이트로 패턴 매칭, 파이프라인 연산자, Set과 배열 메서드, 날짜 관리 등 다양한 작업이 훨씬 간단해졌다.
 
----
-이 글은 Bhuwan Chettri의 [ES15 / ECMAScript 2025: What’s New in JavaScript? 🎉✨](https://javascript.plainenglish.io/es15-ecmascript-2024-whats-new-in-javascript-2a19494a5749)를 한글로 번역한 글입니다.
+
+> [!NOTE] 이 글은 Bhuwan Chettri의 [ES15 / ECMAScript 2025: What’s New in JavaScript? 🎉✨](https://javascript.plainenglish.io/es15-ecmascript-2024-whats-new-in-javascript-2a19494a5749)를 한글로 번역한 글입니다.

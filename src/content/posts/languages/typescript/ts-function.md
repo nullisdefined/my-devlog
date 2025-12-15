@@ -9,6 +9,7 @@ draft: false
 views: 0
 ---
 ![image](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/bdb3fceafe9378092615c3f6ddf659a2.png)
+
 ## Call Signatures로 함수 타입 정의
 Call Signature는 함수의 매개변수와 반환 값의 타입을 미리 정의하는 방법이다. IDE에서 함수에 마우스를 올렸을 때 보이는 타입 정보가 바로 Call Signatures이다.
 
@@ -24,6 +25,7 @@ const add: Add = (a, b) => a + b;
 
 ## 함수 오버로딩(Function Overloading)
 함수 오버로딩은 하나의 함수가 여러 개의 Call Signatures를 가질 수 있게 해주는 기능이다.
+
 ### 함수 오버로딩 예시
 ```ts
 type Config = {
@@ -68,8 +70,9 @@ const calc: Calculator = (x: number, y?: number) => {
 
 ## 다형성과 제네릭(Polymorphism & Generics)
 제네릭은 타입을 파라미터화하여 재사용 가능한 컴포넌트를 만들 수 있게 해준다.
+
 ### 제네릭의 필요성
-먼저 제네릭을 사용하지 않은 경우:
+**먼저 제네릭을 사용하지 않은 경우**:
 ```ts
 // 제네릭 없이 구현한 경우
 type PrintArray = {
@@ -80,7 +83,7 @@ type PrintArray = {
 };
 ```
 
-이를 제네릭을 사용하여 개선하면:
+**이를 제네릭을 사용하여 개선하면**:
 ```ts
 // 제네릭을 사용한 경우
 type PrintArray<T> = {
@@ -123,6 +126,7 @@ printLength([1, 2, 3]);   // array has length
 ```
 
 ## Tips
+
 #### 1. 가능한 타입 추론 활용
 ```ts
 // 불필요한 타입 명시

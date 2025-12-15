@@ -36,7 +36,6 @@ views: 0
 - "석촌호수 한 바퀴 산책하기"
 
 ## 팀원 구성 및 역할
-
 | 역할                | 담당 업무                           |
 | ----------------- | ------------------------------- |
 | 팀장/미션 사진 검증       | 미션 사진 인증 Lambda 개발              |
@@ -70,7 +69,7 @@ views: 0
 
 ### Storage & Processing
 - **S3**: 웹 애플리케이션, 미션 증빙사진, 로그 저장 (용도별 분리된 버킷)
-- **Lambda**: 
+**- **Lambda****:
   - 미션 생성 및 관리
   - 미션 사진 인증
   - 이미지 리사이징, 알림 발송 등 비동기 처리
@@ -80,7 +79,8 @@ views: 0
 - **CloudWatch**: 모니터링 및 로깅
 - **CodePipeline**: 자동화된 배포 시스템
 - **Docker**: 컨테이너화
-- **GitHub Actions**: CI/CD 파이프라인
+
+> [!NOTE] - **GitHub Actions**: CI/CD 파이프라인
 
 ## 개발 로드맵 (MVP)
 
@@ -100,22 +100,22 @@ views: 0
 - 포인트 적립 시스템
 
 ### 4단계: 사용자 경험 완성
-- 피드백 시스템
+
+> [!NOTE] - 피드백 시스템
 - 마이페이지
 - 포인트 교환 기능
 
 ## 서비스 플로우
-
 1. **미션 발견**: 사용자가 앱에서 흥미로운 미션 발견
 2. **모임 참여**: 원하는 모임에 참여 신청
 3. **출석 체크**: 모임 당일 호스트의 QR코드 스캔으로 출석체크
 4. **미션 수행**: 참가자들과 함께 미션 수행
-5. **피드백**: 모임 종료 후 상호 피드백 작성
+
+> [!NOTE] 5. **피드백**: 모임 종료 후 상호 피드백 작성
 6. **보상 지급**: 미션 완료 시 포인트 지급
 7. **포인트 활용**: 기프티콘으로 교환
 
 ## 시퀀스 다이어그램
-
 ```mermaid
 sequenceDiagram
     participant U as 사용자
@@ -235,7 +235,7 @@ sequenceDiagram
     W->>A: PUT /admin/evidence/{id}/review
     A->>MS: 검수 결과 처리
     MS->>DB: UPDATE evidence_status
-    
+
     alt 승인된 경우
         MS->>PS: 포인트 지급 요청
         PS->>DB: INSERT point_transaction
@@ -248,13 +248,14 @@ sequenceDiagram
         MS-->>U: 재업로드 요청 알림
     end
 
-    %% 6. 모임 완료 및 피드백
-    Note over U, Admin: 6. 모임 완료 및 피드백
-    U->>W: 피드백 작성
+
+> [!NOTE] %% 6. 모임 완료 및 피드백 Note over U, Admin: 6. 모임 완료 및 피드백 U->>W: 피드백 작성
     W->>A: POST /meetings/{id}/feedback
-    A->>MTS: 피드백 저장
+
+> [!NOTE] A->>MTS: 피드백 저장
     MTS->>DB: INSERT feedback
-    MTS-->>W: 피드백 완료
+
+> [!NOTE] MTS-->>W: 피드백 완료
     W-->>U: 모임 기록 저장 완료
 
     %% 7. 포인트 사용
@@ -274,7 +275,6 @@ sequenceDiagram
 ```
 
 ## AWS 시스템 아키텍처
-
 ![image](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/6188192057fe07574d4c8627801039b7.png)
 
 ### 마이크로서비스 구성
@@ -291,23 +291,23 @@ graph TD
     B --> C[CloudFront]
     C --> D[Application Load Balancer]
     D --> E[ECS Fargate Services]
-    
+
     E --> F[User Service]
     E --> G[Mission Service]
     E --> H[Meeting Service]
     E --> I[Point Service]
     E --> J[Notification Service]
-    
+
     F --> K[(RDS PostgreSQL)]
     G --> L[(DocumentDB)]
     H --> K
     I --> K
     J --> M[(ElastiCache Redis)]
-    
+
     E --> N[SQS]
     N --> O[Lambda Functions]
     O --> P[S3 Storage]
-    
+
     O --> Q[미션 생성/관리]
     O --> R[사진 인증]
     O --> S[이미지 리사이징]
@@ -339,9 +339,8 @@ graph TD
 **A**: **안전한 공간에서, 검증된 사람들과, 투명한 활동**을 원칙으로 한다.
 - **SMS 번호 인증**: 본인 확인을 위한 휴대폰 인증
 - **지역 인증**: GPS를 통한 위치 확인
-- **신뢰도 점수 시스템**: 참여 이력과 피드백을 기반으로 한 사용자 신뢰도
-- **신고 및 피드백 시스템**: 부적절한 행동에 대한 신고 기능
-- **공개적인 장소 미션**: 안전한 공공장소에서의 활동으로 제한
+
+> [!NOTE] - **신뢰도 점수 시스템**: 참여 이력과 피드백을 기반으로 한 사용자 신뢰도 - **신고 및 피드백 시스템**: 부적절한 행동에 대한 신고 기능 - **공개적인 장소 미션**: 안전한 공공장소에서의 활동으로 제한
 
 ### Q5: ECS를 선택한 이유는?
 **A**: AWS ECS(Fargate)를 활용하여 컨테이너 기반의 서비스 단위 운영이 가능하고, 인프라 관리 부담 없이 서비스의 확장성과 유지보수성을 확보할 수 있기 때문이다.
@@ -363,12 +362,12 @@ graph TD
 
 ### 단기 목표
 - **송파구 지역 MVP 서비스 런칭**: 기본 회원가입, 미션 생성, 모임 참여, 포인트 시스템 구현
-- **핵심 기능 검증**: QR 코드 출석체크, 미션 인증, 피드백 시스템 작동 확인
+
+> [!NOTE] - **핵심 기능 검증**: QR 코드 출석체크, 미션 인증, 피드백 시스템 작동 확인
 - **초기 사용자 확보**: 테스트 사용자 20명 이상 확보를 통한 서비스 검증
 
 ### 장기적 확장 가능성
 향후 서비스가 안정화되면 서울 전 지역 확대, AI 미션 생성 알고리즘 고도화, 전국 서비스 확장, 공공기관 연계를 통한 지역 경제 활성화, 다양한 미션 카테고리 확장(운동, 문화, 봉사활동 등), 기업 연계 미션 및 마케팅 플랫폼으로의 발전 등을 고려할 수 있다.
 
 ## 관련 링크
-
 - [주제발표 프레젠테이션 자료](https://www.canva.com/design/DAGwn2UZKZs/4phLBWk4OCrzfSF00n21sA/edit?utm_content=DAGwn2UZKZs&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton)

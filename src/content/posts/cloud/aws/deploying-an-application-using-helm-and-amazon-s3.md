@@ -16,9 +16,6 @@ helm package <디렉터리> = npm pack / npm publish
 
 실습에서는 s3를 helm chart저장소인 helm repository로 사용함
 
-
-
-
 <img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/fcda16913825d982c9b11245b536ff7e.png" alt="image" width="700" />
 실습 환경 아키텍처
 
@@ -97,7 +94,7 @@ helm s3 push ./productcatalog_workshop-1.0.0.tgz productcatalog
 
 
  S3 버킷에 저장된 Helm 차트의 버전 수를 확인
- 
+
 ```
 helm search repo
 ```

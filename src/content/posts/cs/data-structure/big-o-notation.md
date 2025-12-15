@@ -38,6 +38,7 @@ function sumWithFormula(n) {
 - 메모리를 적게 사용하는 코드
 - 가독성이 좋은 코드
 하지만 '실행 속도가 빠르다'는 것은 어떻게 측정할 수 있을까? 단순히 실행 시간을 초 단위로 측정하는 것이 방법일 수 있겠지만, 같은 코드라도 실행하는 컴퓨터의 성능에 따라, 상태에 따라 실행 시간이 달라진다. 
+
 ### 빅오 표기법
 빅오 표기법은 입력값의 크기에 따른 알고리즘의 성능을 나타내는 방법이다. 정확한 실행 시간을 측정하는 대신, 컴퓨터가 처리해야 하는 연산의 횟수가 어떤 패턴으로 증가하는지를 표현한다.
 
@@ -56,6 +57,7 @@ function sumWithFormula(n) {
 - boolean, number, undefined, null은 상수 공간을 사용 (O(1))
 - 문자열은 길이에 비례하는 공간을 사용 (O(n))
 - 배열과 객체도 크기에 비례하는 공간을 사용 (O(n))
+
 ### 실제 적용 예시
 앞서 살펴본 1부터 n까지의 합을 구하는 두 방법을 비교해보자.
 1. `sumWithFor`: O(n)
@@ -67,5 +69,5 @@ function sumWithFormula(n) {
 
 이처럼 수학적 공식을 사용한 방법이 시간 복잡도 측면에서 더 효율적임을 알 수 있다.
 
----
-이 글은 Udemy에서 [【한글자막】 JavaScript 알고리즘 & 자료구조 마스터클래스](https://www.udemy.com/course/best-javascript-data-structures/) 강의를 토대로 공부한 내용을 정리한 것입니다.
+
+> [!NOTE] 이 글은 Udemy에서 [【한글자막】 JavaScript 알고리즘 & 자료구조 마스터클래스](https://www.udemy.com/course/best-javascript-data-structures/) 강의를 토대로 공부한 내용을 정리한 것입니다.

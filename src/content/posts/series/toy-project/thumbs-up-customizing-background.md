@@ -9,6 +9,7 @@ draft: false
 views: 0
 ---
 배경에서는 그라디언트, 단색, 이미지로 커스터마이징할 수 있게 구현했다. 특히 색상 선택의 어려움을 해결하기 위해 셔플 버튼으로 미리 준비된 색상 조합을 제공하는 기능을 추가했다.
+
 ## 주요 기능
 1. 그라디언트 배경: 두 가지 색상 조합으로 그라디언트를 설정한다.
 2. 단색 배경: 단순한 색상으로 배경을 채운다.
@@ -115,6 +116,7 @@ const handleRandomGradient = () => {
 
 ## 4. 이미지 배경
 이미지를 업로드하고 배경으로 사용할 수 있도록 했다. 또한 추가로 이미지 크롭과 블러 효과를 조절할 수 있게 했다.
+
 ### 파일 업로드 처리
 ```tsx
 const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -177,5 +179,5 @@ if (bgType === "gradient") {
 }
 ```
 
----
-이 프로젝트의 모든 소스 코드는 [GitHub](https://github.com/nullisdefined/thumbs-up)에 공개되어 있습니다. 코드 품질 개선이나 새로운 기능 제안에 대한 피드백은 언제나 환영합니다.
+
+> [!NOTE] 이 프로젝트의 모든 소스 코드는 [GitHub](https://github.com/nullisdefined/thumbs-up)에 공개되어 있습니다. 코드 품질 개선이나 새로운 기능 제안에 대한 피드백은 언제나 환영합니다.

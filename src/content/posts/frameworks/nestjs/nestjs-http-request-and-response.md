@@ -13,20 +13,24 @@ views: 0
 NestJS에서는 HTTP 요청과 응답을 처리하기 위한 다양한 데코레이터와 기능을 제공한다. 이를 통해 클라이언트의 요청을 효과적으로 처리하고, 적절한 응답을 반환할 수 있다.
 
 ## HTTP 통신의 기본 구조
+
 ### Request 구조
 요청은 크게 Start Line, Headers, Body로 구성된다.
 
 ![image](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/2edb8df6883ce6d3ddb112b8610f3303.png)
+
 #### 1. Start Line
 - HTTP Method (GET, POST, PUT, DELETE 등)
 - Request Target (URL)
 - HTTP Version
+
 #### 2. Headers
 - Host:  요청하는 서버의 도메인 정보
 - User-Agent: 클라이언트 애플리케이션 정보
 - Accept: 클라이언트가 받을 수 있는 컨텐츠 타입
 - Authorization: 인증 관련 정보 (e.g., Bearer JWT Token)
 - Content-Type: 요청 본문의 타입 (e.g., application/json)
+
 #### 3. Body
 - POST나 PUT 요청에서 서버로 전송하는 데이터
 
@@ -34,18 +38,22 @@ NestJS에서는 HTTP 요청과 응답을 처리하기 위한 다양한 데코레
 응답은 Status Line, Headers, Body로 구성된다.
 
 ![image](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/b19fcb766119c88bc38a9f8acfdc68bc.png)
+
 #### 1. Status Line
 - HTTP Version
 - Status Code (200, 404, 500 등)
 - Status Text (OK, Not Found 등)
+
 #### 2. Headers
 - Content-Type: 응답 본문의 타입
 - Set-Cookie: 클라이언트에 쿠키 설정
 - Cache-Control: 캐싱 정책
+
 #### 3. Body
   - 서버가 클라이언트에게 전송하는 실제 데이터
 
 ## Request 처리
+
 ### 요청 파라미터 처리
 NestJS에서는 `@Param`과 `@Query` 데코레이터를 통해 URL 파라미터와 쿼리 파라미터를 처리할 수 있다.
 ```ts
@@ -111,6 +119,7 @@ export class AuthController {
 ```
 
 ## Response 처리
+
 ### 기본 응답과 상태 코드
 응답 상태 코드는 `@HttpCode` 데코레이터를 사용해 지정할 수 있다.
 ```ts

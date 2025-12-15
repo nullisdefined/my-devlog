@@ -15,7 +15,6 @@ views: 0
 ## 데이터베이스의 발전: 온프레미스에서 클라우드로
 
 ### 전통적인 관계형 DB
-
 1970년대부터 기업들은 관계형 데이터베이스를 기본으로 사용해왔다. 관계형 DB는 데이터를 테이블로 정리하고, 테이블 간의 관계를 통해 복잡한 데이터 구조를 표현한다.
 
 <img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/018ae22c6297c4772dd9e11e2e120243.png" alt="image" width="600" />
@@ -23,7 +22,6 @@ views: 0
 위 그림처럼 도서 테이블, 판매 테이블, 저자 테이블이 '저자' 속성으로 연결되어 있다. 이런 구조 덕분에 "특정 저자의 책이 얼마나 팔렸는지"와 같은 복잡한 질문에 SQL로 쉽게 답할 수 있다.
 
 ### 관계형 DB의 특징
-
 |**장점**|**단점**|
 |---|---|
 |복잡한 SQL 조인으로 데이터 분석 가능|고정된 스키마로 유연성 부족|
@@ -34,7 +32,6 @@ views: 0
 ## 클라우드 시대의 DB 운영 방식
 
 ### 비관리형 vs 관리형 DB
-
 AWS에서 데이터베이스를 운영하는 방식은 크게 두 가지로 나뉜다.
 
 <img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/b129cee147e4cd60478890733c743c06.png" alt="image" width="600" />
@@ -73,20 +70,18 @@ AWS가 인프라와 데이터베이스 관리를 대신해주는 서비스다.
 특별한 이유가 없다면 관리형 서비스를 선택하는 것이 좋다. 인프라 관리에 들어가는 시간과 비용을 비즈니스 로직 개발에 투자할 수 있기 때문이다.
 
 ## Amazon RDS
-
 <img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/25028d44a550e4bdfd67b075a22b0da7.png" alt="image" width="600" />
 
 ### RDS가 지원하는 DB 엔진
-
 |**유형**|**데이터베이스**|**특징**|
 |---|---|---|
 |**상용**|Oracle, SQL Server|기업 환경에서 검증된 안정성|
 |**오픈소스**|MySQL, PostgreSQL, MariaDB|비용 효율적, 커뮤니티 지원|
 |**클라우드 네이티브**|Amazon Aurora|AWS 최적화, 최고 성능|
+
 ### RDS 구성 요소
 
 #### 1. DB 인스턴스
-
 DB 인스턴스는 데이터베이스 엔진이 실행되는 격리된 클라우드 환경이다. EC2와 비슷하지만, 데이터베이스 운영에 최적화되어 있다.
 
 **인스턴스 클래스 선택 기준:**
@@ -95,7 +90,6 @@ DB 인스턴스는 데이터베이스 엔진이 실행되는 격리된 클라우
 - **버스트 가능 (t3, t4g)**: 간헐적 부하가 있는 개발/테스트 환경
 
 #### 2. 스토리지 옵션
-
 <img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/6d25afa41dc5e76526b68911fb536c9b.png" alt="image" width="600" />
 
 1. **범용 SSD (gp3)**
@@ -115,7 +109,6 @@ DB 인스턴스는 데이터베이스 엔진이 실행되는 격리된 클라우
 > 여기서 IOPS는 Input/Output Operations Per Second의 약자로 초당 입출력 작업 횟수를 의미한다.
 
 ### 고가용성을 위한 다중 AZ 배포
-
 <img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/82e46b367fb1b3c9e67542436f244f68.png" alt="image" width="600" />
 
 그림과 같이, 장애를 대비한 고가용성을 위한 RDS를 여러 군데에 복제해서 운영하는 구조다.
@@ -154,7 +147,6 @@ App → DNS (db.example.com) → Primary DB (AZ-A) ❌
 4. 애플리케이션 코드 변경 없이 DNS만 전환
 
 #### 백업 전략
-
 **자동 백업 구성:**
 
 - 일일 스냅샷 자동 수행
@@ -169,9 +161,7 @@ App → DNS (db.example.com) → Primary DB (AZ-A) ❌
 | 교차 리전 스냅샷 복제 | 재해 복구(Disaster Recovery)를 위해 다른 리전에 복사 |
 | 백업 모니터링      | CloudWatch 또는 EventBridge로 실패 알림 구성    |
 
-
 #### 복구 전략
-
 |**상황**|**대응 방안**|
 |---|---|
 |DB 장애|Multi-AZ 자동 Failover|
@@ -182,21 +172,18 @@ App → DNS (db.example.com) → Primary DB (AZ-A) ❌
 ## 목적별 데이터베이스
 
 ### 1. Amazon DynamoDB
-
 <img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/3f763fac86ff0dbce870aff533e44d75.png" alt="image" width="300" />
 
 DynamoDB는 AWS에서 제공하는 완전관리형 NoSQL Key-Value 및 문서(document) 기반 데이터베이스다.
 어떤 규모에서든 빠르고 일관된 성능을 제공하며, 서버 관리가 필요 없는 서버리스 구조이다.
 
 ### 2. Amazon ElastiCache
-
 <img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/50053caff397b55893cfb9faa43fbfe4.png" alt="image" width="300" />
 
 ElastiCache는 AWS에서 제공하는 완전관리형 인-메모리 캐싱 서비스다.
 Redis와 Memcached라는 두 가지 오픈 소스 캐시 엔진을 지원하며, 빠른 데이터 액세스와 애플리케이션 성능 향상을 위한 목적으로 사용된다.
 
 ### 3. Amazon MemoryDB for Redis
-
 <img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/73d6a79ba9130e4636d0dc327f8e068f.png" alt="image" width="300" />
 
 MemoryDB는 Redis와 호환되는 고성능 인메모리 데이터베이스 서비스로, 캐시 그 이상을 목표로 하는 완전관리형 솔루션이다.
@@ -214,7 +201,6 @@ Redis처럼 빠르지만, 내구성과 고가용성까지 갖춘 데이터 저�
 | 사용 사례  | DB 앞단 캐시                | Redis 기반 **실시간 DB** 사용처 (e.g. 세션, 메시징) |
 
 ### 4. Amazon DocumentDB
-
 <img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/e0d05bcd8393a2a1608a72e6c24f5cd4.png" alt="image" width="300" />
 
 DocumentDB는 AWS에서 제공하는 완전관리형 문서기반 NoSQL 데이터베이스 서비스이다.
@@ -232,14 +218,12 @@ DocumentDB는 AWS에서 제공하는 완전관리형 문서기반 NoSQL 데이�
 |비용|낮을 수 있으나 운영 복잡|관리형 비용 + 운영 부담 ↓|
 
 ### 5. Amazon Keyspaces (Apache Cassandra용)
-
 <img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/106f079bc64eee0ec8b629496ce2872c.png" alt="image" width="300" />
 
 Keyspaces는 AWS에서 제공하는 완전관리형, 고가용성 NoSQL 데이터베이스 서비스로, Apache Cassandra와 호환된다.
 기존에 Cassandra를 사용하던 워크로드를 코드 변경 없이 AWS 클라우드 환경으로 옮겨 실행할 수 있다.
 
 ### 6. Amazon Neptune
-
 <img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/4c10685272a221c924651f56167b4211.png" alt="image" width="300" />
 
 Neptune은 AWS에서 제공하는 완전관리형 그래프(graph) 데이터베이스 서비스다.
@@ -251,7 +235,6 @@ Neptune은 AWS에서 제공하는 완전관리형 그래프(graph) 데이터베�
 > - 복잡한 관계형 구조에 강력함
 
 ### 7. Amazon Timestream
-
 Timestream은 AWS에서 제공하는 완전관리형 시계열(time seires) 데이터베이스 서비스다.
 서버리스 기반으로, 수조 개의 시간 기반 이벤트를 빠르고 저렴하게 저장 및 분석할 수 있다.
 
@@ -260,7 +243,6 @@ Timestream은 AWS에서 제공하는 완전관리형 시계열(time seires) 데�
 > 	e.g. IoT 센서 값이나 CPU 사용률, 메모리 사용량 등의 서버 모니터링 로그, 주식 시세, 환율, 날씨 기록 등
 
 ### 8. Amazon Quantum Ledger Database(QLDB)
-
 QLDB는 AWS에서 제공하는 완전관리형 원장(ledger) 데이터베이스로, 데이터의 모든 변경 내역을 영구적이고 변경 불가능하게 기록하고, 암호학적으로 무결성을 검증할 수 있는 신뢰성 높은 데이터베이스다.
 
 > 원장(ledger)이란?

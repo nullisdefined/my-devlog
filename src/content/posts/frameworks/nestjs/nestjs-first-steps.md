@@ -11,30 +11,25 @@ views: 0
 <img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/e48e6fd88f6339a761df1c6155770ce4.png" alt="image" width="400" />
 
 # 첫 걸음
-
 이 문서 시리즈에서는 Nest의 핵심 기본 사항을 배우게 됩니다. Nest 애플리케이션의 필수 구성 요소에 익숙해지기 위해, 입문 수준에서 많은 내용을 다루는 기본적인 CRUD 애플리케이션을 구축해볼 것입니다.
 
 ## 언어
-
 우리는 TypeScript를 사랑하지만, 무엇보다도 Node.js를 사랑합니다. 그래서 Nest는 TypeScript와 순수 JavaScript 모두와 호환됩니다. Nest는 최신 언어 기능을 활용하므로, 바닐라 JavaScript와 함께 사용하려면 Babel 컴파일러가 필요합니다.
 
 우리가 제공하는 예제에서는 주로 TypeScript를 사용하지만, 언제든지 코드 스니펫을 바닐라 JavaScript 구문으로 전환할 수 있습니다(각 스니펫의 오른쪽 상단 모서리에 있는 언어 버튼을 클릭하여 전환).
 
 ## 사전 요구사항
-
 운영 체제에 Node.js(버전 >= 20)가 설치되어 있는지 확인하세요.
 
 ## 설정
-
-Nest CLI를 사용하면 새 프로젝트 설정이 매우 간단합니다. npm이 설치되어 있다면, OS 터미널에서 다음 명령어로 새 Nest 프로젝트를 생성할 수 있습니다:
+**Nest CLI를 사용하면 새 프로젝트 설정이 매우 간단합니다. npm이 설치되어 있다면, OS 터미널에서 다음 명령어로 새 Nest 프로젝트를 생성할 수 있습니다**:
 
 ```bash
 $ npm i -g @nestjs/cli
 $ nest new project-name
 ```
 
-> [!HINT]
-> TypeScript의 더 엄격한 기능 세트로 새 프로젝트를 생성하려면 `nest new` 명령에 `--strict` 플래그를 전달하세요.
+> [!HINT] TypeScript의 더 엄격한 기능 세트로 새 프로젝트를 생성하려면 `nest new` 명령에 `--strict` 플래그를 전달하세요.
 
 `project-name` 디렉토리가 생성되고, node modules와 몇 가지 보일러플레이트 파일이 설치되며, `src/` 디렉토리가 생성되어 몇 가지 핵심 파일로 채워집니다.
 
@@ -77,11 +72,9 @@ Nest 애플리케이션 인스턴스를 생성하기 위해 핵심 `NestFactory`
 
 Nest CLI로 스캐폴딩된 프로젝트는 개발자가 각 모듈을 전용 디렉토리에 보관하는 규칙을 따르도록 권장하는 초기 프로젝트 구조를 생성합니다.
 
-> [!HINT]
-> 기본적으로 애플리케이션 생성 중 오류가 발생하면 앱은 코드 1로 종료됩니다. 대신 오류를 발생시키려면 `abortOnError` 옵션을 비활성화하세요 (e.g.  `NestFactory.create(AppModule, { abortOnError: false })`).
+> [!HINT] 기본적으로 애플리케이션 생성 중 오류가 발생하면 앱은 코드 1로 종료됩니다. 대신 오류를 발생시키려면 `abortOnError` 옵션을 비활성화하세요 (e.g.  `NestFactory.create(AppModule, { abortOnError: false })`).
 
 ## 플랫폼
-
 Nest는 플랫폼에 구애받지 않는 프레임워크를 목표로 합니다. 플랫폼 독립성은 개발자가 여러 유형의 애플리케이션에서 활용할 수 있는 재사용 가능한 논리적 부분을 만들 수 있게 합니다. 기술적으로 Nest는 *어댑터*가 생성되면 모든 Node HTTP 프레임워크와 함께 작동할 수 있습니다. 기본적으로 지원되는 두 가지 HTTP 플랫폼이 있습니다.
 express와 fastify 입니다. 필요한 상황에 따라 가장 적합한 것을 선택할 수 있습니다.
 
@@ -101,15 +94,13 @@ const app = await NestFactory.create<NestExpressApplication>(AppModule);
 ```
 
 ## 애플리케이션 실행
-
 설치 프로세스가 완료되면, OS 명령 프롬프트에서 다음 명령을 실행하여 인바운드 HTTP 요청을 수신하는 애플리케이션을 시작할 수 있습니다.
 
 ```bash
 $ npm run start
 ```
 
-> [!HINT]
-> 개발 프로세스 속도를 높이려면(20배 빠른 빌드), start 스크립트에 `-b swc` 플래그를 전달하여 *SWC 빌더*를 사용할 수 있습니다. `npm run start -- -b swc`
+> [!HINT] 개발 프로세스 속도를 높이려면(20배 빠른 빌드), start 스크립트에 `-b swc` 플래그를 전달하여 *SWC 빌더*를 사용할 수 있습니다. `npm run start -- -b swc`
 
 > **SWC 빌더**: TypeScript/JavaScript 코드를 고속으로 변환(트랜스파일)해주는 빌드 도구를 의미한다. Rust로 작성된 고속 트랜스파일러이며, Babel이나 tsc(TypeScript Compiler) 같은 기존 JS/TS 빌드 도구보다 수십 배 빠른 성능을 제공한다.
 > 하지만, TS를 JS로 단순 트랜스파일만하며 타입에 대한 검사를 하지 않기 때문에 tsc처럼 컴파일 타임에 버그 검출이 불가하다.
@@ -125,11 +116,9 @@ $ npm run start:dev
 이 명령은 파일을 감시하여 자동으로 재컴파일하고 서버를 다시 로드합니다.
 
 ## 린팅과 포매팅
-
 CLI는 대규모에서 신뢰할 수 있는 개발 워크플로우를 스캐폴딩하기 위해 최선을 다합니다. 따라서 생성된 Nest 프로젝트에는 코드 린터와 포매터가 사전 설치되어 있습니다(각각 eslint와 prettier).
 
-> [!HINT]
-> 포매터와 린터의 역할이 확실하지 않으신가요? [여기](https://prettier.io/docs/comparison.html)에서 차이점을 알아보세요.
+> [!HINT] 포매터와 린터의 역할이 확실하지 않으신가요? [여기](https://prettier.io/docs/comparison.html)에서 차이점을 알아보세요.
 
 최대한의 안정성과 확장성을 보장하기 위해 기본 eslint와 prettier CLI 패키지를 사용합니다. 이 설정은 설계상 공식 확장 프로그램과 깔끔한 IDE 통합을 가능하게 합니다.
 
@@ -138,6 +127,7 @@ IDE가 관련이 없는 *헤드리스 환경*(지속적 통합, Git 훅 등)의 
 > **헤드리스 환경(Headless Environment)**: 사용자 인터페이스(GUI) 없이, 명령어 기반(CLI)이나 자동화 도구로만 실행되는 환경을 의미한다. 즉, 개발자가 직접 IDE에서 실행/디버깅 하지 않고, CI/CD 서버, Git 훅, Docker 컨테이너 등에서 자동으로 코드가 빌드 · 테스트 · 배포되는 상황이다.
 
 ```bash
+
 # eslint로 린트 및 자동 수정
 $ npm run lint
 
@@ -147,5 +137,5 @@ $ npm run format
 
 > Nest는 이런 헤드리스 환경에서도 바로 동작할 수 있도록 `npm run build`, `npm run start`, `npm run test`, `npm run lint`, `npm run format`같은 스크립트들을 기본으로 제공한다.
 
----
-이 글은 [NestJS 공식문서](https://docs.nestjs.com/)를 한글로 번역 및 개인적인 이해를 바탕으로 재구성한 글입니다.
+
+> [!NOTE] 이 글은 [NestJS 공식문서](https://docs.nestjs.com/)를 한글로 번역 및 개인적인 이해를 바탕으로 재구성한 글입니다.

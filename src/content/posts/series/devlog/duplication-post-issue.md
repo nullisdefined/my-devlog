@@ -31,6 +31,7 @@ return allPosts.filter((post) =>
 3. 중복을 제거하는 로직이 없다.
 
 ## 해결 방안
+
 ### Map 사용하기
 JS의 Map 자료구조를 활용해 문제를 해결했다. Map은 키-값 쌍을 저장하고 키의 고유성이 보장된다.
 
@@ -52,4 +53,5 @@ const uniquePosts = new Map<string, Post>();
 단순히 코드를 작성하는 것뿐만 아니라 다양한 엣지 케이스를 고려하는 것이 중요하다는 것을 다시 한 번 깨달았다.
 
 
-이 프로젝트의 모든 소스 코드는 [GitHub](https://github.com/nullisdefined/mydevlog)에 공개되어 있습니다. 코드 품질 개선이나 새로운 기능 제안에 대한 피드백은 언제나 환영합니다.
+
+> [!NOTE] 이 프로젝트의 모든 소스 코드는 [GitHub](https://github.com/nullisdefined/mydevlog)에 공개되어 있습니다. 코드 품질 개선이나 새로운 기능 제안에 대한 피드백은 언제나 환영합니다.

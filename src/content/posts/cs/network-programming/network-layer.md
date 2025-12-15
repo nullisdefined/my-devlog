@@ -11,7 +11,6 @@ views: 0
 ## 기본 개념 정리
 
 ### 네트워크 구성 요소
-
 **노드(Node)**
 
 - 네트워크에 연결된 모든 장치를 의미
@@ -40,7 +39,6 @@ views: 0
 - e.g. 사용자 노트북 ↔ 웹 서버
 
 ### 도메인(Domain)
-
 **도메인**
 
 - 어떤 기능/영향 범위가 적용되는 네트워크 영역 범위
@@ -62,11 +60,9 @@ views: 0
 - 실제 물리적 또는 논리적 연결을 의미
 
 ## 인터넷 계층 구조
-
 인터넷은 계층적 구조로 구성되어 있다.
 
 ### ISP 계층 구조
-
 <img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/03f1fe0025f0c683af3be56ae2e689d6.png" alt="ISP 계층 구조" width="500" />
 
 **1. Backbone ISP**
@@ -86,21 +82,17 @@ views: 0
 - 서로 다른 Backbone ISP 간의 연결 지점으로 백본 간의 peering 또는 트래픽 중계가 일어나는 곳
 
 ### 계층 구조의 의미
-
 인터넷은 계층적 구조로 구성되어 있으며, 최하위 계층인 Local ISP는 개인 사용자에게 인터넷을 제공하고, 이들 Local ISP는 Regional ISP를 통해 연결된다. Regional ISP는 여러 Local ISP를 묶어 트래픽을 상위 계층인 Backbone ISP로 전달하며, 백본 간 트래픽 교환은 NAP에서 이루어진다.
 
 ## 캡슐화(Encapsulation)
-
 <img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/db2680c5ed2fa132bbaff22fe854cc8e.png" alt="image" width="550" />
 
 ### 캡슐화란?
-
 **캡슐화**: 상위 계층의 데이터를 하위 계층으로 전달하면서 헤더를 추가하는 과정
 
 - 하위 계층은 상위 계층에서 받은 전체 패킷(데이터 + 헤더) 그 앞에 자신의 헤더를 붙임
 
 ### 캡슐화 과정
-
 ```
 Application Layer:    [    Data    ]
 Transport Layer:      [ TCP Header | Data ]
@@ -110,18 +102,15 @@ Physical Layer:       01101010110101... (bits)
 ```
 
 **동작 원리**:
-
 1. N 계층에서 받은 데이터는 N-1 계층에서 하나의 데이터 단위로 취급됨
 2. N-1 계층은 이를 캡슐화하여 새로운 헤더를 붙임
 3. 최종적으로 물리 계층에서는 모든 계층의 헤더가 누적된 데이터를 비트로 변환하여 전송
 4. 수신 측에서는 이를 다시 상위 계층으로 전달하면서 각 계층의 헤더를 제거
 
 ## OSI 7계층 vs TCP/IP 모델
-
 ![image](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/143d125498943ab22cb412ee2c56f2d9.png)
 
 ### OSI 7계층의 각 계층 기능
-
 **7. 응용 계층 (Application Layer)**
 
 - 사용자가 네트워크에 접근할 수 있도록 도와주는 계층
@@ -152,7 +141,6 @@ Physical Layer:       01101010110101... (bits)
 - 0과 1의 비트를 전기적 또는 광학적 신호로 변환하여 전송하며, 전송 매체의 물리적 특성, 전송 속도, 동기화 등을 규정
 
 ### TCP/IP 모델과의 비교
-
 |OSI 7계층|TCP/IP 모델|PDU|주요 기능|
 |---|---|---|---|
 |응용 계층|응용 계층|메시지|사용자 인터페이스|
@@ -164,16 +152,13 @@ Physical Layer:       01101010110101... (bits)
 |물리 계층|↑ (통합)|비트|물리적 전송|
 
 **특징**:
-
 - TCP/IP 프로토콜은 5계층 구조로, OSI 7계층 모델의 일부 계층이 통합되어 있음
 - 특히 세션 계층과 표현 계층은 TCP/IP에서 별도로 구분되지 않으며, 응용 계층에 통합되어 있음
 
 ## TCP/IP 주소 지정
-
 네트워크에서 정확한 통신을 위해서는 3가지 주소 체계가 필요하다.
 
 ### 1. 물리 주소 (Physical Address)
-
 **사용 계층**: 데이터링크 계층
 
 **형태**: MAC 주소 (48비트, 6바이트, 16진수 표기)
@@ -181,12 +166,10 @@ Physical Layer:       01101010110101... (bits)
 - 예시: `AA:BB:CC:DD:EE:FF`
 
 **특징**:
-
 - 장치에 고정된 하드웨어 주소임
 - LAN을 벗어나면 MAC 주소는 변경됨 (라우터를 지나면서 매 홉마다 변경됨)
 
 ### 2. 논리 주소 (Logical Address)
-
 **사용 계층**: 네트워크 계층
 
 **형태**: IP 주소
@@ -197,13 +180,11 @@ Physical Layer:       01101010110101... (bits)
 **역할**: 전 세계 네트워크 상의 고유한 식별자로, 장치의 위치를 식별함
 
 **특징**:
-
 - 네트워크를 넘어도 변하지 않음
 - 라우터는 IP 주소를 기반으로 데이터그램을 최종 목적지까지 전달함
 - ARP 프로토콜을 통해 논리 주소 → 물리 주소로 변환하여 LAN에서 전달 가능하게 함
 
 ### 3. 포트 주소 (Port Address)
-
 **사용 계층**: 전송 계층
 
 **형태**: 16비트 숫자 (0~65535)
@@ -213,36 +194,29 @@ Physical Layer:       01101010110101... (bits)
 **역할**: 하나의 장치 안에서 어떤 프로세스와 통신할지를 지정함
 
 **특징**:
-
 - 한 장치 내에서 여러 응용 프로그램을 구분하기 위해 필요함
 - TCP/UDP에서 사용됨
 
 ## LAN (유선 근거리 통신망)
 
 ### LAN의 정의와 특징
-
 **LAN(Local Area Network)**:
-
 - 학교, 아파트 등 제한된 지역에서 장치들이 데이터를 교환하는 통신망을 의미
 - 이더넷(Ethernet), 토큰 링, ATM 등의 기술이 있는데 오늘날엔 이더넷이 가장 널리 사용됨
 - LAN은 WAN(광역통신망)이나 인터넷과 연결되어 통신을 확장함
 
 ### IEEE 802 표준
-
 **IEEE 802**: LAN 통신을 위한 표준을 정함
 
 **계층 분할**:
-
 - 데이터링크 계층을 LLC와 MAC 두 부분으로 나눔
 - **LLC(Logical Link Control)**: 논리 링크 제어
 - **MAC(Medium Access Control)**: 매체 접근 제어
 
 ### 이더넷 프레임 구조
-
 <img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/e5e3a37cc7438eb30fd722e31ac84a50.png" alt="Ethernet 프레임 구조" width="550" />
 
 **각 필드 설명**:
-
 **Preamble (7바이트)**
 
 - 수신 동기화를 위해 01 반복
@@ -272,26 +246,21 @@ Physical Layer:       01101010110101... (bits)
 - 오류 검출용 필드, CRC-32 사용
 
 ### 프레임 길이의 제한
-
 **최소 프레임 길이 (64바이트)**:
-
 - CSMA/CD 기반 충돌 감지를 위해 설정된 것
 - 프레임이 너무 짧으면 충돌을 감지하지 못하기 때문
 
 **최대 프레임 길이 (1518바이트)**:
-
 - 메모리 및 버퍼의 제한
 - 네트워크 장치 간의 처리 효율성
 - 충돌 도메인 내 전파 지연 등을 고려해 제한
 
 ### 이더넷 주소 형식 (MAC 주소)
-
 **형태**: 48비트 주소를 16진수로 표기
 
 - 예시: `AA:BB:CC:DD:EE:FF`
 
 **주소 유형 구분**:
-
 **유니캐스트 주소**
 
 - 첫 바이트의 최하위 비트가 0
@@ -309,15 +278,12 @@ Physical Layer:       01101010110101... (bits)
 ## CSMA/CD
 
 ### CSMA/CD이란?
-
 CSMA/CD은 Carrier Sense Multiple Access with Collision Detection의 약자로, 공유 매체(e.g. 이더넷)에서 여러 장치가 동시에 데이터를 전송할 수 있도록 해주는 방식이다.
 
 **배경**:
-
 - 허브(hub) 기반의 네트워크에서는 하나의 선로를 모든 지국(station)이 공유하기 때문에 동시에 데이터를 전송하려고 하면 충돌(collision) 발생 가능성이 존재함
 
 **구성 요소**:
-
 **CS (Carrier Sense, 매체 감지)**
 
 - 전송 전에 채널이 비었는지 확인
@@ -331,22 +297,18 @@ CSMA/CD은 Carrier Sense Multiple Access with Collision Detection의 약자로, 
 - 전송 중 충돌이 감지되면 즉시 중단하며 재전송을 시도하는 것
 
 ### CSMA/CD 동작 과정
-
 <img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/30e33331fba9b023531d899d4b4c5fad.png" alt="CSMA/CD 동작 과정" width="600" />
 *CSMA/CA 흐름 다이어그램*
 
 ### 최소 프레임 길이와의 관계
-
 충돌 감지는 프레임 전송 중에만 가능하기 때문에 전파 지연 시간(propagation delay)보다 프레임 전송 시간이 더 길어야 충돌을 감지할 수 있음
 
 → 최소 프레임 길이 = 64바이트로 고정됨
 
 ### 현재 사용하지 않는 이유
-
 오늘날에는 허브 기반에서 스위치 기반 Full-Duplex 환경이기 때문에 충돌 자체가 발생하지 않아 사용하지 않는다.
 
 **Full-Duplex의 장점**:
-
 - 송신과 수신이 동시에 가능
 - 충돌이 발생하지 않음
 - 각 포트가 독립적인 충돌 도메인을 형성
@@ -354,7 +316,6 @@ CSMA/CD은 Carrier Sense Multiple Access with Collision Detection의 약자로, 
 ## IEEE 802.11 (Wi-Fi, 무선 LAN)
 
 ### 무선 LAN 구조
-
 **BSS (Basic Service Set)**
 
 - 무선 LAN의 기본 단위
@@ -367,51 +328,41 @@ CSMA/CD은 Carrier Sense Multiple Access with Collision Detection의 약자로, 
 - 유동적인 이동을 가능하게 해주는 roaming 기능을 제공함
 
 ### Hidden Station Problem
-
 **문제 상황**:
-
 - B와 C는 A와 각각 통신 가능하지만, B와 C는 서로를 인식하지 못함
 - 동시에 A에게 전송 시 충돌(collision) 발생
 
 <img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/2ee33cb7e62bdc65a28a857db7185aca.png" alt="image" width="600" />
 
 ### 해결 방법: CSMA/CA (Collision Avoidance)
-
 **RTS/CTS 메커니즘**:
-
 1. **B → A**: RTS(Request To Send) 프레임 전송
 2. **A → B, C**: CTS(Clear To Send) 프레임 전송, 다른 지국들에게 통신을 알림
 3. **A가 CTS를 보내면**: 모든 노드가 B의 전송을 기다려야 함 → 충돌 방지
 
 <img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/53835e25fc19409ce83b48de37cf3021.png" alt="CSMA/CA" width="500" />
 
-
 ## 브리지(Bridge, L2 Switch)와 라우터(Router)
 
 ### 브리지 (Bridge, L2 Switch)
-
 <img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/1ac2aa5bb07c445ab84d251e43c6de8a.png" alt="bridge" width="500" />
 
 **동작 계층**: 물리 계층 + 데이터링크 계층
 
 **주요 기능**:
-
 - LAN 세그먼트를 연결 (무조건 같은 네트워크 내의 세그먼트 간의 연결임)
 - MAC 주소 기반 필터링(MAC 테이블 확인하는 작업) 및 포워딩 수행
 - 새로운 지국 발견 시 학습 후 테이블을 갱신함
 - 프레임의 MAC 주소는 변경하지 않음
 
 **도메인 분할**:
-
 - 충돌 도메인 분할 가능 → 포트마다 충돌 도메인을 따로 만들어서 충돌없이 1:1 전송을 가능하게 함
 - 브로드캐스트 도메인 분할 불가능 → 모든 포트에 전파됨
 
 ### 라우터 (Router)
-
 **동작 계층**: 물리 계층 + 데이터링크 계층 + 네트워크 계층
 
 **주요 기능**:
-
 - LAN과 LAN, LAN과 WAN을 연결
 - 브리지보다 더 높은 계층에서 동작하므로 더 넓은 네트워크 연결 가능
 - IP 주소 기반으로 패킷의 목적지를 판단함
@@ -419,12 +370,10 @@ CSMA/CD은 Carrier Sense Multiple Access with Collision Detection의 약자로, 
 - 프레임의 MAC 주소를 변경함
 
 **도메인 분할**:
-
 - 충돌 도메인 분할 가능 → 포트마다 충돌 도메인을 따로 만들어서 충돌없이 전송을 가능하게 함
 - 브로드캐스트 도메인 분할 가능 → 라우터가 브로드캐스트를 차단하여 도메인이 분할됨
 
 ### 비교표
-
 | 특징                | 브리지 (Bridge)   | 라우터 (Router) |
 | ----------------- | -------------- | ------------ |
 | **동작 계층**         | L1, L2         | L1, L2, L3   |
@@ -435,49 +384,39 @@ CSMA/CD은 Carrier Sense Multiple Access with Collision Detection의 약자로, 
 | **브로드캐스트 도메인 분할** | X              | O            |
 | **라우팅 기능**        | X              | O            |
 
----
-
 ## 연결 지향 vs 비연결형 서비스
 
 ### 연결 지향 서비스 (Connection-Oriented Service)
-
 **특징**:
-
 - 데이터 전송 전에 송신자와 수신자 간에 논리적 연결(가상 회선)을 설정
 - 연결 설정 → 데이터 전송 → 연결 해제의 3단계 과정
 - 신뢰성 있는 데이터 전송 보장
 - 순서 보장, 오류 제어, 흐름 제어 제공
 
 **장점**:
-
 - 데이터 전송의 신뢰성 보장
 - 순서가 보장됨
 - 오류 복구 기능
 
 **단점**:
-
 - 연결 설정/해제로 인한 오버헤드
 - 자원 사용량 증가
 
 **예시**: TCP, 전화 통화
 
 ### 비연결형 서비스 (Connectionless Service)
-
 **특징**:
-
 - 연결 설정 없이 데이터를 바로 전송
 - 각 패킷이 독립적으로 처리됨
 - 빠른 전송 가능
 - 신뢰성 보장하지 않음
 
 **장점**:
-
 - 빠른 전송 속도
 - 적은 오버헤드
 - 단순한 구조
 
 **단점**:
-
 - 신뢰성 보장하지 않음
 - 순서 보장하지 않음
 - 오류 제어 없음
@@ -485,9 +424,7 @@ CSMA/CD은 Carrier Sense Multiple Access with Collision Detection의 약자로, 
 **예시**: UDP, IP, 우편 서비스
 
 ### 네트워크 계층에서의 서비스
-
 **IP 프로토콜**:
-
 - 기본적으로 **비연결형 서비스**를 제공
 - 각 패킷(데이터그램)은 독립적으로 라우팅됨
 - 신뢰성은 상위 계층(전송 계층)에서 보장
@@ -495,28 +432,21 @@ CSMA/CD은 Carrier Sense Multiple Access with Collision Detection의 약자로, 
 ## 네트워크 계층의 역할
 
 ### 1. 라우팅 (Routing)
-
 **정의**: 패킷이 목적지까지 가는 최적의 경로를 결정하는 과정
 
 **라우팅 테이블**:
-
 - 목적지 네트워크와 해당 경로 정보를 저장
 - 라우팅 프로토콜을 통해 동적으로 업데이트
 
 ### 2. 포워딩 (Forwarding)
-
 **정의**: 라우팅 테이블을 바탕으로 패킷을 다음 홉으로 전송하는 과정
 
 ### 3. 주소 지정 (Addressing)
-
 **논리적 주소(IP 주소)**:
-
 - 전 세계적으로 유일한 주소 체계
 - 네트워크 부분과 호스트 부분으로 구성
 
 ### 4. 패킷 생성 및 처리
-
 **데이터그램**:
-
 - 네트워크 계층의 PDU
 - IP 헤더 + 상위 계층 데이터로 구성

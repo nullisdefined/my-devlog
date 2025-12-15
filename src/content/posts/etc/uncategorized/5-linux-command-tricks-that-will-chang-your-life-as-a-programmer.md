@@ -40,7 +40,7 @@ mkdir prod
 mkdir -p {dev,test,prod}/{backend,frontend}
 ```
 
-다음은 명령어에 대한 설명이다:
+**다음은 명령어에 대한 설명이다**:
 - `-p` 플래그: 필요한 경우 상위 디렉터리를 자동으로 생성한다. 상위 디렉터리가 없을 경우 오류를 발생시키지 않고, 필요한 디렉터리를 함께 만든다.
 - 중괄호 {}: 중괄호 안에 여러 옵션을 나열하면, mkdir가 이를 조합하여 자동으로 디렉터리를 생성한다.
 - 첫 번째 중괄호 {dev,test,prod}: dev, test, prod 환경용 디렉터리를 만든다.
@@ -90,15 +90,15 @@ cd ..
 `cd -` 명령어를 사용하면, 깊은 디렉터리 구조 안에서 이전 디렉터리로 한 번에 돌아갈 수 있다. 마치 웹 브라우저의 '뒤로 가기' 버튼처럼 동작한다.
 
 #### 사용법
-1. **시작 디렉터리**:
+**1. **시작 디렉터리****:
 루트 디렉터리에서 시작한다고 가정한다.
 `/home/user/projects/webapp/`
 
-2. **중첩 디렉터리로 이동**:
+**2. **중첩 디렉터리로 이동****:
 서브 디렉터리로 이동한다.
 `/home/user/projects/webapp/src/frontend/components`
 
-3. **이전 디렉터리로 돌아가기**:
+**3. **이전 디렉터리로 돌아가기****:
 이제 단순히 cd -를 입력하면 루트 디렉터리로 바로 돌아갈 수 있다.
 `/home/user/projects/webapp/`
 
@@ -256,5 +256,5 @@ history 5
 ![](https://miro.medium.com/v2/resize:fit:1400/0*M3CE87vFMovwI9L-)
 *Photo by [Rowen Smith](https://unsplash.com/@hellosmith?utm_source=medium&utm_medium=referral) on [Unsplash](https://unsplash.com/?utm_source=medium&utm_medium=referral)*
 
----
-이 글은 CyCoderX의 [5 Linux Command Tricks That Will Change Your Life as a Programmer](https://levelup.gitconnected.com/5-linux-command-tricks-that-will-change-your-life-as-a-programmer-825a4524218a)를 한글로 번역한 글입니다.
+
+> [!NOTE] 이 글은 CyCoderX의 [5 Linux Command Tricks That Will Change Your Life as a Programmer](https://levelup.gitconnected.com/5-linux-command-tricks-that-will-change-your-life-as-a-programmer-825a4524218a)를 한글로 번역한 글입니다.

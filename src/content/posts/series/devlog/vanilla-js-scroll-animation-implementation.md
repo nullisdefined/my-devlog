@@ -11,18 +11,16 @@ views: 0
 정적인 포트폴리오 페이지에 조금 인터랙티브한 애니메이션을 추가해 보았다. 특히 스크롤 기반 네비게이션과 3D 프로젝트 캐러셀 구현에 중점을 두었다.
 
 ## 왜 애니메이션인가?
-
-포트폴리오는 개발자의 첫인상을 결정하는 중요한 요소다. 단순히 정보를 나열하는 것보다 사용자와 상호작용하는 동적인 경험을 제공하고 싶었다. 잘 만들어진 애니메이션은:
-
+**포트폴리오는 개발자의 첫인상을 결정하는 중요한 요소다. 단순히 정보를 나열하는 것보다 사용자와 상호작용하는 동적인 경험을 제공하고 싶었다. 잘 만들어진 애니메이션은**:
 - 자연스러운 전환으로 사용자의 인지적 부담을 줄인다
 - 중요한 콘텐츠에 시선을 집중시킨다
 - 전문성과 디테일에 대한 관심을 보여준다
-- 사용자 행동에 즉각적인 피드백을 제공한다
+
+> [!NOTE] - 사용자 행동에 즉각적인 피드백을 제공한다
 
 ## 스크롤 기반 섹션 네비게이션
 
 ### 1. 스크롤 인터셉션 구현
-
 가장 먼저 구현한 것은 히어로 섹션에서 스크롤할 때 자동으로 프로젝트 섹션으로 이동하는 기능이다.
 
 ```tsx
@@ -108,7 +106,7 @@ export function useScrollNavigation() {
     };
 
     window.addEventListener("wheel", handleWheel, { passive: false });
-    
+
     return () => {
       window.removeEventListener("wheel", handleWheel);
       if (scrollTimeoutRef.current) {
@@ -142,7 +140,7 @@ export function useScrollNavigation() {
           if (projectsElement) {
             const projectsRect = projectsElement.getBoundingClientRect();
             const isNearProjectsTop = projectsRect.top >= -200 && projectsRect.top <= 200;
-            
+
             if (isNearProjectsTop) {
               scrollToHero();
             }
@@ -171,13 +169,11 @@ export function useScrollNavigation() {
 ```
 
 ### 2. 스크롤 상태 관리
-
 스크롤 중복 실행을 방지하고 부드러운 전환을 위해 상태 관리가 중요했다. `isScrolling` 플래그로 애니메이션 중 추가 스크롤을 차단하고, 디바운싱으로 과도한 이벤트 호출을 방지했다.
 
 ## 3D 프로젝트 캐러셀 구현
 
 ### 1. 반응형 캐러셀 컴포넌트
-
 데스크톱에서는 3개의 카드를 동시에 보여주고, 모바일에서는 단일 카드로 전환되는 반응형 캐러셀을 구현했다.
 
 ```tsx
@@ -201,7 +197,7 @@ interface ProjectCarouselProps {
 
 export default function ProjectCarousel({ projects, onImageClick }: ProjectCarouselProps) {
   const [currentProjectIndex, setCurrentProjectIndex] = useState(0);
-  
+
   // 프로젝트 네비게이션
   const nextProject = () => {
     setCurrentProjectIndex((prev) => (prev + 1) % projects.length);
@@ -371,7 +367,7 @@ function ProjectCard({ project, isActive, onImageClick }: ProjectCardProps) {
         <p className="text-gray-600 dark:text-gray-300 text-sm mb-4">
           {project.description}
         </p>
-        
+
         {/* 기술 스택 */}
         <div className="flex flex-wrap gap-2 mb-4">
           {project.technologies.map((tech, index) => (
@@ -396,7 +392,8 @@ function ProjectCard({ project, isActive, onImageClick }: ProjectCardProps) {
                 className="text-sm text-blue-500 hover:text-blue-600 
                           transition-colors"
               >
-                GitHub →
+
+> [!NOTE] GitHub →
               </a>
             )}
             {project.liveUrl && (
@@ -419,7 +416,6 @@ function ProjectCard({ project, isActive, onImageClick }: ProjectCardProps) {
 ```
 
 ### 2. 3D 효과와 애니메이션
-
 CSS Transform을 활용해 깊이감 있는 3D 효과를 구현했다. 중앙 카드는 원본 크기로, 양옆 카드는 축소하고 투명도를 조절해 자연스러운 원근감을 표현했다.
 
 ```css
@@ -435,7 +431,6 @@ transition: all 0.5s ease;
 ## 시각적 효과 구현
 
 ### 1. 그라디언트 텍스트
-
 히어로 섹션의 타이틀에 그라디언트 효과를 적용했다.
 
 ```tsx
@@ -451,11 +446,11 @@ export default function HeroSection() {
             DEVELOPER
           </span>
         </h1>
-        
+
         <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-8">
           Creating Digital Experiences
         </p>
-        
+
         {/* 스크롤 유도 애니메이션 */}
         <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2">
           <div className="animate-bounce">
@@ -479,7 +474,6 @@ export default function HeroSection() {
 ```
 
 ### 2. 로딩 상태와 전환 효과
-
 부드러운 전환을 위해 CSS 트랜지션과 애니메이션을 활용했다.
 
 ```tsx
@@ -502,7 +496,6 @@ return (
 ## 성능 최적화 전략
 
 ### 1. 이벤트 디바운싱
-
 스크롤 이벤트는 매우 자주 발생하므로 디바운싱으로 성능을 최적화했다.
 
 ```tsx
@@ -518,14 +511,13 @@ scrollTimeoutRef.current = setTimeout(() => {
 ```
 
 ### 2. 조건부 이벤트 리스너
-
 필요한 경우에만 이벤트 리스너를 등록하고, 컴포넌트 언마운트 시 정리했다.
 
 ```tsx
 useEffect(() => {
   // 이벤트 리스너 등록
   window.addEventListener("wheel", handleWheel, { passive: false });
-  
+
   // 클린업
   return () => {
     window.removeEventListener("wheel", handleWheel);
@@ -534,7 +526,6 @@ useEffect(() => {
 ```
 
 ### 3. 하드웨어 가속 활용
-
 CSS `transform`과 `will-change` 속성을 사용해 GPU 가속을 활용했다.
 
 ```css
@@ -547,7 +538,6 @@ CSS `transform`과 `will-change` 속성을 사용해 GPU 가속을 활용했다.
 ## 접근성 고려사항
 
 ### 1. 키보드 네비게이션
-
 마우스 없이도 모든 기능을 사용할 수 있도록 키보드 지원을 추가했다.
 
 - 좌우 화살표로 프로젝트 전환
@@ -555,7 +545,6 @@ CSS `transform`과 `will-change` 속성을 사용해 GPU 가속을 활용했다.
 - Enter 키로 선택
 
 ### 2. ARIA 레이블
-
 스크린 리더 사용자를 위한 적절한 ARIA 레이블을 추가했다.
 
 ```tsx
@@ -568,7 +557,6 @@ CSS `transform`과 `will-change` 속성을 사용해 GPU 가속을 활용했다.
 ```
 
 ### 3. 모션 감소 설정
-
 ```css
 @media (prefers-reduced-motion: reduce) {
   * {
@@ -580,7 +568,6 @@ CSS `transform`과 `will-change` 속성을 사용해 GPU 가속을 활용했다.
 ```
 
 ## 결과
-
 ![image](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/e687f64014c88975765f9e7407fbb059.gif)
 
 - 스크롤만으로 부드럽게 섹션이 전환된다
@@ -588,4 +575,5 @@ CSS `transform`과 `will-change` 속성을 사용해 GPU 가속을 활용했다.
 
 반응형 디자인, 성능 최적화, 접근성까지 모두 고려하면서도 시각적으로 매력적인 인터페이스를 구현하는 과정이 재미있었고, 동시에 값진 경험이었다.
 
-이 프로젝트의 모든 소스 코드는 [GitHub](https://github.com/nullisdefined/mydevlog)에 공개되어 있습니다. 코드 품질 개선이나 새로운 기능 제안에 대한 피드백은 언제나 환영합니다.
+
+> [!NOTE] 이 프로젝트의 모든 소스 코드는 [GitHub](https://github.com/nullisdefined/mydevlog)에 공개되어 있습니다. 코드 품질 개선이나 새로운 기능 제안에 대한 피드백은 언제나 환영합니다.

@@ -29,7 +29,7 @@ let instructor = {
 - 탐색 - O(n)
 - 접근 - O(1)
 
-객체의 주요 메서드들의 빅오:
+**객체의 주요 메서드들의 빅오**:
 ```js
 // 모두 O(n)
 console.log(Object.keys(instructor));    // ["firstName", "isInstructor", "favoriteNumbers"]
@@ -52,7 +52,7 @@ console.log(instructor.hasOwnProperty("firstName")); // true
 - 접근 - O(1)
 삽입과 제거에서 'It depends...'라고 표현한 이유는 배열의 끝에 삽입(제거)하는 경우 O(1), 앞에 삽입(제거)하는 경우 O(n)의 시간 복잡도를 가지기 때문이다.
 
-배열의 주요 메서드들의 빅오:
+**배열의 주요 메서드들의 빅오**:
 ```js
 let numbers = [1, 2, 3, 4, 5];
 
@@ -104,7 +104,9 @@ push/pop의 경우 unshift/shift보다 성능이 좋다. 이유는 앞에서 말
 ![image](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/eb61fe683f8101776a96307f84b7672c.png)
 
 수정된 테스트 결과를 보니 모든 데이터 크기에서 객체의 삽입이 배열보다 빠른 것을 확인할 수 있었다.
+
 ## 정리
+
 ### 객체를 사용해야 할 때
 - 각 요소의 순서가 중요하지 않을 때
 - 빠른 접근/삽입/제거가 필요할 때
@@ -117,5 +119,5 @@ push/pop의 경우 unshift/shift보다 성능이 좋다. 이유는 앞에서 말
 
 이러한 특성을 고려해서 적절한 데이터 구조를 선택하면 좋을 것 같다.
 
----
-이 글은 Udemy의 [【한글자막】 JavaScript 알고리즘 & 자료구조 마스터클래스](https://www.udemy.com/course/best-javascript-data-structures/) 강의를 토대로 공부한 내용을 정리한 것입니다.
+
+> [!NOTE] 이 글은 Udemy의 [【한글자막】 JavaScript 알고리즘 & 자료구조 마스터클래스](https://www.udemy.com/course/best-javascript-data-structures/) 강의를 토대로 공부한 내용을 정리한 것입니다.

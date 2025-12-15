@@ -26,6 +26,7 @@ const greeting = "Hello, TypeScript!";
 
 ## TypeScript의 보호 기능
 TypeScript는 코드의 실행 전에 타입 체커(Type Checker)를 통해 잠재적인 오류를 감지한다.
+
 ###  타입 체크 예시
 ```ts
 // 잘못된 타입 연산
@@ -43,6 +44,7 @@ user.hello();  // Error: 'hello' 속성이 '{ name: string; }' 형식에 없음
 ```
 
 ## 타입 시스템 활용하기
+
 ### 1. 타입 추론과 타입 명시
 TypeScript는 자동으로 타입을 추론할 수 있지만, 사용자가 명시적으로 타입을 지정할 수도 있다.
 ```ts
@@ -54,6 +56,7 @@ let inferredArray = [1, 2, 3];  // number[]로 추론됨
 let explicitNumber: number = 42;
 let explicitArray: number[] = [1, 2, 3];
 ```
+
 ### 2. 오브젝트 타입(Object Type)
 ```ts
 // 객체의 타입 정의
@@ -79,8 +82,7 @@ const userInfo: [string, number, boolean] = ["Kim", 25, true];
 const constants: readonly [number, string] = [3.14, "PI"];
 ```
 
-튜플은 React의 useState나 특정 함수의 반환 값처럼 관련된 값들을 그룹화할 때 유용하지만, 다음과 같은 한계가 있다:
-
+**튜플은 React의 useState나 특정 함수의 반환 값처럼 관련된 값들을 그룹화할 때 유용하지만, 다음과 같은 한계가 있다**:
 1. 요소의 의미를 파악하기 어려움 (명시적인 레이블이 없음)
 2. 위치에 의존적인 데이터 구조
 3. 디버깅이 어려울 수 있음
@@ -141,7 +143,9 @@ function processValue(value: unknown) {
 }
 ```
 - `value is string`: `isString` 함수가 `true`를 반환하면 인자로 받은 `value`가 문자열임을 TypeScript에게 알려줌
+
 ## 특수한 타입들
+
 ### 1. void 타입
 반환값이 없는 함수의 타입을 나타낸다.
 ```ts
@@ -175,7 +179,6 @@ function infiniteLoop(): never {
 }
 ```
 
-
 ### 4. any 타입
 모든 타입을 허용하지만, TypeScript의 타입 검사를 무력화시키므로 사용을 지양해야 한다.
 ```ts
@@ -184,5 +187,4 @@ unsafe = "string";  // 어떤 타입이든 허용됨
 unsafe = false;     // 타입 안전성이 없어짐
 ```
 
----
 TypeScript의 타입 시스템으로 개발 단계에서 많은 오류를 사전에 잡아내고, 코드의 안정성을 높여준다. 하지만 이러한 타입 검사는 컴파일 시에만 동작하며, 실제 실행되는 JavaScript 코드에서는 타입 정보가 제거된다는 점을 기억해야 한다.

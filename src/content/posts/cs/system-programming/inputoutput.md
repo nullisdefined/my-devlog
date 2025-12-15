@@ -14,11 +14,9 @@ views: 0
 ## Low Level File I/O
 
 ### 기본 개념
-
 Low Level File I/O는 운영체제가 직접 제공하는 시스템 콜을 사용한 파일 입출력 방식이다. File은 입출력이 되는 모든 것을 의미하며, 일반적인 파일뿐만 아니라 디바이스, 파이프, 소켓 등도 포함한다.
 
 ### 동작 흐름
-
 ```
 open() → fd 할당 → 파일 사용 → close()
 ```
@@ -26,7 +24,6 @@ open() → fd 할당 → 파일 사용 → close()
 일반적으로 `fd = open()` 처럼 한 줄에 작성하여 파일 디스크립터를 할당받는다.
 
 ### 파일 디스크립터(File Descriptor)
-
 <img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/ea871f02a5c9ad139a95b1d50d57dfd4.png" alt="image" width="500" />
 
 파일 디스크립터는 열린 파일을 식별하는 정수 값이다. 운영체제는 각 프로세스마다 파일 디스크립터 테이블을 관리한다.
@@ -41,7 +38,6 @@ open() → fd 할당 → 파일 사용 → close()
 새로운 파일을 열면 사용 가능한 가장 작은 번호가 할당된다.
 
 ### open() 함수와 플래그
-
 **기본 문법:**
 
 ```c
@@ -82,7 +78,6 @@ fd = open("test.txt", O_RDWR);
 ### Low Level I/O 함수들
 
 #### read() 함수
-
 ```c
 ssize_t read(int fd, void *buf, size_t count);
 ```
@@ -106,7 +101,6 @@ printf("n = %d, buf = %s\n", n, buf);  // n = 5, buf = "Linux"
 ```
 
 #### write() 함수
-
 ```c
 ssize_t write(int fd, const void *buf, size_t count);
 ```
@@ -131,7 +125,6 @@ while ((n = read(rfd, buf, 6)) > 0) {
 ```
 
 #### lseek() 함수
-
 ```c
 off_t lseek(int fd, off_t offset, int whence);
 ```
@@ -157,7 +150,6 @@ start = lseek(fd, 6, SEEK_SET);  // 파일 시작에서 6바이트 이동
 ### 파일 디스크립터 조작
 
 #### dup() 함수
-
 ```c
 int dup(int oldfd);
 ```
@@ -175,7 +167,6 @@ printf("Standard Output Redirection\n");  // 파일로 출력됨
 ```
 
 #### dup2() 함수
-
 ```c
 int dup2(int oldfd, int newfd);
 ```
@@ -189,7 +180,6 @@ printf("DUP2: Standard Output Redirection\n");
 ```
 
 #### fcntl() 함수
-
 ```c
 int fcntl(int fd, int cmd, ...);
 ```
@@ -213,17 +203,14 @@ fcntl(fd, F_SETFL, flags);   // 플래그 설정
 ## High Level File I/O
 
 ### 기본 개념
-
 High Level File I/O는 C 표준 라이브러리에서 제공하는 파일 입출력 방식이다. Low Level I/O를 감싸서 더 편리하고 효율적인 인터페이스를 제공한다.
 
 ### 동작 흐름
-
 ```
 fopen() → 파일 사용 → fclose()
 ```
 
 ### File Pointer vs File Descriptor
-
 <img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/1bb087375657d54661749cece80252fb.png" alt="image" width="500" />
 
 - **파일 디스크립터**: 정수형, 운영체제가 직접 관리
@@ -236,7 +223,6 @@ fopen() → 파일 사용 → fclose()
 - 플랫폼 독립적인 구조 = 어느 플랫폼에서든 동일하게 동작
 
 ### fopen() 함수
-
 ```c
 FILE *fopen(const char *pathname, const char *mode);
 ```
@@ -258,7 +244,6 @@ FILE *fopen(const char *pathname, const char *mode);
 ### 문자 기반 입출력 함수
 
 #### 입력 함수들
-
 ```c
 // 파일에서 문자 하나 읽기
 int fgetc(FILE *fp);
@@ -270,7 +255,6 @@ int getw(FILE *fp);
 ```
 
 #### 출력 함수들
-
 ```c
 // 파일에 문자 하나 쓰기
 int fputc(int c, FILE *fp);
@@ -298,7 +282,6 @@ while((c = fgetc(rfp)) != EOF) {
 ### 문자열 기반 입출력 함수
 
 #### gets() vs fgets()
-
 ```c
 // 위험한 함수 - 사용 금지
 char *gets(char *s);
@@ -319,7 +302,6 @@ char *fgets(char *s, int size, FILE *fp);
 - 버퍼의 마지막에 널 문자('\0') 추가
 
 #### puts() vs fputs()
-
 ```c
 // 표준 출력에 문자열 출력 (개행 문자 자동 추가)
 int puts(const char *s);
@@ -331,7 +313,6 @@ int fputs(const char *s, FILE *fp);
 ### 버퍼 기반 입출력 함수
 
 #### fread() 함수
-
 ```c
 size_t fread(void *ptr, size_t size, size_t nmemb, FILE *fp);
 ```
@@ -355,7 +336,6 @@ n = fread(buf, sizeof(char) * 2, 4, fp);
 ```
 
 #### fwrite() 함수
-
 ```c
 size_t fwrite(const void *ptr, size_t size, size_t nmemb, FILE *fp);
 ```
@@ -365,7 +345,6 @@ size * nmemb 만큼 ptr 버퍼에서 읽어와 fp 파일에 출력한다.
 ### 형식 기반 입출력 함수
 
 #### scanf 계열
-
 ```c
 // 표준 입력에서 형식화된 입력
 int scanf(const char *format, ...);
@@ -386,7 +365,6 @@ while(fscanf(fp, "%d %d %d %d %d", &id, &s1, &s2, &s3, &s4) != EOF) {
 ```
 
 #### printf 계열
-
 ```c
 // 표준 출력에 형식화된 출력
 int printf(const char *format, ...);
@@ -398,18 +376,15 @@ int fprintf(FILE *fp, const char *format, ...);
 ### 파일 오프셋 제어
 
 #### fseek() 함수
-
 ```c
 int fseek(FILE *fp, long offset, int whence);
 ```
 
-Low Level의 lseek()와 유사하지만:
-
+**Low Level의 lseek()와 유사하지만**:
 - **lseek()**: 성공하면 변경된 오프셋을 리턴
 - **fseek()**: 성공하면 0, 실패하면 -1(EOF)를 리턴
 
 #### ftell() 함수
-
 ```c
 long ftell(FILE *fp);
 ```
@@ -421,7 +396,6 @@ long cur = ftell(fp);  // 현재 위치 확인
 ```
 
 #### rewind() 함수
-
 ```c
 void rewind(FILE *fp);
 ```
@@ -429,7 +403,6 @@ void rewind(FILE *fp);
 파일의 오프셋 위치를 파일의 시작으로 즉시 이동시킨다.
 
 ### 파일 디스크립터 ↔ 파일 포인터 변환
-
 Low Level과 High Level I/O 사이의 상호 변환이 가능하다.
 
 ```c
@@ -451,28 +424,24 @@ int n = read(fd, str, BUFSIZ);    // Low Level 함수 사용
 ## 시스템 콜 오버헤드와 버퍼링
 
 ### 시스템 콜의 오버헤드
-
 시스템 콜 호출 시 다음과 같은 비용이 발생한다.
 
 1. **보호 도메인 변경**: User mode ↔ Supervisor mode 전환 비용
-    
+
     - 레지스터, 플래그, 스택 상태 저장 및 복원
     - 인터럽트 발생 시 처리 비용
 
 2. **포인터 유효성 검사**: 커널이 사용자가 제공한 주소의 유효성을 확인
-    
+
     - 버퍼 주소가 유효한 범위인지 검사
     - 메모리 접근 권한 확인
 
 3. **메모리 맵 조정**: User Stack ↔ Kernel Stack 전환 비용
-    
 
 ### 해결책: 버퍼링
-
 **stdio.h에서 제공하는 표준 입출력 함수들은 버퍼링을 사용하여 시스템 콜 호출 횟수를 줄인다.**
 
 #### 버퍼링의 동작 원리
-
 **📌 예시 1 - fread() 함수**
 
 ```c
@@ -491,14 +460,12 @@ fread(&len, sizeof(len), 1, fp);
 printf("Hello\n");
 ```
 
-내부적으로:
-
+**내부적으로**:
 1. 즉시 write() 시스템 콜을 호출하지 않음
 2. 내부 버퍼에 데이터를 축적
 3. 버퍼가 가득 차거나, 개행 문자('\n')를 만나거나, fflush() 호출 시 실제로 출력
 
 ### 성능 비교
-
 **UNIX I/O (Low Level):**
 
 ```c
@@ -518,7 +485,6 @@ while ((ferror(fp) && fread(&c, 1, 1, fp)) == 1) {
 ```
 
 ## 마치며
-
 마지막으로 Low Level과 High Level I/O의 특징을 정리하면
 
 **📌 Low Level File I/O**

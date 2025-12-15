@@ -11,25 +11,19 @@ views: 0
 서버리스 아키텍처를 학습하고 난 후, 배운 내용을 직접 적용해보고 싶어서 간단한 웹 방명록 서비스를 만들어보았다. 포스트잇 스타일로 방문자들이 자유롭게 메시지를 남길 수 있는 애플리케이션이다.
 
 ## 프로젝트 개요
-
 **포스트잇 스타일 방명록 서비스** - 사용자들이 다양한 색상의 포스트잇에 닉네임과 메시지를 남길 수 있는 웹 애플리케이션을 구현했다. 프로젝트 구현 결과는 [nullisdefined.github.io/guestboots](https://nullisdefined.github.io/guestboots/)에서 확인할 수 있다.
 
 ## 아키텍처 설계
-
 AWS 서버리스 환경으로 구성하여 서버 관리 부담과, 프리티어 계정을 활용한 비용 부담을 없앴다.
 
 ### 프론트엔드: GitHub Pages
 
-처음에는 S3에 정적 웹사이트를 호스팅하려고 했지만, 결국 GitHub Pages로 호스팅하였다. 다음과 같은 이점들 때문이다.
-
-- **배포 자동화**: 코드 수정 시 GitHub Actions 자동 배포
-- **도메인 관리**: GitHub에서 제공하는 도메인 사용 가능
+> [!NOTE] 처음에는 S3에 정적 웹사이트를 호스팅하려고 했지만, 결국 GitHub Pages로 호스팅하였다. 다음과 같은 이점들 때문이다. - **배포 자동화**: 코드 수정 시 GitHub Actions 자동 배포 - **도메인 관리**: GitHub에서 제공하는 도메인 사용 가능
 - **비용**: 무료
 
 기술 스택은 순수 HTML/CSS/JavaScript로 구성한 SPA(Single Page Application)다.
 
 ### 백엔드: AWS 서버리스 서비스
-
 ![Serverless Architecture Overview](https://github.com/user-attachments/assets/e15141e0-185d-4b98-981a-c9dc7886bf0a)
 *Serverless Architecture Overview*
 
@@ -40,7 +34,7 @@ RESTful API 엔드포인트를 제공하는 진입점 역할을 한다.
 *API Gateway 리소스들 - GET, POST, OPTIONS 메서드 설정*
 
 - **엔드포인트**: `https://zzgm438ccd.execute-api.ap-northeast-2.amazonaws.com/prod`
-- **지원 메서드**: 
+**- **지원 메서드****:
   - `GET /notes`: 방명록 데이터 조회
   - `POST /notes`: 새로운 방명록 작성
   - `OPTIONS /notes`: CORS preflight 요청 처리
@@ -66,35 +60,35 @@ const TABLE_NAME = process.env.TABLE_NAME;
 
 export const handler = async (event) => {
     console.log('Event:', JSON.stringify(event, null, 2));
-    
+
     const headers = {
         'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Headers': 'Content-Type',
         'Access-Control-Allow-Methods': 'GET, POST, OPTIONS'
     };
-    
+
     try {
         const command = new ScanCommand({
             TableName: TABLE_NAME
         });
-        
+
         const result = await docClient.send(command);
-        
+
         // created_at으로 정렬 (최신순)
         const sortedItems = result.Items.sort((a, b) => 
             new Date(b.created_at) - new Date(a.created_at)
         );
-        
+
         return {
             statusCode: 200,
             headers,
             body: JSON.stringify(sortedItems)
         };
-        
+
     } catch (error) {
         console.error('Error:', error);
-        
+
         return {
             statusCode: 500,
             headers,
@@ -129,14 +123,14 @@ function generateUUID() {
 
 export const handler = async (event) => {
     console.log('Event:', JSON.stringify(event, null, 2));
-    
+
     const headers = {
         'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Headers': 'Content-Type',
         'Access-Control-Allow-Methods': 'GET, POST, OPTIONS'
     };
-    
+
     // OPTIONS 요청 처리 (CORS preflight)
     if (event.httpMethod === 'OPTIONS') {
         return {
@@ -145,7 +139,7 @@ export const handler = async (event) => {
             body: ''
         };
     }
-    
+
     try {
         // 요청 본문 파싱
         let body;
@@ -160,9 +154,9 @@ export const handler = async (event) => {
                 })
             };
         }
-        
+
         const { nickname, content } = body;
-        
+
         // 입력 검증
         if (!nickname || !content) {
             return {
@@ -173,26 +167,26 @@ export const handler = async (event) => {
                 })
             };
         }
-        
+
         // 새 메모 생성
         const noteId = generateUUID();
         const timestamp = new Date().toISOString();
-        
+
         const item = {
             id: noteId,
             nickname: nickname.trim(),
             content: content.trim(),
             created_at: timestamp
         };
-        
+
         // DynamoDB에 저장
         const command = new PutCommand({
             TableName: TABLE_NAME,
             Item: item
         });
-        
+
         await docClient.send(command);
-        
+
         return {
             statusCode: 201,
             headers,
@@ -201,10 +195,10 @@ export const handler = async (event) => {
                 note: item
             })
         };
-        
+
     } catch (error) {
         console.error('Error:', error);
-        
+
         return {
             statusCode: 500,
             headers,
@@ -241,7 +235,6 @@ Lambda 함수의 로그 모니터링을 위해 사용했다.
 디버깅과 모니터링에 매우 유용했다. 특히 API 요청이 실패했을 때 어느 부분에서 문제가 발생했는지 쉽게 파악할 수 있었다.
 
 ## 프론트엔드
-
 ![image](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/9465fdbf6adc56b58d33de26befe4515.png)
 *페이지 화면 (누군가 인사를 남겼네요 안녕하세요)*
 
@@ -291,9 +284,9 @@ import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
 별 것 아닌 문제로 시간을 꽤 소비했지만, 덕분에 CloudWatch의 중요함을 깨달을 수 있었다. 서버리스 환경에서는 CloudWatch가 중요한 디버깅 도구라는 것을 배웠다.
 
 ## 마치며
-
 첫 서버리스 프로젝트를 통해 클라우드 네이티브 개발의 새로운 경험할 수 있었다. 특히 인프라 관리에 신경 쓰지 않고 비즈니스 로직에만 집중할 수 있다는 점이 매우 인상적이었다.
 
 앞으로는 더 복잡한 서버리스 아키텍처 패턴들을 학습하고, 실제 프로덕션 환경에서 어떻게 서버리스를 효과적으로 활용할 수 있는지 학습해보고 싶다.
 
-이 프로젝트의 모든 소스 코드는 [GitHub](https://github.com/nullisdefined/guestboots)에 공개되어 있습니다. 코드 품질 개선이나 새로운 기능 제안에 대한 피드백은 언제나 환영합니다.
+
+> [!NOTE] 이 프로젝트의 모든 소스 코드는 [GitHub](https://github.com/nullisdefined/guestboots)에 공개되어 있습니다. 코드 품질 개선이나 새로운 기능 제안에 대한 피드백은 언제나 환영합니다.

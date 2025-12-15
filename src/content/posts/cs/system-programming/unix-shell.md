@@ -9,17 +9,14 @@ draft: false
 views: 0
 ---
 ## UNIX Shell
-
 <img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/83e901e30d4faabcdc33d1cd5902a036.png" alt="image" width="500" />
 
 ### Shell이란?
-
 Shell은 사용자와 시스템 간 상호작용하는 기본 인터페이스로, 시스템 콜에 대한 안전한 접근을 제공한다. 쉘은 단순한 명령어 해석기를 넘어서, 강력한 프로그래밍 환경을 제공하는 도구다.
 
 ### Shell 특징
 
 #### 1. 대화형 명령 프롬프트
-
 입력을 즉시 받아 실행하는 대화형 환경을 제공한다.
 
 ```bash
@@ -29,11 +26,11 @@ $ grep "pattern" file.txt
 ```
 
 #### 2. 프로그래밍 환경 제공
-
 - **명령어 별칭(alias)**: 자주 사용하는 명령어를 간단하게 만들기
 - **이전 명령어 불러오기 및 수정**: 히스토리 기능과 편집 기능
 
 ```bash
+
 # 별칭 설정
 alias ll='ls -la'
 alias grep='grep --color=auto'
@@ -45,11 +42,11 @@ history
 ```
 
 #### 3. 문자열 단위(words) 처리
-
 - **공백(스페이스, 탭, 개행 등)을 기준으로 단어가 구분됨**
 - **공백이 포함된 문자열은 따옴표나 백슬래시로 처리**
 
 ```bash
+
 # 잘못된 예
 echo Hello World  # Hello와 World가 각각 다른 인자
 
@@ -59,7 +56,6 @@ echo Hello\ World   # 백슬래시로 공백 이스케이프
 ```
 
 #### 4. Statement 단위 처리
-
 쉘의 모든 명령문은 하나의 statement로 처리되며, 다음으로 끝난다.
 
 - **개행(\n)**
@@ -67,6 +63,7 @@ echo Hello\ World   # 백슬래시로 공백 이스케이프
 - **앰퍼샌드(&)** - 백그라운드 실행
 
 ```bash
+
 # 여러 명령을 한 줄에
 ls; pwd; date
 
@@ -75,11 +72,9 @@ long_running_command &
 ```
 
 ## Commands: 명령문의 분류
-
 쉘에서 처리하는 명령문은 크게 네 가지로 분류된다.
 
 ### 1. 변수 설정
-
 ```bash
 name="Alice"
 PATH="/usr/local/bin:$PATH"
@@ -87,7 +82,6 @@ export DATABASE_URL="postgresql://localhost/mydb"
 ```
 
 ### 2. Built-in Commands (쉘 내장 명령어)
-
 ```bash
 cd /home/user    # 디렉터리 변경
 pwd             # 현재 디렉터리 출력
@@ -96,7 +90,6 @@ exit            # 쉘 종료
 ```
 
 ### 3. 제어문 (if, while 등)
-
 ```bash
 if [ "$USER" = "root" ]; then
     echo "Running as root"
@@ -108,7 +101,6 @@ done < input.txt
 ```
 
 ### 4. External Commands (외부 명령) 실행
-
 ```bash
 ls -la          # 파일 목록
 grep pattern    # 텍스트 검색
@@ -118,40 +110,40 @@ gcc program.c   # 컴파일
 ## Built-in Commands vs External Commands
 
 ### Built-in Commands가 필요한 이유
-
 일부 명령(e.g. `cd`)은 외부 프로그램이 아닌 쉘 내부에서 직접 실행된다. 그 이유는 다음과 같다.
 
 #### 1. 효율성
-
 외부 프로그램을 실행하면 fork()와 exec() 과정이 필요하지만, 내장 명령어는 이 과정을 생략할 수 있다.
 
 #### 2. 쉘의 내부 상태 변경
-
 `cd` 명령어를 예로 들면, 현재 디렉터리를 변경해야 하는데, fork() 이후에는 **쉘의 내부 상태를 변경할 수 없다**. 따라서 cd는 반드시 내장 명령어여야 한다.
 
 ```bash
+
 # 만약 cd가 외부 프로그램이라면?
+
 # 자식 프로세스에서 디렉터리를 변경해도
+
 # 부모 프로세스(쉘)의 현재 디렉터리는 변경되지 않음
 ```
 
 ### External Commands
-
 외부 명령은 **fork()로 프로세스를 복제한 후 exec()로 실행**된다.
 
 ```bash
 $ ls -la
+
 # 1. 쉘이 fork()로 자식 프로세스 생성
+
 # 2. 자식 프로세스에서 exec("ls", "-la") 실행
+
 # 3. 부모 프로세스(쉘)는 자식이 끝날 때까지 대기
 ```
 
 ## Variables → 쉘 변수 시스템
-
 쉘 변수는 기본 변수와 특수 변수로 구분할 수 있다.
 
 ### 기본 변수 특성
-
 ```bash
 #!/bin/bash
 name="Alice"  # 변수 선언 (= 주변에 공백 없이!)
@@ -165,6 +157,7 @@ echo "Hello, $name"
 3. **변수 설정 시 = 기호 주변에 공백이 없어야 한다**
 
 ```bash
+
 # 올바른 예
 name="Alice"
 count=42
@@ -175,7 +168,6 @@ count = 42        # 에러: = 주변에 공백
 ```
 
 ### Special Variables
-
 쉘은 다양한 특수 변수를 제공한다.
 
 |변수|의미|
@@ -190,7 +182,6 @@ count = 42        # 에러: = 주변에 공백
 |`$IFS`|단어 분할 시 기준|
 
 #### $0: 현재 스크립트 이름
-
 ```bash
 #!/bin/bash
 echo "This script is named: $0"
@@ -202,7 +193,6 @@ This script is named: ./myscript.sh
 ```
 
 #### $1~$9: 인자
-
 ```bash
 #!/bin/bash
 echo "First argument: $1"
@@ -216,7 +206,6 @@ Second argument: world
 ```
 
 #### $#: 인자 수
-
 ```bash
 #!/bin/bash
 echo "You passed $# arguments."
@@ -228,7 +217,6 @@ You passed 5 arguments.
 ```
 
 #### $* vs $@: 전체 인자
-
 ```bash
 #!/bin/bash
 echo "\$* : $*"
@@ -244,7 +232,6 @@ $@ : 123 1 qwdk 113porkpo
 > **참고:** `$*`와 `$@`는 기본적으로 동일하지만, 따옴표 안에서는 다르게 동작한다.
 
 #### $?: 직전 명령 종료 상태
-
 ```bash
 $ echo "hello"
 hello
@@ -266,7 +253,6 @@ $ echo "$?"
 - `127`: 명령을 찾을 수 없음
 
 #### $!: 백그라운드 명령의 PID
-
 ```bash
 #!/bin/bash
 sleep 10 &
@@ -274,17 +260,16 @@ echo "PID of background process: $!"
 ```
 
 #### $PS1: 프롬프트 문자열
-
 ```bash
+
 # 프롬프트를 바꾸고 싶을 때
 export PS1="MyShell> "
 ```
 
 #### $IFS: 단어 분리 기준
-
 ```bash
 #!/bin/bash
-IFS=:
+**IFS=**:
 line="apple:banana:cherry"
 for item in $line; do
     echo $item
@@ -307,12 +292,11 @@ cherry
 4. `do echo $item` → 하나씩 출력
 
 ## Globbing → 파일 패턴 매칭
-
 Globbing은 `*`, `?`, `[]`을 활용해 파일 이름을 패턴으로 매칭하는 기능이다.
 
 ### 기본 패턴
-
 ```bash
+
 # 1. * : 모든 .c 파일
 ls *.c
 
@@ -327,8 +311,8 @@ ls *.[ch]
 ```
 
 ### 실용적인 Globbing 예제
-
 ```bash
+
 # 백업 파일 삭제
 rm *~
 
@@ -343,11 +327,9 @@ ls [A-Z]*
 ```
 
 ## Pipes and Redirection → 입출력 제어
-
 쉘의 가장 강력한 기능 중 하나는 파이프(|) 및 **리디렉션**을 통한 입출력 스트림 제어다.
 
 ### 기본 리디렉션
-
 | 연산자  | 의미            |
 | ---- | ------------- |
 | `<`  | 표준 입력         |
@@ -358,15 +340,15 @@ ls [A-Z]*
 ### 실용적인 예제
 
 #### 입력 리디렉션
-
 ```bash
+
 # 파일에서 단어 수 세기
 wc -w < /usr/share/dict/words
 ```
 
 #### 출력 리디렉션
-
 ```bash
+
 # 결과를 파일에 저장 (덮어쓰기)
 cut -d' ' -f5 > totals.txt
 
@@ -376,8 +358,8 @@ stats -bmean variant-b.txt >> means.txt
 ```
 
 #### 에러 리디렉션
-
 ```bash
+
 # 에러 메시지를 파일에 저장
 command 2> error.log
 
@@ -389,8 +371,8 @@ command 2>/dev/null
 ```
 
 ### 파이프라인 활용
-
 ```bash
+
 # 파일에서 특정 패턴 찾아서 정렬
 grep "error" /var/log/syslog | sort
 
@@ -408,12 +390,11 @@ cat /var/log/access.log | \
 ```
 
 ## 파일 디스크립터 관리
-
 쉘은 새로운 파일을 열지 않고도 파일 디스크립터를 복제하고 닫을 수 있다.
 
 ### 파일 디스크립터 복제 → N>&M
-
 ```bash
+
 # 파일 디스크립터 M을 N으로 복제
 echo "Could not open file" 1>&2
 ```
@@ -426,8 +407,8 @@ echo "Could not open file" 1>&2
 **C 코드에서 `dup2(M, N)`과 동일**
 
 ### 파일 디스크립터 닫기: N>&-
-
 ```bash
+
 # 출력 디스크립터 N을 닫음
 N>&-
 
@@ -440,8 +421,8 @@ exec 3>&-    # FD 3 닫기
 ```
 
 ### 고급 리디렉션 예제
-
 ```bash
+
 # stdout과 stderr를 바꾸기
 command 3>&1 1>&2 2>&3 3>&-
 
@@ -457,11 +438,10 @@ exec 3>&-
 ## 실무에서의 Shell 활용
 
 ### 1. 로그 분석
-
 ```bash
 #!/bin/bash
-# 웹 서버 로그 분석 스크립트
 
+# 웹 서버 로그 분석 스크립트
 LOG_FILE="/var/log/nginx/access.log"
 DATE=$(date +%Y-%m-%d)
 
@@ -484,11 +464,10 @@ awk '{print $4}' $LOG_FILE | cut -d: -f2 | sort | uniq -c
 ```
 
 ### 2. 시스템 모니터링
-
 ```bash
 #!/bin/bash
-# 시스템 상태 체크 스크립트
 
+# 시스템 상태 체크 스크립트
 check_disk_usage() {
     echo "--- 디스크 사용량 ---"
     df -h | awk 'NR>1 {
@@ -509,7 +488,7 @@ check_memory() {
 check_services() {
     echo -e "\n--- 주요 서비스 상태 ---"
     services=("nginx" "mysql" "redis")
-    
+
     for service in "${services[@]}"; do
         if systemctl is-active --quiet $service; then
             echo "$service: 실행 중"
@@ -525,11 +504,10 @@ check_services
 ```
 
 ### 3. 백업 스크립트
-
 ```bash
 #!/bin/bash
-# 데이터베이스 백업 스크립트
 
+# 데이터베이스 백업 스크립트
 DB_USER="backup_user"
 DB_PASS="backup_password"
 DB_NAME="production_db"
@@ -546,11 +524,11 @@ mysqldump -u$DB_USER -p$DB_PASS $DB_NAME > $BACKUP_FILE
 
 if [ $? -eq 0 ]; then
     echo "백업 성공: $BACKUP_FILE"
-    
+
     # 압축
     gzip $BACKUP_FILE
     echo "압축 완료: ${BACKUP_FILE}.gz"
-    
+
     # 7일 이전 백업 파일 삭제
     find $BACKUP_DIR -name "*.sql.gz" -mtime +7 -delete
     echo "오래된 백업 파일 정리 완료"
@@ -563,8 +541,8 @@ fi
 ## Shell 최적화 팁
 
 ### 1. 별칭과 함수 활용
-
 ```bash
+
 # ~/.bashrc 또는 ~/.zshrc에 추가
 alias ll='ls -la'
 alias la='ls -A'
@@ -601,8 +579,8 @@ extract() {
 ```
 
 ### 2. 환경 변수 최적화
-
 ```bash
+
 # ~/.bashrc
 export EDITOR=vim
 export BROWSER=firefox
@@ -616,13 +594,14 @@ export LS_COLORS='di=34:ln=35:so=32:pi=33:ex=31:bd=46;34:cd=43;34:su=41;30:sg=46
 ```
 
 ### 3. 효율적인 명령어 사용
-
 ```bash
+
 # 대신에: cat file | grep pattern
 grep pattern file
 
 # 대신에: ls | wc -l
 ls | wc -l
+
 # 더 나은 방법: find . -maxdepth 1 -type f | wc -l
 
 # 대신에: ps aux | grep process

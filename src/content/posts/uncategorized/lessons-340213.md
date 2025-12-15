@@ -11,7 +11,6 @@ views: 0
 문제 링크: https://school.programmers.co.kr/learn/courses/30/lessons/340213*
 
 ## 문제 설명
-
 동영상 재생기는 다음과 같은 세 가지 기능을 지원한다.
 
 1. 10초 전으로 이동: 현재 위치에서 10초 전으로 이동한다. 만약 현재 위치가 10초 미만이라면 영상의 처음으로 이동한다.
@@ -19,19 +18,16 @@ views: 0
 3. 오프닝 건너뛰기: 현재 위치가 오프닝 구간이라면 자동으로 오프닝 종료 위치로 이동한다.
 
 ### 제약 조건
-
 - commands 배열의 길이는 최대 100이다.
 - 입력되는 시간은 항상 유효하며, 동영상의 범위를 벗어나지 않는다.
 
 ### 입출력
-
 - 동영상 길이, 현재 재생 위치, 오프닝 구간(시작과 종료), 명령어 리스트를 입력받는다.
 - 각 시간은 "mm:ss" 형식으로 제공된다.
 
 ## 문제 분석 및 풀이
 
 ### 답안 코드
-
 ```js
 function solution(video_len, pos, op_start, op_end, commands) {
     // 시간 문자열을 초로 변환하는 함수
@@ -39,14 +35,14 @@ function solution(video_len, pos, op_start, op_end, commands) {
         const [min, sec] = timeStr.split(":").map(Number);
         return min * 60 + sec;
     };
-    
+
     // 초를 시간 문자열로 변환하는 함수
     const toTimeStr = (s) => {
         const min = Math.floor(s / 60);
         const sec = s % 60;
         return `${String(min).padStart(2, '0')}:${String(sec).padStart(2, '0')}`;
     };
-    
+
     // 초기 변수 설정
     let sec = toSecond(pos); // 현재 위치를 초로 변환
     const opStartSec = toSecond(op_start); // 오프닝 시작 시간

@@ -15,7 +15,6 @@ views: 0
 ## 문제 상황
 
 ### 기존 이미지 표시 방식
-
 마크다운에서 S3에 업로드한 이미지를 표시할 때 다음과 같은 문제들이 있었다.
 
 - **일관성 없는 크기**: 너비만 조정하다 보니 세로로 긴 이미지는 비정상적으로 크게 표시됨
@@ -30,7 +29,6 @@ views: 0
 ## 해결책: 이미지 확대 모달 구현
 
 ### 요구사항 정의
-
 - 포스팅 글의 이미지를 클릭했을 때 확대해서 보여주는 기능
 - 확대/축소 → 마우스 스크롤
 - 글에서는 이미지 왼쪽 정렬, 확대시에는 중앙 표시
@@ -39,7 +37,6 @@ views: 0
 ### 구현 과정
 
 #### 컴포넌트 구조
-
 ```
 PostContent (부모)
 ├── ImageModal (자식)
@@ -52,7 +49,6 @@ Next.js와 TypeScript를 기반으로 하되, 안정적인 이벤트 처리를 �
 - 상위 요소에 하나의 이벤트 핸들러를 등록하고, 이벤트가 버블링되는 걸 이용해 특정 자식 요소에서 발생한 이벤트를 처리하는 방식
 
 ### 1. ImageModal 컴포넌트
-
 가장 중요한 모달 컴포넌트부터 구현했다. 
 
 ```typescript
@@ -94,7 +90,7 @@ export function ImageModal({ src, alt, isOpen, onClose }: ImageModalProps) {
 
     const handleWheel = (e: WheelEvent) => {
       if (!isOpen) return;
-      
+
       e.preventDefault();
       const delta = e.deltaY > 0 ? -0.1 : 0.1;
       setScale((prev) => Math.max(0.5, Math.min(prev + delta, 3)));
@@ -164,7 +160,6 @@ export function ImageModal({ src, alt, isOpen, onClose }: ImageModalProps) {
 ```
 
 ### 2. 이벤트 위임 패턴
-
 가장 중요한 부분으로, 처음에는 각 이미지에 직접 클릭 이벤트를 등록했는데, 모달을 닫은 후 재클릭이 안 되는 문제가 발생했다.
 
 ```typescript
@@ -175,7 +170,7 @@ useEffect(() => {
 
   const handleClick = (e: Event) => {
     const target = e.target as HTMLElement;
-    
+
     // 클릭된 요소가 이미지이고 prose 안에 있는지 확인
     if (target.tagName === 'IMG' && target.closest('.prose')) {
       const img = target as HTMLImageElement;
@@ -190,17 +185,17 @@ useEffect(() => {
   const images = document.querySelectorAll('.prose img');
   images.forEach((img) => {
     const imageElement = img as HTMLImageElement;
-    
+
     // 스타일 적용
     imageElement.style.cursor = "zoom-in";
     imageElement.style.transition = "transform 0.2s ease, box-shadow 0.2s ease";
-    
+
     // 호버 효과
     const handleMouseEnter = () => {
       imageElement.style.transform = "scale(1.02)";
       imageElement.style.boxShadow = "0 8px 25px rgba(0, 0, 0, 0.15)";
     };
-    
+
     const handleMouseLeave = () => {
       imageElement.style.transform = "scale(1)";
       imageElement.style.boxShadow = "0 1px 3px rgba(0, 0, 0, 0.1)";
@@ -219,7 +214,6 @@ useEffect(() => {
 이벤트 위임 패턴을 사용함으로써 DOM이 재구성되어도 안정적으로 이벤트를 처리할 수 있게 되었다.
 
 ### 3. 스타일링 조정
-
 기본 이미지 스타일도 함께 개선했다.
 
 ```css
@@ -238,7 +232,6 @@ useEffect(() => {
 ## 개발 중 마주한 주요 이슈들
 
 ### 1. 재클릭 문제
-
 **문제**: ESC로 모달을 닫은 후 이미지를 다시 클릭해도 모달이 열리지 않음
 
 **원인**: 개별 이미지에 직접 연결된 이벤트 리스너가 모달 상태 변화에 따라 정상적으로 작동하지 않음
@@ -246,7 +239,6 @@ useEffect(() => {
 **해결**: 이벤트 위임 패턴을 도입하여 부모 요소에서 이벤트를 처리하도록 변경
 
 ### 2. 중앙 정렬 문제
-
 **문제**: 확대된 이미지가 완전히 중앙에 배치되지 않고 왼쪽으로 치우쳐 보임
 
 **해결**: 이중 Flexbox 컨테이너와 CSS margin을 동시에 활용해 중앙 정렬
@@ -260,13 +252,11 @@ useEffect(() => {
 ```
 
 ### 3. Z-Index 겹침 문제
-
 **문제**: 확대 모달이 헤더나 다른 UI 요소 아래에 표시됨
 
 **해결**: z-index를 9999로 설정하여 최상위 레이어에 배치
 
 ### 4. 이미지 확대 후 스타일 깨짐
-
 **문제**: 이미지 확대 후 모달을 닫으면 호버 효과와 캡션 위치가 망가지는 문제가 발생
 
 **원인**: useEffect의 dependency에 content가 포함되어 있어서, 모달이 닫힐 때마다 전체 useEffect가 다시 실행되어 DOM이 재구성되면서 기존에 적용된 스타일과 이벤트 리스너가 초기화됨
@@ -274,7 +264,6 @@ useEffect(() => {
 **해결**: useEffect를 기능별로 분리하고 모달 닫히면 스타일을 재적용
 
 ## 마치며
-
 ![image](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/47b3c193b9c1e92ea79db558ca0d5c98.gif)*구현된 이미지 모달*
 
 블로그 이미지 표시 문제를 해결하기 위해 시작한 작업이었지만, 결과적으로는 사용자 경험을 크게 개선하는 기능이 되었다. 덕분에 이벤트 위임 패턴의 중요성과 React에서의 DOM 이벤트 처리 방법에 대해 학습할 수 있었다.

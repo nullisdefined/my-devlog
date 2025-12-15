@@ -13,7 +13,6 @@ views: 0
 이번 실습에서는 기존에 Amazon ECS를 통해 배포한 컨테이너 기반 애플리케이션을 업데이트하고, 이를 서비스화하는 과정을 포함한다. 구체적으로는 태스크 정의를 업데이트하고, 서비스 설정을 통해 로드 밸런서와 연동하며, 애플리케이션의 무중단 배포 및 태스크 복제본을 유지 및 관리를 실습했다.
 
 ## 1. 태스크 정의(Task Definition) 생성 및 등록
-
 ECS에서 컨테이너를 실행하기 위해서는 반드시 태스크 정의(Task Definition)가 필요하다.
 이 정의는 하나 이상의 컨테이너 설정(이미지, 포트, 환경 변수 등)을 포함하는 JSON 문서다.
 
@@ -49,7 +48,6 @@ Cluster > Services > Update에서 태스크 정의 버전을 LATEST으로 변경
 잠시 후 태스트 상태가 PENDING에서 RUNNING으로 전환되며, 실제 웹 페이지도 새 버전을 반영됨을 확인할 수 있었다. 
 
 ## 5. 태스크 복제본 설정 및 로드 밸런싱 테스트
-
 ECS 서비스에서 Desired Tasks 수를 2로 변경(원래 1)하면 ECS는 두 개의 태스크 인스턴스를 병렬로 실행하게 된다. 이는 고가용성과 로드 밸런싱을 위한 전략이다.
 
 ![image](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/7a34d4c48dc0f29f46bc45576bd1bdb5.png)
@@ -59,7 +57,6 @@ ECS 서비스에서 Desired Tasks 수를 2로 변경(원래 1)하면 ECS는 두 
 ![image](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/9f7198bd3d2616e81122613247cf740a.png)
 
 ## 실습 확인 문제
-
 > **Q1. What is a task definition in Amazon ECS?**
 > **A. A blueprint that describes how a Docker container should launch**
 
@@ -90,7 +87,6 @@ ECS의 Service는 지정한 수의 태스크를 동시에 실행하고 유지한
 태스크가 중단되면 자동 복구되며, 로드 밸런서와도 연동 가능하다.
 
 ## 마치며
-
 이번 실습을 통해 ECS의 기본 구조 → 서비스 구성 → 태스크 배포 및 유지 관리 → 로드 밸런싱까지 전체적인 흐름을 경험할 수 있었다. 특히 다음과 같은 포인트들을 실습으로 체득했다.
 
 - **ECR을 통한 이미지 버전 관리**

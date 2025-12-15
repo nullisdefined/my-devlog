@@ -60,13 +60,14 @@ person.name = "Lee";       // setter 호출
 
 ## 접근 제한자
 TypeScript는 세 가지 접근 제한자를 제공한다.
+
 #### 1. private
 - 해당 클래스 내부에서만 접근 가능
 - 자식 클래스에서도 접근 불가
 ```ts
 class Example {
   private secret: string;
-  
+
   constructor(secret: string) {
     this.secret = secret;
   }
@@ -117,10 +118,10 @@ config.apiKey = "new-key"; // 컴파일 에러
 ```ts
 abstract class Animal {
   constructor(protected name: string) {}
-  
+
   // 추상 메서드는 반드시 자식 클래스에서 구현해야 함
   abstract makeSound(): void;
-  
+
   // 일반 메서드도 포함 가능
   move(): void {
     console.log(`${this.name} is moving.`);
@@ -143,7 +144,7 @@ dog.makeSound(); // "Woof!"
 ```ts
 class MathHelper {
   static readonly PI = 3.14159;
-  
+
   static square(x: number): number {
     return x * x;
   }
@@ -161,11 +162,12 @@ console.log(MathHelper.square(4)); // 16
 
 ## 클래스 상속
 클래스 상속을 통해 기존 클래스의 기능을 확장할 수 있다.
+
 ### 기본 상속
 ```ts
 class Animal {
   constructor(protected name: string) {}
-  
+
   move(): void {
     console.log(`${this.name} is moving.`);
   }
@@ -198,7 +200,7 @@ class Cat extends Animal {
 
 const cat = new Cat("Navi");
 cat.move();
-// 출력:
+**// 출력**:
 // Sneaking quietly...
 // Navi is moving.
 ```
@@ -226,6 +228,7 @@ class Horse implements Movable, Soundable {
 ```
 
 ## 주의 사항
+
 ### 런타임에서의 접근 제한자
 TypeScript의 접근 제한자(private, protected 등)는 컴파일 시점에만 동작한다. JavaScript로 컴파일되면 일반 프로퍼티로 변환되어 런타임에서는 접근이 가능해진다.
 ```ts
@@ -238,13 +241,13 @@ console.log(user.name); // Property 'name' is private and only accessible within
 console.log((user as any).name); // 타입 캐스팅으로 접근 가능
 console.log(user["name"]); // 인덱스로 접근 가능
 ```
-이는 TypeScript가 JavaScript로 컴파일될 때 다음과 같이 변환되기 때문이다:
+**이는 TypeScript가 JavaScript로 컴파일될 때 다음과 같이 변환되기 때문이다**:
 ```js
 var User = /** @class */ (function () {
     function User(name) {
         this.name = name;
     }
-    
+
     return User;
 }());
 

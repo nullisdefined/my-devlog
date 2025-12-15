@@ -148,7 +148,7 @@ ecrUser는 액세스 키를 사용하고 Amazon ECR에 대한 액세스 권한 �
 
 Global credentials (unrestricted) 페이지에서 + Add Credentials를 선택
     New credentials 페이지에서 다음을 구성
-    
+
 
 SSH Username with private key
 
@@ -157,20 +157,20 @@ SSH Username with private key
 이제 액세스 키를 사용하여 _ecrUser_에 대해 이 프로세스를 반복합니다.
 
 41. **Global credentials (unrestricted)** 페이지에서 **+ Add Credentials**를 선택합니다.
-    
+
 42. **New credentials** 페이지에서 다음을 구성합니다.
-    
+
 
 - **Kind** 드롭다운 목록에서 **AWS Credentials**를 선택합니다.
 - **ID** 필드에 
-    
+
     ecrUser
-    
+
     를 입력합니다.
 - **Description** 필드에 
-    
+
     Access keys for Amazon ECR authentication
-    
+
     을 입력합니다.
 -  **복사 편집:** 지침 왼쪽에 있는 패널에서 **EcrUserAccessKey**의 값을 복사하여 **Access Key ID** 필드에 붙여넣습니다.
 -  **복사 편집:** 지침 왼쪽에 있는 패널에서 **EcrUserSecretAccessKey**의 값을 복사하여 **Secret Access Key** 필드에 붙여넣습니다.
@@ -181,16 +181,16 @@ SSH Username with private key
 이제 자격 증명을 생성했으므로 파이프라인을 빌드할 차례입니다.
 
 44. 화면 상단의 브레드크럼 메뉴에서 **Dashboard**를 선택합니다.
-    
+
 45. 페이지 왼쪽의 탐색 창에서 **New Item**을 선택합니다.
-    
+
 46. **Enter an item name** 텍스트 상자에 
-    
+
     JenkinsPipeline
-    
+
     을 입력합니다.
-    
+
 47. 옵션 목록에서 **Pipeline**을 선택한 다음, 화면 하단에서 **OK**를 선택합니다.
-    
+
 
 그러면 Pipeline configuration 페이지로 이동합니다. 다음 단계에서는 파이프라인에 대한 소스 제어 관리(SCM)를 구성하고, SCM이 AWS CodeCommit 리포지토리를 가리키도록 하고, 앞서 생성한 SSH 키를 사용하여 Jenkins가 AWS CodeCommit에 인증할 수 있도록 합니다.

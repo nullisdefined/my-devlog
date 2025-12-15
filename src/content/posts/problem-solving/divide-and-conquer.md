@@ -23,6 +23,7 @@ views: 0
 - 이진 탐색(Binary Search)
 
 ## 예제1: 이진 탐색(Binary Search)
+
 ### 문제
 - 정렬된 배열애서 특정 값을 찾아 위치(index) 반환하기
 - 만약 찾는 값이 없으면 -1을 반환
@@ -54,5 +55,5 @@ function binarySearch(arr, target) {
 - 배열 전체를 탐색하는 경우(선형 탐색): O(n)
 - 이진 탐색의 경우: O(log n)
 
----
-이 글은 Udemy의 [【한글자막】 JavaScript 알고리즘 & 자료구조 마스터클래스](https://www.udemy.com/course/best-javascript-data-structures/) 강의를 토대로 공부한 내용을 정리한 것입니다.
+
+> [!NOTE] 이 글은 Udemy의 [【한글자막】 JavaScript 알고리즘 & 자료구조 마스터클래스](https://www.udemy.com/course/best-javascript-data-structures/) 강의를 토대로 공부한 내용을 정리한 것입니다.

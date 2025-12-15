@@ -54,5 +54,5 @@ console.log(maxSubarraySum([], 3)); // null
 - 중첩 반복문을 사용할 경우 O(n^2)
 - 슬라이딩 윈도우 패턴을 적용할 경우 O(n)
 
----
-이 글은 Udemy의 [【한글자막】 JavaScript 알고리즘 & 자료구조 마스터클래스](https://www.udemy.com/course/best-javascript-data-structures/) 강의를 바탕으로 작성되었습니다.
+
+> [!NOTE] 이 글은 Udemy의 [【한글자막】 JavaScript 알고리즘 & 자료구조 마스터클래스](https://www.udemy.com/course/best-javascript-data-structures/) 강의를 바탕으로 작성되었습니다.

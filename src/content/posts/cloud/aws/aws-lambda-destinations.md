@@ -11,7 +11,6 @@ views: 0
 다음은 Lambda의 목적지(Destinations) 기능에 대한 내용이다. 기존의 DLQ(Dead Letter Queue) 방식보다 훨씬 더 유연하고 포괄적인 해결책을 제공한다.
 
 ## Lambda Destinations
-
 Lambda를 사용하다 보면 다음과 같은 상황에서 어려움을 겪는다.
 
 1. **비동기식 호출 결과 추적 어려움**: S3 이벤트로 Lambda가 호출되었을 때 성공/실패 여부를 쉽게 알 수 없었음
@@ -27,7 +26,6 @@ Lambda를 사용하다 보면 다음과 같은 상황에서 어려움을 겪는�
 3. **더 많은 메타데이터 제공**
 
 ### 비동기식 호출에서의 Destination
-
 ![image](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/7678ae302e22ff90449e71de2d0a6f15.png)
 
 
@@ -44,7 +42,6 @@ Lambda를 사용하다 보면 다음과 같은 상황에서 어려움을 겪는�
 - **실패 시 목적지**: 모든 재시도가 완료된 후에도 실패한 경우
 
 ### 이벤트 소스 매핑에서의 Destination
-
 ![image](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/f016e00fce05d154275fb61c08b68ea3.png)
 
 
@@ -61,7 +58,6 @@ Lambda를 사용하다 보면 다음과 같은 상황에서 어려움을 겪는�
 - Amazon SQS나 Amazon SNS로 전송 가능
 
 ### DLQ, Destinations 비교
-
 | 기능    | DLQ      | 목적지                           |
 | ----- | -------- | ----------------------------- |
 | 지원 대상 | SQS, SNS | SQS, SNS, Lambda, EventBridge |

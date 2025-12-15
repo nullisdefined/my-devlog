@@ -17,7 +17,7 @@ JavaScript는 웹 브라우저 또는 Node.js 환경에서 동작하는 단일 �
 그 대신 비동기 처리 완료 시 콜백 함수를 호출하여 결과를 전달한다. 
 이를 통해 비동기 함수 외부로 결과를 직접 반환하지 않고도 후속 로직을 수행할 수 있다.
 
-예를 들어 다음과 같은 코드가 있을 때:
+**예를 들어 다음과 같은 코드가 있을 때**:
 
 ```js
 let g = 7;
@@ -39,11 +39,9 @@ console.log(g); // 7
 *https://dev.to/jerrycode06/callback-hell-and-how-to-rescue-it-ggj*
 
 ## Promise의 등장
-
 콜백 헬 문제를 해결하기 위해 등장한 것이 바로 Promise이다. Promise는 비동기 연산의 최종 완료 또는 실패를 나타내는 객체로서, 비동기 로직을 더욱 구조적이고 명확하게 관리할 수 있도록 도와준다.
 
 ### Promise의 특징
-
 1. Promise는 다음과 같은 세 가지 상태를 가짐
 	- **대기(pending)**: 비동기 연산이 아직 완료되지 않은 상태
 	- **이행(fulfilled)**: 비동기 연산이 성공적으로 완료되어 결과값을 반환한 상태, 즉 resolve 함수 호출 됨
@@ -81,7 +79,6 @@ fetchData()
 에러 처리도 `catch()` 한 곳에서 일관성 있게 다루며, 콜백 헬로 인해 가독성이 떨어지는 문제를 크게 개선한다.
 
 ## Promise를 통한 콜백 헬 극복
-
 Promise를 사용하면 다음과 같은 이점이 있다.
 
 - **가독성 향상**: 콜백 함수의 깊은 중첩 없이, `then()` 체이닝으로 비동기 로직을 순차적으로 표현할 수 있음
@@ -89,12 +86,10 @@ Promise를 사용하면 다음과 같은 이점이 있다.
 - **유연한 흐름 제어**: Promise의 다양한 패턴(`Promise.all`, `Promise.race` 등)을 사용하면 병렬 처리나 가장 빠른 응답값 사용 등 다양한 비동기 처리 흐름을 단순한 코드로 구현할 수 있음
 
 ## Promise 정적 메서드들
-
 Promise 객체는 개별 인스턴스 메서드(then(), catch() 등) 외에도 다양한 정적 메서드를 제공하여 비동기 처리 흐름을 유연하게 제어할 수 있게 해준다.
 이러한 메서드들을 활용하면 여러 개의 Promise를 병렬로 처리하거나, 가장 빠른 Promise 결과를 얻는 등 다양한 패턴을 깔끔하게 구현할 수 있다.
 
 ### Promise.resolve(value)
-
 - 주어진 값을 이행 상태(fulfilled)인 Promise로 반환함
 - 이미 이행된 값을 Promise 형태로 래핑하고 싶을 때 유용
 ```js
@@ -106,7 +101,6 @@ Promise.resolve('hello')
 ```
 
 ### Promise.reject(reason)
-
 - 주어진 이유(reason)를 가진 거부 상태(rejected)인 Promise를 반환함
 - 에러 핸들링 테스트나 명시적으로 실패를 발생시키고 싶을 때 사용
 ```js
@@ -114,11 +108,10 @@ Promise.reject(new Error('에러 발생'))
   .catch(error => {
     console.error(error); // Error: 에러 발생
   });
-  
+
 ```
 
 ### Promise.all(iterable)
-
 - 주어진 iterable(배열 등)에 포함된 모든 Promise가 이행될 때까지 기다린 뒤, 모든 결과를 배열로 반환하는 Promise를 반환함
 - 모든 비동기 작업이 완료되어야 다음 단계를 진행해야하는 상황에서 유용
 - 만약 하나라도 거부되면 전체가 거부 상태가 됨
@@ -138,7 +131,6 @@ Promise.all([p1, p2, p3])
 ```
 
 ### Promise.allSettled(iterable)
-
 - 주어진 모든 Promise가 이행되거나 거부될 때까지 기다린 뒤, 각 Promise의 상태와 결과를 객체 형태로 담은 배열을 반환함
 - 모든 Promise 결과를 실패 여부와 상관없이 한 번에 수집할 때 유용
 ```js
@@ -157,7 +149,6 @@ Promise.allSettled([p1, p2])
 ```
 
 ### Promise.race(iterable)
-
 - 주어진 Promise들 중 가장 먼저 이행되거나 거부되는 Promise를 반환함
 - 가장 빠른 응답을 필요로 하는 상황에서 유용
 ```js
@@ -177,7 +168,6 @@ Promise.race([slowPromise, fastPromise])
 ```
 
 ### Promise.any(iterable)
-
 - 주어진 Promise들 중 하나라도 이행될 경우 그 Promise의 결과를 반환함
 - 모든 Promise가 거부될 경우에만 에러를 발생시킴
 - 여러 비동기 작업 중 하나라도 성공하면 그 결과를 바로 사용할 수 있음
@@ -197,6 +187,5 @@ Promise.any([p1, p2, p3])
 ```
 
 ## 마치며
-
 비동기 로직을 단순한 콜백으로 처리하던 시절에는 콜백 헬이라는 문제에 직면하기 쉬웠다.
 그러나 Promise가 등장함으로써 비동기 처리를 더 구조적이고 깔끔하게 표현할 수 있게 되었다. `then()` 체이닝을 통한 가독성 향상, `catch()`를 통한 일관된 에러 처리, 그리고 `Promise.all`, `Promise.race`, `Promise.any`, `Promise.allSettled` 등의 정적 메서드로 할 수 있는 유연한 흐름 제어가 JavaScript 개발에서 비동기 처리를 효율적으로 구현하는 데 필요한 요소임을 알게되었다.

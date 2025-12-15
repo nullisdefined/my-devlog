@@ -11,7 +11,6 @@ views: 0
 ![image](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/159e9a38bcb2893d4560150f3d10548f.png)
 
 ## 실습 개요
-
 AWS Database Migration Service (DMS)를 사용하여 EC2 인스턴스의 MySQL 데이터베이스에서 Amazon Aurora RDS 인스턴스로 데이터를 마이그레이션하는 과정을 진행했다. 실제 운영 환경에서 자주 발생하는 데이터베이스 마이그레이션 시나리오를 직접 체험해볼 수 있어 유익한 실습이었다.
 
 ## 실습 환경 구성
@@ -29,7 +28,6 @@ AWS Systems Manager Fleet Manager를 통해 Windows EC2 인스턴스에 원격 �
 ## MySQL 소스 데이터베이스 설정
 
 ### MySQL 설치 및 구성
-
 먼저 소스 데이터베이스 역할을 할 MySQL을 설치했다.
 <img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/b1c642216900c6e3bacf7aa187b6530e.png" alt="image" width="600" />*MySQL Server 설치*
 
@@ -41,7 +39,6 @@ AWS Systems Manager Fleet Manager를 통해 Windows EC2 인스턴스에 원격 �
 - MySQL Workbench - 8.0.36 - X64
 
 ### 데이터베이스 생성 및 데이터 로드
-
 MySQL 설치 후 admin 사용자를 생성하고 mydb 데이터베이스를 생성했다.
 
 <img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/26b5e172d44c7a9b36b9b4bc7eda6f45.png" alt="image" width="600" />
@@ -55,7 +52,6 @@ MySQL 설치 후 admin 사용자를 생성하고 mydb 데이터베이스를 생�
 ![image](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/53cd8f99f14decaea08b470d4b57d18b.png)*소스 데이터 확인*
 
 ## Aurora 대상 데이터베이스 연결
-
 Aurora 데이터베이스에 연결하기 위해 클러스터 엔드포인트를 텍스트 파일로 저장했다.
 
 ![image](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/5d4f6839f8ce73e09711f20005cf3474.png)*ClusterEndpoint 정보를 텍스트 파일로 저장*
@@ -103,7 +99,6 @@ AWS Database Migration Service에서 소스 데이터베이스, 대상 데이터
 - **Subnet group**: 네트워크 설정을 위한 서브넷 그룹
 
 ### Q2
-
 <img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/0047bd615c7690496e4a5df905195a75.png" alt="image" width="500" />
 
 AWS Systems Manager Fleet Manager를 사용하여 EC2 인스턴스에 연결하기 전에 필요한 단계는 Download the PEM key file이다.
@@ -116,7 +111,6 @@ Fleet Manager에서 RDP 연결을 할 때 인증을 위해 PEM 키 파일이 필
 - **Enable public IP addressing**: Fleet Manager는 프라이빗 네트워크를 통해 연결되므로 퍼블릭 IP가 필요하지 않음
 
 ### Q3
-
 <img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/fa674bfd8fc7c30a891ecb74e217196f.png" alt="image" width="500" />
 
 MySQL에서 Aurora로 사용자 액세스가 제대로 마이그레이션되었는지 확인하기 위해 검사해야 할 항목은 User accounts and permissions이다.
@@ -135,7 +129,6 @@ MySQL에서 Aurora로 사용자 액세스가 제대로 마이그레이션되었�
 - **데이터베이스 엔진 버전**: 호환성 확인이지만 사용자 액세스 검증과는 다름
 
 ### Q4
-
 <img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/368d25e487681b78c2bc282e4b0d0cbb.png" alt="image" width="500" />
 
 
@@ -146,7 +139,6 @@ MySQL Workbench를 사용하여 Amazon Aurora 인스턴스에 연결하기 위�
 MySQL 데이터베이스에 데이터가 성공적으로 임포트되었는지 확인하는 올바른 방법은 Run a SELECT query on the imported table 해보는 것이다.
 
 ## 마치며
-
 **DMS 아키텍처 이해**: 복제 인스턴스, 소스/대상 엔드포인트, 마이그레이션 태스크의 관계를 파악할 수 있었다.
 마이그레이션에서 네트워크, 보안, 권한 등 여러 요소를 고려해야 함을 알았다.
 실제 프로덕션 환경에서 DMS가 다음과 같은 가치를 제공함을 알았다.

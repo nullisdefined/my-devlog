@@ -14,7 +14,7 @@ views: 0
 TypeScript는 JavaScript에 타입 시스템을 추가한 프로그래밍 언어이다. Microsoft에서 개발했으며, JavaScript의 상위 집합(Superset)으로 동작한다. 즉, 모든 유효한 JavaScript 코드는 TypeScript 코드이기도 하다.
 
 ### 왜 TypeScript가 필요한가?
-JavaScript는 동적 타입 언어로서 유연하지만, 이로 인해 다음과 같은 문제점들이 발생할 수 있다:
+**JavaScript는 동적 타입 언어로서 유연하지만, 이로 인해 다음과 같은 문제점들이 발생할 수 있다**:
 ```js
 [1, 2, 3, 4] + false; // '1,2,3,4false' (string으로 변환)
 
@@ -34,6 +34,7 @@ user.hello(); // 런타임에서만 TypeError 발생
 4. 런타임 에러 감소
 
 ## TypeScript 프로젝트 설정
+
 ### 기본 설정
 1. TypeScript 설치
 ```shell
@@ -42,6 +43,7 @@ npm install -g typescript
 
 2. 컴파일 및 실행
 ```shell
+
 # TypeScript 파일을 JavaScript로 컴파일
 tsc index.ts
 
@@ -115,7 +117,9 @@ ts-node index.ts
 }
 ```
 자세한 내용은 https://www.typescriptlang.org/tsconfig/ 에서 확인할 수 있다.
+
 ## TypeScript의 주요 특징
+
 #### 1. 타입 명시와 추론
 ```ts
 // 타입 명시
@@ -165,5 +169,4 @@ fetchTodo(1).then((todo) => {
 });
 ```
 
----
 TypeScript는 JavaScript의 유연성을 유지하면서도 강력한 타입 시스템을 제공한다. 특히 규모가 있는 프로젝트에서 코드의 안정성과 유지보수성을 크게 향상시킬 수 있다. IDE 지원과 함께 개발자 경험도 크게 개선되어, 현대 웹 개발에서 필수적인 도구로 자리잡았다.

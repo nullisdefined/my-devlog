@@ -12,7 +12,6 @@ views: 0
 <img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/e48e6fd88f6339a761df1c6155770ce4.png" alt="image" width="400" />
 
 # MongoDB
-
 NestJS는 MongoDB 데이터베이스와의 통합을 위해 두 가지 방법을 제공합니다. MongoDB 커넥터가 포함된 내장 TypeORM 모듈을 사용하거나, 가장 널리 사용되는 MongoDB 객체 모델링 도구인 Mongoose를 사용하는 방법입니다. 이 장에서는 전용 `@nestjs/mongoose` 패키지를 사용하는 후자의 방법에 대해 자세히 살펴보겠습니다.
 
 먼저 필요한 의존성을 설치합니다.
@@ -44,7 +43,6 @@ export class AppModule {}
 > 따라서 `forRoot()`에 전달하는 옵션들은 그대로 `mongoose.connect()`에 전달되어 사용된다.
 
 ## 모델 주입(Model injection)
-
 Mongoose에서는 모든 것이 스키마(Schema)에서 파생됩니다. 각 스키마는 MongoDB 컬렉션에 매핑되고 해당 컬렉션 내 문서의 형태를 정의합니다. 스키마는 모델(Model)을 정의하는 데 사용됩니다. 모델은 기본 MongoDB 데이터베이스에서 문서를 생성하고 읽는 역할을 담당합니다.
 
 스키마는 NestJS 데코레이터를 활용해 생성하거나 Mongoose로 직접 수동 생성할 수 있습니다. 데코레이터를 사용한 스키마 생성 방식은 반복적인 보일러플레이트 코드를 크게 줄이고 전체적인 가독성을 향상시킵니다.
@@ -73,8 +71,7 @@ export class Cat {
 export const CatSchema = SchemaFactory.createForClass(Cat);
 ```
 
-> [!HINT]
-> `DefinitionsFactory` 클래스(`nestjs/mongoose`에서)를 사용하여 원시 스키마 정의를 생성할 수도 있습니다. 이를 통해 제공된 메타데이터를 기반으로 생성된 스키마 정의를 수동으로 수정할 수 있습니다. 이는 데코레이터로 모든 것을 표현하기 어려운 특정 엣지 케이스에 유용합니다.
+> [!HINT] `DefinitionsFactory` 클래스(`nestjs/mongoose`에서)를 사용하여 원시 스키마 정의를 생성할 수도 있습니다. 이를 통해 제공된 메타데이터를 기반으로 생성된 스키마 정의를 수동으로 수정할 수 있습니다. 이는 데코레이터로 모든 것을 표현하기 어려운 특정 엣지 케이스에 유용합니다.
 
 `@Schema()` 데코레이터는 해당 클래스를 스키마 정의로 표시하는 역할을 합니다. 이를 통해 `Cat` 클래스는 동일한 이름의 MongoDB 컬렉션과 매핑되며, 컬렉션 이름은 복수형으로 "s"가 자동으로 추가되어 최종적으로 `cats`가 됩니다. 이 데코레이터는 스키마 옵션 객체인 단일 선택적 인수를 허용합니다. 이를 일반적으로 `mongoose.Schema` 클래스 생성자의 두 번째 인수로 전달하는 객체라고 생각하면 됩니다(e.g., `new mongoose.Schema(_, options)`). 사용 가능한 스키마 옵션에 대한 자세한 내용은 [이 장](https://mongoosejs.com/docs/guide.html)을 참조하세요.
 
@@ -180,7 +177,6 @@ export class CatsService {
 ```
 
 ## 연결(Connection)
-
 경우에 따라 네이티브 Mongoose Connection 객체에 직접 접근해야 할 때가 있습니다. 예를 들어 connection 객체를 통해 네이티브 API를 호출하고 싶은 경우입니다. 다음과 같이 `@InjectConnection()` 데코레이터를 사용하여 Mongoose Connection을 주입할 수 있습니다.
 
 ```typescript
@@ -195,7 +191,6 @@ export class CatsService {
 ```
 
 ## 세션(Sessions)
-
 Mongoose로 세션을 시작하려면, `mongoose.startSession()`을 직접 호출하는 대신 `@InjectConnection`을 사용하여 데이터베이스 연결을 주입하는 것이 권장됩니다. 이 접근 방식은 NestJS 의존성 주입 시스템과 더 나은 통합을 허용하여 적절한 연결 관리를 보장합니다.
 
 세션을 시작하는 방법의 예시입니다.
@@ -219,7 +214,6 @@ export class CatsService {
 이 예시에서 `@InjectConnection()`을 통해 Mongoose 연결을 서비스에 주입받을 수 있습니다. 연결이 주입되고 나면 `connection.startSession()`을 사용해 새로운 세션을 시작할 수 있습니다. 이 세션은 여러 쿼리에 걸친 원자적 작업을 보장하는 데이터베이스 트랜잭션을 관리하는 데 사용할 수 있습니다. 세션을 시작한 후, 로직에 따라 트랜잭션을 커밋하거나 중단하는 것을 잊지 마세요.
 
 ## 다중 데이터베이스(Multiple databases)
-
 일부 프로젝트에서는 여러 데이터베이스 연결이 필요한 경우가 있는데, 이 모듈을 통해서도 이를 구현할 수 있습니다. 여러 연결로 작업하려면, 먼저 연결을 생성합니다. 이 경우, 연결 이름 지정이 필수가 됩니다.
 
 ```typescript
@@ -240,8 +234,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 export class AppModule {}
 ```
 
-> [!WARNING]
-> 이름이 없거나 같은 이름을 가진 여러 연결을 가져서는 안 됩니다. 그렇지 않으면 덮어쓰여집니다.
+> [!WARNING] 이름이 없거나 같은 이름을 가진 여러 연결을 가져서는 안 됩니다. 그렇지 않으면 덮어쓰여집니다.
 
 이렇게 설정한 후에는 `MongooseModule.forFeature()` 함수에서 어떤 연결을 사용할지 지정해주어야 합니다.
 
@@ -290,7 +283,6 @@ export class CatsService {
 ```
 
 ## 훅(Hooks, 미들웨어)
-
 미들웨어(pre 또는 post 훅이라고도 함)는 비동기 함수 실행 중에 제어권이 전달되는 함수입니다. 미들웨어는 스키마 수준에서 지정되며 플러그인 작성에 유용합니다([소스](https://mongoosejs.com/docs/middleware.html)). 모델을 컴파일한 후 `pre()` 또는 `post()`를 호출하는 것은 Mongoose에서 작동하지 않습니다. 모델 등록 전에 훅을 등록하려면, 팩토리 프로바이더(Provider)(즉, `useFactory`)와 함께 `MongooseModule`의 `forFeatureAsync()` 메서드를 사용하세요. 이 기법을 사용하면 스키마 객체에 액세스한 다음 `pre()` 또는 `post()` 메서드를 사용하여 해당 스키마에 훅을 등록할 수 있습니다. 아래 예시를 참조하세요.
 
 ```typescript
@@ -340,7 +332,6 @@ export class AppModule {}
 ```
 
 ## 플러그인(Plugins)
-
 주어진 스키마에 대한 플러그인을 등록하려면, `forFeatureAsync()` 메서드를 사용하세요.
 
 ```typescript
@@ -382,7 +373,6 @@ export class AppModule {}
 ```
 
 ## 판별자(Discriminators)
-
 판별자는 스키마 상속 메커니즘입니다. 동일한 기본 MongoDB 컬렉션 위에서 겹치는 스키마를 가진 여러 모델을 가질 수 있게 해줍니다.
 
 단일 컬렉션에서 다양한 유형의 이벤트를 추적하려고 한다고 가정해보겠습니다. 모든 이벤트는 타임스탬프를 가집니다.
@@ -405,8 +395,7 @@ export class Event {
 export const EventSchema = SchemaFactory.createForClass(Event);
 ```
 
-> [!HINT]
-> mongoose가 서로 다른 판별자 모델을 구별하는 방법은 기본적으로 `__t`인 "판별자 키"입니다. Mongoose는 이 문서가 어떤 판별자의 인스턴스인지 추적하는 데 사용하는 `__t`라는 String 경로를 스키마에 추가합니다. `discriminatorKey` 옵션을 사용하여 판별을 위한 경로를 정의할 수도 있습니다.
+> [!HINT] mongoose가 서로 다른 판별자 모델을 구별하는 방법은 기본적으로 `__t`인 "판별자 키"입니다. Mongoose는 이 문서가 어떤 판별자의 인스턴스인지 추적하는 데 사용하는 `__t`라는 String 경로를 스키마에 추가합니다. `discriminatorKey` 옵션을 사용하여 판별을 위한 경로를 정의할 수도 있습니다.
 
 `SignedUpEvent`와 `ClickedLinkEvent` 인스턴스는 일반적인 이벤트와 동일한 컬렉션에 저장됩니다.
 
@@ -426,7 +415,7 @@ export class ClickedLinkEvent {
 export const ClickedLinkEventSchema = SchemaFactory.createForClass(ClickedLinkEvent);
 ```
 
-그리고 `SignUpEvent` 클래스:
+**그리고 `SignUpEvent` 클래스**:
 
 ```typescript
 // sign-up-event.schema.ts
@@ -467,7 +456,6 @@ export class EventsModule {}
 ```
 
 ## 테스팅(Testing)
-
 애플리케이션의 단위 테스트를 진행할 때는 일반적으로 데이터베이스 연결을 피하여 테스트 설정을 단순화하고 실행 속도를 향상시키려고 합니다. 하지만 우리의 클래스들이 연결 인스턴스에서 가져온 모델에 의존하고 있다면 어떻게 해야 할까요? 이런 경우의 해결책은 모크 모델을 생성하는 것입니다.
 
 이를 더 쉽게 만들기 위해, `@nestjs/mongoose` 패키지는 토큰 이름을 기반으로 준비된 주입 토큰을 반환하는 `getModelToken()` 함수를 제공합니다. 이 토큰을 사용하여, `useClass`, `useValue`, `useFactory`를 포함한 표준 커스텀 프로바이더(Provider) 기법 중 하나를 사용하여 목 구현을 쉽게 제공할 수 있습니다.
@@ -488,7 +476,6 @@ export class CatsModule {}
 이 예시에서, `@InjectModel()` 데코레이터를 사용하여 `Model<Cat>`을 주입하는 모든 소비자에게 하드코딩된 `catModel`(객체 인스턴스)이 제공됩니다.
 
 ## 비동기 구성(Async configuration)
-
 모듈 옵션을 정적으로 전달하는 것이 아니라 비동기적으로 전달해야 하는 경우에는 `forRootAsync()` 메서드를 사용하면 됩니다. 대부분의 동적 모듈과 마찬가지로, Nest는 비동기 구성을 다루는 여러 기법을 제공합니다.
 
 한 가지 기법은 팩토리 함수를 사용하는 것입니다.
@@ -544,7 +531,6 @@ MongooseModule.forRootAsync({
 ```
 
 ## 연결 이벤트(Connection events)
-
 `onConnectionCreate` 구성 옵션을 사용하여 Mongoose 연결 이벤트를 수신할 수 있습니다. 이를 통해 연결이 설정될 때마다 커스텀 로직을 구현할 수 있습니다. 예를 들어, 아래와 같이 `connected`, `open`, `disconnected`, `reconnected`, `disconnecting` 이벤트에 대한 이벤트 리스너를 등록할 수 있습니다.
 
 ```typescript
@@ -586,7 +572,6 @@ MongooseModule.forRootAsync({
 이는 연결 이벤트를 관리하는 유연한 방법을 제공하여 연결 상태의 변화를 효과적으로 처리할 수 있게 해줍니다.
 
 ## 서브도큐먼트(Subdocuments)
-
 부모 문서 내에 서브도큐먼트를 중첩하려면, 다음과 같이 스키마를 정의할 수 있습니다.
 
 ```typescript
@@ -642,7 +627,6 @@ export type PersonDocument = HydratedDocument<Person, PersonDocumentOverride>;
 ```
 
 ## 가상(Virtuals) 필드
-
 Mongoose의 가상(virtual) 필드는 문서에는 존재하지만 실제로는 MongoDB에 저장되지 않는 속성입니다. 데이터베이스에 저장되지 않으면서도 접근할 때마다 동적으로 계산되는 값입니다. 가상 필드는 일반적으로 파생되거나 계산된 값(getter)에 사용됩니다. e.g., 필드 결합(`firstName`과 `lastName`을 연결하여 `fullName` 속성 생성) 또는 문서의 기존 데이터에 의존하는 속성 생성에 사용됩니다.
 
 ```typescript
@@ -662,14 +646,12 @@ class Person {
 }
 ```
 
-> [!HINT]
-> `@Virtual()` 데코레이터는 `@nestjs/mongoose` 패키지에서 임포트됩니다.
+> [!HINT] `@Virtual()` 데코레이터는 `@nestjs/mongoose` 패키지에서 임포트됩니다.
 
 이 예시에서 `fullName` 가상은 `firstName`과 `lastName`을 조합하여 생성됩니다. 접근할 때는 일반 속성처럼 동작하지만 MongoDB 문서에는 실제로 저장되지 않습니다.
 
 ## 예시
-
 실제 동작하는 예시는 [여기](https://github.com/nestjs/nest/tree/master/sample/14-mongoose-base)에서 확인할 수 있습니다.
 
----
-이 글은 [NestJS 공식문서](https://docs.nestjs.com/)를 한글로 번역 및 개인적인 이해를 바탕으로 재구성한 글입니다.
+
+> [!NOTE] 이 글은 [NestJS 공식문서](https://docs.nestjs.com/)를 한글로 번역 및 개인적인 이해를 바탕으로 재구성한 글입니다.
