@@ -247,8 +247,12 @@ pre[data-title] {
 
 /* GitHub-style alerts (admonitions) */
 .markdown-alert {
-    @apply my-6 rounded-lg border-l-4 p-4;
+    @apply my-6 rounded-r-lg border-l-4 pl-6 pr-4 py-3;
     position: relative;
+    margin-left: 1.3rem;
+    margin-right: 1.3rem;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
 }
 
 .markdown-alert-header {
@@ -269,6 +273,15 @@ pre[data-title] {
 
 .markdown-alert-content > *:last-child {
     @apply mb-0;
+}
+
+@media (max-width: 640px) {
+    .markdown-alert {
+        margin-left: 1rem;
+        margin-right: 1rem;
+        padding-left: 1.2rem;
+        padding-right: 1.2rem;
+    }
 }
 
 /* Note alert */
@@ -295,12 +308,12 @@ pre[data-title] {
 
 /* Important alert */
 .markdown-alert-important {
-    @apply bg-purple-50 border-purple-500 text-purple-900;
-    @apply dark:bg-purple-950/30 dark:border-purple-500 dark:text-purple-100;
+    @apply bg-red-50 border-red-500 text-red-900;
+    @apply dark:bg-red-950/30 dark:border-red-500 dark:text-red-100;
 }
 
 .markdown-alert-important .markdown-alert-header {
-    @apply text-purple-700 dark:text-purple-300;
+    @apply text-red-700 dark:text-red-300;
 }
 
 /* Warning alert */
@@ -749,14 +762,19 @@ pre[data-title] {
 
 /* 이미지 다크모드 처리 */
 .dark .prose img {
-    @apply opacity-90 transition-all duration-300 ease-in-out;
-    filter: brightness(0.93) contrast(1.08);
+    @apply opacity-90;
+    filter: brightness(0.9) contrast(1.08);
+    transition:
+        filter 0.2s ease,
+        opacity 0.2s ease;
+    transform: none;
 }
 
 .dark .prose img:hover {
     @apply opacity-95;
-    filter: brightness(0.95) contrast(1.05);
-    transition-duration: 300ms;
+    filter: brightness(0.98) contrast(1.05);
+    transition-duration: 200ms;
+    transform: none !important;
 }
 
 /* 백틱 제거를 위한 추가 스타일 */
@@ -776,6 +794,23 @@ pre[data-title] {
         -moz-osx-font-smoothing: grayscale;
         width: 100%;
         overflow-x: hidden;
+        font-family:
+            var(--font-apple-sd),
+            "Apple SD Gothic Neo",
+            "Apple SD Gothic",
+            var(--font-pretendard),
+            "Pretendard",
+            "Noto Sans KR",
+            "Spoqa Han Sans Neo",
+            -apple-system,
+            BlinkMacSystemFont,
+            "Segoe UI",
+            Helvetica,
+            "Apple Color Emoji",
+            Arial,
+            sans-serif,
+            "Segoe UI Emoji",
+            "Segoe UI Symbol";
     }
 
     @media (max-width: 640px) {
@@ -917,11 +952,11 @@ pre[data-title] {
 }
 
 .prose h2 {
-    @apply mt-6 mb-3;
+    @apply mt-8 mb-4;
 }
 
 .prose h3 {
-    @apply mt-5 mb-2;
+    @apply mt-6 mb-2;
 }
 
 .prose h4 {
@@ -960,7 +995,8 @@ pre[data-title] {
     content: "•";
     position: absolute;
     left: -1.2em;
-    color: var(--tw-prose-bullets);
+    color: hsl(var(--foreground));
+    opacity: 0.8;
 }
 
 .prose ul > li > ul > li::before {
@@ -999,7 +1035,28 @@ pre[data-title] {
 }
 
 .prose blockquote {
-    @apply border-l-4 border-primary/30 pl-6 py-3 my-6 bg-muted/30 italic rounded-r-lg;
+    @apply border-l-4 border-primary/30 pl-6 py-3 my-6 bg-muted/30 rounded-r-lg;
+    @apply text-sm leading-6 font-normal;
+    @apply not-italic;
+    margin-left: 1.3rem;
+    margin-right: 1.3rem;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    font-style: normal !important;
+}
+
+.prose blockquote p {
+    @apply not-italic;
+    font-style: normal !important;
+}
+
+@media (max-width: 640px) {
+    .prose blockquote {
+        margin-left: 1rem;
+        margin-right: 1rem;
+        padding-left: 1.2rem;
+        padding-right: 1.2rem;
+    }
 }
 
 .prose blockquote p::before,
@@ -1009,10 +1066,23 @@ pre[data-title] {
 
 /* Notion 스타일 개선 */
 .prose {
-    @apply text-foreground leading-6;
+    @apply text-foreground leading-7;
     font-family:
-        -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica,
-        "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji",
+        var(--font-apple-sd),
+        "Apple SD Gothic Neo",
+        "Apple SD Gothic",
+        var(--font-pretendard),
+        "Pretendard",
+        "Noto Sans KR",
+        "Spoqa Han Sans Neo",
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Helvetica,
+        "Apple Color Emoji",
+        Arial,
+        sans-serif,
+        "Segoe UI Emoji",
         "Segoe UI Symbol";
     font-size: 16px;
 }
@@ -1023,16 +1093,17 @@ pre[data-title] {
 .prose h4,
 .prose h5,
 .prose h6 {
-    @apply font-semibold text-foreground mt-6 mb-3 leading-tight;
+    @apply font-extrabold text-foreground mt-8 mb-3 leading-tight;
     scroll-margin-top: 80px; /* 스크롤 시 헤더 고려 */
 }
 
 .prose h1 {
-    @apply text-2xl md:text-3xl;
+    @apply text-2xl md:text-3xl mt-10;
 }
 
 .prose h2 {
-    @apply text-xl md:text-2xl border-b border-border/30 pb-2;
+    @apply text-xl md:text-2xl border-b border-border/30 pb-3;
+    @apply mt-12 mb-5;
 }
 
 .prose h3 {
@@ -1044,7 +1115,7 @@ pre[data-title] {
 }
 
 .prose p {
-    @apply text-foreground leading-6 mb-4;
+    @apply text-foreground leading-7 mb-5;
 }
 
 .prose img {
@@ -1056,10 +1127,14 @@ pre[data-title] {
     margin-right: auto;
     display: block;
     transition:
-        filter 0.3s ease,
-        transform 0.2s ease,
+        filter 0.2s ease,
         box-shadow 0.2s ease;
     cursor: zoom-in;
+    transform: none;
+}
+
+.prose img:hover {
+    transform: none !important;
 }
 
 /* 모바일에서 이미지 최대 너비 제한 */
@@ -1135,12 +1210,12 @@ pre[data-title] {
 
 /* 다크모드에서 이미지 어둡게 처리 */
 .dark .prose img {
-    filter: brightness(0.7) contrast(1.1);
+    filter: brightness(0.9) contrast(1.05);
 }
 
 /* 다크모드에서 이미지 호버 시 원본 표시 */
 .dark .prose img:hover {
-    filter: brightness(1) contrast(1);
+    filter: brightness(0.98) contrast(1.05);
 }
 
 .prose table {
@@ -1162,19 +1237,19 @@ pre[data-title] {
 /* 리스트 스타일 개선 - 간격 줄임 */
 .prose ol,
 .prose ul {
-    @apply my-4;
+    @apply my-5;
 }
 
 .prose li {
-    @apply leading-6 mb-1;
+    @apply leading-7 mb-2;
 }
 
 .prose ul > li {
-    @apply mb-1;
+    @apply mb-2;
 }
 
 .prose ol > li {
-    @apply mb-1;
+    @apply mb-2;
 }
 
 /* 중첩 리스트 간격 더 줄임 */

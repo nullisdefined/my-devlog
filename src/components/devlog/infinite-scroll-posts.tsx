@@ -61,11 +61,11 @@ export function InfiniteScrollPosts({
   // Masonry 레이아웃에서 row-major 방식으로 컬럼 분배 함수 추가
   function splitPostsToColumns(
     posts: (Post | React.ReactElement)[],
-    columnCount: number
+    columnCount: number,
   ): Array<Post | React.ReactElement>[] {
     const columns: Array<Post | React.ReactElement>[] = Array.from(
       { length: columnCount },
-      () => []
+      () => [],
     );
     posts.forEach((post, idx) => {
       columns[idx % columnCount].push(post);
@@ -92,7 +92,7 @@ export function InfiniteScrollPosts({
     if (Math.random() < 0.03) {
       const popcatVariant = (Math.random() < 0.5 ? 1 : 2) as 1 | 2;
       columns[0].unshift(
-        <PopcatCard key={`popcat-masonry`} variant={popcatVariant} />
+        <PopcatCard key={`popcat-masonry`} variant={popcatVariant} />,
       );
     }
 

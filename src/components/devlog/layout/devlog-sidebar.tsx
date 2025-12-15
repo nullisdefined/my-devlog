@@ -19,6 +19,7 @@ import {
   Tag as TagIcon,
   FileText,
   LayoutGrid,
+  Rss,
 } from "lucide-react";
 
 interface DevlogSidebarProps {
@@ -378,8 +379,19 @@ export function DevlogSidebar({ posts, onLinkClick }: DevlogSidebarProps) {
         <div className="border-t border-border/50" />
 
         {/* Widgets Section */}
-        <div className="space-y-3 px-2 py-1">
+        <div className="space-y-3 px-3 py-1">
           <VisitorsWidget />
+          <Link
+            href="/feed.xml"
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={onLinkClick}
+            className="flex items-center justify-start gap-2 py-1 text-sm text-foreground hover:text-accent-foreground transition-colors"
+            title="RSS 피드 구독"
+          >
+            <Rss className="w-4 h-4" />
+            <span className="font-semibold">RSS Feed</span>
+          </Link>
         </div>
 
         {/* Bottom padding for scroll */}

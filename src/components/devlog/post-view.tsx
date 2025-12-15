@@ -95,7 +95,7 @@ export function PostView({ post, content, toc, allPosts }: PostViewProps) {
             )}
 
             {/* 제목 */}
-            <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold leading-tight text-foreground">
+            <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-extrabold leading-tight text-foreground">
               {post.title}
             </h1>
 

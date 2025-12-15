@@ -46,6 +46,23 @@ const pretendard = localFont({
     },
   ],
   variable: "--font-pretendard",
+  display: "swap",
+});
+
+const appleSdGothic = localFont({
+  src: [
+    { path: "../../public/fonts/AppleSDGothicNeoB.ttf", weight: "700" },
+    { path: "../../public/fonts/AppleSDGothicNeoEB.ttf", weight: "800" },
+    { path: "../../public/fonts/AppleSDGothicNeoH.ttf", weight: "900" },
+    { path: "../../public/fonts/AppleSDGothicNeoSB.ttf", weight: "600" },
+    { path: "../../public/fonts/AppleSDGothicNeoM.ttf", weight: "500" },
+    { path: "../../public/fonts/AppleSDGothicNeoR.ttf", weight: "400" },
+    { path: "../../public/fonts/AppleSDGothicNeoL.ttf", weight: "300" },
+    { path: "../../public/fonts/AppleSDGothicNeoUL.ttf", weight: "200" },
+    { path: "../../public/fonts/AppleSDGothicNeoT.ttf", weight: "100" },
+  ],
+  variable: "--font-apple-sd",
+  display: "swap",
 });
 
 const jetbrainsMono = JetBrains_Mono({
@@ -224,10 +241,10 @@ export default function RootLayout({
                   document.documentElement.classList.remove('light', 'dark');
                   document.documentElement.classList.add(theme);
                 }
-                
+
                 // 즉시 실행
                 setTheme();
-                
+
                 // DOM이 완전히 로드된 후에도 한 번 더 실행
                 if (document.readyState === 'loading') {
                   document.addEventListener('DOMContentLoaded', setTheme);
@@ -243,7 +260,9 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body>
+      <body
+        className={`${appleSdGothic.className} ${pretendard.className} ${jetbrainsMono.variable} ${appleSdGothic.variable} ${pretendard.variable}`}
+      >
         <ThemeProvider>
           <SessionWrapper>
             {children}

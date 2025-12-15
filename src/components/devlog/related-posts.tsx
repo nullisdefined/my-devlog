@@ -58,7 +58,7 @@ export function RelatedPosts({
 
   return (
     <section className="mt-12 pt-8 border-t border-border">
-      <h2 className="text-2xl font-bold mb-6">관련 포스트</h2>
+      <h2 className="text-2xl font-extrabold mb-6">관련 포스트</h2>
       <div className="grid gap-4 md:grid-cols-2">
         {relatedPosts.map((post) => (
           <Link
