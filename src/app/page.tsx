@@ -7,6 +7,7 @@ import {
   SiNodedotjs,
   SiExpress,
   SiNestjs,
+  SiSupabase,
   SiC,
   SiJavascript,
   SiTypescript,
@@ -1076,6 +1077,22 @@ export default function Home() {
       demo: "https://nullisdefined.github.io/guestboots/",
       image:
         "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/770266670faeaf62f5b14f0576c35928.png",
+    },
+    {
+      title: "Playona",
+      period: "2026.05",
+      description:
+        "Spotify, YouTube Music, Melon 등 파편화된 음악 스트리밍 플랫폼 간 음악 링크를 변환해주는 크로스 플랫폼 음악 공유 서비스입니다.",
+      tech: [
+        { name: "TypeScript", icon: <SiTypescript className="h-4 w-4" /> },
+        { name: "NestJS", icon: <SiNestjs className="h-4 w-4" /> },
+        { name: "AWS Lambda", icon: <SiAwslambda className="h-4 w-4" /> },
+        { name: "Supabase", icon: <SiSupabase className="h-4 w-4" /> },
+      ],
+      link: "https://github.com/nullisdefined/playona",
+      demo: "https://playona-five.vercel.app/",
+      image:
+        "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/76ee690cf1374b249e73c0ead43cb967.gif",
     },
   ];
 
