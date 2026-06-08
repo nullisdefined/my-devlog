@@ -2423,10 +2423,10 @@ dark:hover:bg-gray-700 dark:hover:scale-105 dark:hover:shadow-lg
                   </li>
                   <li>
                     <div className="font-semibold text-sm">
-                      기업연계 Co-op 집중학기제 SAP 트랙 수료 (예정)
+                      Co-op SAP 트랙 수료
                     </div>
                     <div className="text-muted-foreground text-xs sm:text-sm">
-                      숭실대학교 스파르탄SW교육원 × SAP Korea
+                      숭실대학교 스파르탄SW교육원
                     </div>
                     <div className="text-xs text-muted-foreground">
                       2026.03.03 ~ 2026.06.22
@@ -2637,6 +2637,40 @@ dark:hover:bg-gray-700 dark:hover:scale-105 dark:hover:shadow-lg
                     </div>
                     <div className="text-xs text-muted-foreground">
                       2025.11.01
+                    </div>
+                  </li>
+                  <li>
+                    <div className="font-semibold text-sm flex items-center justify-between">
+                      <span>
+                        SAP Certified - Backend Developer (ABAP Cloud)
+                      </span>
+                      <Link
+                        href="https://www.credly.com/badges/3dae76ce-785d-4370-939d-c4ee579be33d/public_url"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="ml-2 text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 transition-colors flex-shrink-0"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="h-5 w-5"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                          />
+                        </svg>
+                      </Link>
+                    </div>
+                    <div className="text-xs sm:text-sm text-muted-foreground">
+                      SAP
+                    </div>
+                    <div className="text-xs text-muted-foreground">
+                      2026.06.08
                     </div>
                   </li>
                 </ul>
