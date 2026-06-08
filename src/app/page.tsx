@@ -22,11 +22,6 @@ import {
   SiTailwindcss,
   SiNextdotjs,
   SiCplusplus,
-  SiVisualstudiocode,
-  SiSlack,
-  SiSwagger,
-  SiNotion,
-  SiConfluence,
   SiTypeorm,
   SiAwslambda,
   SiNginx,
@@ -41,7 +36,6 @@ import {
   SiPusher,
   SiMarkdown,
   SiCss3,
-  SiTerraform,
   SiAmazonrds,
   SiAmazonecs,
   SiSap,
@@ -917,91 +911,45 @@ export default function Home() {
             "Redis 기반으로 페이지 조회수·캐싱 기능을 구현한 경험이 있습니다.",
         },
         {
-          name: "Terraform",
-          icon: <SiTerraform className="h-4 w-4" />,
+          name: "Supabase",
+          icon: <SiSupabase className="h-4 w-4" />,
           description:
-            "IaC로 AWS 인프라를 모듈화하고, 재사용 가능한 구성으로 환경별 자동 배포 구조를 설계한 경험이 있습니다.",
+            "Playona 프로젝트에서 Supabase 기반 PostgreSQL 데이터베이스를 구성·운영한 경험이 있습니다.",
         },
         {
-          name: "EC2 / RDS / S3",
+          name: "AWS Compute",
           icon: <SiAmazon className="h-4 w-4" />,
           description:
-            "EC2, RDS, S3 기반 3-Tier 아키텍처를 설계 및 구축할 수 있습니다.",
+            "EC2 기반 3-Tier 아키텍처를 구축하고, Docker 이미지를 ECR→ECS Fargate로 배포하는 CI/CD 파이프라인을 구성했으며, Lambda·CloudFront를 활용한 S3 Presigned URL 기반 대용량 비디오 업로드 최적화 경험이 있습니다.",
         },
         {
-          name: "ECR / ECS / Fargate",
+          name: "AWS Data",
           icon: <SiAmazon className="h-4 w-4" />,
           description:
-            "Docker 이미지를 ECR을 통해 ECS Fargate로 배포하는 CI/CD 파이프라인 구축 경험이 있습니다.",
-        },
-        {
-          name: "Lambda / CloudFront",
-          icon: <SiAmazon className="h-4 w-4" />,
-          description:
-            "S3 Presigned URL 기반 대용량 비디오 업로드 최적화 경험이 있습니다.",
-        },
-        {
-          name: "SQS / Bedrock / Cognito",
-          icon: <SiAmazon className="h-4 w-4" />,
-          description:
-            "SQS 기반 비동기 영상 처리 파이프라인을 구축해 본 경험이 있습니다.",
+            "RDS·S3로 데이터/스토리지 계층을 구성하고, SQS 기반 비동기 영상 처리 파이프라인을 구축했으며, Bedrock·Cognito 활용 경험이 있습니다.",
         },
       ],
     },
     {
-      category: "ERP",
+      category: "SAP",
       techs: [
         {
           name: "SAP S/4HANA",
           icon: <SiSap className="h-4 w-4" />,
           description:
-            "숭실대학교 Co-op SAP 트랙(2026.03~06)에서 SAP S/4HANA 시스템 구조 및 실무 활용 교육 이수 중입니다.",
+            "숭실대학교 Co-op SAP 트랙(2026.03~06) 수업에서 SAP S/4HANA 시스템 구조 및 실무 활용 교육을 이수했습니다.",
         },
         {
           name: "ABAP",
           icon: <SiSap className="h-4 w-4" />,
           description:
-            "ABAP Dictionary, Screen Programming, ALV Report, OOP, Database Update Technique 등 SAP 개발 핵심 기술을 학습 중입니다.",
-        },
-      ],
-    },
-    {
-      category: "Tools",
-      techs: [
-        {
-          name: "VSCode",
-          icon: <SiVisualstudiocode className="h-4 w-4" />,
-          description: "",
+            "SAP GUI 환경에서 ABAP Dictionary 타입 정의, Screen Programming 기반 화면 레이아웃, ALV Report, OOP 등을 학습한 뒤 Eclipse ADT 기반 ABAP Cloud 개발로 확장하여, SAP Certified Back-End Developer (ABAP Cloud) 자격을 취득했습니다.",
         },
         {
-          name: "Git",
-          icon: <SiGit className="h-4 w-4" />,
-          description: "",
-        },
-        {
-          name: "GitHub",
-          icon: <SiGithub className="h-4 w-4" />,
-          description: "",
-        },
-        {
-          name: "Notion",
-          icon: <SiNotion className="h-4 w-4" />,
-          description: "",
-        },
-        {
-          name: "Slack",
-          icon: <SiSlack className="h-4 w-4" />,
-          description: "",
-        },
-        {
-          name: "Swagger",
-          icon: <SiSwagger className="h-4 w-4" />,
-          description: "",
-        },
-        {
-          name: "Confluence",
-          icon: <SiConfluence className="h-4 w-4" />,
-          description: "",
+          name: "RAP",
+          icon: <SiSap className="h-4 w-4" />,
+          description:
+            "Eclipse ADT 기반 RESTful ABAP Programming Model을 활용해 클라우드 환경에서 웹 CRUD 인터페이스를 구현해 본 경험이 있습니다.",
         },
       ],
     },
