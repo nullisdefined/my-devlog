@@ -39,7 +39,7 @@ export function Footer() {
           {/* Copyright */}
           <div className="text-center">
             <p className="text-sm text-muted-foreground">
-              © 2025 Jaewoo Kim. All rights reserved.
+              © 2026 Jaewoo Kim. All rights reserved.
             </p>
           </div>
         </div>
