@@ -46,7 +46,7 @@ export function DevlogSidebar({ posts, onLinkClick }: DevlogSidebarProps) {
       <div className="space-y-3 px-1 min-h-full">
         {/* Profile Section */}
         <div className="flex flex-col items-center space-y-2 py-0 pb-2 relative z-10">
-          <Link href="/" onClick={onLinkClick}>
+          <Link href="/devlog" onClick={onLinkClick}>
             <Avatar className="h-28 w-28 border-2 border-primary/20 hover:border-primary/40 transition-colors relative z-10">
               <AvatarImage
                 src="https://avatars.githubusercontent.com/u/164657817?v=4"
