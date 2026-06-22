@@ -2289,14 +2289,14 @@ export default function Home() {
                 </div>
               </div>
 
-              <aside className="mx-auto w-full max-w-[17rem] space-y-8 md:mx-0">
+              <aside className="mx-auto w-full max-w-[15rem] space-y-8 md:mx-0">
                 <div className="overflow-hidden rounded-2xl border border-neutral-200 bg-white/70 p-2 shadow-sm dark:border-white/10 dark:bg-white/5">
                   <Image
-                    src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com//images/570b60f93557a3e53203d1b85a87c2f7.jpg"
+                    src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com//images/44c0534f3c6ad5845b875b509dc43de9.jpeg"
                     alt="Profile"
                     width={288}
                     height={384}
-                    className="aspect-[3/4] w-full rounded-xl object-cover object-[center_18%] select-none pointer-events-none"
+                    className="aspect-[0.78] w-full rounded-xl object-cover object-center select-none pointer-events-none"
                     onContextMenu={(e) => e.preventDefault()}
                     draggable={false}
                   />
@@ -2322,14 +2322,16 @@ export default function Home() {
                     Focus
                   </p>
                   <div className="flex flex-wrap gap-2">
-                    {["Node.js", "NestJS", "TypeScript", "AWS Cloud"].map((item) => (
-                      <span
-                        key={item}
-                        className="rounded-full border border-neutral-200 bg-white px-3 py-1.5 text-xs font-medium text-neutral-700 dark:border-white/10 dark:bg-white/5 dark:text-neutral-300"
-                      >
-                        {item}
-                      </span>
-                    ))}
+                    {["Node.js", "NestJS", "TypeScript", "AWS Cloud"].map(
+                      (item) => (
+                        <span
+                          key={item}
+                          className="rounded-full border border-neutral-200 bg-white px-3 py-1.5 text-xs font-medium text-neutral-700 dark:border-white/10 dark:bg-white/5 dark:text-neutral-300"
+                        >
+                          {item}
+                        </span>
+                      ),
+                    )}
                   </div>
                 </div>
               </aside>
