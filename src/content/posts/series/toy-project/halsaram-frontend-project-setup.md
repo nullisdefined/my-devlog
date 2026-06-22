@@ -2,7 +2,7 @@
 title: "[할사람] 프론트엔드 프로젝트 설정"
 slug: "halsaram-frontend-project-setup"
 date: 2025-08-21
-tags: ["ToyProject", "Halsaram", "KOSA", "React", "PWA", "Vite", "Toy Project"]
+tags: ["ToyProject", "Halsaram", "KOSA", "React", "PWA", "Vite"]
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/41cd02897e1a3b4209771a683de6c404.png"
 draft: true
 views: 0

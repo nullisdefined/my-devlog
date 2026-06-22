@@ -2,7 +2,7 @@
 title: "[프로그래머스] 행렬의 곱셈"
 slug: "lessons-12949"
 date: 2025-01-31
-tags: ["JavaScript", "Array", "Problem Solving"]
+tags: ["JavaScript", "Array"]
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com//images/9da43d23144a48a883255434f24e1628.png"
 draft: true
 views: 0

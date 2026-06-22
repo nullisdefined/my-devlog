@@ -2,7 +2,7 @@
 title: "할사람 프론트엔드 화면정의서"
 slug: "halsaram-frontend-wireframe"
 date: 2025-08-21
-tags: ["ToyProject", "Halsaram", "KOSA", "React", "PWA", "Toy Project"]
+tags: ["ToyProject", "Halsaram", "KOSA", "React", "PWA"]
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/42fa1e6e1c4b4584a35e880434337990.png"
 draft: true
 views: 0

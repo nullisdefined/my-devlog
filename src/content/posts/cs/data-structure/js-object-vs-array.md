@@ -2,7 +2,7 @@
 title: "[JS] 배열과 객체 성능 비교"
 slug: "js-object-vs-array"
 date: 2024-11-26
-tags: ["JavaScript", "Object", "Array", "CS", "Data Structure"]
+tags: ["JavaScript", "Object", "Array"]
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/3268fadded62ff0a0987d8204616248f.png"
 draft: false
 views: 0

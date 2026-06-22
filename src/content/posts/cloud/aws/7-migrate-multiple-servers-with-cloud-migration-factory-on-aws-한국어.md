@@ -2,7 +2,7 @@
 title: "7. Migrate multiple servers with Cloud Migration Factory on AWS (한국어)"
 slug: "7-migrate-multiple-servers-with-cloud-migration-factory-on-aws-한국어"
 date: 2025-07-09
-tags: ["Cloud", "AWS"]
+tags: []
 draft: true
 views: 0
 ---

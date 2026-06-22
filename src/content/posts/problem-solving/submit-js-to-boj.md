@@ -2,7 +2,7 @@
 title: "백준(BOJ) 자바스크립트로 제출하기"
 slug: "submit-js-to-boj"
 date: 2024-11-25
-tags: ["JavaScript", "BOJ", "Problem Solving"]
+tags: ["JavaScript", "BOJ"]
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/a2ece62d4e9073e31f91f537a8314a6a.png"
 draft: true
 views: 0

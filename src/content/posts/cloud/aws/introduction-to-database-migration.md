@@ -2,7 +2,7 @@
 title: "Introduction to Database Migration"
 slug: "introduction-to-database-migration"
 date: 2025-07-09
-tags: ["AWS", "Database", "Migration", "SCT", "DMS", "Cloud"]
+tags: ["AWS", "Database", "Migration", "SCT", "DMS"]
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/159e9a38bcb2893d4560150f3d10548f.png"
 draft: false
 views: 0

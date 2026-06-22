@@ -2,7 +2,7 @@
 title: "[JS] 빈도수 세기 패턴"
 slug: "frequency-counter-pattern"
 date: 2024-11-29
-tags: ["JavaScript", "Problem Solving"]
+tags: ["JavaScript"]
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/5527369119ba6ac9455d02961c357398.png"
 draft: true
 views: 0

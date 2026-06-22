@@ -2,7 +2,7 @@
 title: "ES15 / ECMAScript 2025: What’s New in JavaScript? 🎉✨"
 slug: "es15-ecmascript-2025"
 date: 2025-01-02
-tags: ["JavaScript", "PatternMatching", "Set", "TemporalAPI", "Languages"]
+tags: ["JavaScript", "PatternMatching", "Set", "TemporalAPI"]
 thumbnail: "https://miro.medium.com/v2/resize:fit:1400/1*J6tqpXBB9FkZeW8peS5HWg.png"
 draft: false
 views: 0

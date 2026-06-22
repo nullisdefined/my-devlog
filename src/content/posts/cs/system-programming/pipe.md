@@ -2,7 +2,7 @@
 title: "Pipe"
 slug: "pipe"
 date: 2025-06-08
-tags: ["SystemProgramming", "IPC", "Pipe", "SystemCall", "CS", "System Programming"]
+tags: ["IPC", "Pipe", "SystemCall"]
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/ccb112cf7e9468d89ee4c6bf47a0aa93.png"
 draft: false
 views: 0

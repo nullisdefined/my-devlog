@@ -2,7 +2,7 @@
 title: "[Node.js] Express"
 slug: "nodejs-express"
 date: 2024-11-29
-tags: ["NodeJS", "Express", "Frameworks"]
+tags: ["NodeJS", "Express"]
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/03a5a0480e31b580ab7f4657cbf8066d.png"
 draft: false
 views: 0

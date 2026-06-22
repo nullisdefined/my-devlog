@@ -2,7 +2,7 @@
 title: "SQL2"
 slug: "sql2"
 date: 2025-04-28
-tags: ["Database", "DBMS", "SQL", "Oracle", "Join", "GroupBy", "CS"]
+tags: ["Database", "DBMS", "SQL", "Oracle", "Join", "GroupBy"]
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/a9eb3eec458968e0a3f88a28115a0d53.png"
 draft: false
 views: 0

@@ -2,7 +2,7 @@
 title: "Designing Landing Zone Architectures with AWS Control Tower"
 slug: "designing-landing-zone-architectures-with-aws-control-tower"
 date: 2025-07-09
-tags: ["AWS", "LandingZone", "OU", "SCP", "ControlTower", "Cloud"]
+tags: ["AWS", "LandingZone", "OU", "SCP", "ControlTower"]
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/159e9a38bcb2893d4560150f3d10548f.png"
 draft: false
 views: 0

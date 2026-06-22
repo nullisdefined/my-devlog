@@ -2,7 +2,7 @@
 title: "[JS] 분할 정복 패턴"
 slug: "divide-and-conquer"
 date: 2025-01-04
-tags: ["JavaScript", "Problem Solving"]
+tags: ["JavaScript"]
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com//images/fef061c6a4c61eaa9b2a6f5577c8f03e.png"
 draft: true
 views: 0

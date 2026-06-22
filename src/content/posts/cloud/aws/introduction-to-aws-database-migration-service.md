@@ -2,7 +2,7 @@
 title: "Introduction to AWS Database Migration Service"
 slug: "introduction-to-aws-database-migration-service"
 date: 2025-07-11
-tags: ["AWS", "Database", "Migration", "DMS", "MySQL", "Aurora", "Cloud"]
+tags: ["AWS", "Database", "Migration", "DMS", "MySQL", "Aurora"]
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/159e9a38bcb2893d4560150f3d10548f.png"
 draft: false
 views: 0

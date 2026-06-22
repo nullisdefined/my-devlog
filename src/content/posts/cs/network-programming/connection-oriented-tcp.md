@@ -2,7 +2,7 @@
 title: "Connection-Oriented TCP"
 slug: "connection-oriented-tcp"
 date: 2025-06-13
-tags: ["NetworkProgramming", "TransportLayer", "TCP", "Handshake", "Connection", "CS", "Network Programming"]
+tags: ["TransportLayer", "TCP", "Handshake", "Connection"]
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/e7e4047ee1cbaa795440e2c65f278c4d.png"
 draft: false
 views: 0

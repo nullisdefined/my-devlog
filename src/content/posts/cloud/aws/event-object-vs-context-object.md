@@ -2,7 +2,7 @@
 title: "AWS Lambda — 이벤트 객체와 컨텍스트 객체"
 slug: "event-object-vs-context-object"
 date: 2025-06-28
-tags: ["AWS", "Serverless", "Lambda", "EventObject", "ContextObject", "Cloud"]
+tags: ["AWS", "Serverless", "Lambda", "EventObject", "ContextObject"]
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/f5a8cc2df058de8208aa49da96aa146b.png"
 draft: false
 views: 0

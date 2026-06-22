@@ -2,7 +2,7 @@
 title: "Stack Frame"
 slug: "stack-frame"
 date: 2025-06-13
-tags: ["SystemProgramming", "Stack", "CS", "System Programming"]
+tags: ["Stack"]
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/e20d7bd10eda332d91274bb1b8d529b5.png"
 draft: false
 views: 0

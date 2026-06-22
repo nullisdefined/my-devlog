@@ -2,7 +2,7 @@
 title: "VoLTE 통화 과정 분석"
 slug: "sip-rtp-volte"
 date: 2025-06-10
-tags: ["NetworkProgramming", "NetworkLayer", "SIP", "RTP", "VoLTE", "CS", "Network Programming"]
+tags: ["NetworkLayer", "SIP", "RTP", "VoLTE"]
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/bdfa59aee34a5e0e6383a0155caa3116.png"
 draft: false
 views: 0

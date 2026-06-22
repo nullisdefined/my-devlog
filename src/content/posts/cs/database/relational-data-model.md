@@ -2,7 +2,7 @@
 title: "관계형 데이터 모델"
 slug: "relational-data-model"
 date: 2025-04-07
-tags: ["Database", "RelationalAlgebra", "CS"]
+tags: ["Database", "RelationalAlgebra"]
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/0c4e3564f81c421b75c7949ab712eb9d.png"
 draft: false
 views: 0

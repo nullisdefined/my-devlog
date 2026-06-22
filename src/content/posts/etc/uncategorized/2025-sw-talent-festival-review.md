@@ -2,7 +2,7 @@
 title: "2025 SW 인재 페스티벌 참여 후기"
 slug: "2025-sw-talent-festival-review"
 date: 2025-11-28
-tags: ["SW인재페스티벌", "Etc", "Uncategorized"]
+tags: ["SW인재페스티벌"]
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/8932a9b6c8d2e9f7d83e0aa8c5f856c1.png"
 draft: false
 views: 0

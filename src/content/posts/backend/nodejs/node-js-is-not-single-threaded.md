@@ -2,7 +2,7 @@
 title: "Node.js is Not Single-Threaded"
 slug: "node-js-is-not-single-threaded"
 date: 2025-01-03
-tags: ["NodeJS", "JavaScript", "Backend"]
+tags: ["NodeJS", "JavaScript"]
 thumbnail: "https://miro.medium.com/v2/resize:fit:1400/1*ZA75t1puirE_p7gbZ9aZpQ.png"
 draft: false
 views: 0

@@ -2,7 +2,7 @@
 title: "AWS - Storage"
 slug: "aws-storage"
 date: 2025-06-22
-tags: ["AWS", "Storage", "EBS", "S3", "EFS", "EC2", "FSx", "Cloud"]
+tags: ["AWS", "Storage", "EBS", "S3", "EFS", "EC2", "FSx"]
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/a069e2871f8756716b84b6fa1ebd080d.png"
 draft: false
 views: 0

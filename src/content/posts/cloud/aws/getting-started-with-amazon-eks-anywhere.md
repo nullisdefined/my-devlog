@@ -2,7 +2,7 @@
 title: "Getting Started with Amazon EKS Anywhere"
 slug: "getting-started-with-amazon-eks-anywhere"
 date: 2025-07-12
-tags: ["AWS", "Kubernetes", "EKS", "ControlPlane", "Nodes", "Pod", "Cloud"]
+tags: ["AWS", "Kubernetes", "EKS", "ControlPlane", "Nodes", "Pod"]
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/2be604e9718a8ed5766637a2cf6f406d.png"
 draft: false
 views: 0

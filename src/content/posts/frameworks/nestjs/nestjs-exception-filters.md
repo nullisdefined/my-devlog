@@ -2,7 +2,7 @@
 title: "[NestJS] Exception Filters"
 slug: "nestjs-exception-filters"
 date: 2025-08-26
-tags: ["NestJS", "Exception", "Filters", "Frameworks"]
+tags: ["NestJS", "Exception", "Filters"]
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/e48e6fd88f6339a761df1c6155770ce4.png"
 draft: false
 views: 0

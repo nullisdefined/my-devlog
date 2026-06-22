@@ -2,7 +2,7 @@
 title: "[NestJS] Query Parameter Boolean 변환에서 발생한 이슈"
 slug: "nestjs-query-parameter-boolean-transformation-issue"
 date: 2025-07-14
-tags: ["NestJS", "Pipe", "DTO", "Decorator", "Backend"]
+tags: ["NestJS", "Pipe", "DTO", "Decorator"]
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/e48e6fd88f6339a761df1c6155770ce4.png"
 draft: false
 views: 0

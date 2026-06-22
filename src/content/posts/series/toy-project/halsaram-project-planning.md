@@ -2,7 +2,7 @@
 title: "[할사람] 프로젝트 기획"
 slug: "halsaram-project-planning"
 date: 2025-08-21
-tags: ["ToyProject", "Halsaram", "AWS", "KOSA", "Toy Project"]
+tags: ["ToyProject", "Halsaram", "AWS", "KOSA"]
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/56e4ed7848fa4e2fc59cb067cb114fd1.png"
 draft: false
 views: 0

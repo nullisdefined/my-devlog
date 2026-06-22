@@ -2,7 +2,7 @@
 title: "[TS] 함수(Function)"
 slug: "ts-function"
 date: 2024-11-16
-tags: ["TypeScript", "Function", "Languages"]
+tags: ["TypeScript", "Function"]
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/bdb3fceafe9378092615c3f6ddf659a2.png"
 draft: false
 views: 0

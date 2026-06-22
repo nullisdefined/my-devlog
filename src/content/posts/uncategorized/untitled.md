@@ -2,7 +2,7 @@
 title: "스테이징 상태 관리하기"
 slug: "untitled"
 date: 2025-01-25
-tags: ["Uncategorized"]
+tags: []
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com//images/1cacdfa02414a2a9841aa69b5b031f58.png"
 draft: true
 views: 0

@@ -2,7 +2,7 @@
 title: "[프로그래머스] 숫자의 표현"
 slug: "present-numbers"
 date: 2024-12-05
-tags: ["프로그래머스", "Problem Solving"]
+tags: ["프로그래머스"]
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/336450698cb0b43a1a7133eae93730cd.png"
 draft: true
 views: 0

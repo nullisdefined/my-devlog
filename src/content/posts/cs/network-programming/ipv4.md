@@ -2,7 +2,7 @@
 title: "IPv4"
 slug: "ipv4"
 date: 2025-05-10
-tags: ["NetworkProgramming", "NetworkLayer", "IP", "IPv4", "Forwarding", "CIDR", "Fragmentation", "ARP", "OSPF", "RIP", "CS", "Network Programming"]
+tags: ["NetworkLayer", "IP", "IPv4", "Forwarding", "CIDR", "Fragmentation", "ARP", "OSPF", "RIP"]
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/8f7a5baa17e6aa063b861db32b978d75.png"
 draft: false
 views: 0

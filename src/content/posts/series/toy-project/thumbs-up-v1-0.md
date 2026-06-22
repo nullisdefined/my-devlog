@@ -2,7 +2,7 @@
 title: "[Thumbs Up] v1.0 - 썸네일 제작 도구"
 slug: "thumbs-up-v1-0"
 date: 2024-11-02
-tags: ["React", "TypeScript", "TailwindCSS", "ToyProject", "Toy Project"]
+tags: ["React", "TypeScript", "TailwindCSS", "ToyProject"]
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/96853286d6745f087ef00bf2d48b8a3d.png"
 draft: false
 views: 0

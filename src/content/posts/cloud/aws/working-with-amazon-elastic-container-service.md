@@ -2,7 +2,7 @@
 title: "Working with Amazon Elastic Container Service"
 slug: "working-with-amazon-elastic-container-service"
 date: 2025-07-15
-tags: ["AWS", "ECS", "ALB", "Cloud"]
+tags: ["AWS", "ECS", "ALB"]
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/2be604e9718a8ed5766637a2cf6f406d.png"
 draft: false
 views: 0

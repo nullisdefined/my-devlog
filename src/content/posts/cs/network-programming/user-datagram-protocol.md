@@ -2,7 +2,7 @@
 title: "UDP (User Datagram Protocol)"
 slug: "user-datagram-protocol"
 date: 2025-05-23
-tags: ["NetworkProgramming", "TransportLayer", "UDP", "CS", "Network Programming"]
+tags: ["TransportLayer", "UDP"]
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/ea39122b061587fc322b39717a9a325c.png"
 draft: false
 views: 0

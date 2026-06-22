@@ -2,7 +2,7 @@
 title: "[NestJS] Validation Pipe"
 slug: "nestjs-validation-pipe"
 date: 2024-11-13
-tags: ["NestJS", "Validation", "Pipe", "Frameworks"]
+tags: ["NestJS", "Validation", "Pipe"]
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/e48e6fd88f6339a761df1c6155770ce4.png"
 draft: false
 views: 0

@@ -2,7 +2,7 @@
 title: "[Git] Staging Area"
 slug: "git-staging-area"
 date: 2025-01-08
-tags: ["Git", "Index", "StagingArea", "Tools"]
+tags: ["Git", "Index", "StagingArea"]
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com//images/dfeb95ba0c2ed042ed25f03b783c8b4e.png"
 draft: false
 views: 0

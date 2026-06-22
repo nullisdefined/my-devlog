@@ -2,7 +2,7 @@
 title: "[NestJS] HTTP Request와 Response 다루기"
 slug: "nestjs-http-request-and-response"
 date: 2024-11-04
-tags: ["NestJS", "HTTP", "Frameworks"]
+tags: ["NestJS", "HTTP"]
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/e48e6fd88f6339a761df1c6155770ce4.png"
 draft: false
 views: 0

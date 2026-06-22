@@ -2,7 +2,7 @@
 title: "TCP Segment"
 slug: "tcp-segment"
 date: 2025-06-15
-tags: ["NetworkProgramming", "TransportLayer", "TCP", "Segment", "CS", "Network Programming"]
+tags: ["TransportLayer", "TCP", "Segment"]
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/f63d135824a3ff49ee19c7003db53c86.png"
 draft: false
 views: 0

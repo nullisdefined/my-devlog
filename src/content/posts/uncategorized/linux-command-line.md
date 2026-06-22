@@ -2,7 +2,7 @@
 title: "Linux Command Line 정리"
 slug: "linux-command-line"
 date: 2024-12-21
-tags: ["Linux", "Uncategorized"]
+tags: ["Linux"]
 draft: true
 views: 0
 ---

@@ -2,7 +2,7 @@
 title: "[JS] 슬라이딩 윈도우 패턴"
 slug: "sliding-window-pattern"
 date: 2025-01-04
-tags: ["JavaScript", "Problem Solving"]
+tags: ["JavaScript"]
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com//images/36ecfd89922696e1b8edfa4107c40ac0.png"
 draft: true
 views: 0

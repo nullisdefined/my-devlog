@@ -22,6 +22,7 @@ title: "Devlog 시작"
 slug: "devlog-시작"
 date: 2024-10-28
 tags: []
+category: "Series/devlog"
 draft: false
 ```
 

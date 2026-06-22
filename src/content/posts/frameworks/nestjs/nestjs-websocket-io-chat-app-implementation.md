@@ -2,7 +2,7 @@
 title: "[NestJS] WebSocket.IO로 실시간 채팅 구현하기"
 slug: "nestjs-websocket-io-chat-app-implementation"
 date: 2025-06-22
-tags: ["NestJS", "WebSocket", "Chat", "Frameworks"]
+tags: ["NestJS", "WebSocket", "Chat"]
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/ba327d8bd752b28da5ef9d9bcc7670e0.png"
 draft: true
 views: 0

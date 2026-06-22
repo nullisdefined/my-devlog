@@ -2,7 +2,7 @@
 title: "빅오(Big-O) 표기법"
 slug: "big-o-notation"
 date: 2024-11-26
-tags: ["Big-O", "CS", "Data Structure"]
+tags: ["Big-O"]
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/f33e7091d0a8cb916e89b70eced5c553.png"
 draft: false
 views: 0

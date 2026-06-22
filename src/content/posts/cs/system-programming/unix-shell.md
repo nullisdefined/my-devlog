@@ -2,7 +2,7 @@
 title: "Unix Shell"
 slug: "unix-shell"
 date: 2025-06-10
-tags: ["SystemProgramming", "Unix", "Bash", "CS", "System Programming"]
+tags: ["Unix", "Bash"]
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/83e901e30d4faabcdc33d1cd5902a036.png"
 draft: false
 views: 0

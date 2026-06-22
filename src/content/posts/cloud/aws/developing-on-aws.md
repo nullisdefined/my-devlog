@@ -2,7 +2,7 @@
 title: "Developing on AWS"
 slug: "developing-on-aws"
 date: 2025-07-12
-tags: ["AWS", "Serverless", "Lambda", "S3", "IAM", "DynamoDB", "MSA", "APIGateway", "Cognito", "Cloud"]
+tags: ["AWS", "Serverless", "Lambda", "S3", "IAM", "DynamoDB", "MSA", "APIGateway", "Cognito"]
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/eac8150aacab9b3abdb0752727659669.png"
 draft: false
 views: 0

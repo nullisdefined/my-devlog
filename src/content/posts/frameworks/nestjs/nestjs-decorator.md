@@ -2,7 +2,7 @@
 title: "[NestJS] 데코레이터(Decorator)"
 slug: "nestjs-decorator"
 date: 2024-12-15
-tags: ["NestJS", "Decorator", "Pipe", "Frameworks"]
+tags: ["NestJS", "Decorator", "Pipe"]
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/e48e6fd88f6339a761df1c6155770ce4.png"
 draft: false
 views: 0

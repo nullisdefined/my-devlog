@@ -2,7 +2,7 @@
 title: "6. Migrate a Monolith Web Application to AWS Using Application Migration Service (한국어)"
 slug: "6-migrate-a-monolith-web-application-to-aws-using-application-migration-service-한국어"
 date: 2025-07-09
-tags: ["Cloud", "AWS"]
+tags: []
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/7180c1db3d81077ccfedc1dd46f1c8af.png"
 draft: true
 views: 0
