@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-require-imports */
-const { getPostList, getSeriesPostList } = require("./scripts/posts-data");
+const { getPostList } = require("./scripts/posts-data");
 const fs = require("fs");
 const path = require("path");
 const matter = require("gray-matter");
@@ -68,48 +68,6 @@ module.exports = {
       }
     } catch (error) {
       console.warn("포스트 목록을 가져오는데 실패했습니다:", error);
-    }
-
-    // 시리즈 포스트 추가
-    try {
-      const seriesPosts = getSeriesPostList();
-      for (const post of seriesPosts) {
-        const postUrl = `/devlog/posts/${post.urlCategory}/${post.slug}`;
-        paths.push(
-          await config.transform(config, postUrl, {
-            priority: 0.9,
-            changefreq: "monthly",
-            lastmod: formatDate(post.date),
-          }),
-        );
-      }
-    } catch (error) {
-      console.warn("시리즈 포스트 목록을 가져오는데 실패했습니다:", error);
-    }
-
-    // 카테고리 페이지 추가
-    try {
-      const allPosts = [...getPostList(), ...getSeriesPostList()];
-      const categories = new Set();
-
-      allPosts.forEach((post) => {
-        if (post.urlCategory) {
-          categories.add(post.urlCategory);
-        }
-      });
-
-      for (const category of categories) {
-        const categoryUrl = `/devlog/categories/${category}`;
-        paths.push(
-          await config.transform(config, categoryUrl, {
-            priority: 0.8,
-            changefreq: "weekly",
-            lastmod: new Date().toISOString(),
-          }),
-        );
-      }
-    } catch (error) {
-      console.warn("카테고리 목록을 가져오는데 실패했습니다:", error);
     }
 
     // 태그 페이지 추가
@@ -189,18 +147,6 @@ module.exports = {
     else if (path.includes("/devlog/posts/")) {
       priority = 0.9;
       changefreq = "monthly";
-    }
-
-    // 카테고리 페이지
-    else if (path.includes("/devlog/categories/")) {
-      priority = 0.8;
-      changefreq = "weekly";
-    }
-
-    // 시리즈 페이지
-    else if (path.includes("/devlog/series/")) {
-      priority = 0.8;
-      changefreq = "weekly";
     }
 
     // 태그 페이지

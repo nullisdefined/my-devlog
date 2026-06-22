@@ -2,8 +2,7 @@
 title: "Memory Sharing"
 slug: "memory-sharing"
 date: 2025-06-14
-tags: ["SystemProgramming", "IPC", "Cache", "WritePropagation", "MemoryBarrier", "mmap", "ELF"]
-category: "CS/System Programming"
+tags: ["SystemProgramming", "IPC", "Cache", "WritePropagation", "MemoryBarrier", "mmap", "ELF", "CS", "System Programming"]
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/a2e2454068d9e97caefc3b7f9480cc18.png"
 draft: false
 views: 0

@@ -106,7 +106,7 @@ export function postToRSSItem(post: Post): RSS.ItemOptions {
     guid: postUrl,
     date: new Date(post.date),
     author: "nullisdefined@gmail.com (nullisdefined)",
-    categories: [post.category || "Uncategorized", ...(post.tags || [])],
+    categories: post.tags || [],
     // 전체 HTML 콘텐츠 포함 (일부 RSS 리더에서 사용)
     custom_elements: [
       { "content:encoded": htmlContent },
@@ -129,37 +129,16 @@ export function postToRSSItem(post: Post): RSS.ItemOptions {
         : []),
       // 구조화된 데이터 추가
       { "dc:creator": "nullisdefined" },
-      { "dc:subject": post.category },
       ...(post.tags || []).map((tag) => ({ "dc:subject": tag })),
     ],
   };
 }
 
-// 카테고리별 RSS 피드 생성
-export function generateCategoryFeed(category: string, posts: Post[]): RSS {
-  const categoryPosts = posts.filter(
-    (post) => post.category?.toLowerCase() === category.toLowerCase(),
-  );
-
-  const rss = new RSS(
-    createBaseRSSConfig(
-      `개발새발 - ${category} 카테고리`,
-      `${category} 관련 글들을 모아놓은 RSS 피드입니다.`,
-      `https://nullisdefined.my/feed/${category.toLowerCase()}.xml`,
-    ),
-  );
-
-  // 최신 20개 포스트만 추가
-  categoryPosts.slice(0, 20).forEach((post) => {
-    rss.item(postToRSSItem(post));
-  });
-
-  return rss;
-}
-
 // 태그별 RSS 피드 생성
 export function generateTagFeed(tag: string, posts: Post[]): RSS {
-  const tagPosts = posts.filter((post) => post.tags?.includes(tag));
+  const tagPosts = posts.filter((post) =>
+    post.tags?.some((postTag) => postTag.toLowerCase() === tag.toLowerCase()),
+  );
 
   const rss = new RSS(
     createBaseRSSConfig(
@@ -171,27 +150,6 @@ export function generateTagFeed(tag: string, posts: Post[]): RSS {
 
   // 최신 20개 포스트만 추가
   tagPosts.slice(0, 20).forEach((post) => {
-    rss.item(postToRSSItem(post));
-  });
-
-  return rss;
-}
-
-// 시리즈별 RSS 피드 생성
-export function generateSeriesFeed(series: string, posts: Post[]): RSS {
-  const seriesPosts = posts.filter(
-    (post) => post.category?.includes(series) || post.tags?.includes(series),
-  );
-
-  const rss = new RSS(
-    createBaseRSSConfig(
-      `개발새발 - ${series} 시리즈`,
-      `${series} 시리즈의 글들을 모아놓은 RSS 피드입니다.`,
-      `https://nullisdefined.my/feed/series/${encodeURIComponent(series)}.xml`,
-    ),
-  );
-
-  seriesPosts.slice(0, 20).forEach((post) => {
     rss.item(postToRSSItem(post));
   });
 
@@ -219,25 +177,6 @@ export function generateMainFeed(posts: Post[]): RSS {
 // RSS XML 문자열 생성
 export function generateRSSXML(rss: RSS): string {
   return rss.xml({ indent: true });
-}
-
-// 모든 카테고리의 RSS 피드 생성
-export function generateAllCategoryFeeds(posts: Post[]): Map<string, RSS> {
-  const categories = new Set<string>();
-
-  posts.forEach((post) => {
-    if (post.category) {
-      categories.add(post.category);
-    }
-  });
-
-  const feeds = new Map<string, RSS>();
-
-  categories.forEach((category) => {
-    feeds.set(category, generateCategoryFeed(category, posts));
-  });
-
-  return feeds;
 }
 
 // 모든 태그의 RSS 피드 생성

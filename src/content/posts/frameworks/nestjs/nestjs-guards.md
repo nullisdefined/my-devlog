@@ -2,8 +2,7 @@
 title: "[NestJS] Guards"
 slug: "nestjs-guards"
 date: 2025-09-15
-tags: ["NestJS", "Guards", "Authentication", "Authorization"]
-category: "Frameworks/NestJS"
+tags: ["NestJS", "Guards", "Authentication", "Authorization", "Frameworks"]
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/e48e6fd88f6339a761df1c6155770ce4.png"
 draft: false
 views: 0

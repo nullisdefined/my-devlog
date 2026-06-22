@@ -2,8 +2,7 @@
 title: "데이터베이스 소개"
 slug: "database"
 date: 2025-04-02
-tags: ["Database", "DBS", "DBMS", "Schema"]
-category: "CS/Database"
+tags: ["Database", "DBS", "DBMS", "Schema", "CS"]
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/20b59c601d35c90800ef41e2e5c0e6b8.png"
 draft: false
 views: 0

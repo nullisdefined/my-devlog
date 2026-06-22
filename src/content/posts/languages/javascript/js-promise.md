@@ -2,8 +2,7 @@
 title: "[JS] 프로미스(Promise)"
 slug: "js-promise"
 date: 2024-12-16
-tags: ["JavaScript", "Promise"]
-category: "Languages/JavaScript"
+tags: ["JavaScript", "Promise", "Languages"]
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/7089d24aaadae68bb65e4270e212017a.png"
 draft: false
 views: 0

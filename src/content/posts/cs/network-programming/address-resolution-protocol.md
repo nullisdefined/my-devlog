@@ -2,8 +2,7 @@
 title: "Address Resolution Protocol (ARP)"
 slug: "address-resolution-protocol"
 date: 2025-05-13
-tags: ["NetworkProgramming", "NetworkLayer", "IP", "ARP"]
-category: "CS/Network Programming"
+tags: ["NetworkProgramming", "NetworkLayer", "IP", "ARP", "CS", "Network Programming"]
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/eb452982ace322630a199d104f8272a0.png"
 draft: false
 views: 0

@@ -2,8 +2,7 @@
 title: "Delivery and Forwarding of IP Packets"
 slug: "delivery-and-forwarding-of-ip-packets"
 date: 2025-05-16
-tags: ["NetworkProgramming", "NetworkLayer", "IP", "Forwarding", "Routing"]
-category: "CS/Network Programming"
+tags: ["NetworkProgramming", "NetworkLayer", "IP", "Forwarding", "Routing", "CS", "Network Programming"]
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/3eaad1217a0fa061d01c5c2b53d7ea98.png"
 draft: false
 views: 0

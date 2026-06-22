@@ -2,8 +2,7 @@
 title: "[JS] 빌트인 데이터 타입"
 slug: "javascript-built-in-data-type"
 date: 2025-01-31
-tags: ["JavaScript"]
-category: "Languages/JavaScript"
+tags: ["JavaScript", "Languages"]
 draft: true
 views: 0
 ---

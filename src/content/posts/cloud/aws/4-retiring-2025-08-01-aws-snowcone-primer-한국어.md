@@ -2,8 +2,7 @@
 title: "4. [RETIRING - 2025-08-01] AWS Snowcone Primer (한국어)"
 slug: "4-retiring-2025-08-01-aws-snowcone-primer-한국어"
 date: 2025-07-09
-tags: []
-category: "Cloud/AWS"
+tags: ["Cloud", "AWS"]
 draft: true
 views: 0
 ---

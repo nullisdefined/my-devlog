@@ -2,13 +2,12 @@
 title: "[NestJS] Query Parameter Boolean 변환에서 발생한 이슈"
 slug: "nestjs-query-parameter-boolean-transformation-issue"
 date: 2025-07-14
-tags: ["NestJS", "Pipe", "DTO", "Decorator"]
-category: "Backend/NestJS"
+tags: ["NestJS", "Pipe", "DTO", "Decorator", "Backend"]
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/e48e6fd88f6339a761df1c6155770ce4.png"
 draft: false
 views: 0
 ---
-![image](https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/e48e6fd88f6339a761df1c6155770ce4.png)
+<img src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/e48e6fd88f6339a761df1c6155770ce4.png" alt="image" width="400" />
 
 ## 문제 상황
 현재 진행하고 있는 사이드 프로젝트 백엔드 애플리케이션의 알림 API 기능 구현에서 `unreadOnly=false` 쿼리 파라미터를 전달해도 미읽음 알림만 조회되는 버그가 발생했다.

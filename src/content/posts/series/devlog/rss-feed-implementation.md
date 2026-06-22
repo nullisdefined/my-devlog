@@ -3,7 +3,6 @@ title: "RSS 피드 구현"
 slug: "rss-feed-implementation"
 date: 2025-06-17
 tags: ["Devlog", "SEO", "RSS"]
-category: "Series/devlog"
 draft: false
 views: 0
 ---

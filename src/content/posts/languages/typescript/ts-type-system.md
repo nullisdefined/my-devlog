@@ -2,8 +2,7 @@
 title: "[TS] 타입 시스템 이해하기"
 slug: "ts-type-system"
 date: 2024-11-13
-tags: ["TypeScript"]
-category: "Languages/TypeScript"
+tags: ["TypeScript", "Languages"]
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/bdb3fceafe9378092615c3f6ddf659a2.png"
 draft: false
 views: 0

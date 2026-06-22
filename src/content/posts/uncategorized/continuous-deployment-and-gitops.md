@@ -2,7 +2,7 @@
 title: "Continuous Deployment and GitOps"
 slug: "continuous-deployment-and-gitops"
 date: 2025-07-16
-tags: []
+tags: ["Uncategorized"]
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/59cbb48ed0629045b0ec0196e325dbbb.png"
 draft: true
 views: 0

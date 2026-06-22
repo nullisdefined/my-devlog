@@ -2,8 +2,7 @@
 title: "Internet Control Message Protocol Version 4 (ICMPv4)"
 slug: "internet-control-message-protocol-version-4"
 date: 2025-05-14
-tags: ["NetworkProgramming", "NetworkLayer", "IP", "ICMP"]
-category: "CS/Network Programming"
+tags: ["NetworkProgramming", "NetworkLayer", "IP", "ICMP", "CS", "Network Programming"]
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/4d5790e1a34970ee68809eaad18fe825.png"
 draft: false
 views: 0

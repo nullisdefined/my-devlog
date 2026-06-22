@@ -199,7 +199,7 @@ class BlogSync {
 
       let categoryPath = "posts/uncategorized";
 
-      // category는 필요할 때만 사용
+      // 기존 파일 경로 호환을 위해 입력 category는 폴더 배치에만 사용한다.
       if (frontMatter.category) {
         if (frontMatter.category.includes("/")) {
           const [parentCategory, childCategory] =
@@ -262,7 +262,6 @@ class BlogSync {
         `slug: "${slug}"`,
         `date: ${fileDate}`,
         `tags: [${tags.map((tag) => `"${tag}"`).join(", ")}]`,
-        frontMatter.category ? `category: "${frontMatter.category}"` : null,
         thumbnail ? `thumbnail: "${thumbnail}"` : null,
         `draft: ${frontMatter.draft || false}`,
         `views: ${existingViews}`,

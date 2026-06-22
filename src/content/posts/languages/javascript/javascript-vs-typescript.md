@@ -2,8 +2,7 @@
 title: "JavaScript vs. TypeScript"
 slug: "javascript-vs-typescript"
 date: 2025-01-02
-tags: ["JavaScript", "TypeScript"]
-category: "Languages/JavaScript"
+tags: ["JavaScript", "TypeScript", "Languages"]
 thumbnail: "https://miro.medium.com/v2/resize:fit:1400/1*e-kmaRa9iJL82Je5vVn-AA.png"
 draft: false
 views: 0

@@ -2,8 +2,7 @@
 title: "React 기본 개념"
 slug: "react-basic"
 date: 2025-02-01
-tags: ["JavaScript", "React"]
-category: "Frontend/React"
+tags: ["JavaScript", "React", "Frontend"]
 draft: true
 views: 0
 ---

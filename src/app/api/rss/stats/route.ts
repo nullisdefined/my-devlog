@@ -11,9 +11,7 @@ export async function GET() {
     // 피드 타입별 상세 통계
     const feedTypeStats = {
       main: RSSLogger.getFeedTypeStats("main"),
-      category: RSSLogger.getFeedTypeStats("category"),
       tags: RSSLogger.getFeedTypeStats("tags"),
-      series: RSSLogger.getFeedTypeStats("series"),
     };
 
     const stats = {

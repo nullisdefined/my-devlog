@@ -2,7 +2,7 @@
 title: "[JS] 배열"
 slug: "ps-javascript-array"
 date: 2025-01-28
-tags: []
+tags: ["Uncategorized"]
 draft: true
 views: 0
 ---

@@ -2,8 +2,7 @@
 title: "Blob 객체 구현"
 slug: "blob-object-implementation"
 date: 2025-01-10
-tags: ["Git", "Blob"]
-category: "Series/Git-Clone"
+tags: ["Git", "Blob", "Git Clone"]
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com//images/99a4cf003ce62de5e855762653ac5af3.png"
 draft: false
 views: 0

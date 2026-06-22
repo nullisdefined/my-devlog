@@ -2,8 +2,7 @@
 title: "[Git] Merge"
 slug: "git-merge"
 date: 2025-01-09
-tags: ["Git"]
-category: "Tools/Git"
+tags: ["Git", "Tools"]
 draft: true
 views: 0
 ---

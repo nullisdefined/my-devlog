@@ -3,7 +3,6 @@ title: "[Canvas API] 동적 그라디언트 배너 만들기"
 slug: "implement-dynamic-gradient-banner-for-using-canvas-api"
 date: 2025-06-22
 tags: ["Canvas", "Devlog", "Cache"]
-category: "Series/devlog"
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/3ad5bbf38969854139f2d41fa74c926d.gif"
 draft: false
 views: 0

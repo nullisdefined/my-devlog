@@ -2,8 +2,7 @@
 title: "Commit 객체 구현"
 slug: "commit-object-implementation"
 date: 2025-01-10
-tags: ["Git", "Commit"]
-category: "Series/Git-Clone"
+tags: ["Git", "Commit", "Git Clone"]
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com//images/688911e9cb91ab25262d00076f5e75ee.png"
 draft: false
 views: 0

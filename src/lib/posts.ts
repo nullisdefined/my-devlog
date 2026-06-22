@@ -5,11 +5,10 @@ import { Post } from "@/types/index";
 import { getFirstParagraph } from "@/lib/remove-markdown-utils";
 
 const POSTS_PATH = path.join(process.cwd(), "src/content/posts");
-const SERIES_PATH = path.join(process.cwd(), "src/content/posts/series");
 
 // URL에서 특수문자를 제거하는 함수
-const normalizeCategory = (category: string): string => {
-  return category
+const normalizePostPath = (postPath: string): string => {
+  return postPath
     .toLowerCase()
     .split("/")
     .map((segment) => segment.replace(/[^a-z0-9-]/g, ""))
@@ -17,28 +16,21 @@ const normalizeCategory = (category: string): string => {
 };
 
 export async function getPostBySlug(
-  category: string,
+  postPath: string,
   slug: string
 ): Promise<Post | null> {
   try {
     const decodedSlug = decodeURIComponent(slug);
-    const normalizedCategory = normalizeCategory(decodeURIComponent(category));
-
-    const basePath = category.toLowerCase().startsWith("series/")
-      ? SERIES_PATH
-      : POSTS_PATH;
-    const categoryPath = category.toLowerCase().startsWith("series/")
-      ? normalizedCategory.replace("series/", "")
-      : normalizedCategory;
+    const normalizedPostPath = normalizePostPath(decodeURIComponent(postPath));
 
     // 파일 검색 시 frontmatter의 slug 필드도 확인
-    const dirFiles = fs.readdirSync(path.join(basePath, categoryPath));
+    const dirFiles = fs.readdirSync(path.join(POSTS_PATH, normalizedPostPath));
     let filePath = null;
 
     for (const file of dirFiles) {
       if (!file.endsWith(".md")) continue;
 
-      const fullPath = path.join(basePath, categoryPath, file);
+      const fullPath = path.join(POSTS_PATH, normalizedPostPath, file);
       const content = fs.readFileSync(fullPath, "utf-8");
       const { data } = matter(content);
 
@@ -60,7 +52,6 @@ export async function getPostBySlug(
     return {
       title: data.title,
       date: data.date,
-      category: data.category || normalizedCategory,
       slug: data.slug || decodedSlug, // frontmatter의 slug 우선 사용
       tags: data.tags || [],
       thumbnail: data.thumbnail,
@@ -99,7 +90,6 @@ export async function getPostList(): Promise<Post[]> {
         allPosts.push({
           title: data.title,
           date: data.date,
-          category: data.category || urlCategory,
           slug: path.basename(file, ".md"),
           tags: data.tags || [],
           thumbnail: data.thumbnail,
@@ -120,72 +110,16 @@ export async function getPostList(): Promise<Post[]> {
   }
 }
 
-export async function getSeriesPostList(): Promise<Post[]> {
-  try {
-    const allPosts: Post[] = [];
-
-    const processDirectory = (dirPath: string, categoryPath: string[] = []) => {
-      if (!fs.existsSync(dirPath)) return;
-
-      const files = fs.readdirSync(dirPath);
-
-      for (const file of files) {
-        const fullPath = path.join(dirPath, file);
-        const stat = fs.statSync(fullPath);
-
-        if (stat.isDirectory()) {
-          processDirectory(fullPath, [...categoryPath, file.toLowerCase()]);
-          continue;
-        }
-
-        if (!file.endsWith(".md")) continue;
-
-        const fileContent = fs.readFileSync(fullPath, "utf-8");
-        const { data, content } = matter(fileContent);
-
-        if (data.draft) continue;
-
-        // urlCategory를 series 폴더부터 시작하도록 설정
-        const urlCategory = ["series", ...categoryPath].join("/");
-
-        allPosts.push({
-          title: data.title,
-          date: data.date,
-          category: data.category || urlCategory,
-          slug: data.slug || path.basename(file, ".md"),
-          tags: data.tags || [],
-          thumbnail: data.thumbnail,
-          content: getFirstParagraph(content, 200),
-          urlCategory,
-        });
-      }
-    };
-
-    // series 폴더만 처리
-    processDirectory(SERIES_PATH, []);
-
-    return allPosts.sort(
-      (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
-    );
-  } catch (error) {
-    return [];
-  }
-}
-
 export async function getPostsByTag(tag: string): Promise<Post[]> {
-  const [posts, seriesPosts] = await Promise.all([
-    getPostList(),
-    getSeriesPostList(),
-  ]);
+  const posts = await getPostList();
 
   // 중복 제거를 위한 map
   const uniquePosts = new Map<string, Post>();
 
   // 모든 포스트를 순회하면서 중복 체크
-  [...posts, ...seriesPosts].forEach((post) => {
+  posts.forEach((post) => {
     if (post.tags?.some((t) => t.toLowerCase() === tag.toLowerCase())) {
-      // slug와 category를 조합하여 고유 키 생성
-      const uniqueKey = `${post.category}/${post.slug}`;
+      const uniqueKey = `${post.urlCategory}/${post.slug}`;
       if (!uniquePosts.has(uniqueKey)) {
         uniquePosts.set(uniqueKey, post);
       }
@@ -197,11 +131,7 @@ export async function getPostsByTag(tag: string): Promise<Post[]> {
 }
 
 export async function getAllTags(): Promise<string[]> {
-  const [posts, seriesPosts] = await Promise.all([
-    getPostList(),
-    getSeriesPostList(),
-  ]);
-  const allPosts = [...posts, ...seriesPosts];
+  const allPosts = await getPostList();
   const tagsSet = new Set<string>();
 
   allPosts.forEach((post) => {
@@ -214,18 +144,14 @@ export async function getAllTags(): Promise<string[]> {
 }
 
 export async function getAllPosts(): Promise<Post[]> {
-  const [posts, seriesPosts] = await Promise.all([
-    getPostList(),
-    getSeriesPostList(),
-  ]);
+  const posts = await getPostList();
 
   // 중복 제거를 위한 map
   const uniquePosts = new Map<string, Post>();
 
   // 모든 포스트를 순회하면서 중복 체크
-  [...posts, ...seriesPosts].forEach((post) => {
-    // slug와 category를 조합하여 고유 키 생성
-    const uniqueKey = `${post.category}/${post.slug}`;
+  posts.forEach((post) => {
+    const uniqueKey = `${post.urlCategory}/${post.slug}`;
     if (!uniquePosts.has(uniqueKey)) {
       uniquePosts.set(uniqueKey, post);
     }

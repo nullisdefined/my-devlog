@@ -2,8 +2,7 @@
 title: "AWS - Computing"
 slug: "aws-computing"
 date: 2025-06-20
-tags: ["AWS", "EC2", "AMI", "Fargate", "Lambda", "EKS", "Container"]
-category: "Cloud/AWS"
+tags: ["AWS", "EC2", "AMI", "Fargate", "Lambda", "EKS", "Container", "Cloud"]
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/a069e2871f8756716b84b6fa1ebd080d.png"
 draft: false
 views: 0

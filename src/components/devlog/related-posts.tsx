@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { Post } from "@/types";
 import { Badge } from "@/components/ui/badge";
-import { Calendar, Eye } from "lucide-react";
+import { Calendar } from "lucide-react";
 
 interface RelatedPostsProps {
   currentPost: Post;
@@ -20,15 +20,9 @@ export function RelatedPosts({
   const calculateRelevanceScore = (post: Post): number => {
     let score = 0;
 
-    // 같은 카테고리면 높은 점수
-    if (post.category === currentPost.category) {
-      score += 3;
-    }
-
-    // 공통 태그 개수에 따른 점수
     const commonTags =
       post.tags?.filter((tag) => currentPost.tags?.includes(tag)) || [];
-    score += commonTags.length * 2;
+    score += commonTags.length * 3;
 
     // 제목에 공통 키워드가 있으면 점수 추가
     const currentTitleWords = currentPost.title.toLowerCase().split(" ");
@@ -83,9 +77,11 @@ export function RelatedPosts({
                   </time>
                 </div>
 
-                <Badge variant="secondary" className="text-xs">
-                  {post.category}
-                </Badge>
+                {post.tags?.[0] && (
+                  <Badge variant="secondary" className="text-xs">
+                    {post.tags[0]}
+                  </Badge>
+                )}
               </div>
 
               {post.tags && post.tags.length > 0 && (

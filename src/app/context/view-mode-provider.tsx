@@ -15,7 +15,7 @@ const ViewModeContext = createContext<ViewModeContextType | undefined>(
 );
 
 export function ViewModeProvider({ children }: { children: React.ReactNode }) {
-  const [viewMode, setViewMode] = useState<ViewMode>("masonry");
+  const [viewMode, setViewMode] = useState<ViewMode>("list");
 
   // 로컬 스토리지에서 초기값 로드
   useEffect(() => {

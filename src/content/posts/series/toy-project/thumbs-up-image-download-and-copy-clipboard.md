@@ -2,8 +2,7 @@
 title: "[Thumbs Up] 이미지 다운로드 및 클립보드 복사 기능 구현하기"
 slug: "thumbs-up-image-download-and-copy-clipboard"
 date: 2024-10-31
-tags: ["React", "TypeScript", "TailwindCSS", "ToyProject"]
-category: "Series/Toy-Project"
+tags: ["React", "TypeScript", "TailwindCSS", "ToyProject", "Toy Project"]
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/e4d9c6192e594bafdd13406bff5c0257.png"
 draft: false
 views: 0

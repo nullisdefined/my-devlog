@@ -2,8 +2,7 @@
 title: "Introduction to AWS Lambda"
 slug: "introduction-to-aws-lambda"
 date: 2025-06-25
-tags: ["AWS", "Serverless", "Lambda", "S3"]
-category: "Cloud/AWS"
+tags: ["AWS", "Serverless", "Lambda", "S3", "Cloud"]
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/535202db6c9fc67b95b4b3a4778472b2.png"
 draft: false
 views: 0

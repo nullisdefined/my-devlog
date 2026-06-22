@@ -2,8 +2,7 @@
 title: "10 Bad TypeScript Habits To Break In 2024"
 slug: "10-bad-typescript-habits-to-break-in-2024"
 date: 2025-01-01
-tags: ["TypeScript"]
-category: "Languages/TypeScript"
+tags: ["TypeScript", "Languages"]
 thumbnail: "https://miro.medium.com/v2/resize:fit:1400/0*T2UsMjTeeStZEsB5.jpeg"
 draft: false
 views: 0

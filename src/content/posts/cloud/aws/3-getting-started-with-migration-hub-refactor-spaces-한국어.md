@@ -2,8 +2,7 @@
 title: "3. Getting Started with Migration Hub Refactor Spaces (한국어)"
 slug: "3-getting-started-with-migration-hub-refactor-spaces-한국어"
 date: 2025-07-09
-tags: []
-category: "Cloud/AWS"
+tags: ["Cloud", "AWS"]
 draft: true
 views: 0
 ---

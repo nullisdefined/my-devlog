@@ -2,8 +2,7 @@
 title: "[Starving Orange] 한글 닉네임 자동 생성 라이브러리"
 slug: "korean-nickname-random-generator"
 date: 2025-06-26
-tags: ["ToyProject", "JavaScript", "TypeScript", "NPM"]
-category: "Series/Toy-Project"
+tags: ["ToyProject", "JavaScript", "TypeScript", "NPM", "Toy Project"]
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/ae7669a4c1477dcb6cd8ec739fe7b7eb.png"
 draft: false
 views: 0

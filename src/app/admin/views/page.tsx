@@ -6,7 +6,7 @@ import { Eye, RefreshCw } from "lucide-react";
 import { format } from "date-fns";
 
 interface PostViews {
-  category: string;
+  path: string;
   slug: string;
   title: string;
   views: number;
@@ -81,7 +81,7 @@ export default function ViewsPage() {
         ) : (
           posts.map((post, index) => (
             <Card
-              key={`${post.category}/${post.slug}`}
+              key={`${post.path}/${post.slug}`}
               className="p-4 hover:bg-accent/50 transition-colors"
             >
               <div className="flex items-center justify-between gap-4">
@@ -94,7 +94,7 @@ export default function ViewsPage() {
                       {post.title}
                     </h2>
                     <div className="flex items-center gap-4 text-sm text-muted-foreground">
-                      <span className="truncate">{post.category}</span>
+                      <span className="truncate">{post.path}</span>
                       <span className="flex-shrink-0">
                         {format(new Date(post.date), "yyyy.MM.dd")}
                       </span>

@@ -3,8 +3,6 @@ User-agent: *
 Allow: /
 Allow: /devlog
 Allow: /devlog/posts/
-Allow: /devlog/categories/
-Allow: /devlog/series/
 Allow: /devlog/tags/
 Disallow: /admin/
 Disallow: /api/
@@ -14,8 +12,6 @@ User-agent: Googlebot
 Allow: /
 Allow: /devlog
 Allow: /devlog/posts/
-Allow: /devlog/categories/
-Allow: /devlog/series/
 Allow: /devlog/tags/
 Disallow: /admin/
 Disallow: /api/
@@ -26,8 +22,6 @@ User-agent: Bingbot
 Allow: /
 Allow: /devlog
 Allow: /devlog/posts/
-Allow: /devlog/categories/
-Allow: /devlog/series/
 Allow: /devlog/tags/
 Disallow: /admin/
 Disallow: /api/
@@ -38,8 +32,6 @@ User-agent: Yeti
 Allow: /
 Allow: /devlog
 Allow: /devlog/posts/
-Allow: /devlog/categories/
-Allow: /devlog/series/
 Allow: /devlog/tags/
 Disallow: /admin/
 Disallow: /api/
@@ -58,6 +50,4 @@ Sitemap: https://nullisdefined.my/feed.xml
 # RSS Feed discovery for crawlers
 Allow: /feed.xml
 Allow: /feed/
-Allow: /feed/category/
 Allow: /feed/tags/
-Allow: /feed/series/

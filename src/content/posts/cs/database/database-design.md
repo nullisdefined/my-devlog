@@ -2,8 +2,7 @@
 title: "ER 모델"
 slug: "database-design"
 date: 2025-05-05
-tags: ["Database", "DBMS", "ERD"]
-category: "CS/Database"
+tags: ["Database", "DBMS", "ERD", "CS"]
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/32a452c922eb2e81ffa06799956fa0a5.png"
 draft: false
 views: 0

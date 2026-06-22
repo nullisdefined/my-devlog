@@ -2,8 +2,7 @@
 title: "관계 데이터베이스 설계"
 slug: "relational-database-design"
 date: 2025-05-12
-tags: ["Database", "DBMS", "SQL", "Normalization"]
-category: "CS/Database"
+tags: ["Database", "DBMS", "SQL", "Normalization", "CS"]
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/e2a04e26dbb1fbc79e050b412dd7ddd2.png"
 draft: false
 views: 0

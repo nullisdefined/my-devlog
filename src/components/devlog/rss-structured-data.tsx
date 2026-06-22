@@ -2,7 +2,7 @@ import { Post } from "@/types";
 
 interface RSSStructuredDataProps {
   posts: Post[];
-  feedType?: "main" | "category" | "tag" | "series";
+  feedType?: "main" | "tag";
   identifier?: string;
 }
 
@@ -73,7 +73,7 @@ export function RSSStructuredData({
           }
         : undefined,
       keywords: post.tags?.join(", "),
-      articleSection: post.category,
+      articleSection: post.tags?.[0],
       wordCount: post.content.split(" ").length,
       timeRequired: `PT${Math.ceil(post.content.split(" ").length / 200)}M`,
     })),

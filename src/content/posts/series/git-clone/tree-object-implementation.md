@@ -2,8 +2,7 @@
 title: "Tree 객체 구현"
 slug: "tree-object-implementation"
 date: 2025-01-10
-tags: ["Git", "Tree"]
-category: "Series/Git-Clone"
+tags: ["Git", "Tree", "Git Clone"]
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com//images/583b9a6c00a3eebcfc2ac59121a31c2e.png"
 draft: false
 views: 0

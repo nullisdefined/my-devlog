@@ -96,18 +96,6 @@ export const metadata: Metadata = {
           url: "https://nullisdefined.my/feed.xml",
           title: "개발새발 - 전체 RSS Feed",
         },
-        {
-          url: "https://nullisdefined.my/feed/category/javascript",
-          title: "개발새발 - JavaScript 카테고리 RSS",
-        },
-        {
-          url: "https://nullisdefined.my/feed/category/typescript",
-          title: "개발새발 - TypeScript 카테고리 RSS",
-        },
-        {
-          url: "https://nullisdefined.my/feed/series/devlog",
-          title: "개발새발 - Devlog 시리즈 RSS",
-        },
       ],
     },
   },

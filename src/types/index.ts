@@ -2,7 +2,6 @@ export interface Post {
   title: string;
   slug: string;
   date: string;
-  category?: string;
   urlCategory?: string;
   tags?: string[];
   thumbnail?: string;

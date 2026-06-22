@@ -2,8 +2,7 @@
 title: "[CLI] init, add, commit 커맨드 구현"
 slug: "git-cli-init-add-commit-command"
 date: 2025-01-23
-tags: ["Git", "CLI", "Commit", "Blob", "Tree"]
-category: "Series/Git-Clone"
+tags: ["Git", "CLI", "Commit", "Blob", "Tree", "Git Clone"]
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com//images/fefdcff0971b15a5a9a327ee02fe693a.png"
 draft: false
 views: 0

@@ -3,7 +3,6 @@ title: "옵시디언을 활용한 포스팅 시스템 구축하기"
 slug: "obsidian-posting-system"
 date: 2024-11-06
 tags: ["NextJS", "Obsidian", "TypeScript", "Devlog"]
-category: "Series/devlog"
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/4b0d4c2a638da87b152486f37bc04cf3.png"
 draft: false
 views: 0

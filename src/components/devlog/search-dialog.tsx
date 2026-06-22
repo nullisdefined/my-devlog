@@ -36,13 +36,13 @@ const highlightText = (text: string, query: string) => {
   );
 };
 
-const groupByCategory = (posts: Post[]) => {
+const groupByPrimaryTag = (posts: Post[]) => {
   return posts.reduce((groups, post) => {
-    const category = post.category || "Uncategorized";
-    if (!groups[category]) {
-      groups[category] = [];
+    const primaryTag = post.tags?.[0] || "No Tags";
+    if (!groups[primaryTag]) {
+      groups[primaryTag] = [];
     }
-    groups[category].push(post);
+    groups[primaryTag].push(post);
     return groups;
   }, {} as Record<string, Post[]>);
 };
@@ -79,18 +79,18 @@ export function SearchDialog({ posts, open, onOpenChange }: SearchDialogProps) {
 
   const handleSelect = useCallback(
     (post: Post) => {
-      if (!post?.category || !post?.slug) {
+      if (!post?.urlCategory || !post?.slug) {
         console.error("Invalid post data:", post);
         return;
       }
 
-      router.push(`/devlog/posts/${post.category.toLowerCase()}/${post.slug}`);
+      router.push(`/devlog/posts/${post.urlCategory}/${post.slug}`);
       onOpenChange(false);
     },
     [router, onOpenChange]
   );
 
-  const groupedResults = groupByCategory(searchResults);
+  const groupedResults = groupByPrimaryTag(searchResults);
 
   return (
     <CommandDialog open={open} onOpenChange={onOpenChange}>
@@ -110,12 +110,12 @@ export function SearchDialog({ posts, open, onOpenChange }: SearchDialogProps) {
               ? "검색어를 입력해주세요."
               : "검색 결과가 없습니다."}
           </CommandEmpty>
-          {Object.entries(groupedResults).map(([category, categoryPosts]) => (
+          {Object.entries(groupedResults).map(([tag, tagPosts]) => (
             <CommandGroup
-              key={category}
-              heading={`${category} (${categoryPosts.length})`}
+              key={tag}
+              heading={`${tag} (${tagPosts.length})`}
             >
-              {categoryPosts.map((post) => (
+              {tagPosts.map((post) => (
                 <CommandItem
                   key={post.slug}
                   onSelect={() => handleSelect(post)}

@@ -2,8 +2,7 @@
 title: "AWS Lambda — 호출 방식 정리"
 slug: "aws-lambda-invocation-methods"
 date: 2025-06-26
-tags: ["AWS", "Serverless", "Lambda", "FaaS", "Kinesis", "DynamoDB", "Fargate", "CloudWatch", "SNS", "SQS", "EventBridge"]
-category: "Cloud/AWS"
+tags: ["AWS", "Serverless", "Lambda", "FaaS", "Kinesis", "DynamoDB", "Fargate", "CloudWatch", "SNS", "SQS", "EventBridge", "Cloud"]
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/80c9cc3385f65a68c179e65233fdfb2e.png"
 draft: false
 views: 0

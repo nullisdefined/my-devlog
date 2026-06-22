@@ -3,7 +3,6 @@ title: "슬러그 변동 문제"
 slug: "changing-slug"
 date: 2024-12-21
 tags: ["Giscus", "SEO", "Devlog"]
-category: "Series/devlog"
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/fee8bf8654f93bd1b965cf1f534bc746.png"
 draft: false
 views: 0
@@ -23,7 +22,6 @@ title: "Devlog 시작"
 slug: "devlog-시작"
 date: 2024-10-28
 tags: []
-category: "Series/devlog"
 draft: false
 ```
 

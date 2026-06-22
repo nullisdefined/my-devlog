@@ -2,8 +2,7 @@
 title: "TCP Flow, Congestion, Error Control"
 slug: "tcp-flow-congestion-error-control"
 date: 2025-06-18
-tags: ["NetworkProgramming", "TransportLayer", "TCP", "FlowControl", "CongestionControl", "ErrorControl"]
-category: "CS/Network Programming"
+tags: ["NetworkProgramming", "TransportLayer", "TCP", "FlowControl", "CongestionControl", "ErrorControl", "CS", "Network Programming"]
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/5814c335ba54be65ec30bc11c9b781c4.png"
 draft: false
 views: 0

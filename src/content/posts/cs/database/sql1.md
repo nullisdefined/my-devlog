@@ -2,8 +2,7 @@
 title: "SQL1"
 slug: "sql1"
 date: 2025-04-21
-tags: ["Database", "DBMS", "SQL", "Oracle"]
-category: "CS/Database"
+tags: ["Database", "DBMS", "SQL", "Oracle", "CS"]
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/f43c80d23e5108e341f51d9ca9dd9e39.png"
 draft: false
 views: 0

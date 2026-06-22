@@ -2,8 +2,7 @@
 title: "Linking"
 slug: "linking"
 date: 2025-05-20
-tags: ["SystemProgramming", "Linking", "Symbol", "Relocation"]
-category: "CS/System Programming"
+tags: ["SystemProgramming", "Linking", "Symbol", "Relocation", "CS", "System Programming"]
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/cd8f49041a06f62afbe73e5c63f56411.png"
 draft: false
 views: 0

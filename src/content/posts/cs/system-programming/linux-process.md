@@ -2,8 +2,7 @@
 title: "Process"
 slug: "linux-process"
 date: 2025-05-09
-tags: ["SystemProgramming", "Linux", "Fork", "Exec", "MemoryLayout", "ELF", "SystemCall"]
-category: "CS/System Programming"
+tags: ["SystemProgramming", "Linux", "Fork", "Exec", "MemoryLayout", "ELF", "SystemCall", "CS", "System Programming"]
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/0cc54a08d91b1979cec6fa3915b32f18.png"
 draft: false
 views: 0

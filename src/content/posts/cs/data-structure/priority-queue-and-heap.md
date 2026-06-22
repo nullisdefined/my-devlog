@@ -2,8 +2,7 @@
 title: "우선순위 큐와 힙"
 slug: "priority-queue-and-heap"
 date: 2025-01-11
-tags: ["PriorityQueue", "Heap"]
-category: "CS/Data Structure"
+tags: ["PriorityQueue", "Heap", "CS", "Data Structure"]
 draft: true
 views: 0
 ---

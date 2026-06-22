@@ -2,8 +2,7 @@
 title: "[NestJS] Controllers"
 slug: "nestjs-controllers"
 date: 2025-08-24
-tags: ["NestJS", "Controllers"]
-category: "Frameworks/NestJS"
+tags: ["NestJS", "Controllers", "Frameworks"]
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/e48e6fd88f6339a761df1c6155770ce4.png"
 draft: false
 views: 0

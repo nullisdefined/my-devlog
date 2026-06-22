@@ -365,7 +365,7 @@ export async function markdownToHtml(content: string): Promise<string> {
           delete node.properties.height;
 
           // 기존 스타일 유지하면서 max-width 추가
-          let styleRules = [];
+          const styleRules = [];
 
           // 기존 스타일이 있다면 추가
           const existingStyle =

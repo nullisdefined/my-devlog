@@ -3,7 +3,6 @@ title: "[JavaScript] 스크롤 애니메이션 구현하기"
 slug: "vanilla-js-scroll-animation-implementation"
 date: 2025-05-27
 tags: ["Devlog", "FramerMotion"]
-category: "Series/devlog"
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/e687f64014c88975765f9e7407fbb059.gif"
 draft: false
 views: 0

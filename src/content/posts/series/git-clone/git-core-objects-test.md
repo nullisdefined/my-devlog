@@ -2,8 +2,7 @@
 title: "Git 객체 생성 및 저장 테스트"
 slug: "git-core-objects-test"
 date: 2025-01-10
-tags: ["Git", "Blob", "Tree", "Commit"]
-category: "Series/Git-Clone"
+tags: ["Git", "Blob", "Tree", "Commit", "Git Clone"]
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com//images/90e9e5e2c16cb5e09c58335cb84ca52a.png"
 draft: false
 views: 0

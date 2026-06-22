@@ -44,8 +44,8 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: PostPageProps) {
   const slug = params.slug[params.slug.length - 1];
-  const category = params.slug.slice(0, -1).join("/");
-  const post = await getPostBySlug(category.toLowerCase(), slug);
+  const postPath = params.slug.slice(0, -1).join("/");
+  const post = await getPostBySlug(postPath.toLowerCase(), slug);
 
   if (!post) {
     return {
@@ -59,6 +59,7 @@ export async function generateMetadata({ params }: PostPageProps) {
   )}`;
 
   const description = getPostExcerpt(post);
+  const primaryTag = post.tags?.[0] || "Technology";
 
   return {
     title: `${post.title} | 개발새발`,
@@ -67,7 +68,7 @@ export async function generateMetadata({ params }: PostPageProps) {
     authors: [{ name: "nullisdefined", url: "https://nullisdefined.my" }],
     creator: "nullisdefined",
     publisher: "nullisdefined",
-    category: post.category || "Technology",
+    category: primaryTag,
     alternates: {
       canonical: canonicalPath,
     },
@@ -87,7 +88,7 @@ export async function generateMetadata({ params }: PostPageProps) {
       publishedTime: post.date,
       modifiedTime: post.date,
       authors: ["nullisdefined"],
-      section: post.category,
+      section: primaryTag,
       tags: post.tags,
       images: post.thumbnail
         ? [
@@ -151,9 +152,9 @@ export default async function PostPage({
   searchParams,
 }: PostPageProps) {
   const slug = params.slug[params.slug.length - 1];
-  const category = params.slug.slice(0, -1).join("/");
+  const postPath = params.slug.slice(0, -1).join("/");
 
-  const post = await getPostBySlug(category.toLowerCase(), slug);
+  const post = await getPostBySlug(postPath.toLowerCase(), slug);
 
   if (!post) {
     notFound();
@@ -162,6 +163,7 @@ export default async function PostPage({
   const content = await markdownToHtml(post.content || "");
   const toc = extractTableOfContents(content);
   const description = getPostExcerpt(post);
+  const primaryTag = post.tags?.[0] || "Technology";
 
   // 관련 포스트를 위한 전체 포스트 목록 가져오기
   const { getAllPosts } = await import("@/lib/posts");
@@ -206,13 +208,13 @@ export default async function PostPage({
     dateModified: post.date,
     url: canonicalPath,
     keywords: post.tags?.join(", "),
-    articleSection: post.category,
+    articleSection: primaryTag,
     inLanguage: "ko-KR",
     isAccessibleForFree: true,
-    about: {
+    about: (post.tags || [primaryTag]).map((tag) => ({
       "@type": "Thing",
-      name: post.category,
-    },
+      name: tag,
+    })),
     wordCount: post.content ? post.content.split(" ").length : 0,
   };
 
@@ -236,12 +238,6 @@ export default async function PostPage({
       {
         "@type": "ListItem",
         position: 3,
-        name: post.category,
-        item: `https://nullisdefined.my/devlog/categories/${category}`,
-      },
-      {
-        "@type": "ListItem",
-        position: 4,
         name: post.title,
         item: canonicalPath,
       },

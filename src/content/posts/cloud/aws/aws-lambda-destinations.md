@@ -2,8 +2,7 @@
 title: "AWS Lambda — Destinations"
 slug: "aws-lambda-destinations"
 date: 2025-06-28
-tags: ["AWS", "Serverless", "Lambda", "Destinations", "DLQ"]
-category: "Cloud/AWS"
+tags: ["AWS", "Serverless", "Lambda", "Destinations", "DLQ", "Cloud"]
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/7678ae302e22ff90449e71de2d0a6f15.png"
 draft: false
 views: 0

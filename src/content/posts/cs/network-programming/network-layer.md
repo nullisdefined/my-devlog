@@ -2,8 +2,7 @@
 title: "Network Layer 개요"
 slug: "network-layer"
 date: 2025-05-03
-tags: ["NetworkProgramming", "NetworkLayer"]
-category: "CS/Network Programming"
+tags: ["NetworkProgramming", "NetworkLayer", "CS", "Network Programming"]
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/03f1fe0025f0c683af3be56ae2e689d6.png"
 draft: false
 views: 0

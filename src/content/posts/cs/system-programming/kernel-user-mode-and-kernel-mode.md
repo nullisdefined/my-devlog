@@ -2,8 +2,7 @@
 title: "Kernel, User/Kernel mode"
 slug: "kernel-user-mode-and-kernel-mode"
 date: 2025-04-10
-tags: ["SystemProgramming", "Kernel", "Interrupt", "SystemCall"]
-category: "CS/System Programming"
+tags: ["SystemProgramming", "Kernel", "Interrupt", "SystemCall", "CS", "System Programming"]
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/0c8f5c46825f2671a6b00c8eda6fd0a9.png"
 draft: false
 views: 0

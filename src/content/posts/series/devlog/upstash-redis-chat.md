@@ -3,7 +3,6 @@ title: "Upstash Redis 활용 실시간 채팅 기능 구현하기"
 slug: "upstash-redis-chat"
 date: 2024-11-25
 tags: ["NextJS", "Upstash", "Redis", "TypeScript", "Devlog"]
-category: "Series/devlog"
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/833f02d8c2bb631bb74e5c71cd617c0e.png"
 draft: false
 views: 0

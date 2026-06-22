@@ -2,8 +2,7 @@
 title: "Virtual Memory, Memory Mapping"
 slug: "virtual-memory-memory-mapping"
 date: 2025-06-11
-tags: ["SystemProgramming", "mmap", "C"]
-category: "CS/System Programming"
+tags: ["SystemProgramming", "mmap", "C", "CS", "System Programming"]
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/2527d03f6f1ac767b53dddf97d0bf843.png"
 draft: false
 views: 0

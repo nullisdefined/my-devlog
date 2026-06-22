@@ -3,7 +3,6 @@ title: "Devlog 시작"
 slug: "first-devlog-post"
 date: 2024-10-28
 tags: ["Devlog"]
-category: "Series/devlog"
 draft: false
 views: 0
 ---

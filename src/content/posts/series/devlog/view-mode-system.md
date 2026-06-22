@@ -3,7 +3,6 @@ title: "뷰 모드 기능 개발"
 slug: "view-mode-system"
 date: 2025-06-20
 tags: ["Devlog", "View"]
-category: "Series/devlog"
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/262c71177408734aa602608d7ec58a71.png"
 draft: false
 views: 0

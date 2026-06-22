@@ -41,3 +41,7 @@ gcp-*.json
 
 # RSS statistics
 .rss-stats.json
+
+# agent instructions
+.omc
+.qwen

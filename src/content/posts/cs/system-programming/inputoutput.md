@@ -2,8 +2,7 @@
 title: "Input/Output"
 slug: "inputoutput"
 date: 2025-06-01
-tags: ["SystemProgramming", "I/O", "FileDescriptor", "SystemCall"]
-category: "CS/System Programming"
+tags: ["SystemProgramming", "I/O", "FileDescriptor", "SystemCall", "CS", "System Programming"]
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/ea871f02a5c9ad139a95b1d50d57dfd4.png"
 draft: false
 views: 0

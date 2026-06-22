@@ -2,8 +2,7 @@
 title: "5. AWS DataSync Primer (한국어)"
 slug: "5-aws-datasync-primer-한국어"
 date: 2025-07-09
-tags: []
-category: "Cloud/AWS"
+tags: ["Cloud", "AWS"]
 draft: true
 views: 0
 ---

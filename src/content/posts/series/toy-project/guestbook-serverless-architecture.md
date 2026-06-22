@@ -2,8 +2,7 @@
 title: "[Guestboots] 서버리스 아키텍처로 구현한 방명록 애플리케이션"
 slug: "guestbook-serverless-architecture"
 date: 2025-06-25
-tags: ["AWS", "Serverless", "Lambda", "APIGateway", "DynamoDB", "CloudWatch", "ToyProject"]
-category: "Series/Toy-Project"
+tags: ["AWS", "Serverless", "Lambda", "APIGateway", "DynamoDB", "CloudWatch", "ToyProject", "Toy Project"]
 thumbnail: "https://github.com/user-attachments/assets/e15141e0-185d-4b98-981a-c9dc7886bf0a"
 draft: false
 views: 0

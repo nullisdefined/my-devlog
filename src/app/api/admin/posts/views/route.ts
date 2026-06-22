@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import { redis } from "@/lib/redis";
 import { getAllPosts } from "@/lib/posts";
 
+export const dynamic = "force-dynamic";
+
 export async function GET() {
   try {
     // 모든 게시글 가져오기
@@ -10,11 +12,12 @@ export async function GET() {
     // 각 게시글의 조회수 가져오기
     const postsWithViews = await Promise.all(
       posts.map(async (post) => {
-        const viewsKey = `post:${post.category}/${post.slug}:views`;
+        const postPath = post.urlCategory || "uncategorized";
+        const viewsKey = `post:${postPath}/${post.slug}:views`;
         const views = await redis.get(viewsKey);
 
         return {
-          category: post.category,
+          path: postPath,
           slug: post.slug,
           title: post.title,
           views: Number(views) || 0,

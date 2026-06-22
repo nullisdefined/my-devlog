@@ -3,7 +3,6 @@ title: "게시글 페이지에 이미지 모달 구현하기"
 slug: "image-modal-implementation"
 date: 2025-06-25
 tags: ["Devlog", "TypeScript", "DOM"]
-category: "Series/devlog"
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/bda02db8a3f14f2637f18a86373e7397.png"
 draft: false
 views: 0

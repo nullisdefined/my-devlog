@@ -37,6 +37,7 @@ export function Tag({ tag, className }: TagProps) {
 // 카드형 (세로형) 컴포넌트
 function CardView({ post }: PostCardProps) {
   const previewText = getFirstParagraph(post.content, 150);
+  const visibleTags = post.tags?.slice(0, 3) || [];
 
   return (
     <Link
@@ -69,11 +70,9 @@ function CardView({ post }: PostCardProps) {
         {/* 컨텐츠 영역 */}
         <div className="p-4 sm:p-5">
           <div className="flex flex-wrap items-center gap-2 mb-3">
-            {post.category && (
-              <span className="text-xs tracking-wide font-semibold text-primary/90 uppercase bg-primary/10 px-2 py-1 rounded">
-                {post.category}
-              </span>
-            )}
+            {visibleTags.map((tag) => (
+              <Tag key={tag} tag={tag} />
+            ))}
             <span className="text-xs text-muted-foreground">
               {format(new Date(post.date), "yyyy.MM.dd")}
             </span>
@@ -97,6 +96,7 @@ function CardView({ post }: PostCardProps) {
 // 리스트형 (가로형) 컴포넌트
 function ListView({ post }: PostCardProps) {
   const previewText = getFirstParagraph(post.content, 200);
+  const visibleTags = post.tags?.slice(0, 3) || [];
 
   return (
     <Link
@@ -127,11 +127,9 @@ function ListView({ post }: PostCardProps) {
           {/* 본문 영역 */}
           <div className="flex-1 p-4 sm:p-5 flex flex-col order-2 sm:order-1">
             <div className="flex flex-wrap items-center gap-2 mb-3">
-              {post.category && (
-                <span className="text-xs tracking-wide font-semibold text-primary/90 uppercase bg-primary/10 px-2 py-1 rounded">
-                  {post.category}
-                </span>
-              )}
+              {visibleTags.map((tag) => (
+                <Tag key={tag} tag={tag} />
+              ))}
               <span className="text-xs text-muted-foreground">
                 {format(new Date(post.date), "yyyy.MM.dd")}
               </span>
@@ -170,6 +168,7 @@ function ListView({ post }: PostCardProps) {
 // Masonry형 컴포넌트
 function MasonryView({ post }: PostCardProps) {
   const previewText = getFirstParagraph(post.content, 180);
+  const visibleTags = post.tags?.slice(0, 3) || [];
 
   return (
     <Link
@@ -203,11 +202,9 @@ function MasonryView({ post }: PostCardProps) {
         {/* 컨텐츠 영역 */}
         <div className="p-4 sm:p-5">
           <div className="flex flex-wrap items-center gap-2">
-            {post.category && (
-              <span className="text-xs tracking-wide font-semibold text-primary/90 uppercase bg-primary/10 px-2 py-1 rounded">
-                {post.category}
-              </span>
-            )}
+            {visibleTags.map((tag) => (
+              <Tag key={tag} tag={tag} />
+            ))}
             <span className="text-xs text-muted-foreground">
               {format(new Date(post.date), "yyyy.MM.dd")}
             </span>

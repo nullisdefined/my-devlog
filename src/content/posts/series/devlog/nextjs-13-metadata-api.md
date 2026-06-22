@@ -3,7 +3,6 @@ title: "[Next.js] Metadata API 사용해 SEO 최적화하기"
 slug: "nextjs-13-metadata-api"
 date: 2025-06-17
 tags: ["Devlog", "MetadataAPI", "SEO"]
-category: "Series/devlog"
 draft: false
 views: 0
 ---

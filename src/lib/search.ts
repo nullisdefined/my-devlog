@@ -44,9 +44,6 @@ export function searchPosts(posts: Post[], query: string): Post[] {
         score += tagScore * 2;
       }
 
-      // 카테고리 매칭 (중간 가중치)
-      score += getMatchScore(post.category, searchQuery) * 2;
-
       // 내용 매칭 (기본 가중치)
       score += getMatchScore(post.content, searchQuery);
     });

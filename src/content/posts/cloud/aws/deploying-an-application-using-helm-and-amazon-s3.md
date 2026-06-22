@@ -2,8 +2,7 @@
 title: "Deploying an Application Using Helm and Amazon S3"
 slug: "deploying-an-application-using-helm-and-amazon-s3"
 date: 2025-07-16
-tags: ["AWS", "EKS", "Helm", "S3"]
-category: "Cloud/AWS"
+tags: ["AWS", "EKS", "Helm", "S3", "Cloud"]
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/fcda16913825d982c9b11245b536ff7e.png"
 draft: true
 views: 0

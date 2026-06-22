@@ -2,8 +2,7 @@
 title: "Unicast Routing Protocol (RIP, OSPF and BGP)"
 slug: "unicast-routing-protocol-rip-ospf-bgp"
 date: 2025-05-15
-tags: ["NetworkProgramming", "NetworkLayer", "IP", "RIP", "OSPF"]
-category: "CS/Network Programming"
+tags: ["NetworkProgramming", "NetworkLayer", "IP", "RIP", "OSPF", "CS", "Network Programming"]
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/dcbc02881819b2bf9e01d0ba58b466a7.png"
 draft: false
 views: 0

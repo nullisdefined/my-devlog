@@ -2,8 +2,7 @@
 title: "무제 파일"
 slug: "change-into-binary"
 date: 2024-12-06
-tags: []
-category: "Problem Solving"
+tags: ["Problem Solving"]
 draft: true
 views: 0
 ---

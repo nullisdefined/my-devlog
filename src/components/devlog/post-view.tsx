@@ -39,21 +39,7 @@ function Tag({ tag, className }: { tag: string; className?: string }) {
 }
 
 export function PostView({ post, content, toc, allPosts }: PostViewProps) {
-  // URL에서 공백을 하이픈으로 변환하는 함수
-  const normalizeUrlPath = (path: string) => {
-    return path.toLowerCase().replace(/\s+/g, "-");
-  };
-
-  // 브레드크럼 아이템 생성
   const breadcrumbItems = [
-    {
-      title: post.category || "기타",
-      href: post.category?.toLowerCase().startsWith("series/")
-        ? `/devlog/${normalizeUrlPath(post.urlCategory || post.category || "")}`
-        : `/devlog/categories/${normalizeUrlPath(
-            post.urlCategory || post.category || "",
-          )}`,
-    },
     {
       title: post.title,
     },
@@ -74,26 +60,6 @@ export function PostView({ post, content, toc, allPosts }: PostViewProps) {
         {/* 타이틀 헤더 - 배너 밖에 위치, 간격 조정 */}
         <header className="mb-6 sm:mb-8 pb-4 sm:pb-6 border-b border-border/20">
           <div className="space-y-3 sm:space-y-4">
-            {/* 카테고리 */}
-            {post.category && (
-              <div className="inline-block">
-                <Link
-                  href={
-                    post.category.toLowerCase().startsWith("series/")
-                      ? `/devlog/${normalizeUrlPath(
-                          post.urlCategory || post.category || "",
-                        )}`
-                      : `/devlog/categories/${normalizeUrlPath(
-                          post.urlCategory || post.category || "",
-                        )}`
-                  }
-                  className="text-xs font-medium text-muted-foreground uppercase tracking-wider bg-secondary px-3 py-1.5 rounded-full border hover:bg-secondary/80 transition-colors cursor-pointer"
-                >
-                  {post.category}
-                </Link>
-              </div>
-            )}
-
             {/* 제목 */}
             <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-extrabold leading-tight text-foreground">
               {post.title}

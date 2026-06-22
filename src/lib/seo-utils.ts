@@ -93,7 +93,6 @@ export function calculateSEOScore(post: {
   title: string;
   content: string;
   tags?: string[];
-  category?: string;
   thumbnail?: string;
 }): {
   score: number;
@@ -122,16 +121,9 @@ export function calculateSEOScore(post: {
 
   // 태그 개수 체크 (3-5개 권장)
   if (post.tags && post.tags.length >= 3 && post.tags.length <= 5) {
-    score += 15;
+    score += 30;
   } else {
     suggestions.push("태그를 3-5개 설정하는 것이 좋습니다");
-  }
-
-  // 카테고리 설정 체크
-  if (post.category) {
-    score += 15;
-  } else {
-    suggestions.push("카테고리를 설정해주세요");
   }
 
   // 썸네일 이미지 체크

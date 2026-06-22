@@ -2,8 +2,7 @@
 title: "원자성(Atomicity)"
 slug: "db-atomicity"
 date: 2024-12-17
-tags: ["Database", "Transaction", "ACID"]
-category: "CS/Database"
+tags: ["Database", "Transaction", "ACID", "CS"]
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/88e92252f66502104df6a92c90e799cb.png"
 draft: false
 views: 0

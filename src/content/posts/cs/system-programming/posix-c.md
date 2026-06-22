@@ -2,8 +2,7 @@
 title: "POSIX, C"
 slug: "posix-c"
 date: 2025-04-09
-tags: ["POSIX", "C", "SystemProgramming"]
-category: "CS/System Programming"
+tags: ["POSIX", "C", "SystemProgramming", "CS", "System Programming"]
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/47eef63f8667e193a1c417ed6697b74b.png"
 draft: false
 views: 0

@@ -3,7 +3,6 @@ title: "중복 포스트 문제"
 slug: "duplication-post-issue"
 date: 2024-11-05
 tags: ["Devlog"]
-category: "Series/devlog"
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/969b1081b4857711adbc2a75bc3fc45f.png"
 draft: false
 views: 0

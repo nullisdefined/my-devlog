@@ -5,14 +5,9 @@ export async function GET() {
   try {
     const posts = await getAllPosts();
 
-    // 모든 카테고리 수집
-    const categories = new Set<string>();
     const tags = new Set<string>();
 
     posts.forEach((post) => {
-      if (post.category) {
-        categories.add(post.category);
-      }
       post.tags?.forEach((tag) => {
         tags.add(tag);
       });
@@ -24,12 +19,6 @@ export async function GET() {
         url: "https://nullisdefined.my/feed.xml",
         description: "모든 블로그 포스트",
       },
-      categories: Array.from(categories).map((category) => ({
-        title: `개발새발 - ${category} 카테고리`,
-        url: `https://nullisdefined.my/feed/${encodeURIComponent(category)}`,
-        description: `${category} 관련 글들`,
-        postCount: posts.filter((post) => post.category === category).length,
-      })),
       tags: Array.from(tags).map((tag) => ({
         title: `개발새발 - ${tag} 태그`,
         url: `https://nullisdefined.my/feed/tags/${encodeURIComponent(tag)}`,

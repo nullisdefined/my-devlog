@@ -3,7 +3,6 @@ const fs = require("fs");
 const matter = require("gray-matter");
 
 const POSTS_PATH = path.join(process.cwd(), "src/content/posts");
-const SERIES_PATH = path.join(process.cwd(), "src/content/posts/series");
 
 function getPostList(basePath) {
   const allPosts = [];
@@ -43,5 +42,4 @@ function getPostList(basePath) {
 
 module.exports = {
   getPostList: () => getPostList(POSTS_PATH),
-  getSeriesPostList: () => getPostList(SERIES_PATH),
 };

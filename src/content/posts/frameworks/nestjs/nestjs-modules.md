@@ -2,8 +2,7 @@
 title: "[NestJS] Modules"
 slug: "nestjs-modules"
 date: 2025-08-25
-tags: ["NestJS", "Modules"]
-category: "Frameworks/NestJS"
+tags: ["NestJS", "Modules", "Frameworks"]
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/e48e6fd88f6339a761df1c6155770ce4.png"
 draft: false
 views: 0

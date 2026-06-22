@@ -2,8 +2,7 @@
 title: "Memory Representation"
 slug: "memory-representation"
 date: 2025-05-07
-tags: ["Structure", "FloatingPoint", "SystemProgramming", "MemoryAlignment"]
-category: "CS/System Programming"
+tags: ["Structure", "FloatingPoint", "SystemProgramming", "MemoryAlignment", "CS", "System Programming"]
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/32a8aae5665c773a1e858ad4a6473eae.png"
 draft: false
 views: 0

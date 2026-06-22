@@ -2,8 +2,7 @@
 title: "싱글턴(Singleton) 패턴"
 slug: "dp-singleton"
 date: 2025-12-15
-tags: ["DP", "Singleton"]
-category: "CS/Software Analysis and Design"
+tags: ["DP", "Singleton", "CS", "Software Analysis and Design"]
 draft: true
 views: 0
 ---

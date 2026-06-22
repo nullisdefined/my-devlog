@@ -11,7 +11,9 @@ export async function GET(
     const tag = decodeURIComponent(params.tag);
 
     // 해당 태그의 포스트가 있는지 확인
-    const tagPosts = posts.filter((post) => post.tags?.includes(tag));
+    const tagPosts = posts.filter((post) =>
+      post.tags?.some((postTag) => postTag.toLowerCase() === tag.toLowerCase())
+    );
 
     if (tagPosts.length === 0) {
       return new NextResponse("Tag not found", { status: 404 });

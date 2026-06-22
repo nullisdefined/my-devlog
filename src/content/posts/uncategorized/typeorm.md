@@ -2,7 +2,7 @@
 title: "TypeORM"
 slug: "typeorm"
 date: 2025-11-17
-tags: []
+tags: ["Uncategorized"]
 draft: true
 views: 0
 ---

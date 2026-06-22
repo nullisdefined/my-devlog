@@ -2,16 +2,6 @@ import { unstable_cache } from "next/cache";
 import { getAllPosts } from "./posts";
 import { Post } from "@/types";
 
-// 카테고리 정규화 함수 (비교용)
-function normalizeCategory(category: string): string {
-  return category
-    .toLowerCase()
-    .replace(/\//g, " ") // 슬래시를 공백으로
-    .replace(/-/g, " ") // 하이픈을 공백으로
-    .replace(/\s+/g, " ") // 연속 공백을 하나로
-    .trim();
-}
-
 // RSS 피드 캐싱
 export const getCachedRSSFeed = unstable_cache(
   async () => {
@@ -25,53 +15,19 @@ export const getCachedRSSFeed = unstable_cache(
   },
 );
 
-// 카테고리별 RSS 캐싱
-export const getCachedCategoryFeed = (category: string) =>
-  unstable_cache(
-    async () => {
-      const posts = await getAllPosts();
-      const normalizedInputCategory = normalizeCategory(category);
-      return posts.filter(
-        (post) =>
-          post.category &&
-          normalizeCategory(post.category) === normalizedInputCategory,
-      );
-    },
-    ["rss-feed-category", category],
-    {
-      revalidate: 3600,
-      tags: ["posts", "categories"],
-    },
-  )();
-
 // 태그별 RSS 캐싱
 export const getCachedTagFeed = (tag: string) =>
   unstable_cache(
     async () => {
       const posts = await getAllPosts();
-      return posts.filter((post) => post.tags?.includes(tag));
+      return posts.filter((post) =>
+        post.tags?.some((postTag) => postTag.toLowerCase() === tag.toLowerCase()),
+      );
     },
     ["rss-feed-tag", tag],
     {
       revalidate: 3600,
       tags: ["posts", "tags"],
-    },
-  )();
-
-// 시리즈별 RSS 캐싱
-export const getCachedSeriesFeed = (series: string) =>
-  unstable_cache(
-    async () => {
-      const posts = await getAllPosts();
-      return posts.filter(
-        (post) =>
-          post.category?.includes(series) || post.tags?.includes(series),
-      );
-    },
-    ["rss-feed-series", series],
-    {
-      revalidate: 3600,
-      tags: ["posts", "series"],
     },
   )();
 
@@ -82,9 +38,7 @@ export async function invalidateRSSCache() {
     if (typeof window === "undefined") {
       const { revalidateTag } = await import("next/cache");
       revalidateTag("posts");
-      revalidateTag("categories");
       revalidateTag("tags");
-      revalidateTag("series");
     }
   } catch (error) {
     console.warn("Cache revalidation failed:", error);

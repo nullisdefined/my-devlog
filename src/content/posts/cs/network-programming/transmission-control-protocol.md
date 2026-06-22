@@ -2,8 +2,7 @@
 title: "TCP (Transmission Control Protocol)"
 slug: "transmission-control-protocol"
 date: 2025-05-24
-tags: ["NetworkProgramming", "TransportLayer", "TCP"]
-category: "CS/Network Programming"
+tags: ["NetworkProgramming", "TransportLayer", "TCP", "CS", "Network Programming"]
 draft: true
 ---
 ## TCP란?

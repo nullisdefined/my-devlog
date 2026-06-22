@@ -5,12 +5,9 @@ const path = require("path");
 const SITE_URL = "https://nullisdefined.my";
 const RSS_ENDPOINTS = [
   "/feed.xml",
-  "/feed/category/languages",
-  "/feed/category/frameworks",
-  "/feed/category/backend",
   "/feed/tags/JavaScript",
   "/feed/tags/TypeScript",
-  "/feed/series/devlog",
+  "/feed/tags/NestJS",
 ];
 
 // RSS 피드 요청 함수

@@ -2,8 +2,7 @@
 title: "Concurrency"
 slug: "concurrency"
 date: 2025-06-14
-tags: ["SystemProgramming", "Synchronization", "RaceCondition", "MutualExclusion", "Semaphores", "BusyWriting", "Monitor", "Mutex"]
-category: "CS/System Programming"
+tags: ["SystemProgramming", "Synchronization", "RaceCondition", "MutualExclusion", "Semaphores", "BusyWriting", "Monitor", "Mutex", "CS", "System Programming"]
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/e8657206458849ba82d348ef177b8933.png"
 draft: false
 views: 0

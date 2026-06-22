@@ -2,8 +2,7 @@
 title: "AWS - Networking"
 slug: "aws-networking"
 date: 2025-06-21
-tags: ["AWS", "IP", "CIDR", "VPC", "Subnet", "IGW", "VGW", "NACL", "SecurityGroup"]
-category: "Cloud/AWS"
+tags: ["AWS", "IP", "CIDR", "VPC", "Subnet", "IGW", "VGW", "NACL", "SecurityGroup", "Cloud"]
 thumbnail: "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/a069e2871f8756716b84b6fa1ebd080d.png"
 draft: false
 views: 0
