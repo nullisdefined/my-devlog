@@ -2,12 +2,31 @@
 "use client";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { FileText, ArrowDown, X, Trophy } from "lucide-react";
+import {
+  FileText,
+  ArrowDown,
+  X,
+  Trophy,
+  ChevronLeft,
+  ChevronRight,
+} from "lucide-react";
 import {
   SiNodedotjs,
   SiExpress,
   SiNestjs,
   SiSupabase,
+  SiAmazondynamodb,
+  SiAmazoncloudwatch,
+  SiAmazonwebservices,
+  SiGithubactions,
+  SiOpenai,
+  SiAnthropic,
+  SiGooglegemini,
+  SiZedindustries,
+  SiGithubcopilot,
+  SiTerraform,
+  SiMongodb,
+  SiMongoose,
   SiC,
   SiJavascript,
   SiTypescript,
@@ -167,12 +186,14 @@ const ProjectDetailModal = ({
   const [activeTab, setActiveTab] = useState("overview");
   const contentRef = useRef<HTMLDivElement>(null);
 
-  // 모달이 열릴 때마다 개요 탭으로 초기화
+  // 모달이 열릴 때마다 탭 초기화 (문제 해결 탭 우선)
   useEffect(() => {
     if (isOpen) {
-      setActiveTab("overview");
+      setActiveTab(
+        project?.troubleshooting?.length > 0 ? "troubleshooting" : "overview",
+      );
     }
-  }, [isOpen]);
+  }, [isOpen, project]);
 
   // 탭 변경 시 스크롤 위치를 최상단으로 이동
   useEffect(() => {
@@ -259,16 +280,18 @@ const ProjectDetailModal = ({
 
         {/* 탭 네비게이션 */}
         <div className="sticky top-[65px] bg-card border-b border-border px-6 flex gap-4 z-10">
-          <button
-            onClick={() => setActiveTab("overview")}
-            className={`py-3 px-4 text-sm font-medium border-b-2 transition-colors ${
-              activeTab === "overview"
-                ? "border-blue-600 text-blue-600 dark:border-blue-400 dark:text-blue-400"
-                : "border-transparent text-muted-foreground hover:text-foreground"
-            }`}
-          >
-            개요
-          </button>
+          {project.troubleshooting && project.troubleshooting.length > 0 && (
+            <button
+              onClick={() => setActiveTab("troubleshooting")}
+              className={`py-3 px-4 text-sm font-medium border-b-2 transition-colors ${
+                activeTab === "troubleshooting"
+                  ? "border-blue-600 text-blue-600 dark:border-blue-400 dark:text-blue-400"
+                  : "border-transparent text-muted-foreground hover:text-foreground"
+              }`}
+            >
+              문제 해결
+            </button>
+          )}
           {project.responsibilities && project.responsibilities.length > 0 && (
             <button
               onClick={() => setActiveTab("responsibilities")}
@@ -281,18 +304,16 @@ const ProjectDetailModal = ({
               담당 업무
             </button>
           )}
-          {project.troubleshooting && project.troubleshooting.length > 0 && (
-            <button
-              onClick={() => setActiveTab("troubleshooting")}
-              className={`py-3 px-4 text-sm font-medium border-b-2 transition-colors ${
-                activeTab === "troubleshooting"
-                  ? "border-blue-600 text-blue-600 dark:border-blue-400 dark:text-blue-400"
-                  : "border-transparent text-muted-foreground hover:text-foreground"
-              }`}
-            >
-              트러블슈팅
-            </button>
-          )}
+          <button
+            onClick={() => setActiveTab("overview")}
+            className={`py-3 px-4 text-sm font-medium border-b-2 transition-colors ${
+              activeTab === "overview"
+                ? "border-blue-600 text-blue-600 dark:border-blue-400 dark:text-blue-400"
+                : "border-transparent text-muted-foreground hover:text-foreground"
+            }`}
+          >
+            개요
+          </button>
         </div>
 
         {/* 컨텐츠 */}
@@ -482,7 +503,7 @@ const ProjectDetailModal = ({
           {activeTab === "troubleshooting" && project.troubleshooting && (
             <div className="space-y-6">
               <div>
-                <h3 className="text-lg font-semibold mb-4">트러블슈팅</h3>
+                <h3 className="text-lg font-semibold mb-4">문제 해결</h3>
                 <div className="space-y-6">
                   {project.troubleshooting.map((issue: any, idx: number) => (
                     <div key={idx} className="bg-muted/30 rounded-lg p-4">
@@ -536,6 +557,13 @@ const ProjectDetailModal = ({
   );
 };
 
+// 역할 뱃지 색상 (ProjectCard, CompactProjectCard 공용)
+const roleColorMap: { [key: string]: string } = {
+  Backend: "bg-pink-100 text-pink-800 dark:bg-pink-900/50 dark:text-pink-300",
+  FullStack:
+    "bg-amber-100 text-amber-800 dark:bg-amber-900/50 dark:text-amber-300",
+};
+
 // ProjectCard 컴포넌트
 const ProjectCard = ({
   project,
@@ -546,11 +574,6 @@ const ProjectCard = ({
 }) => {
   const [isHovered, setIsHovered] = useState(false);
 
-  const roleColorMap: { [key: string]: string } = {
-    Backend: "bg-pink-100 text-pink-800 dark:bg-pink-900/50 dark:text-pink-300",
-    FullStack:
-      "bg-amber-100 text-amber-800 dark:bg-amber-900/50 dark:text-amber-300",
-  };
   const roleColor =
     roleColorMap[project.role as keyof typeof roleColorMap] ||
     "bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-200";
@@ -646,43 +669,63 @@ const ProjectCard = ({
                   {project.role}
                 </span>
               )}
+              {project.teamSize && (
+                <span className="text-xs font-semibold px-2 py-1 rounded-md bg-muted text-muted-foreground">
+                  {project.teamSize === 1 ? "개인" : `${project.teamSize}인 팀`}
+                </span>
+              )}
             </div>
+          </div>
+          <div className="space-y-0.5">
+            {/* 어떤 서비스인지 1줄 */}
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              {project.oneLiner || project.description}
+            </p>
+            {/* 기간 */}
             <p className="text-sm text-muted-foreground font-medium">
               {project.period}
             </p>
           </div>
-          <p className="text-sm text-muted-foreground leading-relaxed">
-            {project.description}
-          </p>
         </div>
 
-        {/* 주요 기능 */}
-        {/*<div className="space-y-2 mt-4">
-          <h4 className="font-semibold text-sm">주요 기능:</h4>
-          <ul className="list-disc list-inside space-y-1 text-muted-foreground text-sm leading-relaxed">
-            {project.features.map((feature: string, idx: number) => (
-              <li key={idx}>{feature}</li>
+        {/* 핵심 기술 성과 */}
+        {project.keyAchievements && project.keyAchievements.length > 0 && (
+          <ul className="mt-5 space-y-2">
+            {project.keyAchievements.map((item: string, idx: number) => (
+              <li
+                key={idx}
+                className="flex items-start gap-2 text-sm leading-snug"
+              >
+                <span className="mt-0.5 flex-shrink-0 text-blue-600 dark:text-blue-400">
+                  •
+                </span>
+                <span>{item}</span>
+              </li>
             ))}
           </ul>
-        </div>*/}
+        )}
 
-        {/* 기술 스택 */}
-        <div className="space-y-2 mt-3">
+        {/* 기술 스택 (카드 하단, 일부는 카드에서 숨김 — 상세 모달엔 전체 표시) */}
+        <div className="mt-auto pt-4">
           <div className="flex flex-wrap gap-1.5">
-            {project.tech.map((tech: any, idx: number) => (
-              <div
-                key={idx}
-                className="flex items-center space-x-1 text-muted-foreground hover:text-foreground transition-colors bg-muted/50 px-2 py-1 rounded text-xs"
-              >
-                <span className="text-xs">{tech.icon}</span>
-                <span>{tech.name}</span>
-              </div>
-            ))}
+            {project.tech
+              .filter(
+                (t: any) => !(project.cardHiddenTech || []).includes(t.name),
+              )
+              .map((tech: any, idx: number) => (
+                <div
+                  key={idx}
+                  className="flex items-center space-x-1 text-muted-foreground hover:text-foreground transition-colors bg-muted/50 px-2 py-1 rounded text-xs"
+                >
+                  <span className="text-xs">{tech.icon}</span>
+                  <span>{tech.name}</span>
+                </div>
+              ))}
           </div>
         </div>
 
         {/* 레포지토리 버튼 */}
-        <div className="mt-auto pt-4 space-y-2">
+        <div className="pt-3 space-y-2">
           {project.pdf && (
             <Button variant="secondary" className="w-full text-sm" asChild>
               <Link
@@ -713,6 +756,46 @@ const ProjectCard = ({
   );
 };
 
+// CompactProjectCard 컴포넌트 (그 외 프로젝트용)
+const CompactProjectCard = ({
+  project,
+  onCardClick,
+}: {
+  project: any;
+  onCardClick: (project: any) => void;
+}) => {
+  const roleColor =
+    roleColorMap[project.role as keyof typeof roleColorMap] ||
+    "bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-200";
+
+  return (
+    <div
+      className="bg-card rounded-lg shadow-md hover:shadow-xl hover:scale-[1.02] transition-all duration-300 p-4 flex flex-col gap-1.5 cursor-pointer group"
+      onClick={() => onCardClick(project)}
+    >
+      <div className="flex items-center gap-2">
+        <h3 className="font-bold text-base">{project.title}</h3>
+        {project.role && (
+          <span
+            className={`text-xs font-semibold px-2 py-1 rounded-md ${roleColor}`}
+          >
+            {project.role}
+          </span>
+        )}
+      </div>
+      <p className="text-sm text-muted-foreground font-medium">
+        {project.period}
+      </p>
+      <p className="text-sm text-muted-foreground leading-relaxed">
+        {project.oneLiner || project.description}
+      </p>
+      <p className="text-xs text-muted-foreground text-right mt-auto pt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+        상세보기 →
+      </p>
+    </div>
+  );
+};
+
 export default function Home() {
   const [mounted, setMounted] = useState(false);
   const [modalImage, setModalImage] = useState<{
@@ -733,6 +816,15 @@ export default function Home() {
 
   const heroRef = useRef<HTMLElement>(null);
   const projectsRef = useRef<HTMLElement>(null);
+  const toyScrollRef = useRef<HTMLDivElement>(null);
+
+  const scrollToy = (dir: number) => {
+    const el = toyScrollRef.current;
+    if (!el) return;
+    const card = el.children[0] as HTMLElement | undefined;
+    const step = card ? card.clientWidth + 24 : el.clientWidth * 0.85; // 카드 폭 + gap-6(24px)
+    el.scrollBy({ left: step * dir, behavior: "smooth" });
+  };
 
   // 컴포넌트 마운트 확인
   useEffect(() => {
@@ -784,7 +876,10 @@ export default function Home() {
     setSelectedProject(null);
   };
 
-  const skills = [
+  const skills: {
+    category: string;
+    techs: { name: string; icon: React.ReactNode; description: string }[];
+  }[] = [
     {
       category: "Languages",
       techs: [
@@ -801,10 +896,10 @@ export default function Home() {
             "교내 알고리즘 대회에 참가하여 STL을 활용하여 문제 해결 경험이 있습니다.",
         },
         {
-          name: "CSS3",
-          icon: <SiCss3 className="h-4 w-4" />,
+          name: "Java",
+          icon: <FaJava className="h-4 w-4" />,
           description:
-            "반응형 디자인, Flexbox, Grid 레이아웃을 구현할 수 있습니다.",
+            "객체지향 프로그래밍 개념을 바탕으로 기본 문법과 자료구조·알고리즘 문제 해결에 활용해 본 경험이 있습니다.",
         },
         {
           name: "JavaScript",
@@ -816,7 +911,277 @@ export default function Home() {
           name: "TypeScript",
           icon: <SiTypescript className="h-4 w-4" />,
           description:
-            "NestJS 프로젝트에서 타입 시스템을 활용한 DTO/Entity 자동 변환 구조 설계 경험이 있습니다.",
+            "타입 시스템을 활용한 DTO/Entity 자동 변환 구조 설계 경험이 있습니다.",
+        },
+      ],
+    },
+    {
+      category: "Backend",
+      techs: [
+        {
+          name: "Node.js",
+          icon: <SiNodedotjs className="h-4 w-4" />,
+          description:
+            "API 서버 개발 런타임으로 사용하며, 이벤트 루프와 비동기 처리 모델을 이해하고 SQS·Lambda 연동 비동기 파이프라인을 구현할 수 있습니다.",
+        },
+        {
+          name: "Express",
+          icon: <SiExpress className="h-4 w-4" />,
+          description:
+            "라우트 구조를 설계하고, REST CRUD API를 구현할 수 있습니다.",
+        },
+        {
+          name: "TypeORM",
+          icon: <SiTypeorm className="h-4 w-4" />,
+          description:
+            "복잡한 관계 매핑 이슈에서 cascade/orphan 문제 해결 경험이 있습니다.",
+        },
+        {
+          name: "Mongoose",
+          icon: <SiMongoose className="h-4 w-4" />,
+          description:
+            "MongoDB의 ODM 라이브러리로 스키마 정의, 모델링, 미들웨어 구성을 통해 데이터를 관리한 경험이 있습니다.",
+        },
+        {
+          name: "NestJS",
+          icon: <SiNestjs className="h-4 w-4" />,
+          description:
+            "WebSocket Gateway 기반 실시간 처리 기능을 구현할 수 있습니다.",
+        },
+      ],
+    },
+    {
+      category: "Database",
+      techs: [
+        {
+          name: "MySQL",
+          icon: <SiMysql className="h-4 w-4" />,
+          description: "",
+        },
+        {
+          name: "MariaDB",
+          icon: <SiMariadb className="h-4 w-4" />,
+          description: "",
+        },
+        {
+          name: "PostgreSQL",
+          icon: <SiPostgresql className="h-4 w-4" />,
+          description:
+            "주력 RDB로 사용하며, 인덱스 구조 조정과 쿼리 최적화로 성능을 개선한 경험이 있습니다.",
+        },
+        {
+          name: "MongoDB",
+          icon: <SiMongodb className="h-4 w-4" />,
+          description:
+            "문서 기반 NoSQL 데이터 모델을 다루고 Mongoose로 스키마를 설계해 본 경험이 있습니다.",
+        },
+      ],
+    },
+    {
+      category: "Version Control",
+      techs: [
+        {
+          name: "Git",
+          icon: <SiGit className="h-4 w-4" />,
+          description:
+            "브랜치 전략을 기반으로 커밋 단위를 관리하고, 충돌 해결과 이력 정리를 진행한 경험이 있습니다.",
+        },
+        {
+          name: "GitHub",
+          icon: <SiGithub className="h-4 w-4" />,
+          description:
+            "PR 기반 코드 리뷰와 GitHub Actions CI/CD, 이슈 기반 협업 경험이 있습니다.",
+        },
+      ],
+    },
+    {
+      category: "DevOps",
+      techs: [
+        {
+          name: "Nginx",
+          icon: <SiNginx className="h-4 w-4" />,
+          description:
+            "EC2 배포 환경에서 Nginx 리버스 프록시와 Let's Encrypt 기반 SSL/TLS를 구성한 경험이 있습니다.",
+        },
+        {
+          name: "Docker",
+          icon: <SiDocker className="h-4 w-4" />,
+          description:
+            "컨테이너 이미지를 빌드해 ECR로 푸시하고 ECS Fargate로 배포한 경험이 있습니다.",
+        },
+        {
+          name: "GitHub Actions",
+          icon: <SiGithubactions className="h-4 w-4" />,
+          description:
+            "빌드·테스트·ECR 푸시·배포로 이어지는 CI/CD 파이프라인을 구성한 경험이 있습니다.",
+        },
+        {
+          name: "Terraform",
+          icon: <SiTerraform className="h-4 w-4" />,
+          description:
+            "VPC·서브넷·ALB·ECS·RDS 등 AWS 인프라를 Terraform으로 코드화하고 모듈화해 재사용 가능한 IaC를 구성한 경험이 있습니다.",
+        },
+      ],
+    },
+    {
+      category: "Cloud",
+      techs: [
+        {
+          name: "Amazon EC2",
+          icon: <SiAmazonec2 className="h-4 w-4" />,
+          description:
+            "EC2 기반 3-Tier 아키텍처를 구축하고, Route53 + Nginx로 배포 환경을 구성한 경험이 있습니다.",
+        },
+        {
+          name: "Amazon ECS",
+          icon: <SiAmazonecs className="h-4 w-4" />,
+          description:
+            "ECS EC2에서 Fargate로 전환하며 VPC Endpoint 기반 아키텍처로 운영 비용을 절감한 경험이 있습니다.",
+        },
+        {
+          name: "Amazon RDS",
+          icon: <SiAmazonrds className="h-4 w-4" />,
+          description:
+            "RDS PostgreSQL로 운영 데이터 계층을 구성하고 관리한 경험이 있습니다.",
+        },
+        {
+          name: "Amazon S3",
+          icon: <SiAmazons3 className="h-4 w-4" />,
+          description:
+            "S3 Presigned URL 기반 대용량 파일 직접 업로드와 이벤트 트리거 파이프라인을 구현한 경험이 있습니다.",
+        },
+        {
+          name: "Amazon DynamoDB",
+          icon: <SiAmazondynamodb className="h-4 w-4" />,
+          description:
+            "Bedrock 미션 생성 Lambda가 적재하던 미션 데이터를 DynamoDB로 다뤄본 경험이 있습니다.",
+        },
+        {
+          name: "AWS Lambda",
+          icon: <SiAwslambda className="h-4 w-4" />,
+          description:
+            "S3 이벤트·SQS와 연동한 Lambda 워커로 Bedrock AI 이미지 인증 비동기 파이프라인을 구현했습니다.",
+        },
+        {
+          name: "Amazon CloudWatch",
+          icon: <SiAmazoncloudwatch className="h-4 w-4" />,
+          description:
+            "CloudWatch Logs로 ECS Fargate 컨테이너 로그를 수집하고 커스텀 메트릭·알람으로 관찰성을 구성한 경험이 있습니다.",
+        },
+        {
+          name: "Upstash",
+          icon: <SiUpstash className="h-4 w-4" />,
+          description:
+            "Redis 기반으로 페이지 조회수·캐싱 기능을 구현한 경험이 있습니다.",
+        },
+        {
+          name: "Supabase",
+          icon: <SiSupabase className="h-4 w-4" />,
+          description:
+            "Supabase 기반 PostgreSQL 데이터베이스를 구성·운영한 경험이 있습니다.",
+        },
+        {
+          name: "Vercel",
+          icon: <SiVercel className="h-4 w-4" />,
+          description:
+            "Next.js 기반 서비스를 배포, 도메인 연결, 환경 변수 보안 관리 경험이 있습니다.",
+        },
+      ],
+    },
+
+    {
+      category: "AI / LLM",
+      techs: [
+        {
+          name: "OpenAI",
+          icon: <SiOpenai className="h-4 w-4" />,
+          description:
+            "GPT-5.5·GPT-4o를 ChatGPT 대화형 사용과 ChatGPT API 직접 연동으로 활용했으며, 기능 프로토타이핑부터 로직 디버깅까지 적용해 본 경험이 있습니다.",
+        },
+        {
+          name: "Google Gemini",
+          icon: <SiGooglegemini className="h-4 w-4" />,
+          description:
+            "Gemini 계열 모델을 자료 조사와 이미지·문서 멀티모달 입력 검토에 활용해 본 경험이 있습니다.",
+        },
+        {
+          name: "GitHub Copilot",
+          icon: <SiGithubcopilot className="h-4 w-4" />,
+          description:
+            "GitHub Copilot의 코드 리뷰 기능을 적용해 리팩토링을 진행해 본 경험이 있습니다.",
+        },
+        {
+          name: "Anthropic Claude",
+          icon: <SiAnthropic className="h-4 w-4" />,
+          description:
+            "Claude Sonnet 4.6·Opus 4.8을 설계 검토·코드 리뷰·문서화에 주력으로 활용하며, 에이전트 기반 개발 사이클의 중심으로 사용하고 있습니다.",
+        },
+        {
+          name: "Amazon Bedrock",
+          icon: <SiAmazonwebservices className="h-4 w-4" />,
+          description:
+            "Bedrock(Claude 3.5 Sonnet)을 연동해 이미지 관련성 분석 기반 인증 기능을 구현해 본 경험이 있습니다.",
+        },
+        {
+          name: "Cursor",
+          icon: (
+            <svg
+              className="h-4 w-4"
+              viewBox="0 0 512 512"
+              fill="currentColor"
+              xmlns="http://www.w3.org/2000/svg"
+              aria-label="Cursor"
+            >
+              <path d="m415.035 156.35-151.503-87.4695c-4.865-2.8094-10.868-2.8094-15.733 0l-151.4969 87.4695c-4.0897 2.362-6.6146 6.729-6.6146 11.459v176.383c0 4.73 2.5249 9.097 6.6146 11.458l151.5039 87.47c4.865 2.809 10.868 2.809 15.733 0l151.504-87.47c4.089-2.361 6.614-6.728 6.614-11.458v-176.383c0-4.73-2.525-9.097-6.614-11.459zm-9.516 18.528-146.255 253.32c-.988 1.707-3.599 1.01-3.599-.967v-165.872c0-3.314-1.771-6.379-4.644-8.044l-143.645-82.932c-1.707-.988-1.01-3.599.968-3.599h292.509c4.154 0 6.75 4.503 4.673 8.101h-.007z" />
+            </svg>
+          ),
+          description:
+            "사이드 프로젝트 개발 과정에서 Cursor를 활용해 컴포넌트 설계, 코드 리팩토링, 오류 원인 분석을 보조하며 개발 생산성을 높인 경험이 있습니다.",
+        },
+        {
+          name: "OpenRouter",
+          icon: (
+            <svg
+              className="h-4 w-4"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              xmlns="http://www.w3.org/2000/svg"
+              aria-label="OpenRouter"
+            >
+              <path d="M12 0L1.5 6V18L12 24L22.5 18V6L12 0ZM12 2.5L20 7.1V16.9L12 21.5L4 16.9V7.1L12 2.5Z" />
+            </svg>
+          ),
+          description:
+            "OpenRouter를 통해 Qwen 3.7 Plus, DeepSeek V3/R1 등 최신 모델들을 연결하여 개발 워크플로우에 최적화된 AI 모델을 활용하고 있습니다.",
+        },
+        {
+          name: "Zed",
+          icon: <SiZedindustries className="h-4 w-4" />,
+          description:
+            "메인 에디터로 사용하며, Zed IDE의 Zed Agent에 OpenRouter를 연결하여 Qwen 3.7 Plus 모델을 주력 개발 환경으로 활용하고 있습니다.",
+        },
+      ],
+    },
+    {
+      category: "Enterprise",
+      techs: [
+        {
+          name: "SAP S/4HANA",
+          icon: <SiSap className="h-4 w-4" />,
+          description:
+            "SAP S/4HANA 시스템 구조와 ERP 업무 프로세스를 이해하고, 실습 환경에서 활용해 본 경험이 있습니다.",
+        },
+        {
+          name: "SAP ABAP",
+          icon: <SiSap className="h-4 w-4" />,
+          description:
+            "SAP GUI 기반 ALV Report·Screen Programming부터 Eclipse ADT 기반 ABAP Cloud 개발까지 구현해 본 경험이 있습니다.",
+        },
+        {
+          name: "SAP RAP",
+          icon: <SiSap className="h-4 w-4" />,
+          description:
+            "RESTful ABAP Programming Model을 활용해 클라우드 환경의 CRUD 서비스를 구현할 수 있습니다.",
         },
       ],
     },
@@ -826,7 +1191,8 @@ export default function Home() {
         {
           name: "React",
           icon: <SiReact className="h-4 w-4" />,
-          description: "현재 개발 블로그의 메인 프레임워크로 사용 중 입니다.",
+          description:
+            "현재 개발 블로그의 메인 프레임워크로 활용하고 있습니다.",
         },
         {
           name: "Next.js",
@@ -839,12 +1205,6 @@ export default function Home() {
           icon: <SiTailwindcss className="h-4 w-4" />,
           description:
             "Tailwind CSS를 활용하여 다크 모드를 구현해 본 경험이 있습니다.",
-        },
-        {
-          name: "Styled Components",
-          icon: <SiStyledcomponents className="h-4 w-4" />,
-          description:
-            "프론트엔드 프로젝트에서 동적 스타일링 및 테마 관리 구현이 가능합니다.",
         },
         {
           name: "Emotion CSS",
@@ -860,96 +1220,10 @@ export default function Home() {
           description:
             "카카오맵 API을 연동하고 WiFi/GPS에 기반한 위치 인증 모달 UI를 구현해 본 경험이 있습니다.",
         },
-      ],
-    },
-    {
-      category: "Backend",
-      techs: [
         {
-          name: "Express",
-          icon: <SiExpress className="h-4 w-4" />,
-          description:
-            "라우트 구조를 설계하고, REST CRUD API를 구현할 수 있습니다.",
-        },
-        {
-          name: "NestJS",
-          icon: <SiNestjs className="h-4 w-4" />,
-          description:
-            "WebSocket Gateway 기반 실시간 처리 기능을 구현할 수 있습니다.",
-        },
-        {
-          name: "TypeORM",
-          icon: <SiTypeorm className="h-4 w-4" />,
-          description:
-            "복잡한 관계 매핑 이슈에서 cascade/orphan 문제 해결 경험이 있습니다.",
-        },
-        {
-          name: "PostgreSQL",
-          icon: <SiPostgresql className="h-4 w-4" />,
-          description: "인덱스 구조 조정 후 성능 개선 경험이 있습니다.",
-        },
-        {
-          name: "Docker",
-          icon: <SiDocker className="h-4 w-4" />,
-          description: "컨테이너 기반 ECR 배포 경험이 있습니다.",
-        },
-      ],
-    },
-    {
-      category: "Cloud",
-      techs: [
-        {
-          name: "Vercel",
-          icon: <SiVercel className="h-4 w-4" />,
-          description:
-            "Next.js 기반 서비스를 배포, 도메인 연결, 환경 변수 보안 관리 경험이 있습니다.",
-        },
-        {
-          name: "Upstash",
-          icon: <SiUpstash className="h-4 w-4" />,
-          description:
-            "Redis 기반으로 페이지 조회수·캐싱 기능을 구현한 경험이 있습니다.",
-        },
-        {
-          name: "Supabase",
-          icon: <SiSupabase className="h-4 w-4" />,
-          description:
-            "Playona 프로젝트에서 Supabase 기반 PostgreSQL 데이터베이스를 구성·운영한 경험이 있습니다.",
-        },
-        {
-          name: "AWS Compute",
-          icon: <SiAmazon className="h-4 w-4" />,
-          description:
-            "EC2 기반 3-Tier 아키텍처를 구축하고, Docker 이미지를 ECR→ECS Fargate로 배포하는 CI/CD 파이프라인을 구성했으며, Lambda·CloudFront를 활용한 S3 Presigned URL 기반 대용량 비디오 업로드 최적화 경험이 있습니다.",
-        },
-        {
-          name: "AWS Data",
-          icon: <SiAmazon className="h-4 w-4" />,
-          description:
-            "RDS·S3로 데이터/스토리지 계층을 구성하고, SQS 기반 비동기 영상 처리 파이프라인을 구축했으며, Bedrock·Cognito 활용 경험이 있습니다.",
-        },
-      ],
-    },
-    {
-      category: "SAP",
-      techs: [
-        {
-          name: "SAP S/4HANA",
-          icon: <SiSap className="h-4 w-4" />,
-          description:
-            "숭실대학교 Co-op SAP 트랙(2026.03~06) 수업에서 SAP S/4HANA 시스템 구조 및 실무 활용 교육을 이수했습니다.",
-        },
-        {
-          name: "ABAP",
-          icon: <SiSap className="h-4 w-4" />,
-          description:
-            "SAP GUI 환경에서 ABAP Dictionary 타입 정의, Screen Programming 기반 화면 레이아웃, ALV Report, OOP 등을 학습한 뒤 Eclipse ADT 기반 ABAP Cloud 개발로 확장하여, SAP Certified Back-End Developer (ABAP Cloud) 자격을 취득했습니다.",
-        },
-        {
-          name: "RAP",
-          icon: <SiSap className="h-4 w-4" />,
-          description:
-            "Eclipse ADT 기반 RESTful ABAP Programming Model을 활용해 클라우드 환경에서 웹 CRUD 인터페이스를 구현해 본 경험이 있습니다.",
+          name: "Styled Components",
+          icon: <SiStyledcomponents className="h-4 w-4" />,
+          description: "동적 스타일링 및 테마 관리 구현이 가능합니다.",
         },
       ],
     },
@@ -1050,6 +1324,8 @@ export default function Home() {
       period: "24.08 ~ 25.02",
       role: "Backend",
       teamSize: 5,
+      featured: false,
+      oneLiner: "시니어와 가족을 위한 AI 기반 자동 일정 관리 서비스",
       description:
         "시니어와 가족 사용자를 대상으로 하는 AI 기반 자동 일정 관리 서비스입니다. 음성 인식, OCR, NLP를 활용하여 편리한 일정 등록을 지원합니다.",
       features: [
@@ -1226,11 +1502,13 @@ export default function Home() {
       period: "2024.10 ~",
       role: "FullStack",
       teamSize: 1,
+      featured: false,
+      oneLiner: "직접 설계하고 운영 중인 Next.js 기반 개인 개발 블로그",
       description:
         "Next.js 기반의 개인 개발 블로그입니다. 기술 학습 내용과 프로젝트 경험을 기록하고 공유하는 플랫폼으로, 마크다운 기반의 정적 사이트 생성과 동적 기능을 결합하여 운영 중입니다.",
       features: [
         "MDX 기반 마크다운 콘텐츠 관리 및 렌더링",
-        "카테고리, 태그, 시리즈별 포스트 분류 및 전체 글 검색",
+        "태그 기반 포스트 분류 및 전체 글 검색",
         "Upstash Redis 기반 실시간 조회수 추적",
         "게스트와 관리자 간 실시간 1:1 채팅 (Pusher 연동)",
         "Giscus 댓글 시스템 (GitHub Discussions 연동)",
@@ -1410,13 +1688,21 @@ export default function Home() {
       link: "https://github.com/nullisdefined/my-devlog",
       image:
         "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/2256b96dc790d6bf2d8b4c444852f5c9.png",
-      pdf: "https://www.nullisdefined.my/devlog/series/devlog",
+      pdf: "https://www.nullisdefined.my/devlog/tags/Devlog",
     },
     {
       title: "한땀한땀",
       period: "25.03 ~ 25.09",
       role: "Backend",
       teamSize: 4,
+      featured: true,
+      oneLiner: "AI 이미지 인증 기반 소셜 챌린지 플랫폼",
+      cardHiddenTech: ["JWT", "OAuth2", "Docker", "Amazon ECR"],
+      keyAchievements: [
+        "NestJS 기반 RESTful API 설계 및 구현",
+        "SQS-Lambda 기반의 비동기 AI 이미지 인증 파이프라인 구축",
+        "Terraform IaC·ECS Fargate 전환으로 월 인프라 비용 약 30% 절감",
+      ],
       description:
         "개인의 다양한 목표 달성과 꾸준한 습관 형성을 지원하는 AI 기반 소셜 챌린지 플랫폼입니다. HealthKit과 연동된 Apple Watch 자동 인증, 그리고 실시간 AI 이미지 분석을 통해 신뢰성과 공정성을 갖춘 챌린지 환경을 제공합니다.",
       features: [
@@ -1558,12 +1844,12 @@ export default function Home() {
         },
       ],
       tech: [
-        { name: "NestJS", icon: <SiNestjs className="h-4 w-4" /> },
         { name: "TypeScript", icon: <SiTypescript className="h-4 w-4" /> },
+        { name: "NestJS", icon: <SiNestjs className="h-4 w-4" /> },
         { name: "TypeORM", icon: <SiTypeorm className="h-4 w-4" /> },
         { name: "PostgreSQL", icon: <SiPostgresql className="h-4 w-4" /> },
         { name: "Socket.IO", icon: <SiSocketdotio className="h-4 w-4" /> },
-        { name: "JWT", icon: <SiJsonwebtokens className="h-4 w-4" /> },
+        { name: "Docker", icon: <SiDocker className="h-4 w-4" /> },
         {
           name: "OAuth2",
           icon: (
@@ -1572,15 +1858,14 @@ export default function Home() {
             </svg>
           ),
         },
-
-        { name: "Docker", icon: <SiDocker className="h-4 w-4" /> },
+        { name: "JWT", icon: <SiJsonwebtokens className="h-4 w-4" /> },
+        { name: "Amazon CloudFront", icon: <SiAmazon className="h-4 w-4" /> },
+        { name: "Amazon Bedrock", icon: <SiAmazon className="h-4 w-4" /> },
+        { name: "Amazon SQS", icon: <SiAmazonsqs className="h-4 w-4" /> },
         { name: "Amazon ECR", icon: <SiAmazon className="h-4 w-4" /> },
         { name: "Amazon ECS", icon: <SiAmazon className="h-4 w-4" /> },
-        { name: "Amazon S3", icon: <SiAmazons3 className="h-4 w-4" /> },
-        { name: "Amazon CloudFront", icon: <SiAmazon className="h-4 w-4" /> },
         { name: "AWS Lambda", icon: <SiAwslambda className="h-4 w-4" /> },
-        { name: "Amazon SQS", icon: <SiAmazonsqs className="h-4 w-4" /> },
-        { name: "Amazon Bedrock", icon: <SiAmazon className="h-4 w-4" /> },
+        { name: "Amazon S3", icon: <SiAmazons3 className="h-4 w-4" /> },
       ],
       link: "https://github.com/SOAPFT/soapft_backend",
       image:
@@ -1592,6 +1877,14 @@ export default function Home() {
       period: "25.06 ~ 25.08",
       role: "FullStack",
       teamSize: 4,
+      featured: true,
+      oneLiner: "AI 미션 기반 지역 번개모임 커뮤니티 서비스",
+      cardHiddenTech: ["JWT", "OAuth2"],
+      keyAchievements: [
+        "OAuth 인증·모임/미션 라이프사이클 API 설계",
+        "DynamoDB→PostgreSQL 통합·쿼리 최적화로 평균 응답 약 60% 단축",
+        "Socket.IO 실시간 채팅·VAPID 웹 푸시 시스템 구현",
+      ],
       description:
         "AI 기반 미션을 통해 즉시 참여 가능한 지역 번개모임을 만들고 참여할 수 있는 오프라인 커뮤니티 서비스입니다. 사용자는 미션 수행으로 포인트와 신뢰도를 쌓으며, AI 검증·위치·시간 기반 인증을 통해 안전한 모임 환경을 제공합니다.",
       features: [
@@ -1627,12 +1920,14 @@ export default function Home() {
           ],
         },
         {
-          title: "데이터베이스 마이그레이션",
-          description: "DynamoDB → PostgreSQL 스키마 재설계 및 데이터 이전",
+          title: "미션 데이터 저장 구조 통합",
+          description:
+            "DynamoDB·RDB 이중 저장 문제 정의 및 PostgreSQL 중심 데이터 흐름 일원화",
           details: [
-            "NoSQL 데이터를 관계형 스키마로 재설계",
-            "미션, 인증, 사용자, 모임 등 핵심 테이블 정규화",
-            "마이그레이션 스크립트 작성 및 데이터 무결성 검증",
+            "Bedrock 미션 생성 Lambda가 적재하던 DynamoDB 미션 데이터와 RDB 서비스 데이터의 이중 저장 구조 발견",
+            "DynamoDB 미션 스키마를 분석해 PostgreSQL 관계형 스키마로 재설계·매핑",
+            "미션 생성 시점에 RDB로 직접 적재하도록 Lambda 파이프라인 변경 제안 및 협의",
+            "미션, 인증, 사용자, 모임 등 핵심 테이블 정규화 및 무결성 검증",
             "인덱스 최적화로 쿼리 성능 개선",
           ],
         },
@@ -1663,13 +1958,13 @@ export default function Home() {
       ],
       troubleshooting: [
         {
-          problem: "DynamoDB → PostgreSQL 마이그레이션 중 성능 저하",
+          problem: "미션 데이터의 DynamoDB·RDB 이중 저장",
           cause:
-            "중첩된 NoSQL 구조를 관계형 DB로 평탄화하면서 JOIN이 증가하고 N+1 문제가 발생했습니다.",
+            "미션 생성 Lambda(Bedrock)가 결과를 DynamoDB에 적재하고 있었는데, 서비스의 유저·마스터 데이터는 RDB 스키마로 설계되어 있어 미션을 조회하려면 DynamoDB에서 읽어 다시 RDB에 저장해야 하는 이중 저장 구조가 발생했습니다.",
           solution:
-            "핵심 관계 필드에 인덱스를 추가하고, QueryBuilder 기반으로 조인을 최적화했으며, eager loading 사용을 최소화했습니다.",
+            "DynamoDB의 미션 스키마를 분석해 PostgreSQL 관계형 스키마로 매핑하고, 미션 생성 시점부터 RDB에 직접 적재하도록 Lambda 담당 팀원과 협의해 파이프라인을 수정하며 데이터 흐름을 일원화했습니다. 이 과정에서 기존 미션 조회 쿼리의 N+1 문제를 인덱스 추가와 QueryBuilder 기반 조인 최적화로 함께 개선했습니다.",
           result:
-            "평균 응답 시간이 약 60% 단축되었고, 복잡한 조회 쿼리도 200ms 이내로 안정적으로 처리할 수 있게 되었습니다.",
+            "동일 데이터의 중복 적재가 사라져 단일 저장소 기준으로 정합성을 관리할 수 있게 되었고, 평균 응답 시간이 약 60% 단축되어 복잡한 조회 쿼리도 200ms 이내로 안정적으로 처리할 수 있게 되었습니다.",
         },
         {
           problem: "웹 푸시 구독 실패율 증가",
@@ -1700,10 +1995,11 @@ export default function Home() {
         },
       ],
       tech: [
-        { name: "NestJS", icon: <SiNestjs className="h-4 w-4" /> },
         { name: "TypeScript", icon: <SiTypescript className="h-4 w-4" /> },
+        { name: "NestJS", icon: <SiNestjs className="h-4 w-4" /> },
         { name: "TypeORM", icon: <SiTypeorm className="h-4 w-4" /> },
         { name: "PostgreSQL", icon: <SiPostgresql className="h-4 w-4" /> },
+        { name: "Socket.IO", icon: <SiSocketdotio className="h-4 w-4" /> },
         { name: "JWT", icon: <SiJsonwebtokens className="h-4 w-4" /> },
         {
           name: "OAuth2",
@@ -1713,7 +2009,6 @@ export default function Home() {
             </svg>
           ),
         },
-
         { name: "React", icon: <SiReact className="h-4 w-4" /> },
         {
           name: "Styled Components",
@@ -1731,8 +2026,6 @@ export default function Home() {
             />
           ),
         },
-
-        { name: "Socket.IO", icon: <SiSocketdotio className="h-4 w-4" /> },
       ],
       link: "https://github.com/NIPA-AWS-Developer-2nd",
       image:
@@ -1744,6 +2037,15 @@ export default function Home() {
       period: "25.09 ~ 25.11",
       role: "Backend",
       teamSize: 4,
+      featured: true,
+      oneLiner:
+        "화자의 음색을 보존해 영어 영상을 한국어로 더빙하는 AI 더빙 서비스",
+      cardHiddenTech: ["JWT", "OAuth2"],
+      keyAchievements: [
+        "9개 엔티티 더빙 파이프라인 ERD·Worker API 설계",
+        "S3 Presigned URL 직접 업로드로 서버 부하 약 90% 감소·속도 3배",
+        "트랜잭션·FOR UPDATE 행 잠금으로 DubJob 동시성 제어",
+      ],
       description:
         "영어 화자의 음색과 운율을 보존한 자연스러운 한국어 더빙 음성을 생성하는 AI 더빙 서비스입니다. STT-TTS 및 S2ST 융합형 교차 언어 음성 합성 기술을 활용하여, 화자 분리, 음성 인식, 번역, TTS, 자막 생성까지 전 과정을 자동화합니다.",
       features: [
@@ -1877,8 +2179,8 @@ export default function Home() {
         },
       ],
       tech: [
-        { name: "NestJS", icon: <SiNestjs className="h-4 w-4" /> },
         { name: "TypeScript", icon: <SiTypescript className="h-4 w-4" /> },
+        { name: "NestJS", icon: <SiNestjs className="h-4 w-4" /> },
         { name: "TypeORM", icon: <SiTypeorm className="h-4 w-4" /> },
         { name: "PostgreSQL", icon: <SiPostgresql className="h-4 w-4" /> },
         { name: "JWT", icon: <SiJsonwebtokens className="h-4 w-4" /> },
@@ -1939,79 +2241,98 @@ export default function Home() {
         {/* 히어로 섹션 */}
         <section
           ref={heroRef}
-          className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50
-dark:bg-black dark:bg-gradient-to-br dark:from-black dark:via-gray-900 dark:to-black text-black dark:text-white flex items-center justify-center relative overflow-hidden"
+          className="min-h-screen bg-[#f7f7f5] text-black dark:bg-[#0b0c0f] dark:text-white flex items-center justify-center relative overflow-hidden"
         >
-          {/* 배경 그라디언트 */}
-          <div className="absolute inset-0 pointer-events-none"></div>
-
           {/* 하단 블러 효과 */}
           <div className="absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-background to-transparent pointer-events-none z-20 backdrop-blur-md"></div>
 
-          <div className="relative z-10 text-center max-w-5xl mx-auto px-3 sm:px-4 lg:px-6">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black tracking-tighter leading-none mb-6 sm:mb-8 lg:mb-12">
-              <span className="block text-black dark:text-white drop-shadow-md">
-                WEB
-              </span>
-              <span className="block bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent font-extrabold drop-shadow-lg">
-                DEVELOPER
-              </span>
-            </h1>
+          <div className="relative z-10 w-full max-w-5xl mx-auto px-6 sm:px-10 lg:px-8">
+            <div className="grid items-center gap-12 md:grid-cols-[1.35fr_0.65fr]">
+              <div className="space-y-7">
+                <div className="space-y-3">
+                  <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-neutral-400 dark:text-neutral-500">
+                    Portfolio / 2026
+                  </p>
+                  <h1 className="text-6xl sm:text-7xl lg:text-8xl font-black leading-[0.9] tracking-normal text-neutral-950 dark:text-neutral-50">
+                    Jaewoo Kim
+                  </h1>
+                </div>
 
-            <div className="mb-4 sm:mb-6">
-              <div className="w-28 h-28 sm:w-32 sm:h-32 lg:w-40 lg:h-40 mx-auto rounded-full overflow-hidden ring-2 ring-gray-300 dark:ring-gray-700">
-                <Image
-                  src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/fc3d75e331fec6298c3db51101665511.jpeg"
-                  alt="Profile"
-                  width={160}
-                  height={160}
-                  className="w-full h-full object-cover object-[center_20%] select-none pointer-events-none"
-                  onContextMenu={(e) => e.preventDefault()}
-                  draggable={false}
-                />
+                <p className="max-w-2xl text-base sm:text-lg leading-8 font-medium text-neutral-700 dark:text-neutral-300">
+                  사용자 삶의 질 향상에 있어 변화의 물결을 주도하고, 그 물결의
+                  크기 자체를 키우며 다양한 분야에 영향력을 행사하는 웹 개발의
+                  무한한 가능성에 동력을 보태고 싶습니다.
+                </p>
+
+                <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm font-medium text-neutral-400 dark:text-neutral-500">
+                  <span>2000.01.19</span>
+                  <span>Seoul</span>
+                </div>
+
+                <div className="flex flex-wrap gap-3 pt-1">
+                  <Link
+                    href="/devlog"
+                    className="inline-flex items-center justify-center rounded-full border border-neutral-200 bg-white px-4 py-2 text-xs font-bold text-neutral-800 shadow-sm transition-colors hover:bg-neutral-100 dark:border-white/10 dark:bg-white/10 dark:text-neutral-100 dark:hover:bg-white/15"
+                  >
+                    <FileText className="mr-1.5 h-3.5 w-3.5" />
+                    DEVLOG
+                  </Link>
+                  <Link
+                    href="https://github.com/nullisdefined"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center rounded-full bg-neutral-900 px-4 py-2 text-xs font-bold text-white shadow-sm transition-colors hover:bg-neutral-700 dark:bg-neutral-100 dark:text-neutral-950 dark:hover:bg-white"
+                  >
+                    <SiGithub className="mr-1.5 h-3.5 w-3.5" />
+                    GITHUB
+                  </Link>
+                </div>
               </div>
-            </div>
 
-            <div className="mb-2 sm:mb-3">
-              <h2 className="text-lg sm:text-xl md:text-2xl font-light text-gray-900 dark:text-gray-300 mb-1">
-                Jaewoo Kim
-              </h2>
-              <p className="text-sm sm:text-base text-gray-700 dark:text-gray-400">
-                Full Stack Developer
-              </p>
-            </div>
+              <aside className="mx-auto w-full max-w-[17rem] space-y-8 md:mx-0">
+                <div className="overflow-hidden rounded-2xl border border-neutral-200 bg-white/70 p-2 shadow-sm dark:border-white/10 dark:bg-white/5">
+                  <Image
+                    src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com//images/570b60f93557a3e53203d1b85a87c2f7.jpg"
+                    alt="Profile"
+                    width={288}
+                    height={384}
+                    className="aspect-[3/4] w-full rounded-xl object-cover object-[center_18%] select-none pointer-events-none"
+                    onContextMenu={(e) => e.preventDefault()}
+                    draggable={false}
+                  />
+                </div>
 
-            <p className="text-xs sm:text-sm md:text-base lg:text-lg text-gray-600 dark:text-gray-400 max-w-3xl mx-auto mb-6 sm:mb-8 lg:mb-10 leading-relaxed px-2">
-              사용자 삶의 질 향상에 있어 변화의 물결을 주도하고, 그 물결의 크기
-              자체를 키우며 다양한 분야에 영향력을 행사하는 웹 개발의 무한한
-              가능성에 동력을 보태고 싶습니다.
-            </p>
+                <div className="space-y-4 text-sm">
+                  <p className="text-[11px] font-bold uppercase tracking-[0.12em] text-neutral-400 dark:text-neutral-500">
+                    Currently
+                  </p>
+                  <div className="space-y-2 font-medium text-neutral-700 dark:text-neutral-300">
+                    <p>Student of Software Engineering</p>
+                    <p className="text-neutral-500 dark:text-neutral-400">
+                      @ Soongsil University
+                    </p>
+                    <p className="text-xs text-neutral-400 dark:text-neutral-500">
+                      2022.03 - 현재
+                    </p>
+                  </div>
+                </div>
 
-            <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 justify-center mb-10 sm:mb-12 px-3">
-              <Link
-                href="/devlog"
-                className="inline-flex items-center justify-center px-5 sm:px-6 py-2.5 sm:py-3 bg-white text-black font-semibold rounded-full shadow-md hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 text-xs sm:text-sm"
-              >
-                <FileText className="mr-1.5 h-3 w-3 sm:h-4 sm:w-4" />
-                DEVLOG
-              </Link>
-              <Link
-                href="https://github.com/nullisdefined"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="
-inline-flex items-center justify-center px-5 sm:px-6 py-2.5 sm:py-3
-bg-gray-800 text-white font-semibold rounded-full
-hover:bg-gray-900 hover:scale-105 hover:shadow-lg
-transition-all duration-300 transform text-xs sm:text-sm
-
-dark:bg-gray-800 dark:text-gray-100
-dark:hover:bg-gray-700 dark:hover:scale-105 dark:hover:shadow-lg
-"
-              >
-                <SiGithub className="mr-1.5 h-3 w-3 sm:h-4 sm:w-4" />
-                GITHUB
-              </Link>
+                <div className="space-y-4">
+                  <p className="text-[11px] font-bold uppercase tracking-[0.12em] text-neutral-400 dark:text-neutral-500">
+                    Focus
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    {["Node.js", "NestJS", "TypeScript", "AWS Cloud"].map((item) => (
+                      <span
+                        key={item}
+                        className="rounded-full border border-neutral-200 bg-white px-3 py-1.5 text-xs font-medium text-neutral-700 dark:border-white/10 dark:bg-white/5 dark:text-neutral-300"
+                      >
+                        {item}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </aside>
             </div>
           </div>
 
@@ -2021,10 +2342,9 @@ dark:hover:bg-gray-700 dark:hover:scale-105 dark:hover:shadow-lg
           </div>
         </section>
 
-        {/* 프로젝트 섹션 - 그리드 형태 */}
+        {/* Experience 섹션 */}
         <section
-          ref={projectsRef}
-          id="projects"
+          id="experience"
           className="py-20 bg-gradient-to-b from-background to-muted/50"
         >
           <div className="container mx-auto px-4 lg:px-6">
@@ -2032,197 +2352,9 @@ dark:hover:bg-gray-700 dark:hover:scale-105 dark:hover:shadow-lg
               <div className="relative inline-block">
                 <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black tracking-tighter leading-none">
                   <span
-                    className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent
-                                 drop-shadow-lg relative
-                                 dark:from-blue-400 dark:via-purple-400 dark:to-pink-400 dark:opacity-80 px-1"
-                  >
-                    PROJECTS
-                  </span>
-                </h2>
-                {/* 배경 텍스트 효과 */}
-                <div className="absolute inset-0 -z-10">
-                  <span
-                    className="text-2xl sm:text-3xl lg:text-4xl font-black tracking-tighter leading-none
-                                 text-gray-100 dark:text-gray-700 opacity-50 blur-sm"
-                  >
-                    PROJECTS
-                  </span>
-                </div>
-                {/* 언더라인 효과 */}
-                <div
-                  className="absolute -bottom-1.5 left-1/2 transform -translate-x-1/2 w-20 sm:w-24 lg:w-36 h-0.5
-                                bg-gradient-to-r from-blue-600 to-purple-600 rounded-full
-                                dark:from-blue-400 dark:to-purple-400 dark:opacity-70"
-                ></div>
-              </div>
-            </div>
-
-            {/* 프로젝트 카드 그리드 */}
-            <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {projects.map((project, index) => (
-                <ProjectCard
-                  key={index}
-                  project={project}
-                  onCardClick={openProjectDetail}
-                />
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Toy Projects 섹션 */}
-        <section
-          id="toy-projects"
-          className="py-20 bg-gradient-to-b from-muted/50 to-background"
-        >
-          <div className="container mx-auto px-4 lg:px-6">
-            <div className="text-center mb-12">
-              <div className="relative inline-block">
-                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black tracking-tighter leading-none">
-                  <span
                     className="bg-gradient-to-r from-sky-600 via-cyan-600 to-teal-600 bg-clip-text text-transparent
-                                 drop-shadow-lg relative
-                                 dark:from-sky-400 dark:via-cyan-400 dark:to-teal-400 dark:opacity-80 px-1"
-                  >
-                    TOY PROJECTS
-                  </span>
-                </h2>
-                {/* 배경 텍스트 효과 */}
-                <div className="absolute inset-0 -z-10">
-                  <span
-                    className="text-2xl sm:text-3xl lg:text-4xl font-black tracking-tighter leading-none
-                                 text-gray-100 dark:text-gray-700 opacity-50 blur-sm"
-                  >
-                    TOY PROJECTS
-                  </span>
-                </div>
-                {/* 언더라인 효과 */}
-                <div
-                  className="absolute -bottom-1.5 left-1/2 transform -translate-x-1/2 w-32 sm:w-40 lg:w-52 h-0.5
-                                bg-gradient-to-r from-sky-600 to-teal-600 rounded-full
-                                dark:from-sky-400 dark:to-teal-400 dark:opacity-70"
-                ></div>
-              </div>
-            </div>
-
-            {/* 토이 프로젝트 카드 그리드 - 작은 크기 */}
-            <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {sideProjects.map((project, index) => (
-                <div
-                  key={index}
-                  className="bg-card rounded-lg shadow-md hover:shadow-xl transition-all duration-300 flex flex-col h-full"
-                >
-                  {project.image && (
-                    <div className="relative w-full bg-gray-50 dark:bg-gray-900 flex items-center justify-center overflow-hidden flex-shrink-0 rounded-t-lg">
-                      <div className="relative w-full h-48">
-                        <Image
-                          src={project.image}
-                          alt={project.title}
-                          fill
-                          className="object-contain select-none pointer-events-none"
-                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                          onContextMenu={(e) => e.preventDefault()}
-                          draggable={false}
-                        />
-                      </div>
-                    </div>
-                  )}
-                  <div className="p-4 flex-1 flex flex-col">
-                    <div className="space-y-2 flex-1">
-                      <div className="space-y-1">
-                        <h3 className="font-bold text-base">{project.title}</h3>
-                        <p className="text-xs text-muted-foreground font-medium">
-                          {project.period}
-                        </p>
-                      </div>
-                      <p className="text-sm text-muted-foreground leading-relaxed">
-                        {project.description}
-                      </p>
-                    </div>
-
-                    {/* 기술 스택 */}
-                    <div className="space-y-2 mt-3">
-                      <div className="flex flex-wrap gap-1.5">
-                        {project.tech.map((tech: any, idx: number) => (
-                          <div
-                            key={idx}
-                            className="flex items-center space-x-1 text-muted-foreground hover:text-foreground transition-colors bg-muted/50 px-2 py-1 rounded text-xs"
-                          >
-                            <span className="text-xs">{tech.icon}</span>
-                            <span>{tech.name}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* 버튼 */}
-                    <div className="mt-auto pt-4 space-y-2">
-                      {project.demo && (
-                        <Button
-                          variant="default"
-                          className="w-full text-xs"
-                          asChild
-                        >
-                          <Link
-                            href={project.demo}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="flex items-center justify-center"
-                          >
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              className="h-3 w-3 mr-1.5"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              stroke="currentColor"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
-                              />
-                            </svg>
-                            Demo
-                          </Link>
-                        </Button>
-                      )}
-                      <Button
-                        variant="outline"
-                        className="w-full text-xs"
-                        asChild
-                      >
-                        <Link
-                          href={project.link}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex items-center justify-center"
-                        >
-                          <SiGithub className="mr-1.5 h-3 w-3" />
-                          Repository
-                        </Link>
-                      </Button>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Experience 섹션 */}
-        <section
-          id="experience"
-          className="py-20 bg-[#f5f5f5] dark:bg-[#262626]"
-        >
-          <div className="container mx-auto px-4 lg:px-6">
-            <div className="text-center mb-12">
-              <div className="relative inline-block">
-                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black tracking-tighter leading-none">
-                  <span
-                    className="bg-gradient-to-r from-indigo-600 via-purple-600 to-violet-600 bg-clip-text text-transparent
                                drop-shadow-lg relative
-                               dark:from-indigo-400 dark:via-purple-400 dark:to-violet-400 dark:opacity-80"
+                               dark:from-sky-400 dark:via-cyan-400 dark:to-teal-400 dark:opacity-80"
                   >
                     EXPERIENCE
                   </span>
@@ -2239,8 +2371,8 @@ dark:hover:bg-gray-700 dark:hover:scale-105 dark:hover:shadow-lg
                 {/* 언더라인 효과 */}
                 <div
                   className="absolute -bottom-1.5 left-1/2 transform -translate-x-1/2 w-24 sm:w-32 lg:w-44 h-0.5
-                              bg-gradient-to-r from-indigo-600 to-violet-600 rounded-full
-                              dark:from-indigo-400 dark:to-violet-400 dark:opacity-70"
+                              bg-gradient-to-r from-sky-600 to-teal-600 rounded-full
+                              dark:from-sky-400 dark:to-teal-400 dark:opacity-70"
                 ></div>
               </div>
             </div>
@@ -2756,15 +2888,15 @@ dark:hover:bg-gray-700 dark:hover:scale-105 dark:hover:shadow-lg
         </section>
 
         {/* Skills 섹션 */}
-        <section className="py-24 bg-gradient-to-b from-muted/50 to-background">
+        <section className="py-24 bg-muted/50">
           <div className="container mx-auto px-4 sm:px-8 lg:px-12">
             <div className="text-center mb-16 flex justify-center">
               <div className="relative inline-block px-4">
                 <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black tracking-tighter leading-none">
                   <span
-                    className="bg-gradient-to-r from-slate-700 via-gray-600 to-zinc-700 bg-clip-text text-transparent
+                    className="bg-gradient-to-r from-teal-600 via-sky-600 to-blue-600 bg-clip-text text-transparent
                                  drop-shadow-lg relative
-                                 dark:from-slate-400 dark:via-gray-400 dark:to-zinc-400 px-1"
+                                 dark:from-teal-400 dark:via-sky-400 dark:to-blue-400 px-1"
                   >
                     SKILLS
                   </span>
@@ -2781,35 +2913,279 @@ dark:hover:bg-gray-700 dark:hover:scale-105 dark:hover:shadow-lg
                 {/* 언더라인 효과 */}
                 <div
                   className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-20 sm:w-24 lg:w-32 h-1
-                                bg-gradient-to-r from-slate-700 to-zinc-700 rounded-full
-                                dark:from-slate-400 dark:to-zinc-400"
+                                bg-gradient-to-r from-teal-600 to-blue-600 rounded-full
+                                dark:from-teal-400 dark:to-blue-400"
                 ></div>
               </div>
             </div>
             <div className="flex justify-center">
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 max-w-7xl w-full justify-items-center">
-                {skills.map((skill) => (
-                  <div
-                    key={skill.category}
-                    className="p-4 sm:p-5 bg-card rounded-lg shadow-lg h-full w-full max-w-sm flex flex-col"
+                {skills.map((skill) => {
+                  const isWide = skill.category === "Cloud";
+                  return (
+                    <div
+                      key={skill.category}
+                      className={`p-4 sm:p-5 bg-card rounded-lg shadow-lg h-full w-full flex flex-col ${
+                        isWide
+                          ? "max-w-sm lg:max-w-none lg:col-span-2"
+                          : "max-w-sm"
+                      }`}
+                    >
+                      <h3 className="font-bold mb-3 text-base sm:text-lg">
+                        {skill.category}
+                      </h3>
+                      <ul
+                        className={`pl-4 space-y-2.5 ${
+                          isWide
+                            ? "lg:space-y-0 lg:grid lg:grid-cols-2 lg:gap-x-6 lg:gap-y-2.5"
+                            : ""
+                        }`}
+                      >
+                        {skill.techs.map((tech) => (
+                          <li key={tech.name}>
+                            <Tooltip content={tech.description}>
+                              <div className="flex items-start space-x-2 text-muted-foreground hover:text-foreground transition-colors text-xs sm:text-sm">
+                                <span className="flex-shrink-0 w-4 h-4 mt-0.5">
+                                  {tech.icon}
+                                </span>
+                                <span>{tech.name}</span>
+                              </div>
+                            </Tooltip>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* 프로젝트 섹션 - 그리드 형태 */}
+        <section
+          ref={projectsRef}
+          id="projects"
+          className="py-20 bg-gradient-to-b from-muted/50 via-background to-muted/50"
+        >
+          <div className="container mx-auto px-4 lg:px-6">
+            <div className="text-center mb-12">
+              <div className="relative inline-block">
+                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black tracking-tighter leading-none">
+                  <span
+                    className="bg-gradient-to-r from-blue-600 via-indigo-600 to-slate-600 bg-clip-text text-transparent
+                                 drop-shadow-lg relative
+                                 dark:from-blue-400 dark:via-indigo-400 dark:to-slate-400 dark:opacity-80 px-1"
                   >
-                    <h3 className="font-bold mb-3 text-base sm:text-lg">
-                      {skill.category}
-                    </h3>
-                    <ul className="space-y-2.5 pl-4">
-                      {skill.techs.map((tech) => (
-                        <li key={tech.name}>
-                          <Tooltip content={tech.description}>
-                            <div className="flex items-start space-x-2 text-muted-foreground hover:text-foreground transition-colors text-xs sm:text-sm">
-                              <span className="flex-shrink-0 w-4 h-4 mt-0.5">
-                                {tech.icon}
-                              </span>
+                    PROJECTS
+                  </span>
+                </h2>
+                {/* 배경 텍스트 효과 */}
+                <div className="absolute inset-0 -z-10">
+                  <span
+                    className="text-2xl sm:text-3xl lg:text-4xl font-black tracking-tighter leading-none
+                                 text-gray-100 dark:text-gray-700 opacity-50 blur-sm"
+                  >
+                    PROJECTS
+                  </span>
+                </div>
+                {/* 언더라인 효과 */}
+                <div
+                  className="absolute -bottom-1.5 left-1/2 transform -translate-x-1/2 w-20 sm:w-24 lg:w-36 h-0.5
+                                bg-gradient-to-r from-blue-600 to-slate-600 rounded-full
+                                dark:from-blue-400 dark:to-slate-400 dark:opacity-70"
+                ></div>
+              </div>
+            </div>
+
+            {/* 대표 프로젝트 카드 그리드 */}
+            <h3 className="text-lg font-semibold text-muted-foreground text-center mb-6">
+              주요 프로젝트
+            </h3>
+            <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {projects
+                .filter((project) => project.featured)
+                .map((project, index) => (
+                  <ProjectCard
+                    key={index}
+                    project={project}
+                    onCardClick={openProjectDetail}
+                  />
+                ))}
+            </div>
+
+            {/* 그 외 프로젝트 */}
+            <h3 className="text-lg font-semibold text-muted-foreground text-center mt-16 mb-6">
+              그 밖의 프로젝트
+            </h3>
+            <div className="max-w-3xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-4">
+              {projects
+                .filter((project) => !project.featured)
+                .reverse()
+                .map((project, index) => (
+                  <CompactProjectCard
+                    key={index}
+                    project={project}
+                    onCardClick={openProjectDetail}
+                  />
+                ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Toy Projects 섹션 */}
+        <section id="toy-projects" className="py-20 bg-muted/50">
+          <div className="container mx-auto px-4 lg:px-6">
+            <div className="text-center mb-12">
+              <div className="relative inline-block">
+                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black tracking-tighter leading-none">
+                  <span
+                    className="bg-gradient-to-r from-slate-700 via-gray-600 to-zinc-700 bg-clip-text text-transparent
+                                 drop-shadow-lg relative
+                                 dark:from-slate-400 dark:via-gray-400 dark:to-zinc-400 dark:opacity-80 px-1"
+                  >
+                    TOY PROJECTS
+                  </span>
+                </h2>
+                {/* 배경 텍스트 효과 */}
+                <div className="absolute inset-0 -z-10">
+                  <span
+                    className="text-2xl sm:text-3xl lg:text-4xl font-black tracking-tighter leading-none
+                                 text-gray-100 dark:text-gray-700 opacity-50 blur-sm"
+                  >
+                    TOY PROJECTS
+                  </span>
+                </div>
+                {/* 언더라인 효과 */}
+                <div
+                  className="absolute -bottom-1.5 left-1/2 transform -translate-x-1/2 w-32 sm:w-40 lg:w-52 h-0.5
+                                bg-gradient-to-r from-slate-700 to-zinc-700 rounded-full
+                                dark:from-slate-400 dark:to-zinc-400 dark:opacity-70"
+                ></div>
+              </div>
+            </div>
+
+            {/* 토이 프로젝트 캐러셀 (최신순) */}
+            <div className="relative max-w-6xl mx-auto sm:px-16">
+              <button
+                type="button"
+                aria-label="이전 프로젝트"
+                onClick={() => scrollToy(-1)}
+                className="absolute left-0 top-1/2 -translate-y-1/2 z-10 hidden sm:flex items-center justify-center w-10 h-10 rounded-full bg-card shadow-md border border-border text-foreground hover:bg-muted transition-colors"
+              >
+                <ChevronLeft className="h-5 w-5" />
+              </button>
+              <button
+                type="button"
+                aria-label="다음 프로젝트"
+                onClick={() => scrollToy(1)}
+                className="absolute right-0 top-1/2 -translate-y-1/2 z-10 hidden sm:flex items-center justify-center w-10 h-10 rounded-full bg-card shadow-md border border-border text-foreground hover:bg-muted transition-colors"
+              >
+                <ChevronRight className="h-5 w-5" />
+              </button>
+              <div
+                ref={toyScrollRef}
+                className="flex gap-6 overflow-x-auto snap-x snap-mandatory scroll-smooth pb-4 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+              >
+                {[...sideProjects].reverse().map((project, index) => (
+                  <div
+                    key={index}
+                    className="snap-start shrink-0 w-[85%] sm:w-[47%] lg:w-[31.5%] bg-card rounded-lg shadow-md hover:shadow-xl transition-all duration-300 flex flex-col"
+                  >
+                    {project.image && (
+                      <div className="relative w-full bg-gray-50 dark:bg-gray-900 flex items-center justify-center overflow-hidden flex-shrink-0 rounded-t-lg">
+                        <div className="relative w-full h-48">
+                          <Image
+                            src={project.image}
+                            alt={project.title}
+                            fill
+                            className="object-contain select-none pointer-events-none"
+                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                            onContextMenu={(e) => e.preventDefault()}
+                            draggable={false}
+                          />
+                        </div>
+                      </div>
+                    )}
+                    <div className="p-4 flex-1 flex flex-col">
+                      <div className="space-y-2 flex-1">
+                        <div className="space-y-1">
+                          <h3 className="font-bold text-base">
+                            {project.title}
+                          </h3>
+                          <p className="text-xs text-muted-foreground font-medium">
+                            {project.period}
+                          </p>
+                        </div>
+                        <p className="text-sm text-muted-foreground leading-relaxed">
+                          {project.description}
+                        </p>
+                      </div>
+
+                      {/* 기술 스택 */}
+                      <div className="space-y-2 mt-3">
+                        <div className="flex flex-wrap gap-1.5">
+                          {project.tech.map((tech: any, idx: number) => (
+                            <div
+                              key={idx}
+                              className="flex items-center space-x-1 text-muted-foreground hover:text-foreground transition-colors bg-muted/50 px-2 py-1 rounded text-xs"
+                            >
+                              <span className="text-xs">{tech.icon}</span>
                               <span>{tech.name}</span>
                             </div>
-                          </Tooltip>
-                        </li>
-                      ))}
-                    </ul>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* 버튼 */}
+                      <div className="mt-auto pt-4 space-y-2">
+                        {project.demo && (
+                          <Button
+                            variant="default"
+                            className="w-full text-xs"
+                            asChild
+                          >
+                            <Link
+                              href={project.demo}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="flex items-center justify-center"
+                            >
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                className="h-3 w-3 mr-1.5"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth={2}
+                                  d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                                />
+                              </svg>
+                              Demo
+                            </Link>
+                          </Button>
+                        )}
+                        <Button
+                          variant="outline"
+                          className="w-full text-xs"
+                          asChild
+                        >
+                          <Link
+                            href={project.link}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center justify-center"
+                          >
+                            <SiGithub className="mr-1.5 h-3 w-3" />
+                            Repository
+                          </Link>
+                        </Button>
+                      </div>
+                    </div>
                   </div>
                 ))}
               </div>
