@@ -2253,7 +2253,7 @@ export default function Home() {
                   <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-neutral-400 dark:text-neutral-500">
                     Portfolio / 2026
                   </p>
-                  <h1 className="text-6xl sm:text-7xl lg:text-8xl font-black leading-[0.9] tracking-normal text-neutral-950 dark:text-neutral-50">
+                  <h1 className="text-5xl sm:text-7xl lg:text-7xl font-black leading-[0.9] tracking-normal text-neutral-950 dark:text-neutral-50">
                     Jaewoo Kim
                   </h1>
                 </div>
@@ -2289,18 +2289,16 @@ export default function Home() {
                 </div>
               </div>
 
-              <aside className="mx-auto w-full max-w-[15rem] space-y-8 md:mx-0">
-                <div className="overflow-hidden rounded-2xl border border-neutral-200 bg-white/70 p-2 shadow-sm dark:border-white/10 dark:bg-white/5">
-                  <Image
-                    src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com//images/44c0534f3c6ad5845b875b509dc43de9.jpeg"
-                    alt="Profile"
-                    width={288}
-                    height={384}
-                    className="aspect-[0.78] w-full rounded-xl object-cover object-center select-none pointer-events-none"
-                    onContextMenu={(e) => e.preventDefault()}
-                    draggable={false}
-                  />
-                </div>
+              <aside className="mx-auto w-full max-w-[12rem] space-y-8 md:mx-0">
+                <Image
+                  src="https://nullisdefined.s3.ap-northeast-2.amazonaws.com//images/44c0534f3c6ad5845b875b509dc43de9.jpeg"
+                  alt="Profile"
+                  width={288}
+                  height={384}
+                  className="block aspect-[0.78] w-full max-w-[15rem] rounded-lg object-cover object-center brightness-[1.08] shadow-[0_10px_26px_rgba(15,23,42,0.18)] select-none pointer-events-none"
+                  onContextMenu={(e) => e.preventDefault()}
+                  draggable={false}
+                />
 
                 <div className="space-y-4 text-sm">
                   <p className="text-[11px] font-bold uppercase tracking-[0.12em] text-neutral-400 dark:text-neutral-500">
@@ -2312,7 +2310,7 @@ export default function Home() {
                       @ Soongsil University
                     </p>
                     <p className="text-xs text-neutral-400 dark:text-neutral-500">
-                      2022.03 - 현재
+                      2022.03 ~ Now
                     </p>
                   </div>
                 </div>
@@ -2321,12 +2319,12 @@ export default function Home() {
                   <p className="text-[11px] font-bold uppercase tracking-[0.12em] text-neutral-400 dark:text-neutral-500">
                     Focus
                   </p>
-                  <div className="flex flex-wrap gap-2">
+                  <div className="flex flex-nowrap gap-2">
                     {["Node.js", "NestJS", "TypeScript", "AWS Cloud"].map(
                       (item) => (
                         <span
                           key={item}
-                          className="rounded-full border border-neutral-200 bg-white px-3 py-1.5 text-xs font-medium text-neutral-700 dark:border-white/10 dark:bg-white/5 dark:text-neutral-300"
+                          className="whitespace-nowrap rounded-full border border-neutral-200 bg-white px-3 py-1.5 text-xs font-medium text-neutral-700 dark:border-white/10 dark:bg-white/5 dark:text-neutral-300"
                         >
                           {item}
                         </span>
