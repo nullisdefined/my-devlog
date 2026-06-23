@@ -158,6 +158,16 @@ const nextConfig = {
           },
         ],
       },
+      // 포트폴리오 페이지는 검색 엔진 색인에서 제외
+      {
+        source: "/portfolio",
+        headers: [
+          {
+            key: "X-Robots-Tag",
+            value: "noindex, nofollow",
+          },
+        ],
+      },
       // RSS 피드 캐싱
       {
         source: "/feed.xml",

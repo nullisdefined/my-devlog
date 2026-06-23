@@ -26,6 +26,14 @@ export const metadata: Metadata = {
   ],
   creator: "Jaewoo Kim",
   publisher: "Jaewoo Kim",
+  robots: {
+    index: false,
+    follow: false,
+    googleBot: {
+      index: false,
+      follow: false,
+    },
+  },
   openGraph: {
     type: "profile",
     locale: "ko_KR",
