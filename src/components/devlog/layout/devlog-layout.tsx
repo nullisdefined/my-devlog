@@ -23,7 +23,6 @@ export function DevlogLayout({
   posts = [],
   isListPage = false,
 }: DevlogLayoutProps) {
-  const [mounted, setMounted] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const { toc } = useToc();
 
@@ -38,14 +37,6 @@ export function DevlogLayout({
       document.body.style.overflow = "unset";
     };
   }, [isSidebarOpen]);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!mounted) {
-    return null;
-  }
 
   return (
     <ViewModeProvider>
