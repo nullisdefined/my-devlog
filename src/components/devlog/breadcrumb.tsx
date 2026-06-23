@@ -13,7 +13,7 @@ interface BreadcrumbProps {
 export function Breadcrumb({ items }: BreadcrumbProps) {
   const allItems = [
     { title: "Home", href: "/" },
-    { title: "Devlog", href: "/devlog" },
+    { title: "Devlog", href: "/" },
     ...items,
   ];
 

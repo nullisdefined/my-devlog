@@ -21,7 +21,7 @@ interface PostViewProps {
 function Tag({ tag, className }: { tag: string; className?: string }) {
   return (
     <Link
-      href={`/devlog/tags/${encodeURIComponent(tag)}`}
+      href={`/tags/${encodeURIComponent(tag)}`}
       className={cn(
         "inline-flex items-center gap-1.5",
         "px-3 py-1.5 rounded-full",

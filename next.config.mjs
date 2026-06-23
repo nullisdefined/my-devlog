@@ -130,9 +130,9 @@ const nextConfig = {
           },
         ],
       },
-      // devlog 페이지 전용 헤더 (성능 최적화)
+      // 블로그 메인 페이지 전용 헤더 (성능 최적화)
       {
-        source: "/devlog",
+        source: "/",
         headers: [
           {
             key: "Cache-Control",
@@ -146,7 +146,7 @@ const nextConfig = {
       },
       // 개별 포스트 페이지 캐싱
       {
-        source: "/devlog/posts/(.*)",
+        source: "/posts/(.*)",
         headers: [
           {
             key: "Cache-Control",
@@ -179,12 +179,37 @@ const nextConfig = {
     return [
       {
         source: "/devlog/posts/backend/nestjs/modularization-refactor",
-        destination: "/devlog/posts/frameworks/nestjs/modularization-refactor",
+        destination: "/posts/frameworks/nestjs/modularization-refactor",
         permanent: true,
       },
       {
         source: "/devlog/posts/backend/nestjs/nodeflipnest-env-config",
-        destination: "/devlog/posts/frameworks/nestjs/nodeflipnest-env-config",
+        destination: "/posts/frameworks/nestjs/nodeflipnest-env-config",
+        permanent: true,
+      },
+      {
+        source: "/posts/backend/nestjs/modularization-refactor",
+        destination: "/posts/frameworks/nestjs/modularization-refactor",
+        permanent: true,
+      },
+      {
+        source: "/posts/backend/nestjs/nodeflipnest-env-config",
+        destination: "/posts/frameworks/nestjs/nodeflipnest-env-config",
+        permanent: true,
+      },
+      {
+        source: "/devlog/posts/:path*",
+        destination: "/posts/:path*",
+        permanent: true,
+      },
+      {
+        source: "/devlog/tags/:path*",
+        destination: "/tags/:path*",
+        permanent: true,
+      },
+      {
+        source: "/devlog",
+        destination: "/",
         permanent: true,
       },
     ];

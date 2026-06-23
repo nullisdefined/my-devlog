@@ -22,7 +22,7 @@ export function RSSStructuredData({
       feedType === "main"
         ? "소프트웨어 개발에 대한 인사이트와 경험을 공유하는 개인 블로그"
         : `${identifier} ${feedType}에 관한 글들`,
-    url: `${baseUrl}/devlog`,
+    url: baseUrl,
     author: {
       "@type": "Person",
       name: "nullisdefined",
@@ -51,7 +51,7 @@ export function RSSStructuredData({
       "@type": "BlogPosting",
       headline: post.title,
       description: post.excerpt || post.content.substring(0, 160),
-      url: `${baseUrl}/devlog/posts/${post.urlCategory}/${post.slug}`,
+      url: `${baseUrl}/posts/${post.urlCategory}/${post.slug}`,
       datePublished: post.date,
       dateModified: post.date,
       author: {
@@ -64,7 +64,7 @@ export function RSSStructuredData({
       },
       mainEntityOfPage: {
         "@type": "WebPage",
-        "@id": `${baseUrl}/devlog/posts/${post.urlCategory}/${post.slug}`,
+        "@id": `${baseUrl}/posts/${post.urlCategory}/${post.slug}`,
       },
       image: post.thumbnail
         ? {

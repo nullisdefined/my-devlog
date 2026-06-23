@@ -1688,7 +1688,7 @@ export default function Home() {
       link: "https://github.com/nullisdefined/my-devlog",
       image:
         "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/2256b96dc790d6bf2d8b4c444852f5c9.png",
-      pdf: "https://www.nullisdefined.my/devlog/tags/Devlog",
+      pdf: "https://www.nullisdefined.my/tags/Devlog",
     },
     {
       title: "한땀한땀",
@@ -2271,7 +2271,7 @@ export default function Home() {
 
                 <div className="flex flex-wrap gap-3 pt-1">
                   <Link
-                    href="/devlog"
+                    href="/"
                     className="inline-flex items-center justify-center rounded-full border border-neutral-200 bg-white px-4 py-2 text-xs font-bold text-neutral-800 shadow-sm transition-colors hover:bg-neutral-100 dark:border-white/10 dark:bg-white/10 dark:text-neutral-100 dark:hover:bg-white/15"
                   >
                     <FileText className="mr-1.5 h-3.5 w-3.5" />

@@ -17,7 +17,7 @@ export async function GET() {
         title: latestPost.title,
         slug: latestPost.slug,
         urlCategory: latestPost.urlCategory,
-        url: `/devlog/posts/${latestPost.urlCategory}/${latestPost.slug}`,
+        url: `/posts/${latestPost.urlCategory}/${latestPost.slug}`,
       },
     });
   } catch (error) {

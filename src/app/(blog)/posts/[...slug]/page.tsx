@@ -54,7 +54,7 @@ export async function generateMetadata({ params }: PostPageProps) {
     };
   }
 
-  const canonicalPath = `https://nullisdefined.my/devlog/posts/${params.slug.join(
+  const canonicalPath = `https://nullisdefined.my/posts/${params.slug.join(
     "/"
   )}`;
 
@@ -169,7 +169,7 @@ export default async function PostPage({
   const { getAllPosts } = await import("@/lib/posts");
   const allPosts = await getAllPosts();
 
-  const canonicalPath = `https://nullisdefined.my/devlog/posts/${params.slug.join(
+  const canonicalPath = `https://nullisdefined.my/posts/${params.slug.join(
     "/"
   )}`;
 
@@ -233,7 +233,7 @@ export default async function PostPage({
         "@type": "ListItem",
         position: 2,
         name: "개발새발",
-        item: "https://nullisdefined.my/devlog",
+        item: "https://nullisdefined.my",
       },
       {
         "@type": "ListItem",

@@ -63,7 +63,7 @@ export function createBaseRSSConfig(
     webMaster: "nullisdefined@gmail.com (nullisdefined)",
     managingEditor: "nullisdefined@gmail.com (nullisdefined)",
     image_url: "https://nullisdefined.my/favicon.ico",
-    docs: "https://nullisdefined.my/devlog",
+    docs: "https://nullisdefined.my",
     copyright: `Copyright ${new Date().getFullYear()} nullisdefined`,
     categories: [
       "Technology",
@@ -94,7 +94,7 @@ export function createBaseRSSConfig(
 
 // 포스트를 RSS 아이템으로 변환
 export function postToRSSItem(post: Post): RSS.ItemOptions {
-  const postUrl = `https://nullisdefined.my/devlog/posts/${post.urlCategory}/${post.slug}`;
+  const postUrl = `https://nullisdefined.my/posts/${post.urlCategory}/${post.slug}`;
   const htmlContent = markdownToHtml(post.content);
   const description = post.excerpt || extractTextFromHtml(htmlContent);
   const images = extractImages(post.content);

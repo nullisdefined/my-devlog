@@ -54,7 +54,7 @@ export function DevlogHeader({ posts }: DevlogHeaderProps) {
         <div className="flex h-14 items-center justify-between">
           {/* 왼쪽 로고 */}
           <Link
-            href="/devlog"
+            href="/"
             className="flex items-center relative z-[61] px-0 -ml-4"
           >
             <Image

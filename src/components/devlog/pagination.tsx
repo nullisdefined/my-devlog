@@ -11,7 +11,7 @@ export function Pagination({ currentPage, totalPages }: PaginationProps) {
   return (
     <div className="flex justify-center items-center gap-3 mt-8">
       <Link
-        href={`/devlog?page=${currentPage - 1}`}
+        href={`/?page=${currentPage - 1}`}
         className={`text-muted-foreground hover:text-primary p-1.5 rounded-full transition-all hover:bg-primary/10 ${
           currentPage <= 1 ? "pointer-events-none opacity-50" : ""
         }`}
@@ -33,7 +33,7 @@ export function Pagination({ currentPage, totalPages }: PaginationProps) {
               <span className="text-muted-foreground px-2">•••</span>
             )}
             <Link
-              href={`/devlog?page=${page}`}
+              href={`/?page=${page}`}
               className={`${
                 currentPage === page
                   ? "text-white bg-primary hover:bg-primary/90 dark:text-gray-800"
@@ -46,7 +46,7 @@ export function Pagination({ currentPage, totalPages }: PaginationProps) {
         ))}
 
       <Link
-        href={`/devlog?page=${currentPage + 1}`}
+        href={`/?page=${currentPage + 1}`}
         className={`text-muted-foreground hover:text-primary p-1.5 rounded-full transition-all hover:bg-primary/10 ${
           currentPage >= totalPages ? "pointer-events-none opacity-50" : ""
         }`}

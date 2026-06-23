@@ -84,7 +84,7 @@ export function SearchDialog({ posts, open, onOpenChange }: SearchDialogProps) {
         return;
       }
 
-      router.push(`/devlog/posts/${post.urlCategory}/${post.slug}`);
+      router.push(`/posts/${post.urlCategory}/${post.slug}`);
       onOpenChange(false);
     },
     [router, onOpenChange]

@@ -24,7 +24,7 @@ export function Tag({ name, className, clickable = false }: TagProps) {
 
   if (clickable) {
     return (
-      <Link href={`/devlog/tags/${encodeURIComponent(name)}`}>
+      <Link href={`/tags/${encodeURIComponent(name)}`}>
         {tagContent}
       </Link>
     );

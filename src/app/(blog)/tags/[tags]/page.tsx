@@ -26,7 +26,7 @@ export async function generateMetadata({
   params,
 }: Pick<TagPageProps, "params">): Promise<Metadata> {
   const decodedTag = decodeURIComponent(params.tags);
-  const canonicalUrl = `${BASE_URL}/devlog/tags/${encodeURIComponent(decodedTag)}`;
+  const canonicalUrl = `${BASE_URL}/tags/${encodeURIComponent(decodedTag)}`;
   const taggedPosts = await getPostsByTag(decodedTag);
 
   if (taggedPosts.length === 0) {
@@ -106,22 +106,22 @@ export default async function TagPage({ params, searchParams }: TagPageProps) {
     "@type": "CollectionPage",
     name: `${decodedTag} 태그 | 개발새발`,
     description: `${decodedTag} 태그와 관련된 글 모음`,
-    url: `${BASE_URL}/devlog/tags/${encodeURIComponent(decodedTag)}`,
+    url: `${BASE_URL}/tags/${encodeURIComponent(decodedTag)}`,
     inLanguage: "ko-KR",
     isPartOf: {
       "@type": "Blog",
       name: "개발새발",
-      url: `${BASE_URL}/devlog`,
+      url: BASE_URL,
     },
     hasPart: sortedPosts.slice(0, 10).map((post) => ({
       "@type": "BlogPosting",
       headline: post.title,
       datePublished: post.date,
       dateModified: post.date,
-      url: `${BASE_URL}/devlog/posts/${post.urlCategory}/${post.slug}`,
+      url: `${BASE_URL}/posts/${post.urlCategory}/${post.slug}`,
       mainEntityOfPage: {
         "@type": "WebPage",
-        "@id": `${BASE_URL}/devlog/posts/${post.urlCategory}/${post.slug}`,
+        "@id": `${BASE_URL}/posts/${post.urlCategory}/${post.slug}`,
       },
     })),
   };

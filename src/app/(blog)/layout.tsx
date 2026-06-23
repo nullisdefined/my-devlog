@@ -66,7 +66,7 @@ export const metadata: Metadata = {
     title: "개발새발 | 소프트웨어 개발 블로그",
     description:
       "소프트웨어 개발에 대한 인사이트와 경험을 공유하는 개인 블로그입니다. JavaScript, TypeScript, Node.js, NestJS 등 웹 개발 기술을 다룹니다.",
-    url: "https://nullisdefined.my/devlog",
+    url: "https://nullisdefined.my",
     siteName: "개발새발",
     locale: "ko_KR",
     type: "website",
@@ -89,7 +89,7 @@ export const metadata: Metadata = {
     site: "@nullisdefined",
   },
   alternates: {
-    canonical: "https://nullisdefined.my/devlog",
+    canonical: "https://nullisdefined.my",
     types: {
       "application/rss+xml": [
         {
@@ -119,7 +119,7 @@ export default async function Layout({
     name: "개발새발",
     description:
       "소프트웨어 개발에 대한 인사이트와 경험을 공유하는 개인 블로그",
-    url: "https://nullisdefined.my/devlog",
+    url: "https://nullisdefined.my",
     author: {
       "@type": "Person",
       name: "nullisdefined",
@@ -133,7 +133,7 @@ export default async function Layout({
     blogPost: posts.slice(0, 10).map((post) => ({
       "@type": "BlogPosting",
       headline: post.title,
-      url: `https://nullisdefined.my/devlog/posts/${post.urlCategory}/${post.slug}`,
+      url: `https://nullisdefined.my/posts/${post.urlCategory}/${post.slug}`,
       datePublished: post.date,
       author: {
         "@type": "Person",

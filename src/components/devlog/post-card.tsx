@@ -41,7 +41,7 @@ function CardView({ post }: PostCardProps) {
 
   return (
     <Link
-      href={`/devlog/posts/${post.urlCategory}/${post.slug}`}
+      href={`/posts/${post.urlCategory}/${post.slug}`}
       className="block"
     >
       <article className="group relative bg-card rounded-lg border border-border overflow-hidden transition-all duration-300">
@@ -100,7 +100,7 @@ function ListView({ post }: PostCardProps) {
 
   return (
     <Link
-      href={`/devlog/posts/${post.urlCategory}/${post.slug}`}
+      href={`/posts/${post.urlCategory}/${post.slug}`}
       className="block"
     >
       <article className="group relative bg-card dark:bg-[#121212] border-t border-border/50 overflow-hidden transition-all duration-300">
@@ -172,7 +172,7 @@ function MasonryView({ post }: PostCardProps) {
 
   return (
     <Link
-      href={`/devlog/posts/${post.urlCategory}/${post.slug}`}
+      href={`/posts/${post.urlCategory}/${post.slug}`}
       className="block mb-4 md:mb-6 break-inside-avoid"
     >
       <article className="group relative bg-card rounded-lg border border-border overflow-hidden transition-all duration-300">

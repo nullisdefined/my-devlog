@@ -46,7 +46,7 @@ export function DevlogSidebar({ posts, onLinkClick }: DevlogSidebarProps) {
       <div className="space-y-3 px-1 min-h-full">
         {/* Profile Section */}
         <div className="flex flex-col items-center space-y-2 py-0 pb-2 relative z-10">
-          <Link href="/devlog" onClick={onLinkClick}>
+          <Link href="/" onClick={onLinkClick}>
             <Avatar className="h-28 w-28 border-2 border-primary/20 hover:border-primary/40 transition-colors relative z-10">
               <AvatarImage
                 src="https://avatars.githubusercontent.com/u/164657817?v=4"
@@ -66,7 +66,7 @@ export function DevlogSidebar({ posts, onLinkClick }: DevlogSidebarProps) {
         {/* All Posts */}
         <div>
           <Link
-            href="/devlog"
+            href="/"
             onClick={onLinkClick}
             className={cn(
               "flex items-center justify-between w-full px-2 py-2 rounded-md",
@@ -102,7 +102,7 @@ export function DevlogSidebar({ posts, onLinkClick }: DevlogSidebarProps) {
               {tagCounts.map(({ name, count }) => (
                 <Link
                   key={name}
-                  href={`/devlog/tags/${encodeURIComponent(
+                  href={`/tags/${encodeURIComponent(
                     name.toLowerCase(),
                   )}`}
                   onClick={onLinkClick}

@@ -33,24 +33,26 @@ module.exports = {
     "/feed/**",
     "/feed.xml",
     "/podcast.xml",
+    "/devlog",
+    "/devlog/*",
+    "/devlog/**",
   ],
 
   // 추가 경로 및 우선순위 설정
   additionalPaths: async (config) => {
-    const paths = [];
-
-    // 메인 devlog 페이지 추가
-    paths.push({
-      loc: "/devlog",
-      priority: 1.0,
-      changefreq: "daily",
-    });
+    const paths = [
+      {
+        loc: "/",
+        priority: 1.0,
+        changefreq: "daily",
+      },
+    ];
 
     // 모든 개별 포스트 추가
     try {
       const posts = getPostList();
       for (const post of posts) {
-        const postUrl = `/devlog/posts/${post.urlCategory}/${post.slug}`;
+        const postUrl = `/posts/${post.urlCategory}/${post.slug}`;
         paths.push({
           loc: postUrl,
           priority: 0.9,
@@ -76,15 +78,15 @@ module.exports = {
       changefreq = "daily";
     }
 
-    // 블로그 메인 페이지
-    else if (path === "/devlog") {
-      priority = 1.0;
-      changefreq = "daily";
+    // 개별 포스트 페이지
+    else if (path.includes("/posts/")) {
+      priority = 0.9;
+      changefreq = "monthly";
     }
 
-    // 개별 포스트 페이지
-    else if (path.includes("/devlog/posts/")) {
-      priority = 0.9;
+    // 포트폴리오 페이지
+    else if (path === "/portfolio") {
+      priority = 0.8;
       changefreq = "monthly";
     }
 

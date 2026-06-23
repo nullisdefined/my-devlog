@@ -55,7 +55,7 @@ export function RelatedPosts({
         {relatedPosts.map((post) => (
           <Link
             key={`${post.urlCategory}/${post.slug}`}
-            href={`/devlog/posts/${post.urlCategory}/${post.slug}`}
+            href={`/posts/${post.urlCategory}/${post.slug}`}
             className="group block p-4 rounded-lg border border-border hover:border-primary/50 transition-colors"
           >
             <article>
