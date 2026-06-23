@@ -2320,16 +2320,14 @@ export default function Home() {
                     Focus
                   </p>
                   <div className="flex flex-nowrap gap-2">
-                    {["Node.js", "NestJS", "TypeScript", "AWS Cloud"].map(
-                      (item) => (
-                        <span
-                          key={item}
-                          className="whitespace-nowrap rounded-full border border-neutral-200 bg-white px-3 py-1.5 text-xs font-medium text-neutral-700 dark:border-white/10 dark:bg-white/5 dark:text-neutral-300"
-                        >
-                          {item}
-                        </span>
-                      ),
-                    )}
+                    {["Node.js", "NestJS", "TypeScript", "AWS"].map((item) => (
+                      <span
+                        key={item}
+                        className="whitespace-nowrap rounded-full border border-neutral-200 bg-white px-3 py-1.5 text-xs font-medium text-neutral-700 dark:border-white/10 dark:bg-white/5 dark:text-neutral-300"
+                      >
+                        {item}
+                      </span>
+                    ))}
                   </div>
                 </div>
               </aside>
