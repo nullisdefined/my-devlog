@@ -6,6 +6,15 @@ import { getFirstParagraph } from "@/lib/remove-markdown-utils";
 
 const POSTS_PATH = path.join(process.cwd(), "src/content/posts");
 
+const REDIRECTED_POSTS = new Set([
+  "backend/nestjs/modularization-refactor",
+  "backend/nestjs/nodeflipnest-env-config",
+]);
+
+function isRedirectedPost(urlCategory: string, slug: string): boolean {
+  return REDIRECTED_POSTS.has(`${urlCategory}/${slug}`);
+}
+
 // URL에서 특수문자를 제거하는 함수
 const normalizePostPath = (postPath: string): string => {
   return postPath
@@ -86,11 +95,13 @@ export async function getPostList(): Promise<Post[]> {
         if (data.draft) continue;
 
         const urlCategory = categoryPath.join("/");
+        const slug = path.basename(file, ".md");
+        if (isRedirectedPost(urlCategory, slug)) continue;
 
         allPosts.push({
           title: data.title,
           date: data.date,
-          slug: path.basename(file, ".md"),
+          slug,
           tags: data.tags || [],
           thumbnail: data.thumbnail,
           content: getFirstParagraph(content, 200),

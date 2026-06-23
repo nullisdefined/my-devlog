@@ -176,7 +176,18 @@ const nextConfig = {
   },
   // Generate sitemap during build
   async redirects() {
-    return [];
+    return [
+      {
+        source: "/devlog/posts/backend/nestjs/modularization-refactor",
+        destination: "/devlog/posts/frameworks/nestjs/modularization-refactor",
+        permanent: true,
+      },
+      {
+        source: "/devlog/posts/backend/nestjs/nodeflipnest-env-config",
+        destination: "/devlog/posts/frameworks/nestjs/nodeflipnest-env-config",
+        permanent: true,
+      },
+    ];
   },
   // SEO improvements
   poweredByHeader: false,

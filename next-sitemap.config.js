@@ -1,20 +1,15 @@
 /* eslint-disable @typescript-eslint/no-require-imports */
 const { getPostList } = require("./scripts/posts-data");
-const fs = require("fs");
-const path = require("path");
-const matter = require("gray-matter");
 
 function formatDate(date) {
-  const defaultDate = new Date().toISOString().split("T")[0];
-
-  if (!date) return defaultDate;
+  if (!date) return undefined;
 
   try {
     const d = new Date(date);
-    return isNaN(d.getTime()) ? defaultDate : d.toISOString().split("T")[0];
+    return isNaN(d.getTime()) ? undefined : d.toISOString().split("T")[0];
   } catch (error) {
     console.warn(`Invalid date format: ${date}`);
-    return defaultDate;
+    return undefined;
   }
 }
 
@@ -45,82 +40,26 @@ module.exports = {
     const paths = [];
 
     // 메인 devlog 페이지 추가
-    paths.push(
-      await config.transform(config, "/devlog", {
-        priority: 1.0,
-        changefreq: "daily",
-        lastmod: new Date().toISOString(),
-      }),
-    );
+    paths.push({
+      loc: "/devlog",
+      priority: 1.0,
+      changefreq: "daily",
+    });
 
     // 모든 개별 포스트 추가
     try {
       const posts = getPostList();
       for (const post of posts) {
         const postUrl = `/devlog/posts/${post.urlCategory}/${post.slug}`;
-        paths.push(
-          await config.transform(config, postUrl, {
-            priority: 0.9,
-            changefreq: "monthly",
-            lastmod: formatDate(post.date),
-          }),
-        );
+        paths.push({
+          loc: postUrl,
+          priority: 0.9,
+          changefreq: "monthly",
+          lastmod: formatDate(post.date),
+        });
       }
     } catch (error) {
       console.warn("포스트 목록을 가져오는데 실패했습니다:", error);
-    }
-
-    // 태그 페이지 추가
-    try {
-      const postsPath = path.join(process.cwd(), "src/content/posts");
-      const allPosts = [];
-
-      const processDirectory = (dirPath, categoryPath = []) => {
-        if (!fs.existsSync(dirPath)) return;
-
-        const files = fs.readdirSync(dirPath);
-        for (const file of files) {
-          const fullPath = path.join(dirPath, file);
-          const stat = fs.statSync(fullPath);
-
-          if (stat.isDirectory()) {
-            processDirectory(fullPath, [...categoryPath, file.toLowerCase()]);
-            continue;
-          }
-
-          if (!file.endsWith(".md")) continue;
-
-          const fileContent = fs.readFileSync(fullPath, "utf-8");
-          const { data } = matter(fileContent);
-
-          if (data.draft) continue;
-          if (data.tags) {
-            allPosts.push({ tags: data.tags });
-          }
-        }
-      };
-
-      processDirectory(postsPath);
-
-      const tags = new Set();
-      allPosts.forEach((post) => {
-        if (post.tags) {
-          post.tags.forEach((tag) => tags.add(tag.toLowerCase()));
-        }
-      });
-
-      for (const tag of tags) {
-        const tagUrl = `/devlog/tags/${encodeURIComponent(tag)}`;
-        paths.push(
-          await config.transform(config, tagUrl, {
-            priority: 0.6,
-            changefreq: "weekly",
-            lastmod: new Date().toISOString(),
-          }),
-        );
-      }
-    } catch (error) {
-      console.warn("태그 목록을 가져오는데 실패했습니다:", error);
     }
 
     return paths;
@@ -149,17 +88,10 @@ module.exports = {
       changefreq = "monthly";
     }
 
-    // 태그 페이지
-    else if (path.includes("/devlog/tags/")) {
-      priority = 0.6;
-      changefreq = "weekly";
-    }
-
     return {
       loc: path,
       changefreq,
       priority,
-      lastmod: new Date().toISOString(),
     };
   },
 

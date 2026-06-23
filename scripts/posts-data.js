@@ -4,6 +4,15 @@ const matter = require("gray-matter");
 
 const POSTS_PATH = path.join(process.cwd(), "src/content/posts");
 
+const REDIRECTED_POSTS = new Set([
+  "backend/nestjs/modularization-refactor",
+  "backend/nestjs/nodeflipnest-env-config",
+]);
+
+function isRedirectedPost(urlCategory, slug) {
+  return REDIRECTED_POSTS.has(`${urlCategory}/${slug}`);
+}
+
 function getPostList(basePath) {
   const allPosts = [];
 
@@ -27,10 +36,12 @@ function getPostList(basePath) {
       if (data.draft) continue;
 
       const urlCategory = categoryPath.join("/");
+      const slug = path.basename(file, ".md");
+      if (isRedirectedPost(urlCategory, slug)) continue;
 
       allPosts.push({
         urlCategory,
-        slug: path.basename(file, ".md"),
+        slug,
         date: data.date || new Date().toISOString(),
       });
     }
