@@ -43,32 +43,6 @@ function fetchRSSFeed(endpoint) {
   });
 }
 
-// Google에 RSS 피드 업데이트 알림
-function notifyGoogle(feedUrl) {
-  return new Promise((resolve, reject) => {
-    const pingUrl = `https://www.google.com/ping?sitemap=${encodeURIComponent(
-      feedUrl
-    )}`;
-
-    https
-      .get(pingUrl, (res) => {
-        if (res.statusCode === 200) {
-          console.log(`📡 Notified Google about RSS update: ${feedUrl}`);
-          resolve(true);
-        } else {
-          console.log(
-            `⚠️ Failed to notify Google: ${feedUrl} (Status: ${res.statusCode})`
-          );
-          resolve(false);
-        }
-      })
-      .on("error", (err) => {
-        console.log(`❌ Error notifying Google: ${err.message}`);
-        resolve(false);
-      });
-  });
-}
-
 // Bing에 RSS 피드 업데이트 알림
 function notifyBing(feedUrl) {
   return new Promise((resolve, reject) => {
@@ -153,8 +127,7 @@ async function updateAllRSSFeeds() {
   console.log(`❌ Failed: ${results.filter((r) => !r.success).length}`);
   console.log(`⏱️ Total time: ${Date.now() - startTime}ms\n`);
 
-  // Google과 Bing에 메인 RSS 피드 알림
-  await notifyGoogle(`${SITE_URL}/feed.xml`);
+  // Google은 deprecated ping endpoint 대신 robots.txt/Search Console에서 sitemap을 발견한다.
   await notifyBing(`${SITE_URL}/feed.xml`);
 
   // 통계 업데이트
