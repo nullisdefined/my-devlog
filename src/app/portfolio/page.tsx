@@ -9,6 +9,8 @@ import {
   Trophy,
   ChevronLeft,
   ChevronRight,
+  ChevronUp,
+  ChevronDown,
 } from "lucide-react";
 import {
   SiNodedotjs,
@@ -60,6 +62,8 @@ import {
   SiSap,
 } from "react-icons/si";
 import Image from "next/image";
+import ImageVerificationCaseStudy from "./_components/image-verification-case-study";
+import CloudArchitecture from "./_components/cloud-architecture";
 
 import { FaJava } from "react-icons/fa";
 
@@ -185,6 +189,10 @@ const ProjectDetailModal = ({
 }) => {
   const [activeTab, setActiveTab] = useState("overview");
   const contentRef = useRef<HTMLDivElement>(null);
+  const detailRef = useRef<HTMLDivElement>(null);
+  // 문제 해결 상세 패널 상태
+  const [detailIdx, setDetailIdx] = useState(0);
+  const [isDetailOpen, setIsDetailOpen] = useState(false);
 
   // 모달이 열릴 때마다 탭 초기화 (문제 해결 탭 우선)
   useEffect(() => {
@@ -192,6 +200,8 @@ const ProjectDetailModal = ({
       setActiveTab(
         project?.troubleshooting?.length > 0 ? "troubleshooting" : "overview",
       );
+      setIsDetailOpen(false);
+      setDetailIdx(0);
     }
   }, [isOpen, project]);
 
@@ -200,7 +210,17 @@ const ProjectDetailModal = ({
     if (contentRef.current) {
       contentRef.current.scrollTop = 0;
     }
+    if (activeTab !== "troubleshooting") {
+      setIsDetailOpen(false);
+    }
   }, [activeTab]);
+
+  // 상세 이슈 변경 시 상세 패널 스크롤을 최상단으로 이동
+  useEffect(() => {
+    if (detailRef.current) {
+      detailRef.current.scrollTop = 0;
+    }
+  }, [detailIdx]);
 
   // 기간 계산 함수
   const calculateDuration = (period: string, title: string) => {
@@ -245,7 +265,11 @@ const ProjectDetailModal = ({
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
-        onClose();
+        if (isDetailOpen) {
+          setIsDetailOpen(false);
+        } else {
+          onClose();
+        }
       }
     };
 
@@ -256,9 +280,17 @@ const ProjectDetailModal = ({
     return () => {
       window.removeEventListener("keydown", handleEsc);
     };
-  }, [isOpen, onClose]);
+  }, [isOpen, onClose, isDetailOpen]);
 
   if (!isOpen || !project) return null;
+
+  const issues: any[] = project.troubleshooting ?? [];
+  const detailIssue = issues[detailIdx];
+  const openDetail = (idx: number) => {
+    setDetailIdx(idx);
+    setIsDetailOpen(true);
+  };
+  const closeDetail = () => setIsDetailOpen(false);
 
   return (
     <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/80 backdrop-blur-sm">
@@ -266,292 +298,434 @@ const ProjectDetailModal = ({
       <div className="absolute inset-0 cursor-pointer" onClick={onClose} />
 
       {/* 모달 컨텐츠 */}
-      <div className="relative w-full max-w-4xl max-h-[85vh] bg-card rounded-lg shadow-2xl overflow-hidden m-4 z-10">
-        {/* 헤더 */}
-        <div className="sticky top-0 bg-card border-b border-border px-6 py-4 flex items-center justify-between z-10">
-          <h2 className="text-2xl font-bold">{project.title}</h2>
-          <button
-            onClick={onClose}
-            className="p-2 rounded-full hover:bg-muted transition-colors"
-          >
-            <X className="h-5 w-5" />
-          </button>
-        </div>
-
-        {/* 탭 네비게이션 */}
-        <div className="sticky top-[65px] bg-card border-b border-border px-6 flex gap-4 z-10">
-          {project.troubleshooting && project.troubleshooting.length > 0 && (
-            <button
-              onClick={() => setActiveTab("troubleshooting")}
-              className={`py-3 px-4 text-sm font-medium border-b-2 transition-colors ${
-                activeTab === "troubleshooting"
-                  ? "border-blue-600 text-blue-600 dark:border-blue-400 dark:text-blue-400"
-                  : "border-transparent text-muted-foreground hover:text-foreground"
-              }`}
-            >
-              문제 해결
-            </button>
-          )}
-          {project.responsibilities && project.responsibilities.length > 0 && (
-            <button
-              onClick={() => setActiveTab("responsibilities")}
-              className={`py-3 px-4 text-sm font-medium border-b-2 transition-colors ${
-                activeTab === "responsibilities"
-                  ? "border-blue-600 text-blue-600 dark:border-blue-400 dark:text-blue-400"
-                  : "border-transparent text-muted-foreground hover:text-foreground"
-              }`}
-            >
-              담당 업무
-            </button>
-          )}
-          <button
-            onClick={() => setActiveTab("overview")}
-            className={`py-3 px-4 text-sm font-medium border-b-2 transition-colors ${
-              activeTab === "overview"
-                ? "border-blue-600 text-blue-600 dark:border-blue-400 dark:text-blue-400"
-                : "border-transparent text-muted-foreground hover:text-foreground"
-            }`}
-          >
-            개요
-          </button>
-        </div>
-
-        {/* 컨텐츠 */}
+      <div
+        className={`relative flex h-[92dvh] w-full bg-card rounded-lg shadow-2xl overflow-hidden m-4 z-10 transition-[max-width] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none ${
+          isDetailOpen
+            ? "max-w-[min(96vw,1600px)]"
+            : "max-w-6xl"
+        }`}
+      >
+        {/* 메인 컬럼 (헤더 · 탭 · 컨텐츠) */}
         <div
-          ref={contentRef}
-          className="overflow-y-auto max-h-[calc(85vh-130px)] px-6 py-6"
+          className={`flex flex-col min-w-0 flex-shrink-0 transition-[width] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none ${
+            isDetailOpen
+              ? "w-full md:w-[380px] lg:w-[440px] xl:w-[480px]"
+              : "w-full"
+          }`}
         >
-          {activeTab === "overview" && (
-            <div className="space-y-6">
-              {project.image && (
-                <div className="relative w-full rounded-lg overflow-hidden">
-                  <Image
-                    src={project.image}
-                    alt={project.title}
-                    width={800}
-                    height={600}
-                    className="w-full h-auto object-contain"
-                  />
-                </div>
-              )}
-              <div>
-                <h3 className="text-m font-semibold text-muted-foreground mb-2">
-                  프로젝트 기간
-                </h3>
-                <p className="text-sm">
-                  {project.period}
-                  {calculateDuration(project.period, project.title) > 0 &&
-                    ` (${calculateDuration(project.period, project.title)}개월)`}
-                </p>
-              </div>
-              {project.role && (
+          {/* 헤더 */}
+          <div className="flex-shrink-0 bg-card border-b border-border px-6 sm:px-8 py-4 flex items-center justify-between z-10">
+            <h2 className="text-2xl font-bold">{project.title}</h2>
+            <button
+              onClick={onClose}
+              className="p-2 rounded-full hover:bg-muted transition-colors"
+            >
+              <X className="h-5 w-5" />
+            </button>
+          </div>
+
+          {/* 탭 네비게이션 */}
+          <div className="flex-shrink-0 bg-card border-b border-border px-6 sm:px-8 flex gap-1 sm:gap-4 overflow-x-auto z-10 [&>button]:shrink-0 [&>button]:whitespace-nowrap">
+            {project.troubleshooting && project.troubleshooting.length > 0 && (
+              <button
+                onClick={() => setActiveTab("troubleshooting")}
+                className={`py-3 px-4 text-sm font-medium border-b-2 transition-colors ${
+                  activeTab === "troubleshooting"
+                    ? "border-blue-600 text-blue-600 dark:border-blue-400 dark:text-blue-400"
+                    : "border-transparent text-muted-foreground hover:text-foreground"
+                }`}
+              >
+                문제 해결
+              </button>
+            )}
+            {project.responsibilities && project.responsibilities.length > 0 && (
+              <button
+                onClick={() => setActiveTab("responsibilities")}
+                className={`py-3 px-4 text-sm font-medium border-b-2 transition-colors ${
+                  activeTab === "responsibilities"
+                    ? "border-blue-600 text-blue-600 dark:border-blue-400 dark:text-blue-400"
+                    : "border-transparent text-muted-foreground hover:text-foreground"
+                }`}
+              >
+                담당 업무
+              </button>
+            )}
+            {project.architecture && (
+              <button
+                onClick={() => setActiveTab("architecture")}
+                className={`py-3 px-4 text-sm font-medium border-b-2 transition-colors ${
+                  activeTab === "architecture"
+                    ? "border-blue-600 text-blue-600 dark:border-blue-400 dark:text-blue-400"
+                    : "border-transparent text-muted-foreground hover:text-foreground"
+                }`}
+              >
+                아키텍처
+              </button>
+            )}
+            <button
+              onClick={() => setActiveTab("overview")}
+              className={`py-3 px-4 text-sm font-medium border-b-2 transition-colors ${
+                activeTab === "overview"
+                  ? "border-blue-600 text-blue-600 dark:border-blue-400 dark:text-blue-400"
+                  : "border-transparent text-muted-foreground hover:text-foreground"
+              }`}
+            >
+              개요
+            </button>
+          </div>
+
+          {/* 컨텐츠 */}
+          <div
+            ref={contentRef}
+            className="flex-1 min-h-0 overflow-y-auto px-6 py-6 sm:px-8"
+          >
+            {activeTab === "overview" && (
+              <div className="space-y-6">
+                {project.image && (
+                  <div className="relative w-full rounded-lg overflow-hidden">
+                    <Image
+                      src={project.image}
+                      alt={project.title}
+                      width={800}
+                      height={600}
+                      className="w-full h-auto object-contain"
+                    />
+                  </div>
+                )}
                 <div>
                   <h3 className="text-m font-semibold text-muted-foreground mb-2">
-                    역할
-                  </h3>
-                  <span
-                    className={`inline-block text-sm font-semibold px-3 py-1.5 rounded-md ${
-                      project.role === "Backend"
-                        ? "bg-pink-100 text-pink-800 dark:bg-pink-900/50 dark:text-pink-300"
-                        : project.role === "FullStack"
-                          ? "bg-amber-100 text-amber-800 dark:bg-amber-900/50 dark:text-amber-300"
-                          : "bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-200"
-                    }`}
-                  >
-                    {project.role}
-                  </span>
-                </div>
-              )}
-              {project.teamSize && (
-                <div>
-                  <h3 className="text-m font-semibold text-muted-foreground mb-2">
-                    팀 인원
+                    프로젝트 기간
                   </h3>
                   <p className="text-sm">
-                    {project.teamSize === 1 ? "개인" : `${project.teamSize}명`}
+                    {project.period}
+                    {calculateDuration(project.period, project.title) > 0 &&
+                      ` (${calculateDuration(project.period, project.title)}개월)`}
                   </p>
                 </div>
-              )}
-              <div>
-                <h3 className="text-m font-semibold text-muted-foreground mb-2">
-                  프로젝트 설명
-                </h3>
-                <div className="text-sm leading-relaxed">
-                  <p>{project.description}</p>
-                  {project.title === "개발새발" && latestPost && (
-                    <p className="mt-2">
-                      <Link
-                        href={latestPost.url}
-                        className="text-blue-600 dark:text-blue-400 hover:underline"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        최근 글: {latestPost.title}
-                      </Link>
+                {project.role && (
+                  <div>
+                    <h3 className="text-m font-semibold text-muted-foreground mb-2">
+                      역할
+                    </h3>
+                    <span
+                      className={`inline-block text-sm font-semibold px-3 py-1.5 rounded-md ${
+                        project.role === "Backend"
+                          ? "bg-pink-100 text-pink-800 dark:bg-pink-900/50 dark:text-pink-300"
+                          : project.role === "FullStack"
+                            ? "bg-amber-100 text-amber-800 dark:bg-amber-900/50 dark:text-amber-300"
+                            : "bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-200"
+                      }`}
+                    >
+                      {project.role}
+                    </span>
+                  </div>
+                )}
+                {project.teamSize && (
+                  <div>
+                    <h3 className="text-m font-semibold text-muted-foreground mb-2">
+                      팀 인원
+                    </h3>
+                    <p className="text-sm">
+                      {project.teamSize === 1 ? "개인" : `${project.teamSize}명`}
                     </p>
-                  )}
+                  </div>
+                )}
+                <div>
+                  <h3 className="text-m font-semibold text-muted-foreground mb-2">
+                    프로젝트 설명
+                  </h3>
+                  <div className="text-sm leading-relaxed">
+                    <p>{project.description}</p>
+                    {project.title === "개발새발" && latestPost && (
+                      <p className="mt-2">
+                        <Link
+                          href={latestPost.url}
+                          className="text-blue-600 dark:text-blue-400 hover:underline"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          최근 글: {latestPost.title}
+                        </Link>
+                      </p>
+                    )}
+                  </div>
                 </div>
-              </div>
-              {project.features && project.features.length > 0 && (
+                {project.features && project.features.length > 0 && (
+                  <div>
+                    <h3 className="text-m font-semibold text-muted-foreground mb-3">
+                      주요 기능
+                    </h3>
+                    <ul className="space-y-2">
+                      {project.features.map((feature: string, idx: number) => (
+                        <li key={idx} className="flex items-center gap-2">
+                          <span className="text-blue-600 dark:text-blue-400 flex-shrink-0">
+                            •
+                          </span>
+                          <span className="text-sm leading-relaxed">
+                            {feature}
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
                 <div>
                   <h3 className="text-m font-semibold text-muted-foreground mb-3">
-                    주요 기능
+                    기술 스택
                   </h3>
-                  <ul className="space-y-2">
-                    {project.features.map((feature: string, idx: number) => (
-                      <li key={idx} className="flex items-center gap-2">
-                        <span className="text-blue-600 dark:text-blue-400 flex-shrink-0">
-                          •
-                        </span>
-                        <span className="text-sm leading-relaxed">
-                          {feature}
-                        </span>
-                      </li>
+                  <div className="flex flex-wrap gap-2">
+                    {project.tech.map((tech: any, idx: number) => (
+                      <div
+                        key={idx}
+                        className="flex items-center space-x-1.5 text-muted-foreground hover:text-foreground transition-colors bg-muted/50 px-3 py-2 rounded-md text-sm"
+                      >
+                        <span className="text-base">{tech.icon}</span>
+                        <span>{tech.name}</span>
+                      </div>
                     ))}
-                  </ul>
+                  </div>
                 </div>
-              )}
-              <div>
-                <h3 className="text-m font-semibold text-muted-foreground mb-3">
-                  기술 스택
-                </h3>
-                <div className="flex flex-wrap gap-2">
-                  {project.tech.map((tech: any, idx: number) => (
-                    <div
-                      key={idx}
-                      className="flex items-center space-x-1.5 text-muted-foreground hover:text-foreground transition-colors bg-muted/50 px-3 py-2 rounded-md text-sm"
-                    >
-                      <span className="text-base">{tech.icon}</span>
-                      <span>{tech.name}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-              <div className="flex gap-3 pt-4">
-                {project.pdf && (
-                  <Button variant="secondary" className="flex-1" asChild>
+                <div className="flex gap-3 pt-4">
+                  {project.pdf && (
+                    <Button variant="secondary" className="flex-1" asChild>
+                      <Link
+                        href={project.pdf}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center justify-center"
+                      >
+                        <FileText className="mr-2 h-4 w-4" />
+                        {project.documentLabel ?? "Document"}
+                      </Link>
+                    </Button>
+                  )}
+                  <Button variant="outline" className="flex-1" asChild>
                     <Link
-                      href={project.pdf}
+                      href={project.link}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="flex items-center justify-center"
                     >
-                      <FileText className="mr-2 h-4 w-4" />
-                      Document
+                      <SiGithub className="mr-2 h-4 w-4" />
+                      Repository
                     </Link>
                   </Button>
-                )}
-                <Button variant="outline" className="flex-1" asChild>
-                  <Link
-                    href={project.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center justify-center"
-                  >
-                    <SiGithub className="mr-2 h-4 w-4" />
-                    Repository
-                  </Link>
-                </Button>
+                </div>
               </div>
-            </div>
-          )}
+            )}
 
-          {activeTab === "responsibilities" && project.responsibilities && (
-            <div className="space-y-6">
-              <div>
-                <h3 className="text-lg font-semibold mb-4">담당 업무</h3>
-                <div className="space-y-6">
-                  {project.responsibilities.map(
-                    (responsibility: any, idx: number) => (
-                      <div key={idx} className="space-y-3">
-                        <div className="border-l-2 border-blue-600 dark:border-blue-400 pl-4">
-                          <h4 className="text-base font-semibold mb-2">
-                            {responsibility.title}
-                          </h4>
-                          <p className="text-sm text-muted-foreground">
-                            {responsibility.description}
+            {activeTab === "architecture" && project.architecture}
+
+            {activeTab === "responsibilities" && project.responsibilities && (
+              <div className="space-y-6">
+                <div>
+                  <h3 className="text-lg font-semibold mb-4">담당 업무</h3>
+                  <div className="space-y-6">
+                    {project.responsibilities.map(
+                      (responsibility: any, idx: number) => (
+                        <div key={idx} className="space-y-3">
+                          <div className="border-l-2 border-blue-600 dark:border-blue-400 pl-4">
+                            <h4 className="text-base font-semibold mb-2">
+                              {responsibility.title}
+                            </h4>
+                            <p className="text-sm text-muted-foreground">
+                              {responsibility.description}
+                            </p>
+                          </div>
+                          {responsibility.details &&
+                            responsibility.details.length > 0 && (
+                              <ul className="space-y-2 pl-4">
+                                {responsibility.details.map(
+                                  (detail: string, detailIdx: number) => (
+                                    <li
+                                      key={detailIdx}
+                                      className="flex items-center gap-2"
+                                    >
+                                      <span className="text-blue-600 dark:text-blue-400 flex-shrink-0">
+                                        •
+                                      </span>
+                                      <span className="text-sm leading-relaxed">
+                                        {detail}
+                                      </span>
+                                    </li>
+                                  ),
+                                )}
+                              </ul>
+                            )}
+                        </div>
+                      ),
+                    )}
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {activeTab === "troubleshooting" && issues.length > 0 && (
+              <div className="space-y-4">
+                <div className="flex items-baseline justify-between gap-3">
+                  <h3 className="text-lg font-semibold">
+                    문제 해결
+                    <span className="ml-2 text-sm font-normal text-muted-foreground">
+                      {issues.length}건
+                    </span>
+                  </h3>
+                </div>
+                <ul className="space-y-2">
+                  {issues.map((issue: any, idx: number) => {
+                    const isSelected = isDetailOpen && detailIdx === idx;
+                    return (
+                      <li key={idx}>
+                        <button
+                          type="button"
+                          onClick={() => openDetail(idx)}
+                          aria-current={isSelected ? "true" : undefined}
+                          className={`group w-full flex items-start gap-3 rounded-lg border p-4 text-left transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-blue-500 ${
+                            isSelected
+                              ? "border-blue-500/60 bg-blue-50 dark:border-blue-400/50 dark:bg-blue-950/30"
+                              : "border-border/60 bg-muted/20 hover:border-border hover:bg-muted/40"
+                          }`}
+                        >
+                          <span
+                            className={`flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full text-xs font-bold ${
+                              isSelected
+                                ? "bg-blue-600 text-white dark:bg-blue-500"
+                                : "bg-blue-100 text-blue-700 dark:bg-blue-900/50 dark:text-blue-300"
+                            }`}
+                          >
+                            {idx + 1}
+                          </span>
+                          <span className="flex-1 min-w-0">
+                            <span className="block text-[15px] font-semibold leading-snug">
+                              {issue.problem}
+                            </span>
+                            {issue.result && (
+                              <span className="mt-1 block text-sm text-muted-foreground line-clamp-1">
+                                {issue.result}
+                              </span>
+                            )}
+                          </span>
+                          <ChevronRight
+                            className={`mt-0.5 h-5 w-5 flex-shrink-0 transition-transform group-hover:translate-x-0.5 ${
+                              isSelected
+                                ? "text-blue-600 dark:text-blue-400"
+                                : "text-muted-foreground"
+                            }`}
+                          />
+                        </button>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* 문제 해결 상세 패널: md 이상은 우측으로 펼쳐지고, 모바일은 전체를 덮음 */}
+        {issues.length > 0 && (
+          <aside
+            aria-label="문제 해결 상세"
+            aria-hidden={!isDetailOpen}
+            className={`absolute inset-0 z-20 flex flex-col overflow-hidden bg-card transition-[transform,opacity,visibility] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none md:static md:inset-auto md:z-auto md:min-w-0 md:flex-1 md:border-l md:border-border ${
+              isDetailOpen
+                ? "visible translate-x-0 opacity-100"
+                : "invisible translate-x-full opacity-0 md:translate-x-6"
+            }`}
+          >
+            {detailIssue && (
+              <>
+                <div className="flex-shrink-0 border-b border-border px-6 sm:px-8 py-4 flex items-start gap-3">
+                  <button
+                    type="button"
+                    onClick={closeDetail}
+                    className="md:hidden -ml-2 p-2 rounded-full hover:bg-muted transition-colors"
+                    aria-label="목록으로 돌아가기"
+                  >
+                    <ChevronLeft className="h-5 w-5" />
+                  </button>
+                  <div className="flex-1 min-w-0">
+                    <p className="mb-1 text-xs font-semibold text-blue-600 dark:text-blue-400">
+                      문제 해결 {detailIdx + 1} / {issues.length}
+                    </p>
+                    <h3 className="text-lg font-bold leading-snug">
+                      {detailIssue.problem}
+                    </h3>
+                  </div>
+                  <div className="flex flex-shrink-0 items-center gap-1">
+                    <button
+                      type="button"
+                      onClick={() => setDetailIdx((i) => i - 1)}
+                      disabled={detailIdx === 0}
+                      className="p-2 rounded-full hover:bg-muted transition-colors disabled:opacity-30 disabled:pointer-events-none"
+                      aria-label="이전 문제"
+                    >
+                      <ChevronUp className="h-5 w-5" />
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setDetailIdx((i) => i + 1)}
+                      disabled={detailIdx === issues.length - 1}
+                      className="p-2 rounded-full hover:bg-muted transition-colors disabled:opacity-30 disabled:pointer-events-none"
+                      aria-label="다음 문제"
+                    >
+                      <ChevronDown className="h-5 w-5" />
+                    </button>
+                    <button
+                      type="button"
+                      onClick={closeDetail}
+                      className="hidden md:inline-flex p-2 rounded-full hover:bg-muted transition-colors"
+                      aria-label="상세 패널 닫기"
+                    >
+                      <X className="h-5 w-5" />
+                    </button>
+                  </div>
+                </div>
+
+                <div
+                  ref={detailRef}
+                  className="flex-1 min-h-0 overflow-y-auto px-6 py-6 sm:px-8"
+                >
+                  {detailIssue.caseStudy ? (
+                    detailIssue.caseStudy
+                  ) : (
+                    <div className="space-y-6">
+                      {detailIssue.cause && (
+                        <div>
+                          <p className="text-base font-semibold text-foreground mb-3">
+                            원인
+                          </p>
+                          <p className="text-sm leading-relaxed">
+                            {detailIssue.cause}
                           </p>
                         </div>
-                        {responsibility.details &&
-                          responsibility.details.length > 0 && (
-                            <ul className="space-y-2 pl-4">
-                              {responsibility.details.map(
-                                (detail: string, detailIdx: number) => (
-                                  <li
-                                    key={detailIdx}
-                                    className="flex items-center gap-2"
-                                  >
-                                    <span className="text-blue-600 dark:text-blue-400 flex-shrink-0">
-                                      •
-                                    </span>
-                                    <span className="text-sm leading-relaxed">
-                                      {detail}
-                                    </span>
-                                  </li>
-                                ),
-                              )}
-                            </ul>
-                          )}
-                      </div>
-                    ),
+                      )}
+                      {detailIssue.solution && (
+                        <div>
+                          <p className="text-base font-semibold text-foreground mb-3">
+                            해결
+                          </p>
+                          <p className="text-sm leading-relaxed">
+                            {detailIssue.solution}
+                          </p>
+                        </div>
+                      )}
+                      {detailIssue.result && (
+                        <div>
+                          <p className="text-base font-semibold text-foreground mb-3">
+                            결과
+                          </p>
+                          <p className="text-sm leading-relaxed">
+                            {detailIssue.result}
+                          </p>
+                        </div>
+                      )}
+                    </div>
                   )}
                 </div>
-              </div>
-            </div>
-          )}
-
-          {activeTab === "troubleshooting" && project.troubleshooting && (
-            <div className="space-y-6">
-              <div>
-                <h3 className="text-lg font-semibold mb-4">문제 해결</h3>
-                <div className="space-y-6">
-                  {project.troubleshooting.map((issue: any, idx: number) => (
-                    <div key={idx} className="bg-muted/30 rounded-lg p-4">
-                      <h4 className="text-base font-semibold mb-2 flex items-start gap-2">
-                        <span className="text-red-600 dark:text-red-400">
-                          ⚠
-                        </span>
-                        {issue.problem}
-                      </h4>
-                      <div className="space-y-3 ml-6">
-                        {issue.cause && (
-                          <div>
-                            <p className="text-xs font-semibold text-muted-foreground mb-1">
-                              원인
-                            </p>
-                            <p className="text-sm leading-relaxed">
-                              {issue.cause}
-                            </p>
-                          </div>
-                        )}
-                        {issue.solution && (
-                          <div>
-                            <p className="text-xs font-semibold text-muted-foreground mb-1">
-                              해결
-                            </p>
-                            <p className="text-sm leading-relaxed">
-                              {issue.solution}
-                            </p>
-                          </div>
-                        )}
-                        {issue.result && (
-                          <div>
-                            <p className="text-xs font-semibold text-muted-foreground mb-1">
-                              결과
-                            </p>
-                            <p className="text-sm leading-relaxed text-green-600 dark:text-green-400">
-                              {issue.result}
-                            </p>
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          )}
-        </div>
+              </>
+            )}
+          </aside>
+        )}
       </div>
     </div>
   );
@@ -735,7 +909,7 @@ const ProjectCard = ({
                 className="flex items-center justify-center"
               >
                 <FileText className="mr-2 h-4 w-4" />
-                Document
+                {project.documentLabel ?? "Document"}
               </Link>
             </Button>
           )}
@@ -1708,7 +1882,7 @@ export default function Home() {
       features: [
         "AI 기반 이미지 인증 및 자동 검증",
         "Apple Watch·HealthKit 연동 실시간 자동 인증",
-        "개인·그룹 단위 소셜 챌린 기능 ",
+        "개인·그룹 단위 소셜 챌린지 기능 ",
         "실시간 채팅 및 활동 알림",
         "관리자 모더레이션 및 신고처리 시스템",
         "개인 목표 관리 및 습관 트래킹",
@@ -1743,8 +1917,8 @@ export default function Home() {
           description: "SQS와 Lambda를 활용한 AI 기반 이미지 인증 파이프라인",
           details: [
             "Anthropic Claude 3.5 Sonnet v2(AWS Bedrock) 모델을 활용한 이미지 관련성 분석",
-            "이미지 업로드 시 AI 검증 후 approve/reject/review 상태 반환",
-            "S3 이벤트 트리거 기반 SQS 메시지 큐 설계",
+            "이미지 업로드 접수와 AI 분석을 분리하고 postUuid 기반 상태 조회 API 구현",
+            "이미지 저장 및 pending 기록 후 API 서버에서 SQS 분석 작업 발행",
             "Lambda 워커 함수 구현 및 Bedrock AI 연동",
             "ImageVerification 엔티티 설계 및 분석 결과 저장",
             "인증 결과를 관리자 모더레이션 큐에 적재하는 워크플로우 구성",
@@ -1789,13 +1963,14 @@ export default function Home() {
       ],
       troubleshooting: [
         {
-          problem: "Bedrock AI 이미지 검증 시 동시 호출 부하 발생",
+          problem: "AI 이미지 검증의 응답 대기 문제를 비동기 처리 구조로 개선",
           cause:
-            "다수 사용자가 이미지 업로드 시 Bedrock API를 동기적으로 호출하여 타임아웃 및 응답 지연이 발생했습니다.",
+            "이미지 분석을 Promise.all로 병렬 실행해도, 업로드 API는 가장 늦은 Bedrock 분석이 끝날 때까지 응답하지 못했습니다. 이미지 저장과 외부 AI 분석을 하나의 요청 완료 조건으로 묶은 것이 원인이었습니다.",
           solution:
-            "S3 업로드 → SQS 메시지 발행 → Lambda 워커 → Bedrock 분석 → DB 저장 구조로 전면 개편해 비동기 처리 파이프라인을 구축했습니다.",
+            "S3 저장·pending 기록·SQS 작업 발행 후 processing 상태와 postUuid를 반환하도록 변경했습니다. Lambda가 AI 분석 후 DB를 갱신하고, 별도 상태 조회 API에서 전체 이미지의 승인 여부를 확인합니다.",
           result:
-            "동시 처리 성능이 크게 향상되고, 사용자는 업로드 직후 즉시 다음 작업이 가능해 UX가 개선되었습니다.",
+            "AI 분석 완료를 기다리지 않고 이미지 업로드 요청에 응답하도록 개선했습니다. SQS와 Lambda로 분석을 비동기 처리하고, 모든 이미지가 승인된 경우에만 게시글 작성을 허용하도록 구성했습니다.",
+          caseStudy: <ImageVerificationCaseStudy />,
         },
         {
           problem: "CloudWatch Logs 가독성 저하",
@@ -1871,6 +2046,8 @@ export default function Home() {
       image:
         "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/bf10d5f4f6dd3bc64cedf9b0dff5fd73.png",
       pdf: "/project_soapft.pdf",
+      documentLabel: "기획 발표자료 (PDF)",
+      architecture: <CloudArchitecture />,
     },
     {
       title: "할 사람?",
