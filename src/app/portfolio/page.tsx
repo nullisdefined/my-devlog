@@ -62,6 +62,7 @@ import {
 import Image from "next/image";
 import ImageVerificationCaseStudy from "./_components/image-verification-case-study";
 import WinstonCaseStudy from "./_components/winston-case-study";
+import EcsFargateCaseStudy from "./_components/ecs-fargate-case-study";
 import CloudArchitecture from "./_components/cloud-architecture";
 
 import { FaJava } from "react-icons/fa";
@@ -1975,13 +1976,14 @@ export default function Home() {
           caseStudy: <WinstonCaseStudy />,
         },
         {
-          problem: "ECS EC2 클러스터 운영 복잡성과 비용 증가",
+          problem: "ECS EC2 환경의 배포 자원 관리 부담과 불필요한 NAT Gateway 비용",
           cause:
-            "EC2 인스턴스의 클러스터 연결 불안정 및 NAT Gateway 비용 증가로 운영 부담이 커졌습니다.",
+            "롤링 배포 시 기존 Task와 신규 Task를 함께 실행할 EC2 자원이 부족했고, 트래픽이 적은 개발 환경에서도 NAT Gateway의 시간당 요금이 발생했습니다.",
           solution:
-            "ECS EC2 → ECS Fargate로 전환하고 NAT Gateway 제거, Bastion Host + VPC Endpoint 기반 아키텍처로 변경했습니다.",
+            "ECS 실행 환경을 Fargate로 전환하고, 필요한 AWS 서비스에 대한 VPC Endpoint를 구성해 해당 통신에 사용하던 NAT Gateway를 제거했습니다.",
           result:
-            "인프라 관리 부담이 거의 제거되고 월 비용을 약 30% 절감했습니다.",
+            "ECS 실행 환경을 Fargate로 전환해 배포 자원 관리 부담을 줄이고, VPC Endpoint를 구성해 NAT Gateway의 상시 비용을 제거했습니다.",
+          caseStudy: <EcsFargateCaseStudy />,
         },
         {
           problem: "NestJS 모듈 간 순환 의존성",
