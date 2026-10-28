@@ -1971,7 +1971,7 @@ export default function Home() {
           solution:
             "배포 환경의 Console Transport를 한 줄 JSON으로 변경하고, 전역 예외 필터가 오류 객체를 그대로 Winston에 전달하도록 수정했습니다.",
           result:
-            "한 이벤트에서 오류 메시지와 스택 트레이스를 확인하고, 공통 에러코드와 요청 URL을 독립적인 필드 조건으로 검색할 수 있게 됐습니다.",
+            "오류 메시지와 스택 트레이스를 하나의 로그 이벤트에서 확인하고, 필요한 로그를 필드 조건으로 검색할 수 있도록 개선했습니다.",
           caseStudy: <WinstonCaseStudy />,
         },
         {
