@@ -19,20 +19,9 @@ const comparison = [
   ],
 ];
 
-const metrics = [
-  ["API 평균 응답 시간", "업로드 요청 접수부터 응답까지의 평균 시간"],
-  ["API p95 응답 시간", "동일 조건에서 요청의 95%가 응답하는 데 걸린 시간"],
-  ["요청 타임아웃 비율", "전체 업로드 요청 중 타임아웃이 발생한 비율"],
-  ["단위 시간당 검증 완료 수", "동일한 시간 동안 분석이 완료된 이미지 수"],
-  [
-    "업로드부터 검증 완료까지 소요 시간",
-    "업로드 시작부터 모든 이미지의 분석 완료까지 걸린 시간",
-  ],
-];
-
 export default function ImageVerificationCaseStudy() {
   return (
-    <article className="space-y-6 text-sm leading-relaxed break-words text-foreground [&_code]:rounded [&_code]:bg-muted/50 [&_code]:px-1 [&_code]:py-0.5 [&_code]:text-[0.9em] [&_code]:[overflow-wrap:anywhere] [&>section+section]:border-t [&>section+section]:border-border/60 [&>section+section]:pt-6">
+    <article className="space-y-6 text-sm leading-relaxed break-words text-foreground [&_code]:rounded [&_code]:bg-zinc-100 [&_code]:ring-1 [&_code]:ring-inset [&_code]:ring-zinc-300 dark:[&_code]:bg-muted/50 dark:[&_code]:ring-0 [&_code]:px-1 [&_code]:py-0.5 [&_code]:text-[0.9em] [&_code]:[overflow-wrap:anywhere] [&>section+section]:border-t [&>section+section]:border-border/60 [&>section+section]:pt-6">
       <div className="space-y-3 rounded-lg border border-border/60 bg-muted/20 p-4">
         <p className="text-sm font-semibold text-muted-foreground">
           핵심 개선
@@ -41,10 +30,9 @@ export default function ImageVerificationCaseStudy() {
           이미지 업로드와 AI 분석을 분리해, 외부 AI의 분석 완료를 기다리지 않고
           업로드 요청에 응답하도록 개선했습니다.
         </p>
-        <p className="text-muted-foreground">
-          SQS와 Lambda를 이용해 AI 분석을 비동기로 처리하고, 별도의 상태 조회
-          API에서 모든 이미지의 승인 여부를 확인한 뒤 게시글 작성을 허용하도록
-          구성했습니다.
+        <p className="text-[15px] font-medium leading-relaxed">
+          SQS와 Lambda를 이용해 AI 분석을 비동기로 처리하고, 별도의 상태 조회 API에서
+          전체 이미지의 검증 상태와 게시글 작성 가능 여부를 반환하도록 구성했습니다.
         </p>
       </div>
       <section className="space-y-3">
@@ -64,7 +52,7 @@ export default function ImageVerificationCaseStudy() {
           <p className="mb-3 text-sm font-semibold text-muted-foreground">
             초기 처리 흐름
           </p>
-          <ol className="list-decimal space-y-1 pl-5 marker:text-muted-foreground">
+          <ol className="list-decimal space-y-1 pl-5 marker:text-[var(--project-accent)]">
             <li>클라이언트가 이미지 전송</li>
             <li>API 서버가 이미지를 S3에 저장</li>
             <li>
@@ -139,7 +127,7 @@ export default function ImageVerificationCaseStudy() {
             ],
             [
               "3. 검증 결과 확인",
-              "postUuid로 상태 조회 → 전체 이미지 승인 확인 → 게시글 작성 허용",
+              "postUuid로 상태 조회 → 전체 이미지 상태 집계 → 작성 가능 여부 반환",
             ],
           ].map(([label, flow]) => (
             <div key={label} className="py-3">
@@ -153,7 +141,7 @@ export default function ImageVerificationCaseStudy() {
         <div className="space-y-6">
           <section className="space-y-3">
             <h5 className="text-[15px] font-semibold text-foreground">
-              검증 대기 상태 기록 및 SQS 메시지 발행
+              1. 검증 대기 상태 기록 및 SQS 메시지 발행
             </h5>
             <p>
               이미지를 S3에 저장한 뒤, 게시글 작성 전 업로드한 이미지들을 하나의
@@ -167,7 +155,7 @@ export default function ImageVerificationCaseStudy() {
               <code>imageUrl</code>, 챌린지 정보를 SQS 메시지로 발행합니다.
             </p>
             <p>이후 AI 분석 완료를 기다리지 않고 다음 정보를 응답합니다.</p>
-            <ul className="list-disc space-y-1 rounded-lg border border-border/60 bg-muted/20 py-3 pl-8 pr-4 marker:text-muted-foreground">
+            <ul className="list-disc space-y-1 rounded-lg border border-border/60 bg-muted/20 py-3 pl-8 pr-4 marker:text-[15px] marker:text-[var(--project-accent)]">
               <li>
                 <code>overallStatus: processing</code>
               </li>
@@ -185,7 +173,7 @@ export default function ImageVerificationCaseStudy() {
           </section>
           <section className="space-y-3">
             <h5 className="text-[15px] font-semibold text-foreground">
-              Lambda에서 AI 분석 및 DB 상태 갱신
+              2. Lambda에서 AI 분석 및 DB 상태 갱신
             </h5>
             <p>
               SQS 이벤트를 통해 실행된 <code>image-verification</code> Lambda가
@@ -208,7 +196,7 @@ export default function ImageVerificationCaseStudy() {
               aria-label="AI 분석 결과에 따른 상태 결정 기준"
               tabIndex={0}
             >
-              <table className="w-full text-left text-xs leading-relaxed">
+              <table className="w-full text-left text-[13px] leading-relaxed">
                 <caption className="sr-only">
                   AI 분석 결과에 따른 상태 결정 기준
                 </caption>
@@ -254,7 +242,7 @@ export default function ImageVerificationCaseStudy() {
           </section>
           <section className="space-y-3">
             <h5 className="text-[15px] font-semibold text-foreground">
-              상태 조회 API를 통한 게시글 작성 제어
+              3. 상태 조회 API를 통한 검증 상태 및 작성 가능 여부 제공
             </h5>
             <p>
               클라이언트는{" "}
@@ -277,9 +265,8 @@ export default function ImageVerificationCaseStudy() {
               상태의 이미지가 포함되어 있으면 게시글 작성을 허용하지 않습니다.
             </p>
             <p>
-              이렇게 업로드 요청과 검증 결과 확인을 분리하면서도, 모든 이미지가
-              승인되어야 게시글을 작성할 수 있다는 기존 비즈니스 규칙은
-              유지했습니다.
+              이렇게 업로드 요청과 검증 결과 확인을 분리하면서도,
+              전체 이미지가 승인된 경우에만 작성 가능 상태를 반환하도록 구성했습니다.
             </p>
           </section>
         </div>
@@ -287,18 +274,17 @@ export default function ImageVerificationCaseStudy() {
 
       <section className="space-y-3">
         <h4 className="text-base font-semibold text-foreground">결과</h4>
-        <p>이번 변경은 AI 모델의 분석 속도 자체를 높이기 위한 것이 아닙니다.</p>
+        <p>이미지 저장과 분석 작업 등록이 완료되면 업로드 API가 응답하고, AI 분석은 Lambda에서 별도로 진행하도록 변경했습니다.</p>
         <p>
-          업로드 API의 응답 완료 조건에서 AI 분석을 제외해, 외부 AI의 응답
-          지연이 업로드 요청의 대기로 이어지지 않도록 구조를 개선했습니다.
+          이를 통해 업로드 요청의 완료 조건에서 외부 AI 분석을 분리했습니다.
+          클라이언트는 접수 응답을 받은 후 별도 API로 검증 진행 상태와 작성 가능 여부를 확인할 수 있습니다.
         </p>
         <p>
-          변경 후에는 이미지 저장과 분석 작업 등록이 완료되면 API가 응답하고,
-          실제 분석은 Lambda에서 독립적으로 진행됩니다.
+          이 변경의 목적은 AI 분석 속도 향상이 아니라, 작업 접수와 분석 결과 확인을 서로 다른 요청으로 분리하는 것입니다.
         </p>
         <p>
           사용자는 업로드 응답을 받은 뒤 별도의 API로 검증 상태를 확인할 수
-          있으며, 모든 이미지가 승인된 경우에만 게시글 작성이 가능합니다.
+          있으며, 상태 조회 응답을 통해 전체 이미지 승인 여부와 작성 가능 여부를 확인할 수 있습니다.
         </p>
         <h5 className="text-[15px] font-semibold text-foreground">변경 전후 비교</h5>
         <div
@@ -307,7 +293,7 @@ export default function ImageVerificationCaseStudy() {
           aria-label="이미지 검증 구조 변경 전후 비교"
           tabIndex={0}
         >
-          <table className="w-full min-w-[540px] text-left text-xs leading-relaxed">
+          <table className="w-full min-w-[540px] text-left text-[13px] leading-relaxed">
             <caption className="sr-only">
               AI 이미지 검증의 요청과 분석 분리 전후 비교
             </caption>
@@ -337,75 +323,6 @@ export default function ImageVerificationCaseStudy() {
             </tbody>
           </table>
         </div>
-      </section>
-
-      <section className="space-y-3">
-        <div className="flex flex-wrap items-center gap-2">
-          <h4 className="text-base font-semibold text-foreground">정량 검증</h4>
-          <span className="rounded-md bg-muted/50 px-2 py-0.5 text-xs font-medium text-muted-foreground">
-            측정 예정
-          </span>
-        </div>
-        <p className="text-muted-foreground">
-          변경 전후의 성능 지표는 아직 측정하지 않았습니다.
-        </p>
-        <p className="text-muted-foreground">
-          동일한 이미지 수와 크기, 동시 요청 수, 실행 환경을 기준으로 다음
-          지표를 비교할 예정입니다.
-        </p>
-        <p className="text-muted-foreground">
-          특히 업로드 API의 응답 시간과 전체 이미지 검증 완료 시간을 구분해
-          측정하여, 요청 처리 구조 변경이 실제 사용자 대기 시간과 전체 처리
-          성능에 미친 영향을 확인하고자 합니다.
-        </p>
-        <div
-          className="overflow-x-auto rounded-lg border border-border/60"
-          role="region"
-          aria-label="정량 검증 측정 계획"
-          tabIndex={0}
-        >
-          <table className="w-full min-w-[640px] text-left text-xs leading-relaxed">
-            <caption className="sr-only">
-              정량 검증 측정 계획. 대시는 미측정을 의미합니다.
-            </caption>
-            <thead className="bg-muted/30 text-muted-foreground">
-              <tr>
-                {["지표", "변경 전", "변경 후", "개선율", "측정 조건·출처"].map(
-                  (label) => (
-                    <th
-                      key={label}
-                      scope="col"
-                      className="whitespace-nowrap p-3"
-                    >
-                      {label}
-                    </th>
-                  ),
-                )}
-              </tr>
-            </thead>
-            <tbody>
-              {metrics.map(([label, description]) => (
-                <tr key={label} className="border-t border-border align-top">
-                  <th
-                    scope="row"
-                    className="p-3 font-medium"
-                    title={description}
-                  >
-                    {label}
-                  </th>
-                  {["before", "after", "improvement", "source"].map((field) => (
-                    <td key={field} className="p-3 text-muted-foreground">
-                      <span aria-label="미측정">—</span>
-                    </td>
-                  ))}
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-        <p className="text-xs text-muted-foreground">
-          ※ 대시(—)는 미측정을 의미합니다.
-        </p>
       </section>
     </article>
   );

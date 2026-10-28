@@ -27,8 +27,6 @@ import {
   SiZedindustries,
   SiGithubcopilot,
   SiTerraform,
-  SiMongodb,
-  SiMongoose,
   SiC,
   SiJavascript,
   SiTypescript,
@@ -63,21 +61,24 @@ import {
 } from "react-icons/si";
 import Image from "next/image";
 import ImageVerificationCaseStudy from "./_components/image-verification-case-study";
+import WinstonCaseStudy from "./_components/winston-case-study";
 import CloudArchitecture from "./_components/cloud-architecture";
 
 import { FaJava } from "react-icons/fa";
 
 import ThemeToggle from "@/components/theme-toggle";
 import Footer from "@/components/footer";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, type CSSProperties } from "react";
 
 // 툴팁 컴포넌트
 const Tooltip = ({
   children,
   content,
+  compact = false,
 }: {
   children: React.ReactNode;
   content: string;
+  compact?: boolean;
 }) => {
   const [isVisible, setIsVisible] = useState(false);
   const hasContent = content && content.trim() !== "";
@@ -87,11 +88,20 @@ const Tooltip = ({
       <div
         onMouseEnter={() => hasContent && setIsVisible(true)}
         onMouseLeave={() => hasContent && setIsVisible(false)}
+        onFocus={() => hasContent && setIsVisible(true)}
+        onBlur={() => setIsVisible(false)}
       >
         {children}
       </div>
       {hasContent && isVisible && (
-        <div className="absolute z-50 bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-2 bg-gray-900 dark:bg-gray-700 text-white text-sm rounded-lg shadow-lg whitespace-normal w-64 pointer-events-none">
+        <div
+          role="tooltip"
+          className={`absolute z-50 bottom-full left-1/2 transform -translate-x-1/2 mb-2 bg-gray-900 dark:bg-gray-700 text-white rounded-lg shadow-lg whitespace-normal pointer-events-none ${
+            compact
+              ? "w-max max-w-[200px] px-2.5 py-1.5 text-xs"
+              : "w-64 px-3 py-2 text-sm"
+          }`}
+        >
           <div className="text-center leading-relaxed">{content}</div>
           {/* 툴팁 화살표 */}
           <div className="absolute top-full left-1/2 transform -translate-x-1/2 -mt-px">
@@ -215,12 +225,12 @@ const ProjectDetailModal = ({
     }
   }, [activeTab]);
 
-  // 상세 이슈 변경 시 상세 패널 스크롤을 최상단으로 이동
+  // 상세 패널을 다시 열거나 이슈를 변경하면 스크롤을 최상단으로 이동
   useEffect(() => {
-    if (detailRef.current) {
+    if (isDetailOpen && detailRef.current) {
       detailRef.current.scrollTop = 0;
     }
-  }, [detailIdx]);
+  }, [detailIdx, isDetailOpen]);
 
   // 기간 계산 함수
   const calculateDuration = (period: string, title: string) => {
@@ -293,7 +303,10 @@ const ProjectDetailModal = ({
   const closeDetail = () => setIsDetailOpen(false);
 
   return (
-    <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/80 backdrop-blur-sm">
+    <div
+      className="fixed inset-0 z-[60] flex items-center justify-center bg-black/80 backdrop-blur-sm text-[15px] [&_.text-sm]:text-[15px]"
+      style={{ "--project-accent": project.accentColor ?? "#2563eb" } as CSSProperties}
+    >
       {/* 모달 배경 클릭시 닫기 */}
       <div className="absolute inset-0 cursor-pointer" onClick={onClose} />
 
@@ -331,7 +344,7 @@ const ProjectDetailModal = ({
                 onClick={() => setActiveTab("troubleshooting")}
                 className={`py-3 px-4 text-sm font-medium border-b-2 transition-colors ${
                   activeTab === "troubleshooting"
-                    ? "border-blue-600 text-blue-600 dark:border-blue-400 dark:text-blue-400"
+                    ? "border-[var(--project-accent)] text-[var(--project-accent)]"
                     : "border-transparent text-muted-foreground hover:text-foreground"
                 }`}
               >
@@ -343,7 +356,7 @@ const ProjectDetailModal = ({
                 onClick={() => setActiveTab("responsibilities")}
                 className={`py-3 px-4 text-sm font-medium border-b-2 transition-colors ${
                   activeTab === "responsibilities"
-                    ? "border-blue-600 text-blue-600 dark:border-blue-400 dark:text-blue-400"
+                    ? "border-[var(--project-accent)] text-[var(--project-accent)]"
                     : "border-transparent text-muted-foreground hover:text-foreground"
                 }`}
               >
@@ -355,7 +368,7 @@ const ProjectDetailModal = ({
                 onClick={() => setActiveTab("architecture")}
                 className={`py-3 px-4 text-sm font-medium border-b-2 transition-colors ${
                   activeTab === "architecture"
-                    ? "border-blue-600 text-blue-600 dark:border-blue-400 dark:text-blue-400"
+                    ? "border-[var(--project-accent)] text-[var(--project-accent)]"
                     : "border-transparent text-muted-foreground hover:text-foreground"
                 }`}
               >
@@ -366,7 +379,7 @@ const ProjectDetailModal = ({
               onClick={() => setActiveTab("overview")}
               className={`py-3 px-4 text-sm font-medium border-b-2 transition-colors ${
                 activeTab === "overview"
-                  ? "border-blue-600 text-blue-600 dark:border-blue-400 dark:text-blue-400"
+                  ? "border-[var(--project-accent)] text-[var(--project-accent)]"
                   : "border-transparent text-muted-foreground hover:text-foreground"
               }`}
             >
@@ -380,20 +393,21 @@ const ProjectDetailModal = ({
             className="flex-1 min-h-0 overflow-y-auto px-6 py-6 sm:px-8"
           >
             {activeTab === "overview" && (
-              <div className="space-y-6">
+              <article className="space-y-6 text-sm leading-relaxed break-words text-foreground [&>section+section]:border-t [&>section+section]:border-border/60 [&>section+section]:pt-6">
                 {project.image && (
-                  <div className="relative w-full rounded-lg overflow-hidden">
+                  <div className="relative mx-auto w-full max-w-xl rounded-lg overflow-hidden">
                     <Image
                       src={project.image}
                       alt={project.title}
                       width={800}
                       height={600}
-                      className="w-full h-auto object-contain"
+                      className="w-full h-auto max-h-72 sm:max-h-[360px] object-contain"
+                      sizes="(max-width: 640px) 100vw, 576px"
                     />
                   </div>
                 )}
-                <div>
-                  <h3 className="text-m font-semibold text-muted-foreground mb-2">
+                <section className="space-y-3">
+                  <h3 className="text-base font-semibold text-foreground">
                     프로젝트 기간
                   </h3>
                   <p className="text-sm">
@@ -401,10 +415,10 @@ const ProjectDetailModal = ({
                     {calculateDuration(project.period, project.title) > 0 &&
                       ` (${calculateDuration(project.period, project.title)}개월)`}
                   </p>
-                </div>
+                </section>
                 {project.role && (
-                  <div>
-                    <h3 className="text-m font-semibold text-muted-foreground mb-2">
+                  <section className="space-y-3">
+                    <h3 className="text-base font-semibold text-foreground">
                       역할
                     </h3>
                     <span
@@ -418,29 +432,31 @@ const ProjectDetailModal = ({
                     >
                       {project.role}
                     </span>
-                  </div>
+                  </section>
                 )}
                 {project.teamSize && (
-                  <div>
-                    <h3 className="text-m font-semibold text-muted-foreground mb-2">
+                  <section className="space-y-3">
+                    <h3 className="text-base font-semibold text-foreground">
                       팀 인원
                     </h3>
                     <p className="text-sm">
                       {project.teamSize === 1 ? "개인" : `${project.teamSize}명`}
                     </p>
-                  </div>
+                  </section>
                 )}
-                <div>
-                  <h3 className="text-m font-semibold text-muted-foreground mb-2">
+                <section className="space-y-3">
+                  <h3 className="text-base font-semibold text-foreground">
                     프로젝트 설명
                   </h3>
-                  <div className="text-sm leading-relaxed">
-                    <p>{project.description}</p>
+                  <div className="space-y-3">
+                    <p className="text-sm leading-relaxed">
+                      {project.description}
+                    </p>
                     {project.title === "개발새발" && latestPost && (
                       <p className="mt-2">
                         <Link
                           href={latestPost.url}
-                          className="text-blue-600 dark:text-blue-400 hover:underline"
+                          className="text-[var(--project-accent)] hover:underline"
                           target="_blank"
                           rel="noopener noreferrer"
                         >
@@ -449,28 +465,25 @@ const ProjectDetailModal = ({
                       </p>
                     )}
                   </div>
-                </div>
+                </section>
                 {project.features && project.features.length > 0 && (
-                  <div>
-                    <h3 className="text-m font-semibold text-muted-foreground mb-3">
+                  <section className="space-y-3">
+                    <h3 className="text-base font-semibold text-foreground">
                       주요 기능
                     </h3>
-                    <ul className="space-y-2">
+                    <ul className="list-disc space-y-2 pl-5 marker:text-[15px] marker:text-[var(--project-accent)]">
                       {project.features.map((feature: string, idx: number) => (
-                        <li key={idx} className="flex items-center gap-2">
-                          <span className="text-blue-600 dark:text-blue-400 flex-shrink-0">
-                            •
-                          </span>
+                        <li key={idx}>
                           <span className="text-sm leading-relaxed">
                             {feature}
                           </span>
                         </li>
                       ))}
                     </ul>
-                  </div>
+                  </section>
                 )}
-                <div>
-                  <h3 className="text-m font-semibold text-muted-foreground mb-3">
+                <section className="space-y-3">
+                  <h3 className="text-base font-semibold text-foreground">
                     기술 스택
                   </h3>
                   <div className="flex flex-wrap gap-2">
@@ -484,7 +497,7 @@ const ProjectDetailModal = ({
                       </div>
                     ))}
                   </div>
-                </div>
+                </section>
                 <div className="flex gap-3 pt-4">
                   {project.pdf && (
                     <Button variant="secondary" className="flex-1" asChild>
@@ -511,7 +524,7 @@ const ProjectDetailModal = ({
                     </Link>
                   </Button>
                 </div>
-              </div>
+              </article>
             )}
 
             {activeTab === "architecture" && project.architecture}
@@ -524,7 +537,7 @@ const ProjectDetailModal = ({
                     {project.responsibilities.map(
                       (responsibility: any, idx: number) => (
                         <div key={idx} className="space-y-3">
-                          <div className="border-l-2 border-blue-600 dark:border-blue-400 pl-4">
+                          <div className="border-l-2 border-[var(--project-accent)] pl-4">
                             <h4 className="text-base font-semibold mb-2">
                               {responsibility.title}
                             </h4>
@@ -534,16 +547,10 @@ const ProjectDetailModal = ({
                           </div>
                           {responsibility.details &&
                             responsibility.details.length > 0 && (
-                              <ul className="space-y-2 pl-4">
+                              <ul className="list-disc space-y-2 pl-9 marker:text-[15px] marker:text-[var(--project-accent)]">
                                 {responsibility.details.map(
                                   (detail: string, detailIdx: number) => (
-                                    <li
-                                      key={detailIdx}
-                                      className="flex items-center gap-2"
-                                    >
-                                      <span className="text-blue-600 dark:text-blue-400 flex-shrink-0">
-                                        •
-                                      </span>
+                                    <li key={detailIdx}>
                                       <span className="text-sm leading-relaxed">
                                         {detail}
                                       </span>
@@ -579,17 +586,17 @@ const ProjectDetailModal = ({
                           type="button"
                           onClick={() => openDetail(idx)}
                           aria-current={isSelected ? "true" : undefined}
-                          className={`group w-full flex items-start gap-3 rounded-lg border p-4 text-left transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-blue-500 ${
+                          className={`group w-full flex items-start gap-3 rounded-lg border p-4 text-left transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--project-accent)] ${
                             isSelected
-                              ? "border-blue-500/60 bg-blue-50 dark:border-blue-400/50 dark:bg-blue-950/30"
+                              ? "border-[var(--project-accent)] bg-[color-mix(in_srgb,var(--project-accent)_10%,transparent)]"
                               : "border-border/60 bg-muted/20 hover:border-border hover:bg-muted/40"
                           }`}
                         >
                           <span
                             className={`flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full text-xs font-bold ${
                               isSelected
-                                ? "bg-blue-600 text-white dark:bg-blue-500"
-                                : "bg-blue-100 text-blue-700 dark:bg-blue-900/50 dark:text-blue-300"
+                                ? "bg-[var(--project-accent)] text-white"
+                                : "bg-[color-mix(in_srgb,var(--project-accent)_15%,transparent)] text-[var(--project-accent)]"
                             }`}
                           >
                             {idx + 1}
@@ -607,7 +614,7 @@ const ProjectDetailModal = ({
                           <ChevronRight
                             className={`mt-0.5 h-5 w-5 flex-shrink-0 transition-transform group-hover:translate-x-0.5 ${
                               isSelected
-                                ? "text-blue-600 dark:text-blue-400"
+                                ? "text-[var(--project-accent)]"
                                 : "text-muted-foreground"
                             }`}
                           />
@@ -644,7 +651,7 @@ const ProjectDetailModal = ({
                     <ChevronLeft className="h-5 w-5" />
                   </button>
                   <div className="flex-1 min-w-0">
-                    <p className="mb-1 text-xs font-semibold text-blue-600 dark:text-blue-400">
+                    <p className="mb-1 text-xs font-semibold text-[var(--project-accent)]">
                       문제 해결 {detailIdx + 1} / {issues.length}
                     </p>
                     <h3 className="text-lg font-bold leading-snug">
@@ -683,7 +690,7 @@ const ProjectDetailModal = ({
 
                 <div
                   ref={detailRef}
-                  className="flex-1 min-h-0 overflow-y-auto px-6 py-6 sm:px-8"
+                  className="flex-1 min-h-0 overflow-y-auto px-6 py-6 sm:px-8 [&_h4]:py-1 [&_h5]:py-1"
                 >
                   {detailIssue.caseStudy ? (
                     detailIssue.caseStudy
@@ -747,6 +754,23 @@ const ProjectCard = ({
   onCardClick: (project: any) => void;
 }) => {
   const [isHovered, setIsHovered] = useState(false);
+  const cardTech = project.tech
+    .filter((tech: any) => !project.cardHiddenTech?.includes(tech.name))
+    .reduce(
+      (
+        groups: { names: string[]; icon: React.ReactElement }[],
+        tech: { name: string; icon: React.ReactElement },
+      ) => {
+        const existing = groups.find((group) => group.icon.type === tech.icon.type);
+        if (existing) {
+          existing.names.push(tech.name);
+        } else {
+          groups.push({ names: [tech.name], icon: tech.icon });
+        }
+        return groups;
+      },
+      [],
+    );
 
   const roleColor =
     roleColorMap[project.role as keyof typeof roleColorMap] ||
@@ -784,6 +808,7 @@ const ProjectCard = ({
   return (
     <div
       className="bg-card rounded-lg shadow-md hover:shadow-xl hover:scale-[1.02] transition-all duration-300 flex flex-col h-full cursor-pointer relative group"
+      style={{ "--project-accent": project.accentColor ?? "#2563eb" } as CSSProperties}
       onClick={() => onCardClick(project)}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
@@ -821,18 +846,11 @@ const ProjectCard = ({
           </div>
         </div>
       )}
-      <div className="p-4 flex-1 flex flex-col relative">
-        {/* 클릭 가능 힌트 텍스트 */}
-        <div
-          className={`absolute top-2 right-2 text-xs text-muted-foreground transition-opacity duration-300 ${isHovered ? "opacity-100" : "opacity-0"}`}
-        >
-          상세보기 →
-        </div>
-
+      <div className="px-5 py-6 flex-1 flex flex-col relative">
         {/* 프로젝트 제목 및 설명 */}
         <div className="space-y-2">
           <div className="space-y-1">
-            <div className="flex items-center gap-2">
+            <div className="flex flex-wrap items-center gap-2">
               <h3 className="font-bold text-base lg:text-lg">
                 {project.title}
               </h3>
@@ -848,6 +866,9 @@ const ProjectCard = ({
                   {project.teamSize === 1 ? "개인" : `${project.teamSize}인 팀`}
                 </span>
               )}
+              <span className="text-xs font-semibold px-2 py-1 rounded-md bg-muted text-muted-foreground whitespace-nowrap">
+                {project.period}
+              </span>
             </div>
           </div>
           <div className="space-y-0.5">
@@ -855,64 +876,52 @@ const ProjectCard = ({
             <p className="text-sm text-muted-foreground leading-relaxed">
               {project.oneLiner || project.description}
             </p>
-            {/* 기간 */}
-            <p className="text-sm text-muted-foreground font-medium">
-              {project.period}
-            </p>
           </div>
         </div>
 
-        {/* 핵심 기술 성과 */}
-        {project.keyAchievements && project.keyAchievements.length > 0 && (
-          <ul className="mt-5 space-y-2">
-            {project.keyAchievements.map((item: string, idx: number) => (
-              <li
-                key={idx}
-                className="flex items-start gap-2 text-sm leading-snug"
-              >
-                <span className="mt-0.5 flex-shrink-0 text-blue-600 dark:text-blue-400">
-                  •
-                </span>
-                <span>{item}</span>
-              </li>
-            ))}
-          </ul>
+        {/* 상세 모달과 동일한 문제해결 제목 표시 */}
+        {project.troubleshooting?.length > 0 && (
+          <div className="mt-6 space-y-3">
+            <h4 className="text-sm font-semibold">문제 해결</h4>
+            <ul className="list-disc space-y-3 pl-5 marker:text-[15px] marker:text-[var(--project-accent)]">
+              {project.troubleshooting.map(
+                (issue: { problem: string }, idx: number) => (
+                  <li
+                    key={idx}
+                    className="text-sm leading-snug"
+                  >
+                    <span>{issue.problem}</span>
+                  </li>
+                ),
+              )}
+            </ul>
+          </div>
         )}
 
         {/* 기술 스택 (카드 하단, 일부는 카드에서 숨김 — 상세 모달엔 전체 표시) */}
         <div className="mt-auto pt-4">
           <div className="flex flex-wrap gap-1.5">
-            {project.tech
-              .filter(
-                (t: any) => !(project.cardHiddenTech || []).includes(t.name),
-              )
-              .map((tech: any, idx: number) => (
-                <div
-                  key={idx}
-                  className="flex items-center space-x-1 text-muted-foreground hover:text-foreground transition-colors bg-muted/50 px-2 py-1 rounded text-xs"
+            {cardTech.map((tech: { names: string[]; icon: React.ReactElement }) => (
+              <Tooltip
+                key={tech.names.join(", ")}
+                content={tech.names.join(", ")}
+                compact
+              >
+                <span
+                  role="img"
+                  tabIndex={0}
+                  aria-label={tech.names.join(", ")}
+                  className="flex h-8 w-8 items-center justify-center rounded bg-muted/50 text-muted-foreground hover:text-foreground transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--project-accent)]"
                 >
-                  <span className="text-xs">{tech.icon}</span>
-                  <span>{tech.name}</span>
-                </div>
-              ))}
+                  <span aria-hidden="true">{tech.icon}</span>
+                </span>
+              </Tooltip>
+            ))}
           </div>
         </div>
 
         {/* 레포지토리 버튼 */}
         <div className="pt-3 space-y-2">
-          {project.pdf && (
-            <Button variant="secondary" className="w-full text-sm" asChild>
-              <Link
-                href={project.pdf}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-center"
-              >
-                <FileText className="mr-2 h-4 w-4" />
-                {project.documentLabel ?? "Document"}
-              </Link>
-            </Button>
-          )}
           <Button variant="outline" className="w-full text-sm" asChild>
             <Link
               href={project.link}
@@ -962,9 +971,6 @@ const CompactProjectCard = ({
       </p>
       <p className="text-sm text-muted-foreground leading-relaxed">
         {project.oneLiner || project.description}
-      </p>
-      <p className="text-xs text-muted-foreground text-right mt-auto pt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-        상세보기 →
       </p>
     </div>
   );
@@ -1111,12 +1117,6 @@ export default function Home() {
             "복잡한 관계 매핑 이슈에서 cascade/orphan 문제 해결 경험이 있습니다.",
         },
         {
-          name: "Mongoose",
-          icon: <SiMongoose className="h-4 w-4" />,
-          description:
-            "MongoDB의 ODM 라이브러리로 스키마 정의, 모델링, 미들웨어 구성을 통해 데이터를 관리한 경험이 있습니다.",
-        },
-        {
           name: "NestJS",
           icon: <SiNestjs className="h-4 w-4" />,
           description:
@@ -1142,12 +1142,6 @@ export default function Home() {
           icon: <SiPostgresql className="h-4 w-4" />,
           description:
             "주력 RDB로 사용하며, 인덱스 구조 조정과 쿼리 최적화로 성능을 개선한 경험이 있습니다.",
-        },
-        {
-          name: "MongoDB",
-          icon: <SiMongodb className="h-4 w-4" />,
-          description:
-            "문서 기반 NoSQL 데이터 모델을 다루고 Mongoose로 스키마를 설계해 본 경험이 있습니다.",
         },
       ],
     },
@@ -1446,6 +1440,7 @@ export default function Home() {
     },
     {
       title: "Worlds Subscription",
+      hidden: true,
       period: "2025.06",
       description:
         "카카오톡 구독으로 선택한 언어와 난이도에 맞는 단어, 뜻, 발음, 예문을 정해진 시간에 받아볼 수 있는 단어 학습 서비스입니다.",
@@ -1461,6 +1456,7 @@ export default function Home() {
     },
     {
       title: "Guestboots",
+      hidden: true,
       period: "2025.06",
       description:
         "AWS 서버리스 아키텍처로 구현한 포스트잇 방명록 애플리케이션입니다.",
@@ -1866,17 +1862,13 @@ export default function Home() {
     },
     {
       title: "한땀한땀",
+      accentColor: "#ff5f2b",
       period: "25.03 ~ 25.09",
       role: "Backend",
       teamSize: 4,
       featured: true,
       oneLiner: "AI 이미지 인증 기반 소셜 챌린지 플랫폼",
       cardHiddenTech: ["JWT", "OAuth2", "Docker", "Amazon ECR"],
-      keyAchievements: [
-        "NestJS 기반 RESTful API 설계 및 구현",
-        "SQS-Lambda 기반의 비동기 AI 이미지 인증 파이프라인 구축",
-        "Terraform IaC·ECS Fargate 전환으로 월 인프라 비용 약 30% 절감",
-      ],
       description:
         "개인의 다양한 목표 달성과 꾸준한 습관 형성을 지원하는 AI 기반 소셜 챌린지 플랫폼입니다. HealthKit과 연동된 Apple Watch 자동 인증, 그리고 실시간 AI 이미지 분석을 통해 신뢰성과 공정성을 갖춘 챌린지 환경을 제공합니다.",
       features: [
@@ -1963,23 +1955,24 @@ export default function Home() {
       ],
       troubleshooting: [
         {
-          problem: "AI 이미지 검증의 응답 대기 문제를 비동기 처리 구조로 개선",
+          problem: "AI 이미지 분석 대기로 인한 업로드 API 응답 지연",
           cause:
             "이미지 분석을 Promise.all로 병렬 실행해도, 업로드 API는 가장 늦은 Bedrock 분석이 끝날 때까지 응답하지 못했습니다. 이미지 저장과 외부 AI 분석을 하나의 요청 완료 조건으로 묶은 것이 원인이었습니다.",
           solution:
             "S3 저장·pending 기록·SQS 작업 발행 후 processing 상태와 postUuid를 반환하도록 변경했습니다. Lambda가 AI 분석 후 DB를 갱신하고, 별도 상태 조회 API에서 전체 이미지의 승인 여부를 확인합니다.",
           result:
-            "AI 분석 완료를 기다리지 않고 이미지 업로드 요청에 응답하도록 개선했습니다. SQS와 Lambda로 분석을 비동기 처리하고, 모든 이미지가 승인된 경우에만 게시글 작성을 허용하도록 구성했습니다.",
+            "SQS·Lambda로 AI 분석을 분리해 이미지 저장과 작업 등록 후 응답하고, 별도 API로 검증 상태를 조회하도록 개선했습니다.",
           caseStudy: <ImageVerificationCaseStudy />,
         },
         {
-          problem: "CloudWatch Logs 가독성 저하",
+          problem: "CloudWatch 오류 로그의 이벤트 분리와 검색 어려움",
           cause:
-            "Winston 로그가 CloudWatch 환경에서 포맷이 깨지며 JSON 구조가 평탄화되지 않아 분석이 어려웠습니다.",
+            "여러 줄의 오류 로그가 CloudWatch에서 여러 이벤트로 나뉘고, 직렬화된 오류 정보가 message 문자열에 포함되어 에러코드와 URL을 필드 조건으로 검색하기 어려웠습니다.",
           solution:
-            "Console Transport 포맷을 재구성하여 타임스탬프·레벨·스택 트레이스 등을 구조화된 JSON 형태로 출력하도록 개선했습니다.",
+            "배포 환경의 Console Transport를 한 줄 JSON으로 변경하고, 전역 예외 필터가 오류 객체를 그대로 Winston에 전달하도록 수정했습니다.",
           result:
-            "로그 검색·분석 효율성이 크게 향상되어 장애 대응 시간을 단축했습니다.",
+            "한 이벤트에서 오류 메시지와 스택 트레이스를 확인하고, 공통 에러코드와 요청 URL을 독립적인 필드 조건으로 검색할 수 있게 됐습니다.",
+          caseStudy: <WinstonCaseStudy />,
         },
         {
           problem: "ECS EC2 클러스터 운영 복잡성과 비용 증가",
@@ -2046,7 +2039,7 @@ export default function Home() {
       image:
         "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/bf10d5f4f6dd3bc64cedf9b0dff5fd73.png",
       pdf: "/project_soapft.pdf",
-      documentLabel: "기획 발표자료 (PDF)",
+      documentLabel: "Presentation",
       architecture: <CloudArchitecture />,
     },
     {
@@ -2573,14 +2566,35 @@ export default function Home() {
                 </h3>
                 <ul className="space-y-4 pl-3 pb-3">
                   <li>
-                    <div className="font-semibold text-sm">
-                      소프트웨어학부 재학
+                    <div className="font-semibold text-sm flex items-center justify-between">
+                      <span>AI소프트웨어학부 졸업예정</span>
+                      <Link
+                        href="/experience_expected_graduation.pdf"
+                        target="_blank"
+                        aria-label="졸업예정증명서 열기"
+                        className="ml-2 text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 transition-colors flex-shrink-0"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="h-5 w-5"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                          />
+                        </svg>
+                      </Link>
                     </div>
                     <div className="text-muted-foreground text-xs sm:text-sm">
                       숭실대학교
                     </div>
                     <div className="text-xs text-muted-foreground">
-                      2022.03 ~ 2027.03
+                      2022.03 ~ 2027.02
                     </div>
                   </li>
                   <li>
@@ -2677,8 +2691,29 @@ export default function Home() {
                     </div>
                   </li>
                   <li>
-                    <div className="font-semibold text-sm">
-                      Co-op SAP 트랙 수료
+                    <div className="font-semibold text-sm flex items-center justify-between">
+                      <span>Co-op SAP 트랙 수료</span>
+                      <Link
+                        href="/experience_coop_sap.pdf"
+                        target="_blank"
+                        aria-label="Co-op SAP 트랙 이수증 열기"
+                        className="ml-2 text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 transition-colors flex-shrink-0"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="h-5 w-5"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                          />
+                        </svg>
+                      </Link>
                     </div>
                     <div className="text-muted-foreground text-xs sm:text-sm">
                       숭실대학교 스파르탄SW교육원
@@ -2734,37 +2769,6 @@ export default function Home() {
                     </div>
                     <div className="text-xs text-muted-foreground">
                       2019.07.18
-                    </div>
-                  </li>
-                  <li>
-                    <div className="font-semibold text-sm flex items-center justify-between">
-                      <span>네트워크관리사 2급 (필기)</span>
-                      <Link
-                        href="/certificate_network2.pdf"
-                        target="_blank"
-                        className="ml-2 text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 transition-colors flex-shrink-0"
-                      >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          className="h-5 w-5"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-                          />
-                        </svg>
-                      </Link>
-                    </div>
-                    <div className="text-xs sm:text-sm text-muted-foreground">
-                      한국정보통신자격협회
-                    </div>
-                    <div className="text-xs text-muted-foreground">
-                      2024.08.27
                     </div>
                   </li>
                   <li>
@@ -3173,13 +3177,10 @@ export default function Home() {
               </div>
             </div>
 
-            {/* 대표 프로젝트 카드 그리드 */}
-            <h3 className="text-lg font-semibold text-muted-foreground text-center mb-6">
-              주요 프로젝트
-            </h3>
-            <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {/* 내용 보완이 완료된 프로젝트만 표시하고 나머지 데이터는 유지 */}
+            <div className="w-full max-w-[480px] mx-auto grid grid-cols-1 gap-6">
               {projects
-                .filter((project) => project.featured)
+                .filter((project) => project.title === "한땀한땀")
                 .map((project, index) => (
                   <ProjectCard
                     key={index}
@@ -3189,22 +3190,6 @@ export default function Home() {
                 ))}
             </div>
 
-            {/* 그 외 프로젝트 */}
-            <h3 className="text-lg font-semibold text-muted-foreground text-center mt-16 mb-6">
-              그 밖의 프로젝트
-            </h3>
-            <div className="max-w-3xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-4">
-              {projects
-                .filter((project) => !project.featured)
-                .reverse()
-                .map((project, index) => (
-                  <CompactProjectCard
-                    key={index}
-                    project={project}
-                    onCardClick={openProjectDetail}
-                  />
-                ))}
-            </div>
           </div>
         </section>
 
@@ -3241,7 +3226,7 @@ export default function Home() {
             </div>
 
             {/* 토이 프로젝트 캐러셀 (최신순) */}
-            <div className="relative max-w-6xl mx-auto sm:px-16">
+            <div className="relative max-w-7xl mx-auto sm:px-16">
               <button
                 type="button"
                 aria-label="이전 프로젝트"
@@ -3262,19 +3247,23 @@ export default function Home() {
                 ref={toyScrollRef}
                 className="flex gap-6 overflow-x-auto snap-x snap-mandatory scroll-smooth pb-4 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
               >
-                {[...sideProjects].reverse().map((project, index) => (
+                {sideProjects.filter((project) => !project.hidden).reverse().map((project, index) => (
                   <div
                     key={index}
-                    className="snap-start shrink-0 w-[85%] sm:w-[47%] lg:w-[31.5%] bg-card rounded-lg shadow-md hover:shadow-xl transition-all duration-300 flex flex-col"
+                    className="snap-start shrink-0 w-[90%] sm:w-[47%] lg:w-[31.5%] bg-card rounded-lg shadow-md hover:shadow-xl transition-all duration-300 flex flex-col"
                   >
                     {project.image && (
                       <div className="relative w-full bg-gray-50 dark:bg-gray-900 flex items-center justify-center overflow-hidden flex-shrink-0 rounded-t-lg">
-                        <div className="relative w-full h-48">
+                        <div className="relative w-full h-52">
                           <Image
                             src={project.image}
                             alt={project.title}
                             fill
-                            className="object-contain select-none pointer-events-none"
+                            className={`select-none pointer-events-none ${
+                              project.title === "Playona"
+                                ? "object-contain object-center scale-[1.2]"
+                                : "object-contain"
+                            }`}
                             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                             onContextMenu={(e) => e.preventDefault()}
                             draggable={false}
@@ -3282,7 +3271,7 @@ export default function Home() {
                         </div>
                       </div>
                     )}
-                    <div className="p-4 flex-1 flex flex-col">
+                    <div className="p-5 flex-1 flex flex-col">
                       <div className="space-y-2 flex-1">
                         <div className="space-y-1">
                           <h3 className="font-bold text-base">

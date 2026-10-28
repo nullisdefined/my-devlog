@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { ExternalLink } from "lucide-react";
+import { SiGithubactions, SiTerraform } from "react-icons/si";
+import { Button } from "@/components/ui/button";
 import { ImageModal } from "@/components/devlog/image-modal";
 
 const architectureImage =
@@ -12,7 +13,7 @@ export default function CloudArchitecture() {
   const [isImageOpen, setIsImageOpen] = useState(false);
 
   return (
-    <article className="space-y-6 text-sm leading-relaxed break-words text-foreground [&_code]:rounded [&_code]:bg-muted/50 [&_code]:px-1 [&_code]:py-0.5 [&_code]:text-[0.9em] [&_code]:[overflow-wrap:anywhere] [&>section+section]:border-t [&>section+section]:border-border/60 [&>section+section]:pt-6">
+    <article className="space-y-6 text-sm leading-relaxed break-words text-foreground [&_code]:rounded [&_code]:bg-zinc-100 [&_code]:ring-1 [&_code]:ring-inset [&_code]:ring-zinc-300 dark:[&_code]:bg-muted/50 dark:[&_code]:ring-0 [&_code]:px-1 [&_code]:py-0.5 [&_code]:text-[0.9em] [&_code]:[overflow-wrap:anywhere] [&>section+section]:border-t [&>section+section]:border-border/60 [&>section+section]:pt-6">
       <header className="space-y-3">
         <h3 className="text-lg font-semibold">클라우드 아키텍처</h3>
         <p className="text-muted-foreground">
@@ -198,24 +199,27 @@ export default function CloudArchitecture() {
         </p>
       </section>
 
-      <footer className="flex flex-wrap gap-x-4 gap-y-2 border-t border-border/60 pt-6 text-xs text-muted-foreground">
-        <a
-          href="https://github.com/SOAPFT/soapft-infra"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-1 hover:text-foreground"
-        >
-          Terraform 인프라 코드 <ExternalLink className="h-3 w-3" aria-hidden />
-        </a>
-        <a
-          href="https://github.com/SOAPFT/soapft-backend/blob/main/.github/workflows/deploy.yml"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-1 hover:text-foreground"
-        >
-          GitHub Actions 배포 설정{" "}
-          <ExternalLink className="h-3 w-3" aria-hidden />
-        </a>
+      <footer className="flex flex-col gap-3 border-t border-border/60 pt-6 sm:flex-row">
+        <Button variant="secondary" className="flex-1" asChild>
+          <a
+            href="https://github.com/SOAPFT/soapft-infra"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <SiTerraform className="mr-2 h-4 w-4 shrink-0" aria-hidden />
+            Terraform Code
+          </a>
+        </Button>
+        <Button variant="outline" className="flex-1" asChild>
+          <a
+            href="https://github.com/SOAPFT/soapft-backend/blob/main/.github/workflows/deploy.yml"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <SiGithubactions className="mr-2 h-4 w-4 shrink-0" aria-hidden />
+            deploy.yml
+          </a>
+        </Button>
       </footer>
     </article>
   );
