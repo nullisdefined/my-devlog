@@ -1482,7 +1482,7 @@ export default function Home() {
         { name: "AWS Lambda", icon: <SiAwslambda className="h-4 w-4" /> },
         { name: "Supabase", icon: <SiSupabase className="h-4 w-4" /> },
       ],
-      link: "https://github.com/nullisdefined/playona",
+      link: "https://github.com/Database-teamproject/playona-LD",
       demo: "https://playona-five.vercel.app/",
       image:
         "https://nullisdefined.s3.ap-northeast-2.amazonaws.com/images/76ee690cf1374b249e73c0ead43cb967.gif",
